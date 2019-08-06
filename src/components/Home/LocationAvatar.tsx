@@ -59,6 +59,15 @@ const LocationAvatar = ({
         borderColor={color}
         tappable={tappable}
         isYou={isYou}
+        style={{
+          shadowColor: 'rgba(254, 92, 108, 0.65)',
+          shadowOffset: {
+            width: 0,
+            height: 0,
+          },
+          shadowRadius: 9,
+          shadowOpacity: 1,
+        }}
       />
       {theActivity && (
         <View
