@@ -101,6 +101,7 @@ export const LocationWarningAndroid = ({onPress}) => (
       StyleSheet.absoluteFill,
       {
         alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: TRANSLUCENT_WHITE,
       },
     ]}
