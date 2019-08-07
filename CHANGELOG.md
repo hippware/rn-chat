@@ -4,6 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* [ios] [dev] Upload dSYMs to bugsnag (Rework #3929)
+* Pink Shadow needs added to avatar (#3772)
+* [android] Vertically center "Allow Location Access" screen (#3938)
+
 # 4.19.1 - 2019 Aug 1
 
 * BlockedUser type doesn't have presence (#3963)
