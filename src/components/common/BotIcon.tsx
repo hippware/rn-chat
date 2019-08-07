@@ -11,17 +11,17 @@ type Props = {
 }
 
 const defaultIcon = require('../../../images/mapIcons/question.png')
-const setSize = size => (size ? (Platform.OS === 'ios' ? size : size - 5) : 35)
 
-const BotIcon = ({icon, size, imageStyle, textStyle}: Props) =>
-  icon && !oldIcons.includes(icon) ? (
-    <Text style={[styles.icon, textStyle, {fontSize: setSize(size)}]}>{icon}</Text>
+const BotIcon = ({icon, size, imageStyle, textStyle}: Props) => {
+  const theSize = size ? (Platform.OS === 'ios' ? size : size - 5) : 35
+  return icon && !oldIcons.includes(icon) ? (
+    <Text style={[styles.icon, textStyle, {fontSize: theSize}]}>{icon}</Text>
   ) : (
     <Image
       style={[
         {
-          width: setSize(size),
-          height: setSize(size),
+          width: theSize,
+          height: theSize,
           borderRadius: 5,
         },
         imageStyle,
@@ -30,6 +30,7 @@ const BotIcon = ({icon, size, imageStyle, textStyle}: Props) =>
       source={defaultIcon}
     />
   )
+}
 
 export default BotIcon
 
