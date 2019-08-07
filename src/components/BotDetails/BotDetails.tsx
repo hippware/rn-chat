@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect} from 'react'
 import {View, Clipboard, TouchableOpacity} from 'react-native'
 import {inject} from 'mobx-react'
 import {k} from '../Global'
@@ -30,7 +30,7 @@ type Props = {
 
 const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore')(
   observer((props: Props) => {
-    const list = useRef(null)
+    let list
     let viewTimeout
 
     const [bot, setBot] = useState<IBot | undefined>(undefined)
@@ -76,7 +76,7 @@ const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore'
     })
 
     function scrollToNewestPost() {
-      ;(list.current as any).wrappedInstance.scrollToIndex({
+      list.wrappedInstance.scrollToIndex({
         index: 0,
         viewPosition: 0.5,
       })
@@ -87,7 +87,7 @@ const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore'
         <DraggablePopupList
           isActive={props.isActive}
           data={!bot.error && bot.isSubscribed ? bot.posts.list.slice() : []}
-          ref={list}
+          ref={r => (list = r)}
           contentContainerStyle={{
             flexGrow: 1,
           }}
