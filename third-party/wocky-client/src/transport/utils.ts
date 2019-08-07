@@ -296,8 +296,23 @@ export function iso8601toDate(date: string): Date {
   return new Date(timestamp)
 }
 
-export function convertImage(image) {
-  return image && image.trosUrl ? {id: image.trosUrl, url: image.thumbnailUrl} : null
+export function convertImage(image, preserveAspect: boolean = false) {
+  if (image && image.trosUrl) {
+    const aspect = image.urls.find(({type}) => type === 'ASPECT_THUMBNAIL')
+    const thumbnail = image.urls.find(({type}) => type === 'THUMBNAIL')
+    return preserveAspect && aspect
+      ? {
+          id: image.trosUrl,
+          url: aspect.url,
+          type: 'aspect',
+        }
+      : {
+          id: image.trosUrl,
+          url: thumbnail.url,
+        }
+  } else {
+    return null
+  }
 }
 
 export function convertProfile({media, bots, presence, ...data}): IProfilePartial {
@@ -482,7 +497,7 @@ export function convertMessage({
     otherUser,
     unread: isOutgoing ? false : !read,
     time: iso8601toDate(createdAt).getTime(),
-    media: convertImage(media) as any,
+    media: convertImage(media, true) as any,
     content: content || undefined,
     isOutgoing: direction === 'OUTGOING',
   }
