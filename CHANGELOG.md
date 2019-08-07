@@ -8,6 +8,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Pink Shadow needs added to avatar (#3772)
 * [android] Vertically center "Allow Location Access" screen (#3938)
 * [android] Note creation adjustments (#3780)
+* Deep link to Who's Here keeps repeating/switching screens (#3967)
+* "Something went wrong" when posting image to location profile (#3968)
+* Location Profile: Users are unable to edit the Note section (#3970)
 
 # 4.19.1 - 2019 Aug 1
 
