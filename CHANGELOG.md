@@ -4,8 +4,40 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* [ios] [dev] Upload dSYMs to bugsnag (Rework #3929)
+* Pink Shadow needs added to avatar (#3772)
+* [android] Vertically center "Allow Location Access" screen (#3938)
+* [android] Note creation adjustments (#3780)
+
+# 4.19.1 - 2019 Aug 1
+
+* BlockedUser type doesn't have presence (#3963)
+
+# 4.19.0 - 2019 Aug 1
+
+* Refactor: "Hookify" class-based React components part 2 (PR #3939)
+* Presence dot is always 'offline' for self (#3874)
+* [ios] Upload dSYMs to bugsnag (#3929)
+* Loading screen missing (#3743)
+  * [ios] Prettify .xib launch screen (#3951)
+* Upload location upon receiving push notification with flag (#3066)
+
+# 4.18.2 - 2019 Jul 26
+
+Speculative experimental release. Not suitable for public use.
+
+* [ios] RNBGL randomly stops uploading location data points (#3926)
+  * [ios] rn-splash-screen triggers background crash (#3943)
+
+# 4.18.1 - 2019 Jul 25
+
 * Tweak to location creation - Auto populate the location name (#3094)
 * Identify bugsnag user (PR #3932)
+* Fix setParams race condition on Android. (PR #3936)
+  * [android] Back Caret and/or tapping on map does not function (#3587)
+* Conditional footer on friendSearch (PR #3937)
+  * [android] Friends Screen: (#3520)
+* Mark messages as read (#3866)
 
 # 4.18.0 - 2019 Jul 18
 

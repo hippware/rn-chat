@@ -66,6 +66,8 @@
         <action android:name="com.google.firebase.MESSAGING_EVENT" />
       </intent-filter>
     </service>
+    <!-- https://rnfirebase.io/docs/v5.x.x/messaging/android#(Optional)-Background-Messages -->
+    <service android:name="io.invertase.firebase.messaging.RNFirebaseBackgroundMessagingService" />
     <!-- END Push Notifications -->
 
   </application>

@@ -3,7 +3,10 @@ export const AREA_TOO_LARGE = 'AREA_TOO_LARGE'
 export const PROFILE_PROPS = `id firstName lastName handle
   media { thumbnailUrl fullUrl trosUrl }
   bots(first:0, relationship: OWNED) { totalCount }
-  presenceStatus
+  presence {
+    status
+    updatedAt
+  }
 `
 
 export const BOT_PROPS = `id icon title address addressData description radius shortname 

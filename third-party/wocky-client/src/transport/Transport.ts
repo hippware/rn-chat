@@ -952,6 +952,10 @@ export class Transport {
                   firstName
                   lastName
                   handle
+                  presence {
+                    status
+                    updatedAt
+                  }
                   media {
                     thumbnailUrl
                     trosUrl
@@ -1164,6 +1168,23 @@ export class Transport {
     })
   }
 
+  async triggerSilentPush(userId: string) {
+    return this.voidMutation({
+      mutation: gql`
+        mutation userLocationRequestTrigger(
+          $userId: String!
+        ) {
+          userLocationRequestTrigger(
+            input: {userId: $userId}
+          ) {
+            ${VOID_PROPS}
+          }
+        }
+      `,
+      variables: {userId},
+    })
+  }
+
   /******************************** SUBSCRIPTIONS ********************************/
 
   subscribeSharedLocations() {
@@ -1244,6 +1265,10 @@ export class Transport {
               firstName
               lastName
               handle
+              presence {
+                status
+                updatedAt
+              }
               media {
                 thumbnailUrl
                 trosUrl

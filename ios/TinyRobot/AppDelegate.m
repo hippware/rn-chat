@@ -88,6 +88,8 @@
   self.window.rootViewController = rootViewController;
   self.window.backgroundColor = [UIColor whiteColor];
   [self.window makeKeyAndVisible];
+
+  [RNSplashScreen showSplash:@"LaunchScreen" inRootView:rootView];
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -99,7 +101,6 @@
 
   [[UITextField appearance] setTintColor:[UIColor lightGrayColor]];
   [self loadBundle:launchOptions initialProps:env];
-  [RNSplashScreen show];
   return YES;
 }
 
