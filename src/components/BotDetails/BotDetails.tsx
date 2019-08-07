@@ -1,9 +1,10 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React from 'react'
 import {View, Clipboard, TouchableOpacity} from 'react-native'
-import {inject} from 'mobx-react'
+import {observable, runInAction} from 'mobx'
+import {observer, inject} from 'mobx-react'
 import {k} from '../Global'
 import {colors} from '../../constants'
-import {IBot, IWocky} from 'wocky-client'
+import {IProfile, IBot, IWocky} from 'wocky-client'
 import BotPostCard from './BotPostCard'
 import {RText, Spinner} from '../common'
 import AddBotPost from './AddBotPost'
@@ -14,7 +15,6 @@ import DraggablePopupList from '../common/DraggablePopupList'
 import {Actions} from 'react-native-router-flux'
 import {navBarStyle} from '../styles'
 import NotificationStore from '../../store/NotificationStore'
-import {observer} from 'mobx-react-lite'
 
 type Props = {
   botId: string
@@ -28,111 +28,125 @@ type Props = {
   isActive: boolean
 }
 
-const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore')(
-  observer((props: Props) => {
-    const list = useRef(null)
-    let viewTimeout
+@inject('wocky', 'analytics', 'notificationStore', 'homeStore')
+@observer
+export default class BotDetails extends React.Component<Props> {
+  @observable bot?: IBot
+  @observable owner?: IProfile
+  @observable numToRender: number = 8
+  list: any
+  viewTimeout: any
 
-    const [bot, setBot] = useState<IBot | undefined>(undefined)
+  static navigationOptions = ({navigation}) => {
+    const {isNew, bot, notificationStore} = navigation.state.params
+    const backAction = isNew ? () => Actions.popTo('home') : Actions.pop
+    return {
+      backAction,
+      fadeNavConfig: {
+        back: true,
+        backAction,
+        title: bot && (
+          <NavTitle
+            bot={bot}
+            onLongPress={() => {
+              Clipboard.setString(bot.address)
+              notificationStore.flash('Address copied to clipboard 👍')
+            }}
+          />
+        ),
+      },
+    }
+  }
 
-    useEffect(() => {
-      const {wocky, analytics, botId, homeStore, navigation} = props
-      const tempBot = wocky!.getBot({id: botId})
-      setBot(tempBot)
-      if (!tempBot) {
-        return
-      }
+  _footerComponent: any = observer(() => {
+    if (!this.bot) return null
 
-      // send all injected props + bot "up" to static context
-      props.navigation.setParams({...props, bot: tempBot})
+    if (this.props.wocky!.connected && this.bot && isAlive(this.bot) && this.bot.posts.loading)
+      return <Loader />
 
-      homeStore.select(tempBot.id)
-      homeStore.setFocusedLocation(tempBot.location)
-      wocky!.loadBot(botId).then(() => {
-        viewTimeout = setTimeout(() => {
-          if (bot && isAlive(bot)) analytics.track('bot_view', {id: bot.id, title: bot.title})
-        }, 7000)
+    return <View style={{backgroundColor: 'white', height: 100 * k}} />
+  })
 
-        // deep-linking to visitors
-        if (navigation.state.params.params === 'visitors') {
-          // todo: why doesn't Botdetails pop back down when nav'ing to visitors?
-          Actions.visitors({botId})
-        }
-      })
-
-      return () => {
-        if (viewTimeout) {
-          clearTimeout(viewTimeout)
-        }
-      }
+  async componentWillMount() {
+    const {wocky, analytics, botId, homeStore, navigation} = this.props
+    runInAction(() => {
+      this.bot = wocky!.getBot({id: botId})
     })
-
-    const _footerComponent = observer(() => {
-      if (!bot) return null
-
-      if (props.wocky!.connected && bot && isAlive(bot) && bot.posts.loading) return <Loader />
-
-      return <View style={{backgroundColor: 'white', height: 100 * k}} />
-    })
-
-    function scrollToNewestPost() {
-      ;(list.current as any).wrappedInstance.scrollToIndex({
-        index: 0,
-        viewPosition: 0.5,
-      })
+    if (!this.bot) {
+      return
     }
 
-    return bot && isAlive(bot) ? (
+    // send all injected props + bot "up" to static context
+    this.props.navigation.setParams({...this.props, bot: this.bot})
+
+    homeStore.select(this.bot.id)
+    homeStore.setFocusedLocation(this.bot.location)
+    await wocky!.loadBot(botId)
+
+    this.viewTimeout = setTimeout(() => {
+      if (this.bot && isAlive(this.bot))
+        analytics.track('bot_view', {id: this.bot.id, title: this.bot.title})
+    }, 7000)
+
+    // deep-linking to visitors
+    if (navigation.state.params.params === 'visitors') {
+      // todo: why doesn't Botdetails pop back down when nav'ing to visitors?
+      Actions.visitors({botId})
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.viewTimeout) {
+      clearTimeout(this.viewTimeout)
+    }
+  }
+
+  scrollToNewestPost = () => {
+    this.list.wrappedInstance.scrollToIndex({
+      index: 0,
+      viewPosition: 0.5,
+    })
+  }
+
+  renderItem = ({item}) => <BotPostCard item={item} bot={this.bot!} />
+
+  renderSeparator = () => (
+    <View style={{backgroundColor: 'white'}}>
+      <Separator />
+    </View>
+  )
+
+  render() {
+    const {bot} = this
+    if (!bot || !isAlive(bot)) {
+      return null
+    }
+
+    return (
       <View pointerEvents="box-none" style={{flex: 1}}>
         <DraggablePopupList
-          isActive={props.isActive}
+          isActive={this.props.isActive}
           data={!bot.error && bot.isSubscribed ? bot.posts.list.slice() : []}
-          ref={list}
+          ref={r => (this.list = r)}
           contentContainerStyle={{
             flexGrow: 1,
           }}
-          ListFooterComponent={_footerComponent}
-          initialNumToRender={8}
-          headerInner={<Header bot={bot!} {...props} />}
-          ItemSeparatorComponent={() => (
-            <View style={{backgroundColor: 'white'}}>
-              <Separator />
-            </View>
-          )}
-          renderItem={({item}) => <BotPostCard item={item} bot={bot!} />}
+          ListFooterComponent={this._footerComponent}
+          initialNumToRender={this.numToRender}
+          headerInner={<Header bot={this.bot!} {...this.props} />}
+          ItemSeparatorComponent={this.renderSeparator}
+          renderItem={this.renderItem}
           keyExtractor={item => item.id}
           bounces={false}
           keyboardDismissMode="on-drag"
         />
         {!bot.error && bot.isSubscribed && (
-          <AddBotPost bot={bot} afterPostSent={scrollToNewestPost} />
+          <AddBotPost bot={bot} afterPostSent={this.scrollToNewestPost} />
         )}
       </View>
-    ) : null
-  })
-)
-;(BotDetails as any).navigationOptions = ({navigation}) => {
-  const {isNew, bot, notificationStore} = navigation.state.params
-  const backAction = isNew ? () => Actions.popTo('home') : Actions.pop
-  return {
-    backAction,
-    fadeNavConfig: {
-      back: true,
-      backAction,
-      title: bot && (
-        <NavTitle
-          bot={bot}
-          onLongPress={() => {
-            Clipboard.setString(bot.address)
-            notificationStore.flash('Address copied to clipboard 👍')
-          }}
-        />
-      ),
-    },
+    )
   }
 }
-
-export default BotDetails
 
 const NavTitle = ({bot, onLongPress}) => {
   const {titleStyle} = navBarStyle
