@@ -18,6 +18,7 @@ export const File = types
       source: types.maybeNull(FileSource),
       thumbnail: types.maybeNull(FileSource),
       url: '',
+      type: 'square',
     })
   )
   .named('File')
@@ -88,7 +89,8 @@ export const File = types
     }
   })
   .actions(self => ({
-    load({url, ...data}: any) {
+    load({url, type, ...data}: any) {
+      self.type = type
       if (url) {
         if (!self.thumbnail) {
           self.setSource(undefined)
@@ -109,7 +111,8 @@ export const File = types
         }
       }
       if (!self.thumbnail && !self.url) {
-        self.url = yield self.transport.downloadTROS(self.id)
+        const urls = yield self.transport.downloadTROS(self.id)
+        self.url = urls[self.type]
         yield self.downloadThumbnail()
       }
     }),
