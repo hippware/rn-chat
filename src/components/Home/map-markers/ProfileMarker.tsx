@@ -11,7 +11,7 @@ type Props = {
 }
 
 const ProfileMarker = observer(({homeStore, card}: Props) => {
-  const {profile, location, priority} = card
+  const {profile, location} = card
   // we could have null location until https://github.com/hippware/wocky/issues/2304 is implemented
   if (!location) {
     return null
@@ -20,7 +20,7 @@ const ProfileMarker = observer(({homeStore, card}: Props) => {
   return (
     profile && (
       <HackMarker
-        zIndex={1001 + priority}
+        zIndex={card.id === homeStore!.selectedId ? 1001 : 1}
         key={`profilemarker${profile.avatar && profile.avatar.loaded}`}
         coordinate={{latitude, longitude}}
         onPress={() => {
