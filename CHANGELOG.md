@@ -7,6 +7,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [ios] [dev] Upload dSYMs to bugsnag (Rework #3929)
 * Pink Shadow needs added to avatar (#3772)
 * [android] Vertically center "Allow Location Access" screen (#3938)
+* [android] Note creation adjustments (#3780)
 
 # 4.19.1 - 2019 Aug 1
 
