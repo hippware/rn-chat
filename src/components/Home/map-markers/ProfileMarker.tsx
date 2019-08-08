@@ -20,7 +20,7 @@ const ProfileMarker = observer(({homeStore, card}: Props) => {
   return (
     profile && (
       <HackMarker
-        zIndex={1001}
+        zIndex={card.id === homeStore!.selectedId ? 1001 : 1}
         key={`profilemarker${profile.avatar && profile.avatar.loaded}`}
         coordinate={{latitude, longitude}}
         onPress={() => {

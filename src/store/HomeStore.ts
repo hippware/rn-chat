@@ -5,15 +5,12 @@ import {IStore} from './store'
 import {autorun} from 'mobx'
 
 export class Card {
-  // unique id for the card
   get id(): string {
     return this.name
   }
-  // location for given card
   get location(): ILocation | undefined {
     return undefined
   }
-  // name of class
   get name(): string {
     throw new Error('It is abstract class')
   }
@@ -94,7 +91,7 @@ const HomeStore = types
         const sharers =
           wocky && wocky.profile
             ? wocky.profile!.locationSharers.list.map(
-                sharer => new LocationSharerCard(sharer.sharedWith)
+                ({sharedWith}) => new LocationSharerCard(sharedWith)
               )
             : []
         const localBots = wocky.localBots.list.map(bot => new BotCard(bot))
@@ -103,7 +100,6 @@ const HomeStore = types
     }
   })
   .views(self => ({
-    // return the list for current mode
     get list(): Card[] {
       return self.creationMode ? [] : self.cards
     },

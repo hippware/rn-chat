@@ -6,6 +6,7 @@ import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../../../store/LocationStore'
 import {IHomeStore, YouCard} from '../../../store/HomeStore'
 import LocationAvatar from '../LocationAvatar'
+import _ from 'lodash'
 
 interface IProps {
   locationStore?: ILocationStore
@@ -27,7 +28,12 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
   return (
     profile && (
       <HackMarker
-        zIndex={1000}
+        zIndex={
+          homeStore!.focusedLocation === null ||
+          _.isEqual(homeStore!.focusedLocation, locationStore!.location)
+            ? 2000
+            : 1000
+        }
         key={`youmarker${profile.avatar && profile.avatar.loaded && profile.isLocationShared}`}
         coordinate={{latitude, longitude}}
         onPress={() => {
