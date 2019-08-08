@@ -18,7 +18,7 @@ export const File = types
       source: types.maybeNull(FileSource),
       thumbnail: types.maybeNull(FileSource),
       url: '',
-      type: 'square',
+      type: types.optional(types.enumeration(['square', 'aspect']), 'square'),
     })
   )
   .named('File')
@@ -122,12 +122,12 @@ export interface IFile extends Instance<typeof File> {}
 
 export const FileRef = types.maybeNull(
   types.reference(File, {
-    get(id: string, parent: any) {
+    get(id: string, parent: any, data?: {type: 'aspect' | 'file'}) {
       return (
         parent.service &&
         parent.service.files &&
-        isAlive(parent.service.files.get(id)) &&
-        parent.service.files.get(id)
+        isAlive(parent.service.files.get(id, data)) &&
+        parent.service.files.get(id, data)
       )
     },
     set(value: IFile) {

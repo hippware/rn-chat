@@ -32,7 +32,8 @@ export function createMessage(params: any, service: any): IMessage {
     params.otherUser = service.profiles.get(params.otherUser.id, params.otherUser)
   }
   if (params.media) {
-    params.media = service.files.get(params.media.id, params.media)
+    // use aspect ratio thumbnails in Chat Messages
+    params.media = service.files.get(params.media.id, {...params.media, type: 'aspect'})
   }
   return Message.create(params)
 }
