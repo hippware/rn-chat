@@ -4,6 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Support for aspect-preserved images (PR #3979)
+  * [dev] [wocky-client] Refactor image downloads (#3955)
+
+# 4.19.2 - 2019 Aug 7
+
 * [ios] [dev] Upload dSYMs to bugsnag (Rework #3929)
 * Pink Shadow needs added to avatar (#3772)
 * [android] Vertically center "Allow Location Access" screen (#3938)
