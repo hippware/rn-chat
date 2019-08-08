@@ -87,7 +87,7 @@
     "react-native-permissions": "^1.1.1",
     "react-native-pure-jwt": "^2.1.0",
     "react-native-push-notification": "github:zo0r/react-native-push-notification#6a6e9514c4bdd4d7182b3805785478f61a703088",
-    "react-native-router-flux": "^4.1.0-beta.5",
+    "react-native-router-flux": "^4.1.0-beta.6",
     "react-native-snap-carousel": "^3.7.5",
     "react-native-splash-screen": "^3.2.0",
     "react-native-swiper": "1.5.13",
