@@ -1,8 +1,6 @@
 import React from 'react'
 import {View, Image, Text, ImageBackground} from 'react-native'
-import {colors} from '../../constants'
 import {Avatar} from '../common'
-import Triangle from '../map/Triangle'
 import {IProfile} from 'wocky-client'
 import {UserActivityType} from 'third-party/wocky-client/src/transport/types'
 
