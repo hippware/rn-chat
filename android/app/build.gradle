@@ -246,7 +246,8 @@ dependencies {
   implementation project(':react-native-extra-dimensions-android')
   implementation project(':react-native-localize')
   implementation project(':react-native-gesture-handler')
-  implementation 'com.android.support:multidex:1.0.3'
+  def multidex_version = "2.0.1"
+  implementation 'androidx.multidex:multidex:$multidex_version'
   implementation project(':react-native-background-geolocation')
   implementation project(':bugsnag-react-native')
   implementation(project(':react-native-push-notification')){
