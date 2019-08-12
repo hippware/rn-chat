@@ -8683,6 +8683,11 @@ lodash@4.x.x, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.17.5, 
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
 
+lodash@^4.17.15:
+  version "4.17.15"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
+  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+
 log-symbols@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/log-symbols/-/log-symbols-1.0.2.tgz#376ff7b58ea3086a0f09facc74617eca501e1a18"
@@ -11238,12 +11243,12 @@ react-native-pure-jwt@^2.1.0:
   version "3.1.7"
   resolved "https://codeload.github.com/zo0r/react-native-push-notification/tar.gz/6a6e9514c4bdd4d7182b3805785478f61a703088"
 
-react-native-router-flux@^4.1.0-beta.6:
-  version "4.1.0-beta.6"
-  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-4.1.0-beta.6.tgz#84831622aa676b786968586f7c58c8369cb86966"
-  integrity sha512-UnsY9cnKuC75SeK3xWSBGLwBQj2X2K8rdgICjpbbxJdefclXcSHAX37hVuCaj6Aq9RqxXUhJg93p5eNWYcuBfA==
+react-native-router-flux@^4.1.0-beta.7:
+  version "4.1.0-beta.7"
+  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-4.1.0-beta.7.tgz#37efe65608c65ed802129c7c018c7adda13ea3e5"
+  integrity sha512-xVXkvThAVUpz2q5ZRmZfiuH/OpB92sNkdqx4FOWixp3yIHq9/pVgtHzgyqT2hkuLJ1TXCI4rMokvSF05aKHlvw==
   dependencies:
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     opencollective "^1.0.3"
     path-to-regexp "^2.4.0"
     prop-types "^15.6.2"
