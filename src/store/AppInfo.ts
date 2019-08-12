@@ -1,6 +1,7 @@
 import {types, Instance, getParent, flow} from 'mobx-state-tree'
 import uuid from 'uuid/v1'
 import {IStore} from './store'
+import {Platform} from 'react-native'
 import DeviceInfo from 'react-native-device-info'
 const jwt = require('react-native-pure-jwt').default
 
@@ -26,6 +27,12 @@ export const AppInfo = types
       },
       get uaString(): string {
         const extras: string[] = [`${systemName} ${systemVersion}`, deviceId]
+
+        if (Platform.OS === 'android') {
+          extras.push(DeviceInfo.getManufacturer())
+          extras.push(DeviceInfo.getModel())
+        }
+
         if (codePushStore.updateInfo) {
           extras.push(`${self.nativeVersion}-${codePushStore.updateInfo}`)
         }
