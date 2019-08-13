@@ -1,8 +1,6 @@
 import React from 'react'
-import {View, Image, Text} from 'react-native'
-import {colors} from '../../constants'
+import {View, Image, Text, ImageBackground} from 'react-native'
 import {Avatar} from '../common'
-import Triangle from '../map/Triangle'
 import {IProfile} from 'wocky-client'
 import {UserActivityType} from 'third-party/wocky-client/src/transport/types'
 
@@ -16,6 +14,9 @@ type Props = {
   isYou?: boolean
 }
 
+const avatarBG = require('../../../images/LocationAvatar.png')
+const avatarBGNoRing = require('../../../images/LocationAvatarNoRing.png')
+const avatarBGGray = require('../../../images/LocationAvatarGray.png')
 const activity = require('../../../images/activity-outer.png')
 const activityEmojis = {
   walking: '🚶',
@@ -35,19 +36,25 @@ const LocationAvatar = ({
   isYou,
 }: Props) => {
   const isStill = currentActivity === 'still'
-  const color = hidden || isStill ? colors.DARK_GREY : colors.PINK
+  const currentBG =
+    hidden || isStill
+      ? avatarBGGray
+      : isYou || (sharesLocation && !isStill)
+      ? avatarBG
+      : avatarBGNoRing
   const theActivity = activityEmojis[currentActivity || '']
   return (
-    <View
+    <ImageBackground
+      source={currentBG}
       style={{
+        marginVertical: -9,
+        marginHorizontal: -5,
+        paddingTop: 17,
+        width: 85,
+        height: 87,
         alignItems: 'center',
-        borderColor: color,
-        borderWidth: isYou || (sharesLocation && !isStill) ? 1 : 0,
-        borderRadius: 50,
-        paddingTop: 3.3,
-        paddingHorizontal: 3.3,
-        height: 63.6,
-        width: 63.6,
+
+        paddingLeft: 1.2,
         opacity: isStill && !noFade ? 0.4 : 1,
       }}
     >
@@ -56,18 +63,9 @@ const LocationAvatar = ({
         size={54}
         profile={profile}
         hideDot
-        borderColor={color}
+        borderWidth={0}
         tappable={tappable}
         isYou={isYou}
-        style={{
-          shadowColor: 'rgba(254, 92, 108, 0.65)',
-          shadowOffset: {
-            width: 0,
-            height: 0,
-          },
-          shadowRadius: 9,
-          shadowOpacity: 1,
-        }}
       />
       {theActivity && (
         <View
@@ -85,8 +83,7 @@ const LocationAvatar = ({
           <Text style={{bottom: 3, left: 1}}>{theActivity}</Text>
         </View>
       )}
-      <Triangle width={8} height={8} color={color} direction="down" />
-    </View>
+    </ImageBackground>
   )
 }
 
