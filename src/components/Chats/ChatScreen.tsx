@@ -38,6 +38,8 @@ const ChatScreen = withKeyboardHOC(
           store.chat!.readAll()
         })
         store.chat!.setActive(true)
+
+        // insert chat into props for accessing in navigationOptions
         navigation.setParams({chat: store.chat})
 
         return function cleanup() {
