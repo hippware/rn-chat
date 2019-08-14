@@ -14,6 +14,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Minimalise Location Debug screen (#3965)
 * Upgrade: react-native-router-flux (RNRF) (PR #3986)
   * Loading screen missing (#3743)
+* `yarn policies set-version 1.17.3` (PR #3989)
+* [android] Add res/raw/silence.ogg. (PR #3996)
+* Pink Shadow needs added to avatar (Rework #3772)
+* [android] Splash screen doesn't cover screen (#3887)
 
 # 4.19.2 - 2019 Aug 7
 
