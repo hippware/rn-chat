@@ -10,7 +10,6 @@ type Props = {
 
 class AnimatedPushScene extends React.Component<Props> {
   @observable viewHeight: number = 0
-  animating: boolean = false
   slideHeight = new Animated.Value(height) // initialize to full screen height
 
   componentDidMount() {
@@ -39,12 +38,10 @@ class AnimatedPushScene extends React.Component<Props> {
     this.slideSceneTo(this.props.scene.route.params.fromTop ? -this.viewHeight : this.viewHeight)
 
   slideSceneTo = offset => {
-    if (this.animating) return
-    this.animating = true
     Animated.spring(this.slideHeight, {
       toValue: offset,
       useNativeDriver: true,
-    }).start(() => (this.animating = false))
+    }).start()
   }
 
   render() {
