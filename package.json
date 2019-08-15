@@ -11,7 +11,7 @@
     "androidReload": "adb shell input text RR",
     "androidNetwork": "adb reverse tcp:8081 tcp:8081",
     "androidInstall": "cd android && ./gradlew clean && ./gradlew assembleStagingDebug && ./gradlew installStagingDebug && cd .. && yarn androidNetwork",
-    "test": "npm run testLocal && npm run jestWockyCI && brew tap wix/brew && brew install applesimutils && echo 'Detecting applesimutils' && which applesimutils && detox build-framework-cache && detox build --configuration ios.sim.release && detox test --configuration ios.sim.release",
+    "test": "npm run testLocal && npm run jestWockyCI",
     "testLocal": "npm run lint && npm run lintWocky && npm run tsc:all && npm run jestCI",
     "tsc": "node node_modules/.bin/tsc -p tsconfig.build.json",
     "tsc:all": "node node_modules/.bin/tsc -p tsconfig.json",
