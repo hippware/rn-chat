@@ -50,7 +50,8 @@ const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore'
       homeStore.setFocusedLocation(tempBot.location)
       wocky!.loadBot(botId).then(() => {
         viewTimeout = setTimeout(() => {
-          if (bot && isAlive(bot)) analytics.track('bot_view', {id: bot.id, title: bot.title})
+          if (tempBot && isAlive(tempBot))
+            analytics.track('bot_view', {id: tempBot.id, title: tempBot.title})
         }, 7000)
 
         // deep-linking to visitors
