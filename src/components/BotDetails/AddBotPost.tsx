@@ -25,7 +25,7 @@ const AddBotPost = inject('notificationStore', 'wocky', 'navStore')(
     const [imageURI, setImageURI] = useState('')
     const [text, setText] = useState('')
     const [sendingPost, setSendingPost] = useState(false)
-    const [image, setImage] = useState<any>(undefined)
+    const [image, setImage] = useState<PickerImage | undefined>(undefined)
     const textInput = useRef<TextInput>(null)
 
     // let image: PickerImage | undefined | void
