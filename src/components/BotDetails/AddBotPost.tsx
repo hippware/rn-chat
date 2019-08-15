@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import {View, Keyboard, TextInput, TouchableOpacity, Image, StyleSheet} from 'react-native'
-import {observer, inject} from 'mobx-react'
-import {observable, action} from 'mobx'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import {Spinner, RText} from '../common'
 import {colors} from '../../constants'
 import {showImagePicker, PickerImage} from '../ImagePicker'
@@ -20,69 +20,69 @@ type Props = {
   navStore: any
 }
 
-@inject('notificationStore', 'wocky', 'navStore')
-@observer
-class AddBotPost extends React.Component<Props> {
-  @observable imageURI?: string
-  image?: PickerImage
-  @observable text: string = ''
-  @observable focused: boolean = false
-  @observable sendingPost: boolean = false
-  post?: IBotPost | null
-  textInput: any
+const AddBotPost = inject('notificationStore', 'wocky', 'navStore')(
+  observer((props: Props) => {
+    const [imageURI, setImageURI] = useState('')
+    const [text, setText] = useState('')
+    const [sendingPost, setSendingPost] = useState(false)
+    const [image, setImage] = useState<any>(undefined)
+    const textInput = useRef<TextInput>(null)
 
-  componentWillUnmount() {
-    // remove unpublished post
-    if (this.post && this.post.id && this.props.bot) {
-      this.props.bot.removePost(this.post.id)
-    }
-  }
+    // let image: PickerImage | undefined | void
+    let post: IBotPost | null = null
 
-  onSend = async () => {
-    if (this.sendingPost) return
-    this.sendingPost = true
-    const {notificationStore, bot} = this.props
-    try {
-      this.post = bot.createPost(this.text.trim())
-      if (this.image) {
-        this.post!.setFile(this.image)
-        await this.post!.upload()
+    useEffect(() => {
+      // remove unpublished post
+      if (post && post.id && props.bot) {
+        props.bot.removePost(post.id)
       }
-      await this.post!.publish()
-      this.post = null
-      this.text = ''
-      this.imageURI = undefined
-      this.image = undefined
-      this.textInput.blur()
-      Keyboard.dismiss()
-      this.props.afterPostSent()
-    } catch (e) {
-      log('AddBotPost error', e)
-      const message =
-        e.code === '403'
-          ? 'Cannot publish, access denied'
-          : 'Something went wrong, please try again'
-      notificationStore.flash(message)
-    } finally {
-      this.sendingPost = false
-    }
-  }
+    }, [])
 
-  onAttach = async () => {
-    const image = await showImagePicker()
-    if (image) {
-      // todo: fix uri here
-      this.imageURI = image.uri
-      this.image = image
-      if (this.textInput) {
-        this.textInput.focus()
+    async function onSend() {
+      if (sendingPost) return
+      setSendingPost(true)
+      const {notificationStore, bot} = props
+      try {
+        post = bot.createPost(text.trim())
+        if (image) {
+          post!.setFile(image)
+          await post!.upload()
+        }
+        await post!.publish()
+        post = null
+        setText('')
+        setImageURI('')
+        setImage(undefined)
+        textInput.current!.blur()
+        Keyboard.dismiss()
+        props.afterPostSent()
+      } catch (e) {
+        log('AddBotPost error', e)
+        const message =
+          e.code === '403'
+            ? 'Cannot publish, access denied'
+            : 'Something went wrong, please try again'
+        notificationStore.flash(message)
+      } finally {
+        setSendingPost(false)
       }
     }
-  }
 
-  render() {
-    const textLength = this.text.trim().length
-    const {wocky} = this.props
+    async function onAttach() {
+      const tempImage = await showImagePicker()
+      if (tempImage) {
+        // todo: fix uri here
+        setImageURI(tempImage.uri)
+        setImage(tempImage)
+        if (textInput) {
+          textInput.current!.focus()
+        }
+      }
+    }
+
+    const textLength = text.trim().length
+    const {wocky} = props
+
     return (
       <View
         style={{
@@ -95,47 +95,43 @@ class AddBotPost extends React.Component<Props> {
           <TouchableOpacity
             hitSlop={{top: 15, left: 15, right: 15, bottom: 15}}
             style={{borderWidth: 0, borderColor: 'transparent'}}
-            onPress={this.onAttach}
-            disabled={!!this.imageURI}
+            onPress={onAttach}
+            disabled={!!imageURI}
           >
             <Image
               style={{height: 21}}
               resizeMode="contain"
               source={
-                this.imageURI
+                imageURI
                   ? require('../../../images/attachPhotoGray.png')
                   : require('../../../images/attachPhoto.png')
               }
             />
           </TouchableOpacity>
           <TextInput
-            ref={text => (this.textInput = text)}
-            onChangeText={action((text: string) => (this.text = text))}
+            ref={textInput}
+            onChangeText={setText}
             style={[styles.textInput, styles.textInputDay, {height: 'auto'}]}
             placeholder="Add a comment"
             placeholderTextColor={colors.DARK_GREY}
-            onFocus={() => (this.focused = true)}
-            onBlur={() => (this.focused = false)}
             multiline
             returnKeyType="default"
             enablesReturnKeyAutomatically
-            value={this.text}
+            value={text}
             maxLength={5000}
             selectionColor={colors.COVER_BLUE}
           />
           <TouchableOpacity
             hitSlop={{top: 15, left: 15, right: 15, bottom: 15}}
-            disabled={(textLength === 0 && !this.imageURI) || !wocky!.connected || this.sendingPost}
-            onPress={this.onSend}
+            disabled={(textLength === 0 && !imageURI) || !wocky!.connected || sendingPost}
+            onPress={onSend}
           >
-            {this.sendingPost ? (
+            {sendingPost ? (
               <Spinner size={22} />
             ) : (
               <RText
                 size={16}
-                color={
-                  (textLength || this.imageURI) && wocky!.connected ? colors.PINK : colors.GREY
-                }
+                color={(textLength || imageURI) && wocky!.connected ? colors.PINK : colors.GREY}
               >
                 Post
               </RText>
@@ -144,17 +140,17 @@ class AddBotPost extends React.Component<Props> {
         </View>
         <View style={{backgroundColor: 'white'}}>
           <ImagePost
-            imageURI={this.imageURI}
+            imageURI={imageURI}
             deleteImage={() => {
-              this.imageURI = undefined
-              this.image = undefined
+              setImageURI('')
+              setImage(undefined)
             }}
           />
         </View>
       </View>
     )
-  }
-}
+  })
+)
 
 const ImagePost = ({imageURI, deleteImage}) => {
   return imageURI ? (
