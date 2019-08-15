@@ -14,14 +14,7 @@ import analytics from '../utils/analytics'
 const MAX_DATE1 = '2030-01-01-17:00'
 const MAX_DATE2 = '2030-01-01-18:00'
 
-export const BG_STATE_PROPS = [
-  'distanceFilter',
-  'stationaryRadius',
-  'activityType',
-  'activityRecognitionInterval',
-  'debug',
-  'logLevel',
-]
+export const BG_STATE_PROPS = ['distanceFilter', 'activityType', 'debug']
 
 const prefix = 'BGGL'
 
@@ -34,23 +27,10 @@ export const ActivityTypeChoices = {
 }
 const ActivityTypeValues = Object.keys(ActivityTypeChoices)
 
-export const LogLevelChoices = {
-  '0': 'OFF',
-  '1': 'ERROR',
-  '2': 'WARNING',
-  '3': 'INFO',
-  '4': 'DEBUG',
-  '5': 'VERBOSE',
-}
-const LogLevelValues = Object.keys(LogLevelChoices)
-
 const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOptions', {
   distanceFilter: types.maybeNull(types.number),
-  stationaryRadius: types.maybeNull(types.number),
   debug: types.maybeNull(types.boolean),
   activityType: types.maybeNull(types.enumeration(ActivityTypeValues)),
-  activityRecognitionInterval: types.maybeNull(types.number),
-  logLevel: types.maybeNull(types.enumeration(LogLevelValues)),
 })
 
 // todo: https://github.com/hippware/rn-chat/issues/3434
@@ -125,7 +105,6 @@ const LocationStore = types
         backgroundOptions: {
           ...options,
           activityType: options.activityType ? options.activityType.toString() : undefined,
-          logLevel: options.logLevel.toString(),
         },
       })
     },
@@ -147,6 +126,10 @@ const LocationStore = types
 
       if (!settings.configurableLocationSettings) {
         config.distanceFilter = 10
+      }
+
+      if (__DEV__ || settings.isStaging) {
+        config.logLevel = BackgroundGeolocation.LOG_LEVEL_VERBOSE
       }
 
       if (reset) {
@@ -271,7 +254,6 @@ const LocationStore = types
 
       // For some reason, these parameters must be ints, not strings
       config.activityType = parseInt(config.activityType)
-      config.logLevel = parseInt(config.logLevel)
       BackgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)
     }
 
