@@ -24,9 +24,9 @@ else
   which applesimutils
 
   echo 'Detox build'
-  yarn detox build-framework-cache
-  yarn detox build --configuration ios.sim.release
+  npx detox build-framework-cache
+  npx detox build --configuration ios.sim.release
   
   echo 'Detox test'
-  yarn detox test --configuration ios.sim.release
+  npx detox test --configuration ios.sim.release
 fi
