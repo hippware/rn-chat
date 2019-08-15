@@ -5,7 +5,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {inject, observer} from 'mobx-react'
 import moment from 'moment'
 
-import {ILocationStore, ActivityTypeChoices, BG_STATE_PROPS} from '../store/LocationStore'
+import {ILocationStore, BG_STATE_PROPS} from '../store/LocationStore'
 import Screen from './Screen'
 import _ from 'lodash'
 import {IWocky} from 'wocky-client'
@@ -19,7 +19,6 @@ const debuggerSettings = t.struct({
   debugSounds: t.Boolean,
   distanceFilter: t.Number,
   autoSyncThreshold: t.Number,
-  activityType: t.enums(ActivityTypeChoices),
 })
 
 const options = {
@@ -32,9 +31,6 @@ const options = {
     },
     autoSyncThreshold: {
       label: 'autoSyncThreshold (maximum batch size)',
-    },
-    activityType: {
-      label: 'activityType',
     },
   },
 }

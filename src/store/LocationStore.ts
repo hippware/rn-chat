@@ -14,24 +14,14 @@ import analytics from '../utils/analytics'
 const MAX_DATE1 = '2030-01-01-17:00'
 const MAX_DATE2 = '2030-01-01-18:00'
 
-export const BG_STATE_PROPS = ['distanceFilter', 'autoSyncThreshold', 'activityType', 'debug']
+export const BG_STATE_PROPS = ['distanceFilter', 'autoSyncThreshold', 'debug']
 
 const prefix = 'BGGL'
-
-// https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-activitytype-activity_type_automotive_navigation-activity_type_other_navigation-activity_type_fitness-activity_type_other
-export const ActivityTypeChoices = {
-  '1': 'OTHER',
-  '2': 'AUTOMOTIVE_NAVIGATION',
-  '3': 'FITNESS',
-  '4': 'OTHER_NAVIGATION',
-}
-const ActivityTypeValues = Object.keys(ActivityTypeChoices)
 
 const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOptions', {
   autoSyncThreshold: types.maybeNull(types.number),
   distanceFilter: types.maybeNull(types.number),
   debug: types.maybeNull(types.boolean),
-  activityType: types.maybeNull(types.enumeration(ActivityTypeValues)),
 })
 
 // todo: https://github.com/hippware/rn-chat/issues/3434
@@ -105,7 +95,6 @@ const LocationStore = types
       Object.assign(self, {
         backgroundOptions: {
           ...options,
-          activityType: options.activityType ? options.activityType.toString() : undefined,
         },
       })
     },
@@ -254,7 +243,6 @@ const LocationStore = types
       })
 
       // For some reason, these parameters must be ints, not strings
-      config.activityType = parseInt(config.activityType)
       config.autoSyncThreshold = parseInt(config.autoSyncThreshold)
       BackgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)
     }
