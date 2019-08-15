@@ -65,7 +65,7 @@ const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore'
           clearTimeout(viewTimeout)
         }
       }
-    })
+    }, [])
 
     const _footerComponent = observer(() => {
       if (!bot) return null
