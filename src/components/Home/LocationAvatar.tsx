@@ -71,8 +71,8 @@ const LocationAvatar = ({
         <View
           style={{
             position: 'absolute',
-            top: -12,
-            right: -7,
+            top: 0,
+            right: 0,
             height: 35,
             width: 35,
             alignItems: 'center',
