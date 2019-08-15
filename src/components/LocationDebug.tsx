@@ -31,7 +31,7 @@ const options = {
       label: 'distanceFilter (in meters)',
     },
     autoSyncThreshold: {
-      label: 'maximum batch size',
+      label: 'autoSyncThreshold (maximum batch size)',
     },
     activityType: {
       label: 'activityType',

@@ -255,6 +255,7 @@ const LocationStore = types
 
       // For some reason, these parameters must be ints, not strings
       config.activityType = parseInt(config.activityType)
+      config.autoSyncThreshold = parseInt(config.autoSyncThreshold)
       BackgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)
     }
 
