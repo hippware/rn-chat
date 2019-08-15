@@ -1,23 +1,31 @@
 platform :ios, '9.0'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
 def testing_pods
+  pod 'React', :path => '../node_modules/react-native/'
+  pod 'React-Core', :path => '../node_modules/react-native/React'
+  pod 'React-DevSupport', :path => '../node_modules/react-native/React'
+  pod 'React-RCTActionSheet', :path => '../node_modules/react-native/Libraries/ActionSheetIOS'
+  pod 'React-RCTAnimation', :path => '../node_modules/react-native/Libraries/NativeAnimation'
+  pod 'React-RCTBlob', :path => '../node_modules/react-native/Libraries/Blob'
+  pod 'React-RCTImage', :path => '../node_modules/react-native/Libraries/Image'
+  pod 'React-RCTLinking', :path => '../node_modules/react-native/Libraries/LinkingIOS'
+  pod 'React-RCTNetwork', :path => '../node_modules/react-native/Libraries/Network'
+  pod 'React-RCTSettings', :path => '../node_modules/react-native/Libraries/Settings'
+  pod 'React-RCTText', :path => '../node_modules/react-native/Libraries/Text'
+  pod 'React-RCTVibration', :path => '../node_modules/react-native/Libraries/Vibration'
+  pod 'React-RCTWebSocket', :path => '../node_modules/react-native/Libraries/WebSocket'
+  
+  pod 'React-cxxreact', :path => '../node_modules/react-native/ReactCommon/cxxreact'
+  pod 'React-jsi', :path => '../node_modules/react-native/ReactCommon/jsi'
+  pod 'React-jsiexecutor', :path => '../node_modules/react-native/ReactCommon/jsiexecutor'
+  pod 'React-jsinspector', :path => '../node_modules/react-native/ReactCommon/jsinspector'
   pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
-  pod 'React', path: '../node_modules/react-native', :subspecs => [
-    'Core',
-    'CxxBridge',
-    'DevSupport',
-    'RCTActionSheet',
-    'RCTAnimation',
-    'RCTGeolocation',
-    'RCTImage',
-    'RCTLinkingIOS',
-    'RCTPushNotification',
-    'RCTNetwork',
-    'RCTSettings',
-    'RCTText',
-    'RCTVibration',
-    'RCTWebSocket'
-  ]
+  
+  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
+  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+  pod 'React-RCTPushNotification', path: '../node_modules/react-native/Libraries/PushNotificationIOS'
   pod 'GoogleMaps'
   pod 'react-native-mixpanel', path: '../node_modules/react-native-mixpanel'
   pod 'react-native-maps', :path => '../node_modules/react-native-maps'
@@ -38,17 +46,21 @@ def testing_pods
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
   pod 'RNImageCropPicker', :path =>  '../node_modules/react-native-image-crop-picker'
-
+  
   # Add new pods below this line
+  pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
+
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
+
+  pod 'RNTouchThroughView', :path => '../node_modules/react-native-touch-through-view'
+
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
-
+  
   pod 'RNPureJwt', :path => '../node_modules/react-native-pure-jwt'
-
+  
   pod 'RNLocalize', :path => '../node_modules/react-native-localize'
-
+  
   pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
-  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
-  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
   
   platform :ios, '9.0'
@@ -56,7 +68,7 @@ end
 
 target 'tinyrobot' do
   testing_pods
-
+  
 end
 
 target 'tinyrobotStaging' do
@@ -70,13 +82,25 @@ post_install do |installer|
         config.build_settings['CLANG_ENABLE_MODULES'] = 'No'
       end
     end
-
-    targets_to_ignore = %w(React yoga)
+    
+    targets_to_ignore = %w(React)
     
     if targets_to_ignore.include? target.name
       target.remove_from_project
     end
-
+    
+    if target.name == 'react-native-config'
+      phase = target.project.new(Xcodeproj::Project::Object::PBXShellScriptBuildPhase)
+      phase.shell_script = "cd ../../"\
+      " && RNC_ROOT=./node_modules/react-native-config/"\
+      " && export SYMROOT=$RNC_ROOT/ios/ReactNativeConfig"\
+      " && export BUILD_DIR=$RNC_ROOT/ios/ReactNativeConfig"\
+      " && ruby $RNC_ROOT/ios/ReactNativeConfig/BuildDotenvConfig.ruby"
+      
+      target.build_phases << phase
+      target.build_phases.move(phase,0)
+    end
+    
     # if target.name == "React"
     #   target.remove_from_project
     # end

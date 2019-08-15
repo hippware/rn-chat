@@ -3,6 +3,7 @@ package com.hippware.android.tinyrobot;
 import androidx.multidex.MultiDexApplication;
 
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.netinfo.NetInfoPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.zaguiini.RNPureJwt.RNPureJwtPackage;
 import com.actionsheet.ActionSheetPackage;
@@ -28,7 +29,6 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.rt2zz.reactnativecontacts.ReactNativeContacts;
 
@@ -52,6 +52,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(new MainReactPackage(),
+            new NetInfoPackage(),
             new SplashScreenReactPackage(), new RNPureJwtPackage(), new ActionSheetPackage(),
           new PickerPackage(), new AndroidOpenSettingsPackage(), new ExtraDimensionsPackage(), new RNLocalizePackage(),
           new RNBackgroundGeolocation(), BugsnagReactNative.getPackage(), new ReactNativePushNotificationPackage(),

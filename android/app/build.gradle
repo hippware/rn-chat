@@ -238,6 +238,7 @@ android {
 }
 
 dependencies {
+    implementation project(':@react-native-community_netinfo')
   implementation project(':react-native-splash-screen')
   implementation project(':react-native-pure-jwt')
   implementation project(':react-native-action-sheet')
