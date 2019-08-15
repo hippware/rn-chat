@@ -16,6 +16,12 @@ then
 else 
   echo "iOS build! $APPCENTER_XCODE_SCHEME"
 
+  echo "Node version..."
+  node --version
+
+  echo "NPM version..."
+  npm --version
+
   echo "Installing applesimutils"
   brew tap wix/brew
   brew install applesimutils
