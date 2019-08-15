@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.20.0 - 2019 Aug 15
+
 * Support for aspect-preserved images (PR #3979)
   * [dev] [wocky-client] Refactor image downloads (#3955)
 * Keep selected avatar at the top/in focus (#3800)
