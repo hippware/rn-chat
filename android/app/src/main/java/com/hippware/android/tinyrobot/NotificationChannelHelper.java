@@ -44,9 +44,12 @@ public class NotificationChannelHelper {
         // Creation is sort-of idempotent.
         // Channels can be created even if they already exist.
         // New settings just get ignored.
-        NotificationChannel myDefault = new NotificationChannel("default", "Miscellaneous", NotificationManager.IMPORTANCE_DEFAULT);
-        myDefault.setSound(null, audioAttr);
-        manager.createNotificationChannel(myDefault);
+
+        // `fcm_fallback_notification_channel` is the channel used by Firebase.
+        // If we create it before Firebase does, we can configure it to no sound.
+        NotificationChannel fallback = new NotificationChannel("fcm_fallback_notification_channel", "Miscellaneous", NotificationManager.IMPORTANCE_DEFAULT);
+        fallback.setSound(null, audioAttr);
+        manager.createNotificationChannel(fallback);
 
         NotificationChannel chat = new NotificationChannel("chat", "Messages", NotificationManager.IMPORTANCE_DEFAULT);
         manager.createNotificationChannel(chat);
