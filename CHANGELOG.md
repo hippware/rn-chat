@@ -11,13 +11,15 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Messages: Allow the sharing of non-square images (#3814)
 * [android] Configure multidex for API level less than 21. (PR #3992)
 * [android] Include manufacturer,model in UA string. (PR #3993)
-* Minimalise Location Debug screen (#3965)
 * Upgrade: react-native-router-flux (RNRF) (PR #3986)
   * Loading screen missing (#3743)
 * `yarn policies set-version 1.17.3` (PR #3989)
 * [android] Add res/raw/silence.ogg. (PR #3996)
 * Pink Shadow needs added to avatar (Rework #3772)
 * [android] Splash screen doesn't cover screen (#3887)
+* [android] Back caret does not work from visitors area (#3981)
+* [android] Menu screen is displaying when user has no friends (#3933)
+* Minimalise Location Debug screen (#3965)
 
 # 4.19.2 - 2019 Aug 7
 
