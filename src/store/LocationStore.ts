@@ -14,7 +14,7 @@ import analytics from '../utils/analytics'
 const MAX_DATE1 = '2030-01-01-17:00'
 const MAX_DATE2 = '2030-01-01-18:00'
 
-export const BG_STATE_PROPS = ['distanceFilter', 'activityType', 'debug']
+export const BG_STATE_PROPS = ['distanceFilter', 'autoSyncThreshold', 'activityType', 'debug']
 
 const prefix = 'BGGL'
 
@@ -28,6 +28,7 @@ export const ActivityTypeChoices = {
 const ActivityTypeValues = Object.keys(ActivityTypeChoices)
 
 const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOptions', {
+  autoSyncThreshold: types.maybeNull(types.number),
   distanceFilter: types.maybeNull(types.number),
   debug: types.maybeNull(types.boolean),
   activityType: types.maybeNull(types.enumeration(ActivityTypeValues)),

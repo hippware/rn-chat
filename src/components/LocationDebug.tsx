@@ -18,6 +18,7 @@ const debuggerSettings = t.struct({
   debug: t.Boolean,
   debugSounds: t.Boolean,
   distanceFilter: t.Number,
+  autoSyncThreshold: t.Number,
   activityType: t.enums(ActivityTypeChoices),
 })
 
@@ -28,6 +29,9 @@ const options = {
     },
     distanceFilter: {
       label: 'distanceFilter (in meters)',
+    },
+    autoSyncThreshold: {
+      label: 'maximum batch size',
     },
     activityType: {
       label: 'activityType',
