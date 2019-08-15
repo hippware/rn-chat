@@ -2,6 +2,7 @@ import Config from 'react-native-config'
 
 export type Settings = {
   isStaging: boolean
+  configurableLocationSettings: boolean
   host: string
   dynamicLinkDomain: string
   iosBundleId: string
@@ -25,6 +26,7 @@ const isStaging = Config.IS_STAGING === 'true'
 
 export const settings: Settings = {
   isStaging,
+  configurableLocationSettings: isStaging,
   host: Config.HOST,
   dynamicLinkDomain: Config.DYNAMIC_LINK_DOMAIN,
   iosBundleId: Config.IOS_BUNDLE_ID,
