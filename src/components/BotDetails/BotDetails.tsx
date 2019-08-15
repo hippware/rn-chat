@@ -76,8 +76,9 @@ export default class BotDetails extends React.Component<Props> {
       return
     }
 
-    // send all injected props + bot "up" to static context
-    this.props.navigation.setParams({...this.props, bot: this.bot})
+    // send injected props + bot "up" to static context
+    const {isNew, notificationStore} = this.props
+    this.props.navigation.setParams({isNew, bot: this.bot, notificationStore})
 
     homeStore.select(this.bot.id)
     homeStore.setFocusedLocation(this.bot.location)
