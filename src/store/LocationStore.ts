@@ -14,61 +14,14 @@ import analytics from '../utils/analytics'
 const MAX_DATE1 = '2030-01-01-17:00'
 const MAX_DATE2 = '2030-01-01-18:00'
 
-export const BG_STATE_PROPS = [
-  'elasticityMultiplier',
-  // 'preventSuspend',
-  // 'heartbeatInterval',
-  'stopTimeout',
-  'desiredAccuracy',
-  'distanceFilter',
-  'stationaryRadius',
-  'activityType',
-  'activityRecognitionInterval',
-  'debug',
-  'logLevel',
-]
+export const BG_STATE_PROPS = ['distanceFilter', 'autoSyncThreshold', 'debug']
 
 const prefix = 'BGGL'
 
-// https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-desiredaccuracy-0-10-100-1000-in-meters
-export const LocationAccuracyChoices = {
-  '-1': 'HIGH',
-  '0': 'ANDROID DEFAULT',
-  '10': 'MEDIUM',
-  '100': 'LOW',
-  '1000': 'VERY_LOW',
-}
-const LocationAccuracyValues = Object.keys(LocationAccuracyChoices)
-
-// https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-activitytype-activity_type_automotive_navigation-activity_type_other_navigation-activity_type_fitness-activity_type_other
-export const ActivityTypeChoices = {
-  '1': 'OTHER',
-  '2': 'AUTOMOTIVE_NAVIGATION',
-  '3': 'FITNESS',
-  '4': 'OTHER_NAVIGATION',
-}
-const ActivityTypeValues = Object.keys(ActivityTypeChoices)
-
-export const LogLevelChoices = {
-  '0': 'OFF',
-  '1': 'ERROR',
-  '2': 'WARNING',
-  '3': 'INFO',
-  '4': 'DEBUG',
-  '5': 'VERBOSE',
-}
-const LogLevelValues = Object.keys(LogLevelChoices)
-
 const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOptions', {
-  elasticityMultiplier: types.maybeNull(types.number),
-  stopTimeout: types.maybeNull(types.number),
-  desiredAccuracy: types.maybeNull(types.enumeration(LocationAccuracyValues)),
+  autoSyncThreshold: types.maybeNull(types.number),
   distanceFilter: types.maybeNull(types.number),
-  stationaryRadius: types.maybeNull(types.number),
   debug: types.maybeNull(types.boolean),
-  activityType: types.maybeNull(types.enumeration(ActivityTypeValues)),
-  activityRecognitionInterval: types.maybeNull(types.number),
-  logLevel: types.maybeNull(types.enumeration(LogLevelValues)),
 })
 
 // todo: https://github.com/hippware/rn-chat/issues/3434
@@ -142,9 +95,6 @@ const LocationStore = types
       Object.assign(self, {
         backgroundOptions: {
           ...options,
-          desiredAccuracy: options.desiredAccuracy.toString(),
-          activityType: options.activityType ? options.activityType.toString() : undefined,
-          logLevel: options.logLevel.toString(),
         },
       })
     },
@@ -156,15 +106,20 @@ const LocationStore = types
     configure: flow(function*(reset = false) {
       const config = {
         batchSync: true,
+        desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
         maxRecordsToPersist: 20,
         startOnBoot: true,
         stopOnTerminate: false,
+        stopTimeout: 1,
         disableLocationAuthorizationAlert: true,
       } as any
 
       if (!settings.configurableLocationSettings) {
-        config.stopTimeout = 1
         config.distanceFilter = 10
+      }
+
+      if (__DEV__ || settings.isStaging) {
+        config.logLevel = BackgroundGeolocation.LOG_LEVEL_VERBOSE
       }
 
       if (reset) {
@@ -288,8 +243,7 @@ const LocationStore = types
       })
 
       // For some reason, these parameters must be ints, not strings
-      config.activityType = parseInt(config.activityType)
-      config.logLevel = parseInt(config.logLevel)
+      config.autoSyncThreshold = parseInt(config.autoSyncThreshold)
       BackgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)
     }
 

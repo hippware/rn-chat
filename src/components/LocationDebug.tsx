@@ -5,13 +5,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {inject, observer} from 'mobx-react'
 import moment from 'moment'
 
-import {
-  ILocationStore,
-  LocationAccuracyChoices,
-  ActivityTypeChoices,
-  LogLevelChoices,
-  BG_STATE_PROPS,
-} from '../store/LocationStore'
+import {ILocationStore, BG_STATE_PROPS} from '../store/LocationStore'
 import Screen from './Screen'
 import _ from 'lodash'
 import {IWocky} from 'wocky-client'
@@ -23,14 +17,8 @@ const Form = t.form.Form
 const debuggerSettings = t.struct({
   debug: t.Boolean,
   debugSounds: t.Boolean,
-  stopTimeout: t.Number,
-  elasticityMultiplier: t.Number,
-  desiredAccuracy: t.enums(LocationAccuracyChoices),
   distanceFilter: t.Number,
-  stationaryRadius: t.Number,
-  activityType: t.enums(ActivityTypeChoices),
-  activityRecognitionInterval: t.Number,
-  logLevel: t.enums(LogLevelChoices),
+  autoSyncThreshold: t.Number,
 })
 
 const options = {
@@ -38,29 +26,11 @@ const options = {
     debug: {
       label: 'Background location debug mode',
     },
-    stopTimeout: {
-      label: 'stopTimeout (in minutes)',
-    },
-    elasticityMultiplier: {
-      label: 'elasticityMultiplier',
-    },
-    desiredAccuracy: {
-      label: 'desiredAccuracy',
-    },
     distanceFilter: {
       label: 'distanceFilter (in meters)',
     },
-    stationaryRadius: {
-      label: 'stationaryRadius (in meters, min 25)',
-    },
-    activityType: {
-      label: 'activityType',
-    },
-    activityRecognitionInterval: {
-      label: 'activityRecognitionInterval (in ms)',
-    },
-    logLevel: {
-      label: 'logLevel',
+    autoSyncThreshold: {
+      label: 'autoSyncThreshold (maximum batch size)',
     },
   },
 }
