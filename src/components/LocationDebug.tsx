@@ -7,7 +7,6 @@ import moment from 'moment'
 
 import {
   ILocationStore,
-  LocationAccuracyChoices,
   ActivityTypeChoices,
   LogLevelChoices,
   BG_STATE_PROPS,
@@ -23,9 +22,6 @@ const Form = t.form.Form
 const debuggerSettings = t.struct({
   debug: t.Boolean,
   debugSounds: t.Boolean,
-  stopTimeout: t.Number,
-  elasticityMultiplier: t.Number,
-  desiredAccuracy: t.enums(LocationAccuracyChoices),
   distanceFilter: t.Number,
   stationaryRadius: t.Number,
   activityType: t.enums(ActivityTypeChoices),
@@ -37,15 +33,6 @@ const options = {
   fields: {
     debug: {
       label: 'Background location debug mode',
-    },
-    stopTimeout: {
-      label: 'stopTimeout (in minutes)',
-    },
-    elasticityMultiplier: {
-      label: 'elasticityMultiplier',
-    },
-    desiredAccuracy: {
-      label: 'desiredAccuracy',
     },
     distanceFilter: {
       label: 'distanceFilter (in meters)',

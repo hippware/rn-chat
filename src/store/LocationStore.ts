@@ -15,11 +15,6 @@ const MAX_DATE1 = '2030-01-01-17:00'
 const MAX_DATE2 = '2030-01-01-18:00'
 
 export const BG_STATE_PROPS = [
-  'elasticityMultiplier',
-  // 'preventSuspend',
-  // 'heartbeatInterval',
-  'stopTimeout',
-  'desiredAccuracy',
   'distanceFilter',
   'stationaryRadius',
   'activityType',
@@ -29,16 +24,6 @@ export const BG_STATE_PROPS = [
 ]
 
 const prefix = 'BGGL'
-
-// https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-desiredaccuracy-0-10-100-1000-in-meters
-export const LocationAccuracyChoices = {
-  '-1': 'HIGH',
-  '0': 'ANDROID DEFAULT',
-  '10': 'MEDIUM',
-  '100': 'LOW',
-  '1000': 'VERY_LOW',
-}
-const LocationAccuracyValues = Object.keys(LocationAccuracyChoices)
 
 // https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-activitytype-activity_type_automotive_navigation-activity_type_other_navigation-activity_type_fitness-activity_type_other
 export const ActivityTypeChoices = {
@@ -60,9 +45,6 @@ export const LogLevelChoices = {
 const LogLevelValues = Object.keys(LogLevelChoices)
 
 const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOptions', {
-  elasticityMultiplier: types.maybeNull(types.number),
-  stopTimeout: types.maybeNull(types.number),
-  desiredAccuracy: types.maybeNull(types.enumeration(LocationAccuracyValues)),
   distanceFilter: types.maybeNull(types.number),
   stationaryRadius: types.maybeNull(types.number),
   debug: types.maybeNull(types.boolean),
@@ -142,7 +124,6 @@ const LocationStore = types
       Object.assign(self, {
         backgroundOptions: {
           ...options,
-          desiredAccuracy: options.desiredAccuracy.toString(),
           activityType: options.activityType ? options.activityType.toString() : undefined,
           logLevel: options.logLevel.toString(),
         },
@@ -156,14 +137,15 @@ const LocationStore = types
     configure: flow(function*(reset = false) {
       const config = {
         batchSync: true,
+        desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
         maxRecordsToPersist: 20,
         startOnBoot: true,
         stopOnTerminate: false,
+        stopTimeout: 1,
         disableLocationAuthorizationAlert: true,
       } as any
 
       if (!settings.configurableLocationSettings) {
-        config.stopTimeout = 1
         config.distanceFilter = 10
       }
 
