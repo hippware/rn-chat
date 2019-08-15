@@ -26,7 +26,7 @@
     "codepush": "ts-node -P tsconfig.script.json ./scripts/codepush/codepush.ts",
     "versionBump": "ts-node -P tsconfig.script.json ./scripts/version-increment.ts",
     "bugsnag": "ts-node -P tsconfig.script.json ./scripts/sendBugsnagSymbols.ts",
-    "detox1": "detox build --configuration ios.sim.release && detox test --configuration ios.sim.release",
+    "detoxTest": "detox build --configuration ios.sim.release && detox test --configuration ios.sim.release",
     "fetchGraphQLSchema": "ts-node -P tsconfig.script.json scripts/fetchGraphQLInfo.ts",
     "syncWockyClient": "git subtree push --prefix=\"third-party/wocky-client\" https://github.com/hippware/wocky-client master",
     "findUnusedExports": "./node_modules/.bin/ts-unused-exports ./tsconfig.json",

@@ -16,7 +16,6 @@ const takeScreenshot = (name?: string) => {
     const screenshotFilename = `${SCREENSHOT_DIR}/${name || `screenshot-${screenshotIndex++}`}.png`
     execSync(`xcrun simctl io booted screenshot ${screenshotFilename}`, SCREENSHOT_OPTIONS)
   } catch (err) {
-    // TODO: get screenshots working on Nevercode?
     console.log('Screenshot failed:', err)
   }
 }
