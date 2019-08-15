@@ -20,6 +20,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [android] Back caret does not work from visitors area (#3981)
 * [android] Menu screen is displaying when user has no friends (#3933)
 * Minimalise Location Debug screen (#3965)
+* [android] Notification channels (#3995)
 
 # 4.19.2 - 2019 Aug 7
 
