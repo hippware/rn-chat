@@ -118,11 +118,13 @@ your phone number.
         closeable={true}
         filterable={true}
         onChange={[Function]}
-        translation="eng"
+        translation="common"
       >
         <View
           accessible={true}
+          clickable={true}
           isTVSelectable={true}
+          onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -364,7 +366,9 @@ your phone number.
       >
         <View
           accessible={true}
+          clickable={true}
           isTVSelectable={true}
+          onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}

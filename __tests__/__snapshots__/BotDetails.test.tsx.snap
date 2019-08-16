@@ -423,7 +423,9 @@ and depart this location.
                   </Text>
                   <View
                     accessible={true}
+                    clickable={true}
                     isTVSelectable={true}
+                    onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
                     onResponderRelease={[Function]}

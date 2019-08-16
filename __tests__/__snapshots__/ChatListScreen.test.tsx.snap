@@ -188,7 +188,9 @@ exports[`ChatListScreen renders with no data 1`] = `
           >
             <View
               accessible={true}
+              clickable={true}
               isTVSelectable={true}
+              onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
               onResponderRelease={[Function]}
@@ -243,14 +245,11 @@ exports[`ChatListScreen renders with no data 1`] = `
       <View
         onLayout={[Function]}
         style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "height": 200,
-              "justifyContent": "center",
-            },
-            null,
-          ]
+          Object {
+            "alignItems": "center",
+            "height": 200,
+            "justifyContent": "center",
+          }
         }
       >
         <Text

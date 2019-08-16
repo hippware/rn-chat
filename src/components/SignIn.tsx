@@ -112,13 +112,13 @@ const SignIn = inject('firebaseStore')(
           <CountryPicker
             onChange={value => {
               store.set({
-                cca2: value.cca2,
+                cca2: value.cca2 as any,
                 callingCode: value.callingCode,
-                countryName: value.name,
+                countryName: value.name as any,
               })
             }}
-            cca2={store.cca2}
-            translation="eng"
+            cca2={store.cca2 as any}
+            translation="common"
             filterable
             closeable
             ref={picker}
