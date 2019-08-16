@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Activity indicator is incorrectly positioned. (#4007)
+
 # 4.20.0 - 2019 Aug 15
 
 * Support for aspect-preserved images (PR #3979)
