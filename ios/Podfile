@@ -28,7 +28,6 @@ def testing_pods
   pod 'React-RCTPushNotification', path: '../node_modules/react-native/Libraries/PushNotificationIOS'
   pod 'GoogleMaps'
   pod 'react-native-mixpanel', path: '../node_modules/react-native-mixpanel'
-  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
   pod 'react-native-google-maps', :path => '../node_modules/react-native-maps'
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
   pod 'react-native-blur', :path => '../node_modules/react-native-blur'
@@ -38,7 +37,6 @@ def testing_pods
   pod 'RSKImageCropper'
   pod 'QBImagePickerController'
   pod 'Firebase/Core'
-  pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
   pod 'Firebase/Auth'
   pod 'Firebase/DynamicLinks'
   pod 'BugsnagReactNative', path: '../node_modules/bugsnag-react-native/'
@@ -48,9 +46,14 @@ def testing_pods
   pod 'RNImageCropPicker', :path =>  '../node_modules/react-native-image-crop-picker'
   
   # Add new pods below this line
-  pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
+  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
+
+  pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
 
   pod 'react-native-config', :path => '../node_modules/react-native-config'
+
+  pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
+
 
   pod 'RNTouchThroughView', :path => '../node_modules/react-native-touch-through-view'
 

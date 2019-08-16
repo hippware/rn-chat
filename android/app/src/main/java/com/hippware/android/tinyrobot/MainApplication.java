@@ -3,6 +3,7 @@ package com.hippware.android.tinyrobot;
 import androidx.multidex.MultiDexApplication;
 
 import com.facebook.react.ReactApplication;
+import io.invertase.firebase.RNFirebasePackage;
 import com.reactnativecommunity.netinfo.NetInfoPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.zaguiini.RNPureJwt.RNPureJwtPackage;
@@ -22,7 +23,6 @@ import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import io.invertase.firebase.links.RNFirebaseLinksPackage;
-import com.airbnb.android.react.maps.MapsPackage;
 import com.kevinejohn.RNMixpanel.RNMixpanel;
 import com.rome2rio.android.reactnativetouchthroughview.TouchThroughViewPackage;
 import com.facebook.react.ReactNativeHost;
@@ -52,6 +52,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(new MainReactPackage(),
+            new RNFirebasePackage(),
             new NetInfoPackage(),
             new SplashScreenReactPackage(), new RNPureJwtPackage(), new ActionSheetPackage(),
           new PickerPackage(), new AndroidOpenSettingsPackage(), new ExtraDimensionsPackage(), new RNLocalizePackage(),
