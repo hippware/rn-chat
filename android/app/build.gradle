@@ -1,5 +1,6 @@
 apply plugin: "com.android.application"
-apply plugin: 'io.fabric'
+// apply plugin: 'io.fabric'
+
 
 import com.android.build.OutputFile
 
@@ -18,6 +19,9 @@ import com.android.build.OutputFile
  *
  *   // the entry file for bundle generation
  *   entryFile: "index.android.js",
+ *
+ *   // https://facebook.github.io/react-native/docs/performance#enable-the-ram-format
+ *   bundleCommand: "ram-bundle",
  *
  *   // whether to bundle JS and assets in debug mode
  *   bundleInDebug: false,
@@ -74,7 +78,8 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-  entryFile: "index.js"
+    entryFile: "index.js",
+    enableHermes: false,  // clean and rebuild if changing
 ]
 
 // configure env files for different build flavors.
@@ -106,7 +111,27 @@ def enableSeparateBuildPerCPUArchitecture = false
  */
 def enableProguardInReleaseBuilds = false
 
+/**
+ * The preferred build flavor of JavaScriptCore.
+ *
+ * For example, to use the international variant, you can use:
+ * `def jscFlavor = 'org.webkit:android-jsc-intl:+'`
+ *
+ * The international variant includes ICU i18n library and necessary data
+ * allowing to use e.g. `Date.toLocaleString` and `String.localeCompare` that
+ * give correct results when using with locales other than en-US.  Note that
+ * this variant is about 6MiB larger per architecture than default.
+ */
+def jscFlavor = 'org.webkit:android-jsc:+'
 
+/**
+ * Whether to enable the Hermes VM.
+ *
+ * This should be set on project.ext.react and mirrored here.  If it is not set
+ * on project.ext.react, JavaScript will not be compiled to Hermes Bytecode
+ * and the benefits of using Hermes will therefore be sharply reduced.
+ */
+def enableHermes = project.ext.react.get("enableHermes", false);
 def isAppCenterBuild = System.getenv("APPCENTER_BRANCH")
 
 // output values from .env file so we know it's getting picked up correctly
@@ -114,7 +139,8 @@ System.println("*** HOST: " + project.env.get("HOST"))
 System.println("*** IS_STAGING: " + project.env.get("IS_STAGING"))
 
 android {
-  lintOptions {
+	purgeBackgroundGeolocationDebugResources(applicationVariants)
+	lintOptions {
     disable 'GradleCompatible'
     disable 'InvalidPackage'
   }
@@ -229,16 +255,49 @@ android {
       // Also see https://developer.android.com/google/play/publishing/multiple-apks.html#using-a-version-code-scheme
       def versionCodes = ["armeabi-v7a": 1, "x86": 2]
       def abi = output.getFilter(OutputFile.ABI)
-      if (abi != null) {  // null for the universal-debug, universal-release variants
+    if (abi != null) {  // null for the universal-debug, universal-release variants
         output.versionCodeOverride =
           versionCodes.get(abi) * 1000000 + defaultConfig.versionCode
       }
     }
   }
+  packagingOptions {
+        pickFirst '**/armeabi-v7a/libc++_shared.so'
+        pickFirst '**/x86/libc++_shared.so'
+        pickFirst '**/arm64-v8a/libc++_shared.so'
+        pickFirst '**/x86_64/libc++_shared.so'
+        pickFirst '**/x86/libjsc.so'
+        pickFirst '**/armeabi-v7a/libjsc.so'
+  }
+
 }
 
 dependencies {
+    implementation project(':react-native-background-fetch')
     implementation project(':react-native-firebase')
+  // Required dependencies
+  //noinspection GradleCompatible
+  implementation "com.google.firebase:firebase-core:17.0.1"
+  implementation "com.google.android.gms:play-services-base:17.1.0"
+  implementation "com.google.android.gms:play-services-maps:17.0.0"
+
+  /* -------------------------
+   *   OPTIONAL FIREBASE SDKS
+   * ------------------------- */
+
+  // Authentication
+  implementation "com.google.firebase:firebase-auth:18.1.0"
+  // Dynamic Links
+  implementation "com.google.firebase:firebase-dynamic-links:18.0.0"
+  // Cloud Messaging / FCM
+  implementation "com.google.firebase:firebase-messaging:19.0.1"
+
+  // For React Native Firebase Notifications
+  implementation 'me.leolin:ShortcutBadger:1.1.21@aar'
+
+  // for Android animated gif support
+  implementation 'com.facebook.fresco:fresco:1.10.0'
+  implementation 'com.facebook.fresco:animated-gif:1.10.0'
     implementation project(':@react-native-community_netinfo')
   implementation project(':react-native-splash-screen')
   implementation project(':react-native-pure-jwt')
@@ -248,67 +307,52 @@ dependencies {
   implementation project(':react-native-extra-dimensions-android')
   implementation project(':react-native-localize')
   implementation project(':react-native-gesture-handler')
-  // def multidex_version = "2.0.1"
   implementation 'androidx.multidex:multidex:2.0.1'
   implementation project(':react-native-background-geolocation')
   implementation project(':bugsnag-react-native')
-  implementation(project(':react-native-push-notification')){
-    exclude group: 'com.google.firebase', module: 'firebase-iid'
-    exclude group: 'com.google.firebase', module: 'firebase-messaging'
-  }
+  implementation project(':react-native-push-notification')
   implementation project(':react-native-linear-gradient')
   implementation project(':react-native-fs')
   implementation project(':react-native-touch-through-view')
   implementation project(':react-native-mixpanel')
   implementation project(':react-native-device-info')
   implementation project(':react-native-code-push')
-  implementation(project(':react-native-maps')){
-    exclude group: 'com.google.android.gms', module: 'play-services-base'
-    exclude group: 'com.google.android.gms', module: 'play-services-maps'
-  } 
+  implementation project(':react-native-maps')
   implementation project(':react-native-config')
   implementation project(':react-native-contacts')
-  //noinspection GradleDynamicVersion
-  implementation "com.facebook.react:react-native:+"
-  implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "com.facebook.react:react-native:+"  // From node_modules
 
-  /* ----------------------------
-   *    REACT NATIVE FIREBASE
-   * ---------------------------- */
-
-  // Library as defined in settings.gradle
-  implementation project(path: ':react-native-firebase', configuration: 'default')
-  // Required dependencies
-  //noinspection GradleCompatible
-  implementation "com.google.firebase:firebase-core:16.0.6"
-  implementation "com.google.android.gms:play-services-base:16.0.1"
-  implementation "com.google.android.gms:play-services-maps:16.0.0"
-
-  /* -------------------------
-   *   OPTIONAL FIREBASE SDKS
-   * ------------------------- */
-
-  // Authentication
-  implementation "com.google.firebase:firebase-auth:16.1.0"
-  // Dynamic Links
-  implementation "com.google.firebase:firebase-dynamic-links:16.1.5"
-  // Cloud Messaging / FCM
-  implementation ("com.google.firebase:firebase-messaging:17.3.4"){
-    exclude group: 'com.google.firebase', module: 'firebase-iid'
-  }
-
-  // For React Native Firebase Notifications
-  implementation 'me.leolin:ShortcutBadger:1.1.21@aar'
-
-  // for Android animated gif support
-  implementation 'com.facebook.fresco:fresco:1.10.0'
-  implementation 'com.facebook.fresco:animated-gif:1.10.0'
+    if (enableHermes) {
+      def hermesPath = "../../node_modules/hermesvm/android/";
+      debugImplementation files(hermesPath + "hermes-debug.aar")
+      releaseImplementation files(hermesPath + "hermes-release.aar")
+    } else {
+      implementation jscFlavor
+    }
 }
 
 // Run this once to be able to run the application with BUCK
 // puts all compile dependencies into folder libs for BUCK to use
 task copyDownloadableDepsToLibs(type: Copy) {
-  from configurations.compile
-  into 'libs'
+    from configurations.compile
+    into 'libs'
 }
 
+apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+
+// [Added by react-native-background-geolocation] Purge debug sounds from release build.
+def purgeBackgroundGeolocationDebugResources(applicationVariants) {
+    if ((rootProject.ext.has("removeBackgroundGeolocationDebugSoundsInRelease")) && (rootProject.ext.removeBackgroundGeolocationDebugSoundsInRelease == false)) return
+    applicationVariants.all { variant ->
+        if (variant.buildType.name == "release") {
+            println("[react-native-background-geolocation] Purging debug resources in release build")
+            variant.mergeResources.doLast {
+                delete(fileTree(dir: variant.mergeResources.outputDir, includes: ["raw_tslocationmanager*"]))
+            }
+        }
+    }
+}
+
+apply plugin: 'com.google.gms.google-services'
+com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
