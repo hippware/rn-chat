@@ -13,9 +13,6 @@ public class NotificationChannelHelper {
 
     // A list of obsolete channels that should be deleted
     private static String[] obsoleteChannels = {
-        // RNBGL injects its own channel.
-        // Remove the production one so it is not user-visible.
-        "com.hippware.android.tinyrobotTSLocationManager"
     };
 
     private static NotificationManager manager;
