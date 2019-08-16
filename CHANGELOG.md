@@ -4,7 +4,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.20.1 - 2019 Aug 16
+
 * Activity indicator is incorrectly positioned. (#4007)
+* Hookify BotDetails, AddBotPost (PR #4010)
+* [dev] Detox failures should fail the appcenter build (#3905)
+* [android] [prod] RNBGL location tracking might be broken (#4011)
 
 # 4.20.0 - 2019 Aug 15
 
