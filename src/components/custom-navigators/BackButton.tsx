@@ -4,6 +4,7 @@ import {Actions} from 'react-native-router-flux'
 import {navBarStyle} from '../styles'
 import {IHomeStore} from 'src/store/HomeStore'
 import {observer, inject} from 'mobx-react'
+import {FADE_NAV_BAR_HEADER_HEIGHT} from './NavBarHeader'
 
 type Props = {
   scene: any
@@ -32,7 +33,7 @@ export default class BackButton extends React.Component<Props> {
       <Animated.View
         style={{
           position: 'absolute',
-          top: 50,
+          top: FADE_NAV_BAR_HEADER_HEIGHT + 10,
           left: -5,
           width: 51,
           height: 55,
