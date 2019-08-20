@@ -112,7 +112,9 @@ const BotCompose = inject(
               tempBot!.load({location: {...location}})
               if (textReactsToLocation) {
                 props.geocodingStore!.reverse(location).then(data => {
-                  setText(data.address)
+                  if (data.address) {
+                    setText(data.address)
+                  }
                 })
               }
             }
