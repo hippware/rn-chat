@@ -25,7 +25,7 @@ def testing_pods
   pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
-  pod 'React-RCTPushNotification', path: '../node_modules/react-native/Libraries/PushNotificationIOS'
+  pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios/RNCPushNotificationIOS.podspec'
   pod 'GoogleMaps'
   pod 'react-native-mixpanel', path: '../node_modules/react-native-mixpanel'
   pod 'react-native-google-maps', :path => '../node_modules/react-native-maps'
