@@ -67,6 +67,7 @@ exports[`Home renders with no data 1`] = `
       style={
         Object {
           "backgroundColor": "white",
+          "elevation": 3,
           "paddingTop": 46,
           "shadowColor": "rgb(212,212,212)",
           "shadowOffset": Object {
