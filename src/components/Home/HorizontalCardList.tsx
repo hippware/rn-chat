@@ -166,6 +166,9 @@ const styles = StyleSheet.create({
     shadowRadius: 5 * k,
     shadowOpacity: 0.5,
     shadowOffset: {width: 0, height: 0},
+    borderRadius: 8,
+    backgroundColor: 'white',
+    elevation: 3,
   },
   newDot: {
     position: 'absolute',
