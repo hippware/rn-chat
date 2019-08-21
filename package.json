@@ -31,7 +31,7 @@
     "syncWockyClient": "git subtree push --prefix=\"third-party/wocky-client\" https://github.com/hippware/wocky-client master",
     "findUnusedExports": "./node_modules/.bin/ts-unused-exports ./tsconfig.json",
     "storybook": "storybook start",
-    "postinstall": "patch-package",
+    "postinstall": "patch-package && babel-node ./fix-metro-android-release-bug.js",
     "logcat": "adb logcat -e com.hippware",
     "deeplink:android": "adb shell am start -W -a android.intent.action.VIEW -d \"tinyrobotStaging://conversation/2575d406-18ec-11e8-8e4b-0a580a020223/\"",
     "deeplink:ios": "xcrun simctl openurl booted \"tinyrobotStaging://conversation/2575d406-18ec-11e8-8e4b-0a580a020223/\""
