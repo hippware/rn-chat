@@ -186,9 +186,9 @@ PODS:
     - React/RCTBlob
   - ReactNativePermissions (1.1.1):
     - React
-  - RNBackgroundFetch (2.6.1):
+  - RNBackgroundFetch (2.7.0):
     - React
-  - RNBackgroundGeolocation (3.0.9):
+  - RNBackgroundGeolocation (3.2.0):
     - CocoaLumberjack (~> 3.5.1)
     - React
   - RNDeviceInfo (2.2.2):
@@ -364,8 +364,8 @@ SPEC CHECKSUMS:
   react-native-mixpanel: f7ca1a4a436f1d3c19d9ca5d57aa47b848e97292
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
-  RNBackgroundFetch: 7c84c5bc191885588538fd65d568e9b833cd89fb
-  RNBackgroundGeolocation: 4d0af84b16f77102288ef236616a055b1e070fe2
+  RNBackgroundFetch: c6dd741d7f86ad981f1f03279415c5151397559a
+  RNBackgroundGeolocation: 8cc02b38a945bd3bb8f0793bfe4ba65f191c86fa
   RNDeviceInfo: 1215084f45c1059b031c530281442dc7079ccf0a
   RNFirebase: fb4f66d93810b53aa4d1cc50c9fb91ee3548abe2
   RNFS: c9bbde46b0d59619f8e7b735991c60e0f73d22c1
