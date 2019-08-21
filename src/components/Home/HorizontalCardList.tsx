@@ -88,6 +88,7 @@ export default class HorizontalCardList extends React.Component<Props, State> {
             onSnapToItem={setIndex}
             inactiveSlideOpacity={1}
             initialNumToRender={list.length} // TODO: potential performance bottleneck with many bots
+            // contentContainerCustomStyle={{elevation: 3}}
           />
         </View>
       </Animated.View>
