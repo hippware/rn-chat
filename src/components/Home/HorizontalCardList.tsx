@@ -88,6 +88,7 @@ export default class HorizontalCardList extends React.Component<Props, State> {
             onSnapToItem={setIndex}
             inactiveSlideOpacity={1}
             initialNumToRender={list.length} // TODO: potential performance bottleneck with many bots
+            // contentContainerCustomStyle={{elevation: 3}}
           />
         </View>
       </Animated.View>
@@ -166,6 +167,9 @@ const styles = StyleSheet.create({
     shadowRadius: 5 * k,
     shadowOpacity: 0.5,
     shadowOffset: {width: 0, height: 0},
+    borderRadius: 8,
+    backgroundColor: 'white',
+    elevation: 3,
   },
   newDot: {
     position: 'absolute',

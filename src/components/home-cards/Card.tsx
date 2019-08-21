@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 20 * k, // leave room for avatar to poke above
     borderRadius: 3,
+    elevation: 3,
   },
   avatar: {
     position: 'absolute',
