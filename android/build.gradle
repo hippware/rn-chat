@@ -27,9 +27,6 @@ buildscript {
 
 allprojects {
     repositories {
-		maven {
-			url "$rootDir/../node_modules/react-native-background-geolocation/android/libs"
-		}
         mavenLocal()
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
@@ -38,9 +35,6 @@ allprojects {
         maven {
             // Android JSC is installed from npm
             url("$rootDir/../node_modules/jsc-android/dist")
-        }
-        maven {
-            url "$rootDir/../node_modules/react-native-background-fetch/android/libs"
         }
         maven { url "https://jitpack.io" }
     

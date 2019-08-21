@@ -31,7 +31,6 @@ def testing_pods
   pod 'react-native-google-maps', :path => '../node_modules/react-native-maps'
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
   pod 'react-native-blur', :path => '../node_modules/react-native-blur'
-  pod 'RNBackgroundFetch', :path => '../node_modules/react-native-background-fetch'
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
   pod 'RSKImageCropper'
   pod 'QBImagePickerController'
@@ -45,12 +44,12 @@ def testing_pods
   pod 'RNImageCropPicker', :path =>  '../node_modules/react-native-image-crop-picker'
   
   # Add new pods below this line
+  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
+
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
-  pod 'RNBackgroundGeolocation', :path => '../node_modules/react-native-background-geolocation'
 
 
-  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
 
   pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
 
@@ -69,6 +68,7 @@ def testing_pods
   
   pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
   
+use_native_modules!("..")
   platform :ios, '9.0'
 end
 
