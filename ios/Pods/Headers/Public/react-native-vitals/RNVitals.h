@@ -1,0 +1,1 @@
+../../../../../node_modules/react-native-vitals/ios/RNVitals.h

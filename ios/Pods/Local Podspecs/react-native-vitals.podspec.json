@@ -1,0 +1,23 @@
+{
+  "name": "react-native-vitals",
+  "version": "2.0.1",
+  "summary": "Memory and resource information Native Module for React Native",
+  "license": "MIT",
+  "homepage": "https://github.com/robinpowered/react-native-vitals",
+  "authors": {
+    "Robin Powered": "engineering@robinpowered.com"
+  },
+  "source": {
+    "git": "https://github.com/robinpowered/react-native-vitals.git",
+    "tag": "v2.0.1"
+  },
+  "source_files": "ios/*.{h,m}",
+  "platforms": {
+    "ios": "8.0"
+  },
+  "dependencies": {
+    "React": [
+
+    ]
+  }
+}

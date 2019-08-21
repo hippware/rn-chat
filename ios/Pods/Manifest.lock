@@ -129,6 +129,8 @@ PODS:
     - React
   - react-native-splash-screen (3.2.0):
     - React
+  - react-native-vitals (2.0.1):
+    - React
   - React/Core (0.59.2):
     - yoga (= 0.59.2.React)
   - React/CxxBridge (0.59.2):
@@ -230,6 +232,7 @@ DEPENDENCIES:
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
+  - react-native-vitals (from `../node_modules/react-native-vitals`)
   - React/Core (from `../node_modules/react-native`)
   - React/CxxBridge (from `../node_modules/react-native`)
   - React/DevSupport (from `../node_modules/react-native`)
@@ -307,6 +310,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-mixpanel"
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
+  react-native-vitals:
+    :path: "../node_modules/react-native-vitals"
   ReactNativePermissions:
     :path: "../node_modules/react-native-permissions"
   RNBackgroundFetch:
@@ -363,6 +368,7 @@ SPEC CHECKSUMS:
   react-native-maps: 0316ed017dbb64b33b227751fa810e2454fcfa39
   react-native-mixpanel: f7ca1a4a436f1d3c19d9ca5d57aa47b848e97292
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
+  react-native-vitals: 64f6d267e5a08041604aba1e963c42d93b4174b2
   ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
   RNBackgroundFetch: 7c84c5bc191885588538fd65d568e9b833cd89fb
   RNBackgroundGeolocation: 4d0af84b16f77102288ef236616a055b1e070fe2
@@ -377,6 +383,6 @@ SPEC CHECKSUMS:
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   yoga: 3768a3026ade0fb46a68f3a31a917cf86bc34fc4
 
-PODFILE CHECKSUM: d8e8272276cb2af7de298d172425f2d9c14d8bda
+PODFILE CHECKSUM: 4376ac84f99e3fbe4ace4cdd8e99e9c00f556173
 
 COCOAPODS: 1.6.1
