@@ -3,6 +3,7 @@ package com.hippware.android.tinyrobot;
 import androidx.multidex.MultiDexApplication;
 
 import com.facebook.react.ReactApplication;
+import com.robinpowered.react.vitals.RNVitalsPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.zaguiini.RNPureJwt.RNPureJwtPackage;
 import com.actionsheet.ActionSheetPackage;
@@ -52,7 +53,8 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(new MainReactPackage(),
-            new SplashScreenReactPackage(), new RNPureJwtPackage(), new ActionSheetPackage(),
+          new RNVitalsPackage(),
+          new SplashScreenReactPackage(), new RNPureJwtPackage(), new ActionSheetPackage(),
           new PickerPackage(), new AndroidOpenSettingsPackage(), new ExtraDimensionsPackage(), new RNLocalizePackage(),
           new RNBackgroundGeolocation(), BugsnagReactNative.getPackage(), new ReactNativePushNotificationPackage(),
           new LinearGradientPackage(), new RNFSPackage(), new TouchThroughViewPackage(), new RNMixpanel(),

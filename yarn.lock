@@ -11311,6 +11311,11 @@ react-native-touch-through-view@^1.1.0-beta.0:
   resolved "https://registry.yarnpkg.com/react-native-touch-through-view/-/react-native-touch-through-view-1.1.0-beta.0.tgz#751f0d1d916e5bb337a5512802563ec8c616dc6d"
   integrity sha512-FNKJbiM6z9Z2ES7zrYPVivwTHy2+PVhQDGGghsAogcThIDhO/AzEdw1kJ5ea38lncmfQpoO/s01YibBbfqhb7g==
 
+react-native-vitals@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-vitals/-/react-native-vitals-2.0.1.tgz#0ba276b9c2a9c16a4771e1f9dd64a4c4f41a3c0f"
+  integrity sha512-cEI/HZU9MOmP3EtNlhVuHMcwVFHlGgjG9VS7z3IgA8/z0iNw7s6hu9jPyuEN+b72H2zqZacMe97KO9BM2hCRmQ==
+
 react-native@0.59.2:
   version "0.59.2"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.59.2.tgz#c2e2d9e185b04e54948f170841d97c24661a0fa9"

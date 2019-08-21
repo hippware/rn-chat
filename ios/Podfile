@@ -40,6 +40,8 @@ def testing_pods
   pod 'RNImageCropPicker', :path =>  '../node_modules/react-native-image-crop-picker'
 
   # Add new pods below this line
+  pod 'react-native-vitals', :path => '../node_modules/react-native-vitals'
+
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
   pod 'RNPureJwt', :path => '../node_modules/react-native-pure-jwt'
