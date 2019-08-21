@@ -94,6 +94,7 @@ project.ext.envConfigFiles = [
 
 apply from: "../../node_modules/react-native/react.gradle"
 apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
+apply from: "../../node_modules/react-native-background-geolocation/android/app.gradle"
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 /**
@@ -139,7 +140,6 @@ System.println("*** HOST: " + project.env.get("HOST"))
 System.println("*** IS_STAGING: " + project.env.get("IS_STAGING"))
 
 android {
-	purgeBackgroundGeolocationDebugResources(applicationVariants)
 	lintOptions {
     disable 'GradleCompatible'
     disable 'InvalidPackage'
@@ -273,7 +273,6 @@ android {
 }
 
 dependencies {
-    implementation project(':react-native-background-fetch')
     implementation project(':react-native-firebase')
   // Required dependencies
   //noinspection GradleCompatible
