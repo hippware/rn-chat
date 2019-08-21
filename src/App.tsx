@@ -8,6 +8,7 @@ import NotificationBanner from './components/NotificationBanner'
 import Connectivity from './components/Connectivity'
 import ErrorHandler from './components/common/ErrorHandler'
 import {bugsnagNotify} from 'src/utils/bugsnagConfig'
+import Vitals from 'react-native-vitals'
 
 const App = () => {
   const [store, setStore] = useState()
@@ -18,9 +19,14 @@ const App = () => {
     })
   }, [])
 
+  Vitals.addLowMemoryListener(memory => {
+    bugsnagNotify(new Error('Vitals LowMemory triggered'), 'low_memory', {memory})
+    analytics.track('low_memory', {memory})
+  })
+
   // This seems to be undocumented event. Not even sure what `state` is.
   AppState.addEventListener('memoryWarning', (state: any) => {
-    bugsnagNotify(new Error('AppState.memoryWarning fired'), 'memory_warning', {state})
+    bugsnagNotify(new Error('AppState memoryWarning triggered'), 'memory_warning', {state})
     analytics.track('memory_warning', {state})
   })
 
