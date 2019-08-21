@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Lag with back caret & pin location (#3991)
+
 # 4.20.1 - 2019 Aug 16
 
 * Activity indicator is incorrectly positioned. (#4007)
