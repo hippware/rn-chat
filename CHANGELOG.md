@@ -5,6 +5,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Lag with back caret & pin location (#3991)
+* Add AppState memoryWarning listener. (PR #4038)
+* [Android] Add drop shadow (#3784)
+* [dev] Update to RNBGL 3.2.0 (#4030)
 
 # 4.20.1 - 2019 Aug 16
 
