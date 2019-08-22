@@ -4,7 +4,8 @@ import BottomPopup from './BottomPopup'
 import {Actions} from 'react-native-router-flux'
 import {isAlive} from 'mobx-state-tree'
 import {colors} from '../constants'
-import {observer, inject} from 'mobx-react'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import Avatar from './common/Avatar'
 import {k, minHeight, avatarScale} from './Global'
 import {IWocky, IOwnProfile} from 'wocky-client'
@@ -108,15 +109,21 @@ type Props = {
   wocky?: IWocky
 }
 
-@inject('wocky')
-@observer
-export default class BottomMenu extends React.Component<Props> {
-  render() {
-    const {wocky} = this.props
+const BottomMenu = inject('wocky')(
+  observer(({wocky}: Props) => {
     const {profile} = wocky!
     if (!profile || !isAlive(profile)) {
       return null
     }
+
+    function toggleInvisible() {
+      if (!profile!.hidden.enabled) {
+        Actions.invisibleExpirationSelector()
+      } else {
+        disableInvisibleMode(profile!)
+      }
+    }
+
     return (
       <BottomPopup>
         <MenuItemWrapper
@@ -170,7 +177,7 @@ export default class BottomMenu extends React.Component<Props> {
           </MenuItem>
           <MenuItem
             image={profile.hidden.enabled ? invisibleOn : invisibleOff}
-            onPress={this.toggleInvisible}
+            onPress={toggleInvisible}
             imageStyle={{
               width: 55 * avatarScale,
               height: 41 * avatarScale,
@@ -182,21 +189,10 @@ export default class BottomMenu extends React.Component<Props> {
         </View>
       </BottomPopup>
     )
-  }
+  })
+)
 
-  toggleInvisible = () => {
-    const {wocky} = this.props
-    const {profile} = wocky!
-    if (!profile) {
-      return
-    }
-    if (!profile!.hidden.enabled) {
-      Actions.invisibleExpirationSelector()
-    } else {
-      disableInvisibleMode(profile)
-    }
-  }
-}
+export default BottomMenu
 
 const invisibleOn = require('../../images/InvisibleOn.png')
 const invisibleOff = require('../../images/InvisibleOff.png')
