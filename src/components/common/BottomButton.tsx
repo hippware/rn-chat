@@ -1,7 +1,5 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {Keyboard, Animated} from 'react-native'
-import {observer} from 'mobx-react'
-import {observable, when} from 'mobx'
 import GradientButton from './GradientButton'
 import {minHeight} from '../Global'
 
@@ -12,90 +10,57 @@ type Props = {
   onPress?: () => void
 }
 
-type State = {
-  height: Animated.Value
-}
+const BottomButton = (props: Props) => {
+  const [height] = useState(new Animated.Value(0))
 
-@observer
-class BottomButton extends React.Component<Props, State> {
-  @observable keyboardHeight: number = 0
-  @observable animating: boolean = false
-  keyboardDidShowListener: any
-  keyboardDidHideListener: any
-  animation: any
-  state = {
-    height: new Animated.Value(0),
-  }
-
-  componentWillMount() {
-    this.keyboardDidShowListener = Keyboard.addListener('keyboardWillShow', this._keyboardWillShow)
-    this.keyboardDidHideListener = Keyboard.addListener('keyboardWillHide', this._keyboardWillHide)
-  }
-
-  componentWillUnmount() {
-    this.keyboardDidShowListener.remove()
-    this.keyboardDidHideListener.remove()
-  }
-
-  render() {
-    const {style, children, ...rest} = this.props
-    return (
-      <Animated.View
-        style={[
-          {
-            position: 'absolute',
-            bottom: Animated.add(this.state.height, 0),
-            // bottom: Animated.add(this.state.height, -50),
-            // bottom: 0,
-            right: 0,
-            left: 0,
-            padding: 0,
-            margin: 0,
-          },
-          style,
-        ]}
-      >
-        <GradientButton
-          isPink={!this.props.isDisabled}
-          style={{height: 50 * minHeight}}
-          {...rest}
-          onPress={!this.props.isDisabled ? this.props.onPress : null}
-        >
-          {children}
-        </GradientButton>
-      </Animated.View>
-    )
-  }
-
-  private _keyboardWillShow = ({endCoordinates, duration}: any) => {
-    when(
-      () => !this.animating,
-      () => {
-        this.animating = true
-        this.animation = Animated.timing(this.state.height, {
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardWillShow',
+      ({endCoordinates, duration}: any) => {
+        Animated.timing(height, {
           toValue: endCoordinates.height,
           duration,
-        }).start(this.animationCb)
+        }).start()
       }
     )
-  }
+    const keyboardDidHideListener = Keyboard.addListener('keyboardWillHide', ({duration}: any) => {
+      Animated.timing(height, {
+        toValue: 0,
+        duration,
+      }).start()
+    })
 
-  private _keyboardWillHide = ({duration}: any) => {
-    when(
-      () => !this.animating,
-      () => {
-        this.animating = true
-        this.animation = Animated.timing(this.state.height, {
-          toValue: 0,
-          duration,
-        }).start(this.animationCb)
-      }
-    )
-  }
+    return () => {
+      keyboardDidShowListener.remove()
+      keyboardDidHideListener.remove()
+    }
+  }, [])
 
-  private animationCb = () => {
-    this.animating = false
-  }
+  const {style, children, ...rest} = props
+  return (
+    <Animated.View
+      style={[
+        {
+          position: 'absolute',
+          bottom: height,
+          right: 0,
+          left: 0,
+          padding: 0,
+          margin: 0,
+        },
+        style,
+      ]}
+    >
+      <GradientButton
+        isPink={!props.isDisabled}
+        style={{height: 50 * minHeight}}
+        {...rest}
+        onPress={!props.isDisabled ? props.onPress : null}
+      >
+        {children}
+      </GradientButton>
+    </Animated.View>
+  )
 }
 
 export default BottomButton
