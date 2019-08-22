@@ -29,12 +29,12 @@ else
   echo "Detecting applesimutils"
   which applesimutils
 
-  yarn install
+#  yarn install
 
   echo 'Detox build'
-  yarn detox build-framework-cache
-  yarn detox build --configuration ios.sim.release
+#  yarn detox build-framework-cache
+#  yarn detox build --configuration ios.sim.release
   
   echo 'Detox test'
-  yarn detox test --configuration ios.sim.release
+#  yarn detox test --configuration ios.sim.release
 fi
