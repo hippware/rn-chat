@@ -4,10 +4,16 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.20.2 - 2019 Aug 22
+
 * Lag with back caret & pin location (#3991)
 * Add AppState memoryWarning listener. (PR #4038)
 * [Android] Add drop shadow (#3784)
 * [dev] Update to RNBGL 3.2.0 (#4030)
+* TypeError in src/components/BotCompose/BotCompose.tsx:111 (#4027)
+* Disable detox tests (PR #4047)
+* [android] Configure RNBGL notification channel (#4044)
+* Loading screen visible when user taps "Sharing Location" (#4022)
 
 # 4.20.1 - 2019 Aug 16
 
