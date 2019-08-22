@@ -4,7 +4,7 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-# 4.20.2 - 2019 Aug 22
+# 4.21.0 - 2019 Aug 22
 
 * Lag with back caret & pin location (#3991)
 * Add AppState memoryWarning listener. (PR #4038)
