@@ -108,6 +108,10 @@ const LocationStore = types
         batchSync: true,
         desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
         maxRecordsToPersist: 20,
+        notification: {
+          // android only
+          channelName: 'Location Service',
+        },
         startOnBoot: true,
         stopOnTerminate: false,
         stopTimeout: 1,
