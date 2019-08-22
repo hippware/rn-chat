@@ -11243,10 +11243,10 @@ react-native-pure-jwt@^2.1.0:
   version "3.1.7"
   resolved "https://codeload.github.com/zo0r/react-native-push-notification/tar.gz/6a6e9514c4bdd4d7182b3805785478f61a703088"
 
-react-native-router-flux@^4.1.0-beta.7:
-  version "4.1.0-beta.7"
-  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-4.1.0-beta.7.tgz#37efe65608c65ed802129c7c018c7adda13ea3e5"
-  integrity sha512-xVXkvThAVUpz2q5ZRmZfiuH/OpB92sNkdqx4FOWixp3yIHq9/pVgtHzgyqT2hkuLJ1TXCI4rMokvSF05aKHlvw==
+react-native-router-flux@^4.1.0-beta.8:
+  version "4.1.0-beta.8"
+  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-4.1.0-beta.8.tgz#8e8c53053d50a1de10ced7312d5d205fa6c93efa"
+  integrity sha512-wTlcMNmbI0pRBsamVTvX/N2ba620S0jh3Qr5tPjyGP8DSyWBAjR+HI/IOG+/SyseW2ifHRZ7WfbQdA4dPJ/dXA==
   dependencies:
     lodash "^4.17.15"
     opencollective "^1.0.3"
