@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {
   ActivityIndicator,
   View,
@@ -11,7 +11,8 @@ import {
 } from 'react-native'
 import {colors} from '../constants'
 import {IAppInfo} from '../store/AppInfo'
-import {observer, inject} from 'mobx-react'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import {ICodePushStore} from '../store/CodePushStore'
 import {settings} from '../globals'
 
@@ -20,21 +21,19 @@ type Props = {
   appInfo?: IAppInfo
 }
 
-@inject('codePushStore', 'appInfo')
-@observer
-class CodePushScene extends React.Component<Props> {
-  componentWillMount() {
-    this.props.codePushStore!.getFreshData()
-  }
+const CodePushScene = inject('codePushStore', 'appInfo')(
+  observer(({codePushStore, appInfo}: Props) => {
+    useEffect(() => {
+      codePushStore!.getFreshData()
+    }, [])
 
-  render() {
-    const {downloadProgress, metadata} = this.props.codePushStore!
+    const {downloadProgress, metadata} = codePushStore!
     return (
       <View style={{flex: 1, padding: 20}}>
         <View style={styles.statusSection}>
           <Text style={{marginTop: 20}}>
             <Text style={styles.bold}>Version: </Text>
-            <Text>{this.props.appInfo!.nativeVersion}</Text>
+            <Text>{appInfo!.nativeVersion}</Text>
           </Text>
 
           {/* TODO {displayCPInfo && (
@@ -54,8 +53,8 @@ class CodePushScene extends React.Component<Props> {
         <SyncStatus />
       </View>
     )
-  }
-}
+  })
+)
 
 const Metadata = inject('codePushStore')(
   observer(({codePushStore}: Props) => {
