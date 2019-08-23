@@ -18,10 +18,11 @@ const App = () => {
     })
   }, [])
 
-  // This seems to be undocumented event. Not even sure what `state` is.
-  AppState.addEventListener('memoryWarning', (state: any) => {
-    bugsnagNotify(new Error('AppState.memoryWarning fired'), 'memory_warning', {state})
-    analytics.track('memory_warning', {state})
+  // This seems to be undocumented event.
+  AppState.addEventListener('memoryWarning', () => {
+    const extras = {currentState: AppState.currentState}
+    bugsnagNotify(new Error('AppState.memoryWarning fired'), 'memory_warning', extras)
+    analytics.track('memory_warning', extras)
   })
 
   if (!store) return null
