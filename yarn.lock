@@ -11196,6 +11196,11 @@ react-native-image-crop-picker@^0.21.3:
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.21.3.tgz#04457a3f2a888949f51be4a670dcf2520b9994f8"
   integrity sha512-qzY8aSYZxH4L9XYRk4V1n8x1gfq+ykNG0Kc0a9ne+JWwAQkf2P8aTKeNd4noNFZEOSJBiD4XXE/pbX55dQ5F3g==
 
+react-native-image-picker@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-1.0.2.tgz#8b0ffe89d7dd97bef1f7e317f313f90549b126b3"
+  integrity sha512-+xwfqOQz5lU6mO6YUWdp7cb1a8V9hOqh4joI6YoRRyWp2stQ5P7m6x3f6w9j1r29f5mK67kqmM5gOfweTqzDaA==
+
 react-native-iphone-x-helper@^1.0.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.0.tgz#9f8a376eb00bc712115abff4420318a0063fa796"
@@ -11244,9 +11249,9 @@ react-native-pure-jwt@^2.1.0:
   resolved "https://codeload.github.com/zo0r/react-native-push-notification/tar.gz/6a6e9514c4bdd4d7182b3805785478f61a703088"
 
 react-native-router-flux@^4.1.0-beta.7:
-  version "4.1.0-beta.7"
-  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-4.1.0-beta.7.tgz#37efe65608c65ed802129c7c018c7adda13ea3e5"
-  integrity sha512-xVXkvThAVUpz2q5ZRmZfiuH/OpB92sNkdqx4FOWixp3yIHq9/pVgtHzgyqT2hkuLJ1TXCI4rMokvSF05aKHlvw==
+  version "4.1.0-beta.8"
+  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-4.1.0-beta.8.tgz#8e8c53053d50a1de10ced7312d5d205fa6c93efa"
+  integrity sha512-wTlcMNmbI0pRBsamVTvX/N2ba620S0jh3Qr5tPjyGP8DSyWBAjR+HI/IOG+/SyseW2ifHRZ7WfbQdA4dPJ/dXA==
   dependencies:
     lodash "^4.17.15"
     opencollective "^1.0.3"

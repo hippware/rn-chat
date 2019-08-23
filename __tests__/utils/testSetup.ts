@@ -1,7 +1,6 @@
 jest.mock('mobx-react/native', () => require('mobx-react/custom'))
 
 jest.mock('NativeAnimatedHelper')
-
 jest.mock('Linking', () => {
   return {
     addEventListener: jest.fn(),

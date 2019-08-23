@@ -1,7 +1,7 @@
 import React from 'react'
 import {TouchableOpacity, ImageURISource} from 'react-native'
 import {avatarScale} from './Global'
-import {showImagePicker} from './ImagePicker'
+import {showImagePicker} from './ImageCropPicker'
 import {observer, inject} from 'mobx-react'
 import {Spinner, Avatar} from './common'
 import {observable} from 'mobx'

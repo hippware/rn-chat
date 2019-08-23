@@ -1,8 +1,8 @@
 import {Keyboard, Platform} from 'react-native'
-import ImagePicker, {Image} from 'react-native-image-crop-picker'
+import ImagePicker from 'react-native-image-picker'
 import ActionSheet from 'react-native-action-sheet'
 import Permissions from 'react-native-permissions'
-import {warn} from 'src/utils/logger'
+import {warn, log} from 'src/utils/logger'
 
 export type PickerImage = {
   height: number
@@ -13,12 +13,17 @@ export type PickerImage = {
   name: string
 }
 
-const IMG_DEFAULT_SIZE = 1000
-
 function getImageUri(rawUri: string) {
   let uri = rawUri
+  return uri
   if (Platform.OS === 'android') {
-    uri = rawUri.indexOf('file://') !== 0 ? 'file://' + rawUri : rawUri
+    if (rawUri.indexOf('content://') !== 0) {
+      uri = rawUri
+    } else {
+      uri = rawUri.indexOf('file://') !== 0 ? 'file://' + rawUri : rawUri
+    }
+  } else {
+    uri = rawUri.replace('file://', '')
   }
   return uri
 }
@@ -41,48 +46,72 @@ async function photoPermissionsGranted(includeCamera: boolean = false): Promise<
 async function launchImageLibrary(cropping: boolean): Promise<PickerImage | void> {
   try {
     if (await photoPermissionsGranted()) {
-      const result = await ImagePicker.openPicker({
-        width: IMG_DEFAULT_SIZE,
-        height: IMG_DEFAULT_SIZE,
-        cropping,
-        mediaType: 'photo',
-        // cropperCircleOverlay: false,
-        compressImageMaxWidth: IMG_DEFAULT_SIZE,
-        compressImageMaxHeight: IMG_DEFAULT_SIZE,
-        // compressImageQuality: 0.5,
-      })
-      const image: Image = result[0] || result
+      return new Promise((resolve, reject) => {
+        ImagePicker.launchImageLibrary({}, response => {
+          if (response.didCancel) {
+            reject()
+          } else if (response.error) {
+            reject(response.error)
+          } else if (response.customButton) {
+            // console.log('User tapped custom button: ', response.customButton)
+          } else {
+            const res: any = {
+              uri: getImageUri(response.uri),
+              type: response.type,
+              name: response.fileName,
+              width: response.width,
+              height: response.height,
+              size: response.fileSize,
+            }
+            resolve(res)
 
-      return {
-        uri: getImageUri(image.path),
-        type: image.mime,
-        name: image.path.substring(image.path.lastIndexOf('/') + 1),
-        width: image.width,
-        height: image.height,
-        size: image.size,
-      }
+            // You can also display the image using data:
+            // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+            // this.setState({
+            //   avatarSource: source,
+            // })
+          }
+        })
+      })
     }
   } catch (err) {
     // disable error log because normal user picker cancelling is interpreted as error
-    // log('launchImageLibrary error', err, {level: levels.ERROR});
+    log('launchImageLibrary error', err)
   }
 }
 
 async function launchCamera(cropping: boolean): Promise<PickerImage | void> {
   Keyboard.dismiss()
   try {
-    const image: any = await ImagePicker.openCamera({
-      width: IMG_DEFAULT_SIZE,
-      height: IMG_DEFAULT_SIZE,
-      cropping,
-      cropperToolbarTitle: 'Crop Image',
+    return new Promise((resolve, reject) => {
+      ImagePicker.launchCamera({rotation: 360}, response => {
+        if (response.didCancel) {
+          reject()
+        } else if (response.error) {
+          reject(response.error)
+        } else if (response.customButton) {
+          // console.log('User tapped custom button: ', response.customButton)
+        } else {
+          const res: any = {
+            uri: getImageUri(response.uri),
+            type: response.type,
+            name: response.fileName,
+            width: response.width,
+            height: response.height,
+            size: response.fileSize,
+          }
+          resolve(res)
+
+          // You can also display the image using data:
+          // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+          // this.setState({
+          //   avatarSource: source,
+          // })
+        }
+      })
     })
-    return {
-      ...image,
-      uri: image.path,
-      type: image.mime,
-      name: image.path,
-    }
   } catch (err) {
     warn('camera error:', err)
   }
