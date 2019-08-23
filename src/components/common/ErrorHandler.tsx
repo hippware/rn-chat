@@ -23,6 +23,8 @@ class ErrorHandler extends React.Component<Props> {
   @observable error
   @observable errorInfo
 
+  // todo: hookify this component once there is a compatible hook for `didCatch`
+  // https://reactjs.org/docs/hooks-faq.html#do-hooks-cover-all-use-cases-for-classes
   componentDidCatch(error, errorInfo) {
     this.error = error
     this.errorInfo = errorInfo

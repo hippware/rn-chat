@@ -1,5 +1,5 @@
 import React, {ReactElement} from 'react'
-import {View, Alert, Image, StyleSheet, Clipboard, TouchableOpacity} from 'react-native'
+import {View, Image, StyleSheet, Clipboard, TouchableOpacity} from 'react-native'
 import {observer, inject} from 'mobx-react'
 import {k, width, minHeight} from '../Global'
 import {colors} from '../../constants'
@@ -27,18 +27,7 @@ const shareIcon = require('../../../images/shareIcon.png')
 const followIcon = require('../../../images/shoesPink.png')
 
 const BotDetailsHeader = inject('notificationStore', 'analytics', 'locationStore')(
-  observer(({bot, locationStore, notificationStore, analytics}: Props) => {
-    function unsubscribe() {
-      Alert.alert('', 'Are you sure you want to remove this from your saved locations?', [
-        {text: 'Cancel', style: 'cancel'},
-        {
-          text: 'Remove',
-          style: 'destructive',
-          onPress: () => bot.unsubscribe(),
-        },
-      ])
-    }
-
+  observer(({bot, locationStore, notificationStore}: Props) => {
     function copyAddress() {
       Clipboard.setString(bot.address)
       notificationStore.flash('Address copied to clipboard 👍')
@@ -70,8 +59,6 @@ const BotDetailsHeader = inject('notificationStore', 'analytics', 'locationStore
           <ActionButton
             bot={bot}
             style={{position: 'absolute', right: 0}}
-            unsubscribe={unsubscribe}
-            isSubscribed={bot.isSubscribed}
             copyAddress={copyAddress}
           />
         </View>
