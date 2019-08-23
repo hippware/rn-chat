@@ -83,6 +83,7 @@ export const Message = types
         )
         self.setStatus(Status.Sent)
       } catch (e) {
+        console.log('SEND ERROR: ', self.media!, e)
         self.setStatus(Status.Error)
       }
     }),

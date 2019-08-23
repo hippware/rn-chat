@@ -2,7 +2,7 @@ import React from 'react'
 // import Camera from '../../src/components/Camera'
 import {Router, Scene, Stack} from 'react-native-router-flux'
 import {TouchableOpacity, View, Alert, Text} from 'react-native'
-import {showImagePicker} from 'src/components/ImagePicker'
+import {showImagePicker} from 'src/components/ImageCropPicker'
 // import fileService from 'src/store/fileService'
 
 export default () => (

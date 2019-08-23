@@ -1,5 +1,5 @@
 import {Keyboard, Platform} from 'react-native'
-import ImagePicker, {Image} from 'react-native-image-crop-picker'
+import ImagePicker from 'react-native-image-picker'
 import ActionSheet from 'react-native-action-sheet'
 import Permissions from 'react-native-permissions'
 import {warn} from 'src/utils/logger'
@@ -41,26 +41,46 @@ async function photoPermissionsGranted(includeCamera: boolean = false): Promise<
 async function launchImageLibrary(cropping: boolean): Promise<PickerImage | void> {
   try {
     if (await photoPermissionsGranted()) {
-      const result = await ImagePicker.openPicker({
-        width: IMG_DEFAULT_SIZE,
-        height: IMG_DEFAULT_SIZE,
-        cropping,
-        mediaType: 'photo',
-        // cropperCircleOverlay: false,
-        compressImageMaxWidth: IMG_DEFAULT_SIZE,
-        compressImageMaxHeight: IMG_DEFAULT_SIZE,
-        // compressImageQuality: 0.5,
-      })
-      const image: Image = result[0] || result
+      ImagePicker.launchImageLibrary(options, response => {
+        if (response.didCancel) {
+          console.log('User cancelled image picker')
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error)
+        } else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton)
+        } else {
+          console.log('IMAGE RESPONSE: ', JSON.stringify(response))
+          const source = {uri: response.uri}
 
-      return {
-        uri: getImageUri(image.path),
-        type: image.mime,
-        name: image.path.substring(image.path.lastIndexOf('/') + 1),
-        width: image.width,
-        height: image.height,
-        size: image.size,
-      }
+          // You can also display the image using data:
+          // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+          // this.setState({
+          //   avatarSource: source,
+          // })
+        }
+      })
+
+      // const result = await ImagePicker.openPicker({
+      //   width: IMG_DEFAULT_SIZE,
+      //   height: IMG_DEFAULT_SIZE,
+      //   cropping,
+      //   mediaType: 'photo',
+      //   // cropperCircleOverlay: false,
+      //   compressImageMaxWidth: IMG_DEFAULT_SIZE,
+      //   compressImageMaxHeight: IMG_DEFAULT_SIZE,
+      //   // compressImageQuality: 0.5,
+      // })
+      // const image: Image = result[0] || result
+
+      // return {
+      //   uri: getImageUri(image.path),
+      //   type: image.mime,
+      //   name: image.path.substring(image.path.lastIndexOf('/') + 1),
+      //   width: image.width,
+      //   height: image.height,
+      //   size: image.size,
+      // }
     }
   } catch (err) {
     // disable error log because normal user picker cancelling is interpreted as error
@@ -71,18 +91,24 @@ async function launchImageLibrary(cropping: boolean): Promise<PickerImage | void
 async function launchCamera(cropping: boolean): Promise<PickerImage | void> {
   Keyboard.dismiss()
   try {
-    const image: any = await ImagePicker.openCamera({
-      width: IMG_DEFAULT_SIZE,
-      height: IMG_DEFAULT_SIZE,
-      cropping,
-      cropperToolbarTitle: 'Crop Image',
+    ImagePicker.launchCamera(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker')
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error)
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton)
+      } else {
+        console.log('IMAGE RESPONSE: ', JSON.stringify(response))
+        const source = {uri: response.uri}
+      }
     })
-    return {
-      ...image,
-      uri: image.path,
-      type: image.mime,
-      name: image.path,
-    }
+    // return {
+    //   ...image,
+    //   uri: image.path,
+    //   type: image.mime,
+    //   name: image.path,
+    // }
   } catch (err) {
     warn('camera error:', err)
   }
