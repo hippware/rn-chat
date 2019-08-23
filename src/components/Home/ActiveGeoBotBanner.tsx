@@ -87,6 +87,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props, State> {
             shadowOffset: {width: 0, height: 2},
             shadowOpacity: 1,
             shadowRadius: 5,
+            elevation: 3,
           }}
         >
           <FlatList

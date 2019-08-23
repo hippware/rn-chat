@@ -20,6 +20,8 @@ type Props = {
   scrollY?: Animated.Value
 }
 
+export const FADE_NAV_BAR_HEADER_HEIGHT = 64 * minHeight
+
 const NavBarHeader = inject('scrollY')(({config, scrollY}: Props) => {
   if (!config) {
     return null
@@ -47,12 +49,12 @@ const NavBarHeader = inject('scrollY')(({config, scrollY}: Props) => {
   const listHeight = height / 2 + keyboardHeight
 
   const opacity = scrollY!.interpolate({
-    inputRange: [-1000, height - listHeight - 120, height - listHeight],
+    inputRange: [-1000, height - listHeight - 160, height - listHeight - 40],
     outputRange: [0, 0, 1],
   })
 
   return (
-    <Animated.View style={[{opacity}, styles.header]}>
+    <Animated.View style={[{opacity, position: 'none'}, styles.header]}>
       <View style={{width: 23}}>
         {back ? (
           <TouchableOpacity onPress={() => (backAction ? backAction() : Actions.pop())}>
@@ -81,7 +83,7 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
     left: 0,
-    height: 64 * minHeight,
+    height: FADE_NAV_BAR_HEADER_HEIGHT,
     flex: 1,
     backgroundColor: 'white',
     elevation: 1,

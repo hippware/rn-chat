@@ -14,7 +14,15 @@ import analytics from '../utils/analytics'
 const MAX_DATE1 = '2030-01-01-17:00'
 const MAX_DATE2 = '2030-01-01-18:00'
 
+export const BG_STATE_PROPS = ['distanceFilter', 'autoSyncThreshold', 'debug']
+
 const prefix = 'BGGL'
+
+const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOptions', {
+  autoSyncThreshold: types.maybeNull(types.number),
+  distanceFilter: types.maybeNull(types.number),
+  debug: types.maybeNull(types.boolean),
+})
 
 // todo: https://github.com/hippware/rn-chat/issues/3434
 const isMetric = RNLocalize.usesMetricSystem()
@@ -22,6 +30,7 @@ const LocationStore = types
   .model('LocationStore', {
     // should we persist location?
     location: types.maybeNull(Location),
+    backgroundOptions: types.optional(BackgroundLocationConfigOptions, {}),
   })
   .volatile(() => ({
     enabled: true,
@@ -81,6 +90,14 @@ const LocationStore = types
       BackgroundGeolocation.logger.info(`${prefix} setAlwaysOn(${value})`)
       self.alwaysOn = value
     },
+    updateBackgroundConfigSuccess(state) {
+      const options = _.pick(state, BG_STATE_PROPS)
+      Object.assign(self, {
+        backgroundOptions: {
+          ...options,
+        },
+      })
+    },
     setState(value) {
       Object.assign(self, value)
     },
@@ -90,13 +107,20 @@ const LocationStore = types
       const config = {
         batchSync: true,
         desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
-        distanceFilter: 10,
         maxRecordsToPersist: 20,
+        notification: {
+          // android only
+          channelName: 'Location Service',
+        },
         startOnBoot: true,
         stopOnTerminate: false,
         stopTimeout: 1,
         disableLocationAuthorizationAlert: true,
       } as any
+
+      if (!settings.configurableLocationSettings) {
+        config.distanceFilter = 10
+      }
 
       if (__DEV__ || settings.isStaging) {
         config.logLevel = BackgroundGeolocation.LOG_LEVEL_VERBOSE
@@ -216,6 +240,17 @@ const LocationStore = types
       })
     })
 
+    function setBackgroundConfig(config) {
+      if (config.debugSounds && !self.debugSounds) BackgroundGeolocation.playSound(1028) // newsflash
+      self.setState({
+        debugSounds: config.debugSounds,
+      })
+
+      // For some reason, these parameters must be ints, not strings
+      config.autoSyncThreshold = parseInt(config.autoSyncThreshold)
+      BackgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)
+    }
+
     function startStandaloneGeolocation() {
       stopStandaloneGeolocation()
       watcherID = navigator.geolocation.watchPosition(onLocation, error =>
@@ -249,6 +284,7 @@ const LocationStore = types
       refreshCredentials,
       invalidateCredentials,
       getCurrentPosition,
+      setBackgroundConfig,
       startStandaloneGeolocation,
       stopStandaloneGeolocation,
       emailLog,
@@ -317,6 +353,7 @@ const LocationStore = types
         yield self.configure()
         const config = yield BackgroundGeolocation.ready({reset: false})
         log(prefix, 'Ready: ', config)
+        self.updateBackgroundConfigSuccess(config)
       }
     })
 

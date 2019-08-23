@@ -1,6 +1,6 @@
 {
   "name": "tinyrobot",
-  "version": "4.19.2",
+  "version": "4.21.0",
   "private": true,
   "scripts": {
     "start": "ENVFILE=.env.staging node node_modules/react-native/local-cli/cli.js start",
@@ -26,7 +26,7 @@
     "codepush": "ts-node -P tsconfig.script.json ./scripts/codepush/codepush.ts",
     "versionBump": "ts-node -P tsconfig.script.json ./scripts/version-increment.ts",
     "bugsnag": "ts-node -P tsconfig.script.json ./scripts/sendBugsnagSymbols.ts",
-    "detox": "detox build --configuration ios.sim.release && detox test --configuration ios.sim.release",
+    "detoxTest": "detox build --configuration ios.sim.release && detox test --configuration ios.sim.release",
     "fetchGraphQLSchema": "ts-node -P tsconfig.script.json scripts/fetchGraphQLInfo.ts",
     "syncWockyClient": "git subtree push --prefix=\"third-party/wocky-client\" https://github.com/hippware/wocky-client master",
     "findUnusedExports": "./node_modules/.bin/ts-unused-exports ./tsconfig.json",
@@ -90,12 +90,13 @@
     "react-native-permissions": "^1.1.1",
     "react-native-pure-jwt": "^2.1.0",
     "react-native-push-notification": "^3.1.9",
-    "react-native-router-flux": "^4.1.0-beta.7",
-    "react-native-snap-carousel": "^3.7.5",
+    "react-native-router-flux": "^4.1.0-beta.8",
+    "react-native-snap-carousel": "^3.8.0",
     "react-native-splash-screen": "^3.2.0",
     "react-native-swiper": "1.5.13",
     "react-native-touch-through-view": "^1.1.0-beta.0",
     "react-navigation-stack": "^1.1.0",
+    "tcomb-form-native": "^0.6.20",
     "validate.js": "github:hippware/validate.js#969b4fb274b0bb5234b8fe4199cc07dc1acb536e"
   },
   "devDependencies": {

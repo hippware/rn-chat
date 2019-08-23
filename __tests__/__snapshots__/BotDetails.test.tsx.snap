@@ -1,5 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+<<<<<<< HEAD
 exports[`BotDetails renders with no data 1`] = `
 <View
   pointerEvents="box-none"
@@ -483,3 +484,6 @@ and depart this location.
   </R2RTouchThroughWrapper>
 </View>
 `;
+=======
+exports[`BotDetails renders with no data 1`] = `null`;
+>>>>>>> origin/master

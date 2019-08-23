@@ -4,6 +4,26 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.21.0 - 2019 Aug 22
+
+* Lag with back caret & pin location (#3991)
+* Add AppState memoryWarning listener. (PR #4038)
+* [Android] Add drop shadow (#3784)
+* [dev] Update to RNBGL 3.2.0 (#4030)
+* TypeError in src/components/BotCompose/BotCompose.tsx:111 (#4027)
+* Disable detox tests (PR #4047)
+* [android] Configure RNBGL notification channel (#4044)
+* Loading screen visible when user taps "Sharing Location" (#4022)
+
+# 4.20.1 - 2019 Aug 16
+
+* Activity indicator is incorrectly positioned. (#4007)
+* Hookify BotDetails, AddBotPost (PR #4010)
+* [dev] Detox failures should fail the appcenter build (#3905)
+* [android] [prod] RNBGL location tracking might be broken (#4011)
+
+# 4.20.0 - 2019 Aug 15
+
 * Support for aspect-preserved images (PR #3979)
   * [dev] [wocky-client] Refactor image downloads (#3955)
 * Keep selected avatar at the top/in focus (#3800)
@@ -11,13 +31,16 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Messages: Allow the sharing of non-square images (#3814)
 * [android] Configure multidex for API level less than 21. (PR #3992)
 * [android] Include manufacturer,model in UA string. (PR #3993)
-* Minimalise Location Debug screen (#3965)
 * Upgrade: react-native-router-flux (RNRF) (PR #3986)
   * Loading screen missing (#3743)
 * `yarn policies set-version 1.17.3` (PR #3989)
 * [android] Add res/raw/silence.ogg. (PR #3996)
 * Pink Shadow needs added to avatar (Rework #3772)
 * [android] Splash screen doesn't cover screen (#3887)
+* [android] Back caret does not work from visitors area (#3981)
+* [android] Menu screen is displaying when user has no friends (#3933)
+* Minimalise Location Debug screen (#3965)
+* [android] Notification channels (#3995)
 
 # 4.19.2 - 2019 Aug 7
 
