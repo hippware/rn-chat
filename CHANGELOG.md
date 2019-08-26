@@ -4,6 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Tweak memoryWarning listener. (PR #4056)
+* [dev] React hooks + mobx-react v6 (#3779)
+  * Hookify 3 (PR #4054)
+
 # 4.21.0 - 2019 Aug 22
 
 * Lag with back caret & pin location (#3991)
