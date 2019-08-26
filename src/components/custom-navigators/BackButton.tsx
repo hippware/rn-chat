@@ -1,34 +1,27 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {TouchableOpacity, Image, Animated} from 'react-native'
 import {Actions} from 'react-native-router-flux'
 import {navBarStyle} from '../styles'
 import {IHomeStore} from 'src/store/HomeStore'
-import {observer, inject} from 'mobx-react'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import {FADE_NAV_BAR_HEADER_HEIGHT} from './NavBarHeader'
 
 type Props = {
   scene: any
-  transitionProps: any
   homeStore?: IHomeStore
 }
-@inject('homeStore')
-@observer
-export default class BackButton extends React.Component<Props> {
-  offsetLeft: Animated.Value = new Animated.Value(-100)
 
-  // https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const {
-      scene: {index, isActive},
-    } = nextProps
-    Animated.spring(this.offsetLeft, {
+const BackButton = inject('homeStore')(
+  observer(({scene, homeStore}: Props) => {
+    const [offsetLeft] = useState(new Animated.Value(-100))
+
+    const {index, isActive} = scene
+    Animated.spring(offsetLeft, {
       toValue: index > 0 && isActive ? 0 : -100,
       useNativeDriver: true,
     }).start()
-  }
 
-  render() {
-    const {homeStore} = this.props
     return (
       <Animated.View
         style={{
@@ -39,7 +32,7 @@ export default class BackButton extends React.Component<Props> {
           height: 55,
           transform: [
             {
-              translateX: this.offsetLeft,
+              translateX: offsetLeft,
             },
           ],
         }}
@@ -54,11 +47,13 @@ export default class BackButton extends React.Component<Props> {
         />
         <TouchableOpacity
           style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
-          onPress={this.props.scene.descriptor.options.backAction || Actions.pop}
+          onPress={scene.descriptor.options.backAction || Actions.pop}
         >
           <Image source={navBarStyle.backButtonImage} />
         </TouchableOpacity>
       </Animated.View>
     )
-  }
-}
+  })
+)
+
+export default BackButton
