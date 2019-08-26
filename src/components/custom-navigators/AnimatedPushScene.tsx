@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {Animated} from 'react-native'
-import {observable, when} from 'mobx'
+import {when} from 'mobx'
 import {height} from '../Global'
 
 type Props = {
@@ -8,77 +8,73 @@ type Props = {
   transitionProps: any
 }
 
-class AnimatedPushScene extends React.Component<Props> {
-  @observable viewHeight: number = 0
-  slideHeight = new Animated.Value(height) // initialize to full screen height
+const AnimatedPushScene = ({scene, transitionProps}: Props) => {
+  const [viewHeight, setViewHeight] = useState(0)
+  // initialize to full screen height
+  const [slideHeight] = useState(new Animated.Value(height))
 
-  componentDidMount() {
+  useEffect(() => {
     when(
-      () => !!this.viewHeight,
+      () => !!viewHeight,
       () => {
-        this.slideHeight.setValue(this.viewHeight)
-        this.showScene()
+        slideHeight.setValue(viewHeight)
+        showScene()
       }
     )
-  }
+  }, [])
 
-  componentWillReceiveProps({transitionProps, scene}) {
-    if (scene.index > 0) {
-      if (transitionProps.index === scene.index) {
-        this.showScene()
-      } else {
-        this.hideScene()
-      }
-    }
-  }
+  const showScene = () => slideSceneTo(0)
 
-  showScene = () => this.slideSceneTo(0)
+  const hideScene = () => slideSceneTo(scene.route.params.fromTop ? -viewHeight : viewHeight)
 
-  hideScene = () =>
-    this.slideSceneTo(this.props.scene.route.params.fromTop ? -this.viewHeight : this.viewHeight)
-
-  slideSceneTo = offset => {
-    Animated.spring(this.slideHeight, {
+  function slideSceneTo(offset) {
+    Animated.spring(slideHeight, {
       toValue: offset,
       useNativeDriver: true,
     }).start()
   }
 
-  render() {
-    const {
-      descriptor: {navigation, getComponent},
-      route: {
-        params: {fromTop},
-      },
-      isActive,
-    } = this.props.scene
-    const Scene = getComponent()
-    return (
-      <Animated.View
-        pointerEvents="box-none"
-        style={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          top: fromTop ? 0 : undefined,
-          bottom: fromTop ? undefined : 0,
-          transform: [
-            {
-              translateY: this.slideHeight,
-              // TODO: opacity - fade in on show and fade out on hide
-            },
-          ],
-        }}
-        onLayout={({
-          nativeEvent: {
-            layout: {height: viewHeight},
-          },
-        }) => (this.viewHeight = viewHeight)}
-      >
-        <Scene navigation={navigation} isActive={isActive} />
-      </Animated.View>
-    )
+  if (scene.index > 0) {
+    if (transitionProps.index === scene.index) {
+      showScene()
+    } else {
+      hideScene()
+    }
   }
+
+  const {
+    descriptor: {navigation, getComponent},
+    route: {
+      params: {fromTop},
+    },
+    isActive,
+  } = scene
+  const Scene = getComponent()
+  return (
+    <Animated.View
+      pointerEvents="box-none"
+      style={{
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: fromTop ? 0 : undefined,
+        bottom: fromTop ? undefined : 0,
+        transform: [
+          {
+            translateY: slideHeight,
+            // TODO: opacity - fade in on show and fade out on hide
+          },
+        ],
+      }}
+      onLayout={({
+        nativeEvent: {
+          layout: {height: vHeight},
+        },
+      }) => setViewHeight(vHeight)}
+    >
+      <Scene navigation={navigation} isActive={isActive} />
+    </Animated.View>
+  )
 }
 
 export default AnimatedPushScene
