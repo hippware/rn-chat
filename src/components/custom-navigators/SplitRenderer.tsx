@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Transitioner} from 'react-navigation-stack'
 import {View, Platform, Animated, StyleSheet} from 'react-native'
 import AnimatedPushScene from './AnimatedPushScene'
@@ -14,10 +14,10 @@ type Props = {
   screenProps: any
 }
 
-export default class SplitRenderer extends React.Component<Props> {
-  scrollY = new Animated.Value(0)
+const SplitRenderer = (props: Props) => {
+  const [scrollY] = useState(new Animated.Value(0))
 
-  _renderScene = (transitionProps, scene) => {
+  function _renderScene(transitionProps, scene) {
     const {index} = scene
     if (index === 0) {
       // main screen
@@ -36,18 +36,18 @@ export default class SplitRenderer extends React.Component<Props> {
           key={scene.route.key}
           pointerEvents="box-none"
         >
-          <BackButton transitionProps={transitionProps} scene={scene} />
+          <BackButton scene={scene} />
           <AnimatedPushScene transitionProps={transitionProps} scene={scene} />
         </View>
       )
     }
   }
 
-  _render = (transitionProps, prevTransitionProps) => {
+  function _render(transitionProps, prevTransitionProps) {
     const {scenes, scene} = transitionProps
-    const theScenes = scenes.map(s => this._renderScene(transitionProps, s))
+    const theScenes = scenes.map(s => _renderScene(transitionProps, s))
     return (
-      <Provider scrollY={this.scrollY}>
+      <Provider scrollY={scrollY}>
         <View style={{flex: 1}}>
           {theScenes}
           <NavBarHeader config={scene.descriptor.options.fadeNavConfig} />
@@ -55,22 +55,19 @@ export default class SplitRenderer extends React.Component<Props> {
       </Provider>
     )
   }
-  onTransitionStart = () => {
-    this.scrollY.setValue(0)
-  }
-  onTransitionEnd = () => null
-  render() {
-    return (
-      <Transitioner
-        screenProps={this.props.screenProps}
-        descriptors={this.props.descriptors}
-        // NOTE: our transition animations don't need to be configurable
-        configureTransition={null}
-        navigation={this.props.navigation}
-        render={this._render}
-        onTransitionStart={this.onTransitionStart}
-        onTransitionEnd={this.onTransitionEnd}
-      />
-    )
-  }
+
+  return (
+    <Transitioner
+      screenProps={props.screenProps}
+      descriptors={props.descriptors}
+      // NOTE: our transition animations don't need to be configurable
+      configureTransition={null}
+      navigation={props.navigation}
+      render={_render}
+      onTransitionStart={() => scrollY.setValue(0)}
+      // onTransitionEnd={onTransitionEnd}
+    />
+  )
 }
+
+export default SplitRenderer
