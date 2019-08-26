@@ -142,7 +142,13 @@ const LocationStore = types
     let watcherID
 
     function onLocation(position) {
-      log(prefix, 'location: ', JSON.stringify(position))
+      if (position.isStandalone) {
+        const text = `Standalone location: ${JSON.stringify(position)}`
+        log(prefix, text)
+        BackgroundGeolocation.logger.info(`${prefix} ${text}`)
+      } else {
+        log(prefix, 'location: ', JSON.stringify(position))
+      }
       self.setPosition(position.coords)
 
       if (profile) {
@@ -252,17 +258,32 @@ const LocationStore = types
     }
 
     function startStandaloneGeolocation() {
-      stopStandaloneGeolocation()
-      watcherID = navigator.geolocation.watchPosition(onLocation, error =>
+      log(prefix, `startStandaloneGeolocation`)
+      BackgroundGeolocation.logger.info(`${prefix} startStandaloneGeolocation`)
+
+      _stopStandaloneGeolocation()
+      watcherID = navigator.geolocation.watchPosition(onStandaloneLocation, error =>
         warn('GPS ERROR:', error)
       )
     }
 
     function stopStandaloneGeolocation() {
+      log(prefix, `stopStandaloneGeolocation`)
+      BackgroundGeolocation.logger.info(`${prefix} stopStandaloneGeolocation`)
+
+      _stopStandaloneGeolocation()
+    }
+
+    function _stopStandaloneGeolocation() {
       if (watcherID !== undefined) {
         navigator.geolocation.clearWatch(watcherID)
         watcherID = undefined
       }
+    }
+
+    function onStandaloneLocation(position) {
+      position.isStandalone = true
+      onLocation(position)
     }
 
     function emailLog(email) {
@@ -384,6 +405,8 @@ const LocationStore = types
   })
   .actions(self => ({
     hide: flow(function*(value: boolean, expires: Date | undefined) {
+      log(prefix, `Hide(${value}, ${expires})`)
+      BackgroundGeolocation.logger.info(`${prefix} hide(${value}, ${expires})`)
       self.finish()
       self.stopStandaloneGeolocation()
       if (value) {
