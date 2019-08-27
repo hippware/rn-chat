@@ -1,70 +1,59 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {Animated, Keyboard} from 'react-native'
-import {observable, action} from 'mobx'
-import {observer} from 'mobx-react'
 
 export default (Component): any => {
-  @observer
-  class KeyboardAwareView extends React.Component<any> {
-    @observable keyboardShowing: boolean = false
-    keyboardHeight = new Animated.Value(0)
-    keyboardDidShowListener: any
-    keyboardDidHideListener: any
+  const KeyboardAwareView = props => {
+    const {forwardedRef, ...rest} = props
 
-    componentDidMount() {
-      this.keyboardDidShowListener = Keyboard.addListener(
+    const [keyboardShowing, setKeyboardShowing] = useState(false)
+    const [keyboardHeight] = useState(new Animated.Value(0))
+
+    useEffect(() => {
+      const keyboardDidShowListener = Keyboard.addListener(
         'keyboardWillShow',
-        this._keyboardWillShow
+        ({endCoordinates, duration}: any) => {
+          setKeyboardShowing(true)
+          Animated.timing(keyboardHeight, {
+            toValue: -endCoordinates.height,
+            duration,
+            useNativeDriver: true,
+          }).start()
+        }
       )
-      this.keyboardDidHideListener = Keyboard.addListener(
+      const keyboardDidHideListener = Keyboard.addListener(
         'keyboardWillHide',
-        this._keyboardWillHide
+        ({duration}: any) => {
+          setKeyboardShowing(false)
+          Animated.timing(keyboardHeight, {
+            toValue: 0,
+            duration,
+            useNativeDriver: true,
+          }).start()
+        }
       )
-    }
 
-    componentWillUnmount() {
-      Keyboard.removeListener('keyboardWillHide', this.keyboardDidHideListener)
-      Keyboard.removeListener('keyboardWillShow', this.keyboardDidShowListener)
-    }
+      return () => {
+        Keyboard.removeListener('keyboardWillHide', keyboardDidHideListener as any)
+        Keyboard.removeListener('keyboardWillShow', keyboardDidShowListener as any)
+      }
+    }, [])
 
-    @action
-    _keyboardWillShow = ({endCoordinates, duration}: any) => {
-      this.keyboardShowing = true
-      Animated.timing(this.keyboardHeight, {
-        toValue: -endCoordinates.height,
-        duration,
-        useNativeDriver: true,
-      }).start()
-    }
-
-    @action
-    _keyboardWillHide = ({duration}: any) => {
-      this.keyboardShowing = false
-      Animated.timing(this.keyboardHeight, {
-        toValue: 0,
-        duration,
-        useNativeDriver: true,
-      }).start()
-    }
-
-    render() {
-      const {forwardedRef, ...rest} = this.props
-      return (
-        <Animated.View
-          pointerEvents="box-none"
-          style={{
-            flex: 1,
-            transform: [
-              {
-                translateY: this.keyboardHeight,
-              },
-            ],
-          }}
-        >
-          <Component ref={forwardedRef} {...rest} keyboardShowing={this.keyboardShowing} />
-        </Animated.View>
-      )
-    }
+    return (
+      <Animated.View
+        pointerEvents="box-none"
+        style={{
+          flex: 1,
+          transform: [
+            {
+              translateY: keyboardHeight,
+            },
+          ],
+        }}
+      >
+        <Component ref={forwardedRef} {...rest} keyboardShowing={keyboardShowing} />
+      </Animated.View>
+    )
+    // }
   }
 
   // https://reactjs.org/docs/forwarding-refs.html
