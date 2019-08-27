@@ -142,12 +142,15 @@ const LocationStore = types
     let watcherID
 
     function onLocation(position) {
-      if (position.isStandalone) {
-        const text = `Standalone location: ${JSON.stringify(position)}`
+      if (__DEV__ || settings.isStaging) {
+        const text = `${position.isStandalone ? 'Standalone ' : ''}location: ${JSON.stringify(
+          position
+        )}`
         log(prefix, text)
-        BackgroundGeolocation.logger.info(`${prefix} ${text}`)
-      } else {
-        log(prefix, 'location: ', JSON.stringify(position))
+
+        if (position.isStandalone) {
+          BackgroundGeolocation.logger.info(`${prefix} ${text}`)
+        }
       }
       self.setPosition(position.coords)
 
