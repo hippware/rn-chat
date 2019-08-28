@@ -241,13 +241,13 @@ const LocationStore = types
       BackgroundGeolocation.logger.info(`${prefix} invalidateCredentials`)
     })
 
-    const getCurrentPosition = flow(function*() {
+    function getCurrentPosition(): Promise<any> {
       log(prefix, 'get current position')
-      yield BackgroundGeolocation.getCurrentPosition({
+      return BackgroundGeolocation.getCurrentPosition({
         timeout: 20,
         maximumAge: 1000,
       })
-    })
+    }
 
     function setBackgroundConfig(config) {
       if (config.debugSounds && !self.debugSounds) BackgroundGeolocation.playSound(1028) // newsflash
