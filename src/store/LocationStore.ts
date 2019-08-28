@@ -24,7 +24,6 @@ const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOpt
   debug: types.maybeNull(types.boolean),
 })
 
-// todo: https://github.com/hippware/rn-chat/issues/3434
 const isMetric = RNLocalize.usesMetricSystem()
 const LocationStore = types
   .model('LocationStore', {
@@ -139,16 +138,14 @@ const LocationStore = types
     const {transport} = getEnv(self)
     const wocky: IWocky = (getParent(self) as any).wocky
     const {profile} = wocky
-    let watcherID
 
     function onLocation(position) {
+      const hidden = wocky.profile && wocky.profile.hidden.enabled
       if (__DEV__ || settings.isStaging) {
-        const text = `${position.isStandalone ? 'Standalone ' : ''}location: ${JSON.stringify(
-          position
-        )}`
+        const text = `${hidden ? 'Standalone ' : ''}location: ${JSON.stringify(position)}`
         log(prefix, text)
 
-        if (position.isStandalone) {
+        if (hidden) {
           BackgroundGeolocation.logger.info(`${prefix} ${text}`)
         }
       }
@@ -210,6 +207,12 @@ const LocationStore = types
       self.setAlwaysOn(provider.status === BackgroundGeolocation.AUTHORIZATION_STATUS_ALWAYS)
     }
 
+    // todo: this may be helpful to subscribe to for logging purposes
+    // https://transistorsoft.github.io/react-native-background-geolocation/classes/_react_native_background_geolocation_.backgroundgeolocation.html#onactivitychange
+    // function onPowerSaveChange() {
+
+    // }
+
     const refreshCredentials = flow(function*() {
       try {
         const token = yield wocky.getLocationUploadToken()
@@ -265,8 +268,13 @@ const LocationStore = types
       BackgroundGeolocation.logger.info(`${prefix} startStandaloneGeolocation`)
 
       _stopStandaloneGeolocation()
-      watcherID = navigator.geolocation.watchPosition(onStandaloneLocation, error =>
-        warn('GPS ERROR:', error)
+
+      BackgroundGeolocation.watchPosition(
+        () => log(prefix, `watchPosition location received`),
+        error => warn(prefix, `watchPosition location error`, error),
+        {
+          interval: 5000,
+        }
       )
     }
 
@@ -278,15 +286,7 @@ const LocationStore = types
     }
 
     function _stopStandaloneGeolocation() {
-      if (watcherID !== undefined) {
-        navigator.geolocation.clearWatch(watcherID)
-        watcherID = undefined
-      }
-    }
-
-    function onStandaloneLocation(position) {
-      position.isStandalone = true
-      onLocation(position)
+      BackgroundGeolocation.stopWatchPosition()
     }
 
     function emailLog(email) {
@@ -335,13 +335,13 @@ const LocationStore = types
             if (wocky.connected && wocky.profile && wocky.profile.onboarded && self.alwaysOn) {
               try {
                 await self.refreshCredentials()
-                if (!wocky.profile.hidden.enabled) {
-                  await BackgroundGeolocation.start()
-                  await self.getCurrentPosition()
-                  log(prefix, 'Start')
-                } else {
-                  log(prefix, 'Not started because user has invisible mode')
+                await BackgroundGeolocation.start()
+                if (wocky.profile.hidden.enabled) {
+                  log(prefix, 'Started in invisible mode')
                   self.startStandaloneGeolocation()
+                } else {
+                  log(prefix, 'Start')
+                  await self.getCurrentPosition()
                 }
               } catch (err) {
                 // prevent unhandled promise rejection
@@ -382,6 +382,9 @@ const LocationStore = types
     })
 
     function willUnmount() {
+      if (wocky.profile.hidden.enabled) {
+        BackgroundGeolocation.stop()
+      }
       BackgroundGeolocation.logger.info(`${prefix} willUnmount`)
       BackgroundGeolocation.un('location', self.onLocation)
       BackgroundGeolocation.un('http', self.onHttp)
