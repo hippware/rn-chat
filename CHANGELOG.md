@@ -5,9 +5,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Tweak memoryWarning listener. (PR #4056)
-* [dev] React hooks + mobx-react v6 (#3779)
-  * Hookify 3 (PR #4054)
-* RNBGL debugging for invisible/standalone mode. (PR #4059)
+* [dev] React hooks + mobx-react v6 (#3779, PR #4054, PR #4062)
+* RNBGL debugging for invisible/standalone mode. (PR #4059, PR #4063)
 * Images sent from Android are rotated when received on iPhone (#3941)
 
 # 4.21.0 - 2019 Aug 22
