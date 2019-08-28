@@ -1,5 +1,6 @@
 import {types, getEnv, flow, getParent, getRoot} from 'mobx-state-tree'
 import {autorun, IReactionDisposer} from 'mobx'
+import {AppState} from 'react-native'
 import Permissions from 'react-native-permissions'
 import BackgroundGeolocation from 'react-native-background-geolocation'
 import DeviceInfo from 'react-native-device-info'
@@ -139,18 +140,10 @@ const LocationStore = types
     const {transport} = getEnv(self)
     const wocky: IWocky = (getParent(self) as any).wocky
     const {profile} = wocky
-    let watcherID
 
     function onLocation(position) {
       if (__DEV__ || settings.isStaging) {
-        const text = `${position.isStandalone ? 'Standalone ' : ''}location: ${JSON.stringify(
-          position
-        )}`
-        log(prefix, text)
-
-        if (position.isStandalone) {
-          BackgroundGeolocation.logger.info(`${prefix} ${text}`)
-        }
+        log(prefix, `location: ${JSON.stringify(position)}`)
       }
       self.setPosition(position.coords)
 
@@ -241,13 +234,13 @@ const LocationStore = types
       BackgroundGeolocation.logger.info(`${prefix} invalidateCredentials`)
     })
 
-    const getCurrentPosition = flow(function*() {
+    function getCurrentPosition(): Promise<any> {
       log(prefix, 'get current position')
-      yield BackgroundGeolocation.getCurrentPosition({
+      return BackgroundGeolocation.getCurrentPosition({
         timeout: 20,
         maximumAge: 1000,
       })
-    })
+    }
 
     function setBackgroundConfig(config) {
       if (config.debugSounds && !self.debugSounds) BackgroundGeolocation.playSound(1028) // newsflash
@@ -260,33 +253,27 @@ const LocationStore = types
       BackgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)
     }
 
-    function startStandaloneGeolocation() {
-      log(prefix, `startStandaloneGeolocation`)
-      BackgroundGeolocation.logger.info(`${prefix} startStandaloneGeolocation`)
+    // Start watching (foreground mode). This doesn't upload in hidden mode
+    // as long as it was restarted (so the watcher doesn't retain old values)
+    function startWatching() {
+      log(prefix, `startWatching`)
+      BackgroundGeolocation.logger.info(`${prefix} startWatching`)
 
-      _stopStandaloneGeolocation()
-      watcherID = navigator.geolocation.watchPosition(onStandaloneLocation, error =>
-        warn('GPS ERROR:', error)
+      BackgroundGeolocation.watchPosition(
+        location => {
+          BackgroundGeolocation.logger.info(
+            `${prefix} Hidden location: ${JSON.stringify(location)}`
+          )
+        },
+        error => warn(prefix, `watchPosition location error`, error),
+        {interval: 5000}
       )
     }
 
-    function stopStandaloneGeolocation() {
-      log(prefix, `stopStandaloneGeolocation`)
-      BackgroundGeolocation.logger.info(`${prefix} stopStandaloneGeolocation`)
-
-      _stopStandaloneGeolocation()
-    }
-
-    function _stopStandaloneGeolocation() {
-      if (watcherID !== undefined) {
-        navigator.geolocation.clearWatch(watcherID)
-        watcherID = undefined
-      }
-    }
-
-    function onStandaloneLocation(position) {
-      position.isStandalone = true
-      onLocation(position)
+    function stopWatching() {
+      log(prefix, `stopWatching`)
+      BackgroundGeolocation.logger.info(`${prefix} stopWatching`)
+      BackgroundGeolocation.stopWatchPosition()
     }
 
     function emailLog(email) {
@@ -309,8 +296,8 @@ const LocationStore = types
       invalidateCredentials,
       getCurrentPosition,
       setBackgroundConfig,
-      startStandaloneGeolocation,
-      stopStandaloneGeolocation,
+      startWatching,
+      stopWatching,
       emailLog,
     }
   })
@@ -333,15 +320,20 @@ const LocationStore = types
         autorun(
           async () => {
             if (wocky.connected && wocky.profile && wocky.profile.onboarded && self.alwaysOn) {
+              // If switching between start() and startSchedule() or
+              //   vice versa, the watcher has to be restarted.
+              self.stopWatching()
               try {
                 await self.refreshCredentials()
                 if (!wocky.profile.hidden.enabled) {
+                  BackgroundGeolocation.stopSchedule()
                   await BackgroundGeolocation.start()
                   await self.getCurrentPosition()
                   log(prefix, 'Start')
                 } else {
-                  log(prefix, 'Not started because user has invisible mode')
-                  self.startStandaloneGeolocation()
+                  BackgroundGeolocation.stop()
+                  BackgroundGeolocation.startSchedule()
+                  log(prefix, 'Start schedule because user has invisible mode')
                 }
               } catch (err) {
                 // prevent unhandled promise rejection
@@ -350,6 +342,8 @@ const LocationStore = types
                   `${prefix} Start onConnected reaction error ${err}`
                 )
               }
+
+              self.startWatching()
             }
           },
           {name: 'LocationStore: Start RNBGL after connected'}
@@ -360,7 +354,15 @@ const LocationStore = types
     function finish() {
       reactions.forEach(disposer => disposer())
       reactions = []
-      // self.stopStandaloneGeolocation()
+    }
+
+    function _handleAppStateChange(nextAppState) {
+      BackgroundGeolocation.logger.info(`${prefix} AppStateChange: ${nextAppState}`)
+      if (nextAppState === 'active') {
+        self.startWatching()
+      } else if (nextAppState === 'background') {
+        self.stopWatching()
+      }
     }
 
     const didMount = flow(function*() {
@@ -379,6 +381,9 @@ const LocationStore = types
         log(prefix, 'Ready: ', config)
         self.updateBackgroundConfigSuccess(config)
       }
+
+      AppState.addEventListener('change', _handleAppStateChange)
+      _handleAppStateChange(AppState.currentState)
     })
 
     function willUnmount() {
@@ -389,6 +394,7 @@ const LocationStore = types
       BackgroundGeolocation.un('motionchange', self.onMotionChange)
       BackgroundGeolocation.un('activitychange', self.onActivityChange)
       BackgroundGeolocation.un('providerchange', self.onProviderChange)
+      AppState.removeEventListener('change', _handleAppStateChange)
     }
 
     const logout = flow(function*() {
@@ -411,7 +417,14 @@ const LocationStore = types
       log(prefix, `Hide(${value}, ${expires})`)
       BackgroundGeolocation.logger.info(`${prefix} hide(${value}, ${expires})`)
       self.finish()
-      self.stopStandaloneGeolocation()
+
+      // If switching between start() and startSchedule() or vice versa,
+      //   the watcher has to be stopped and restarted otherwise it uses
+      //   'old' configuration.
+      // If turning on hidden mode, restart the watcher otherwise points
+      //   retrieved via the watcher will be uploaded.
+      self.stopWatching()
+
       if (value) {
         yield BackgroundGeolocation.stopSchedule()
         yield BackgroundGeolocation.stop()
@@ -420,11 +433,12 @@ const LocationStore = types
         // console.log(`SCHEDULE: ${schedule}`)
         BackgroundGeolocation.setConfig({schedule: [schedule]})
         yield BackgroundGeolocation.startSchedule()
-        self.startStandaloneGeolocation()
       } else {
         yield BackgroundGeolocation.stopSchedule()
         self.start()
       }
+
+      self.startWatching()
     }),
   }))
 
