@@ -261,9 +261,11 @@ const LocationStore = types
 
       BackgroundGeolocation.watchPosition(
         location => {
-          BackgroundGeolocation.logger.info(
-            `${prefix} Hidden location: ${JSON.stringify(location)}`
-          )
+          if (__DEV__ || settings.isStaging) {
+            BackgroundGeolocation.logger.info(
+              `${prefix} Hidden location: ${JSON.stringify(location)}`
+            )
+          }
         },
         error => warn(prefix, `watchPosition location error`, error),
         {interval: 5000}
