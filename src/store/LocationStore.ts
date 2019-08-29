@@ -265,8 +265,15 @@ const LocationStore = types
       BackgroundGeolocation.logger.info(`${prefix} startStandaloneGeolocation`)
 
       _stopStandaloneGeolocation()
-      watcherID = navigator.geolocation.watchPosition(onStandaloneLocation, error =>
-        warn('GPS ERROR:', error)
+      watcherID = navigator.geolocation.watchPosition(
+        onStandaloneLocation,
+        error => warn('GPS ERROR:', error),
+        {
+          timeout: 20,
+          maximumAge: 1000,
+          enableHighAccuracy: true,
+          distanceFilter: 10,
+        }
       )
     }
 
