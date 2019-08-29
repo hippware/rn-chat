@@ -8,6 +8,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [dev] React hooks + mobx-react v6 (#3779, PR #4054, PR #4062)
 * RNBGL debugging for invisible/standalone mode. (PR #4059, PR #4063)
 * Images sent from Android are rotated when received on iPhone (#3941)
+* [android] Open from the Play Store seems to crash on initial tap (#4070)
+* More accurate geolocation watching. (PR #4072)
+  * [android] Owners pin moves to new location with invisible mode (#4050)
+  * [android] Foreground location tracking (invisible mode) is poor (#4065)
+* [android] Like the app? screen does not function (#4068)
 
 # 4.21.0 - 2019 Aug 22
 
