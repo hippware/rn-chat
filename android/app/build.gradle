@@ -290,6 +290,8 @@ dependencies {
   implementation "com.google.firebase:firebase-auth:16.1.0"
   // Dynamic Links
   implementation "com.google.firebase:firebase-dynamic-links:16.1.5"
+  // Added for: https://github.com/hippware/rn-chat/issues/4070
+  implementation "com.google.firebase:firebase-invites:16.0.6"
   // Cloud Messaging / FCM
   implementation ("com.google.firebase:firebase-messaging:17.3.4"){
     exclude group: 'com.google.firebase', module: 'firebase-iid'
