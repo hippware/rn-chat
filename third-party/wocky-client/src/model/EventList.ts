@@ -54,6 +54,10 @@ export function createEvent(params: any, service: any): IEventEntity {
   if (params.image) {
     params.image = service.files.get(params.image.id, params.image)
   }
+
+  if (params.post.profile) {
+    params.post.profile = service.profiles.get(params.post.profile.id, params.post.profile)
+  }
   return EventEntity.create(params)
 }
 
