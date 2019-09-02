@@ -58,6 +58,9 @@ export function createEvent(params: any, service: any): IEventEntity {
   if (params.post.profile) {
     params.post.profile = service.profiles.get(params.post.profile.id, params.post.profile)
   }
+  if (params.sender) {
+    params.sender = service.profiles.get(params.sender.id, params.sender)
+  }
   return EventEntity.create(params)
 }
 
