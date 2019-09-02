@@ -273,7 +273,6 @@ android {
 }
 
 dependencies {
-    implementation project(':react-native-firebase')
   // Required dependencies
   //noinspection GradleCompatible
   implementation "com.google.firebase:firebase-core:17.0.1"
@@ -297,7 +296,6 @@ dependencies {
   // for Android animated gif support
   implementation 'com.facebook.fresco:fresco:1.10.0'
   implementation 'com.facebook.fresco:animated-gif:1.10.0'
-    implementation project(':@react-native-community_netinfo')
   implementation project(':react-native-splash-screen')
   implementation project(':react-native-pure-jwt')
   implementation project(':react-native-action-sheet')
