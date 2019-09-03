@@ -652,6 +652,7 @@ export class Transport {
     }
   }
 
+  // This can throw errors (due to connectionCheck())
   async requestUpload({file, size, access}: MediaUploadParams): Promise<any> {
     this.connectionCheck()
     const res = await this.client!.mutate({
@@ -1385,7 +1386,10 @@ export class Transport {
    * Reduce boilerplate for pass/fail gql mutations.
    */
   private async voidMutation({mutation, variables}: MutationOptions): Promise<void> {
-    this.connectionCheck()
+    if (!this.client || !this.connected) {
+      return
+    }
+
     let name: string = '',
       res: any
     // todo: use the name as defined by the Wocky mutation (not the name given to the wrapper)
