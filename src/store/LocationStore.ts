@@ -112,6 +112,7 @@ const LocationStore = types
         notification: {
           // android only
           channelName: 'Location Service',
+          priority: BackgroundGeolocation.NOTIFICATION_PRIORITY_MIN,
         },
         startOnBoot: true,
         stopOnTerminate: false,
