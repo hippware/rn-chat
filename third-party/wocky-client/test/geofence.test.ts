@@ -23,7 +23,7 @@ async function exitBot(user: IWocky) {
 
 describe('Geofence', () => {
   beforeAll(async () => {
-    jest.setTimeout(30000)
+    jest.setTimeout(60000)
     user1 = await createUser()
     user2 = await createUser()
   })
