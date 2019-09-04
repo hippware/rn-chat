@@ -1,6 +1,6 @@
 import {types, Instance} from 'mobx-state-tree'
 import {EventBot, IEventBotData} from './EventBot'
-import {Profile} from './Profile'
+import {Profile, IProfilePartial} from './Profile'
 
 export const EventBotInviteType = 'BOT_INVITATION_NOTIFICATION'
 export const EventBotInviteResponseType = 'BOT_INVITATION_RESPONSE_NOTIFICATION'
@@ -24,7 +24,7 @@ export const EventBotInvite = types
 export interface IEventBotInvite extends Instance<typeof EventBotInvite> {}
 
 export interface IEventBotInviteData extends IEventBotData {
-  sender: string
+  sender: IProfilePartial
   isAccepted?: boolean
   isResponse: boolean
   inviteId: number

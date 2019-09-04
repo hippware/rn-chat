@@ -397,7 +397,7 @@ export function convertNotification(edge: any): IEventData | null {
         time,
         post: {
           id: data.botItem.id,
-          profile: data.botItem.owner.id,
+          profile: convertProfile(data.botItem.owner) as any,
           title: '',
           content: '',
           image: null,
@@ -419,7 +419,7 @@ export function convertNotification(edge: any): IEventData | null {
         id,
         time,
         bot,
-        sender: data.user.id,
+        sender: convertProfile(data.user),
         isResponse: __typename === 'BotInvitationResponseNotification',
         isAccepted: data.accepted,
         inviteId: data.invitation.id,
