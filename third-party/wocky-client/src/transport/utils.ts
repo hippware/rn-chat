@@ -397,7 +397,7 @@ export function convertNotification(edge: any): IEventData | null {
         time,
         post: {
           id: data.botItem.id,
-          profile: convertProfile(data.botItem.owner).id,
+          profile: convertProfile(data.botItem.owner) as any,
           title: '',
           content: '',
           image: null,
