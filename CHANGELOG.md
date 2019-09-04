@@ -4,6 +4,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Speculative fixes:
+  * TypeError in src/components/map/AddressBar.tsx:84 (#4078)
+  * TypeError in src/store/GeocodingStore.ts:94 (#4077)
+* [android] RNBGL `foregroundService` to be true (#4087)
+* Error in MainActivity (#3957)
+
 # 4.22.0 - 2019 Aug 29
 
 * Tweak memoryWarning listener. (PR #4056)
