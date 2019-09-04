@@ -80,10 +80,12 @@ class AddressBar extends React.Component<Props> {
     homeStore!.setFocusedLocation(location)
 
     // leave time for the map animate to the location
-    setTimeout(() => {
-      Actions.botCompose({botId: bot.id, title: placeName})
-      analytics.track('botcreate_chooselocation', getSnapshot(bot))
-    }, 1000)
+    if (bot) {
+      setTimeout(() => {
+        Actions.botCompose({botId: bot.id, title: placeName})
+        analytics.track('botcreate_chooselocation', getSnapshot(bot))
+      }, 1000)
+    }
   }
 
   suggestion = ({item}) => {
