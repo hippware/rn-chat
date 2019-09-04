@@ -19,7 +19,11 @@ const BotPostData = types.model('BotPostData', {
 
 export const BotPost = types
   .compose(
-    types.compose(Base, Timeable, Loadable),
+    types.compose(
+      Base,
+      Timeable,
+      Loadable
+    ),
     createUploadable(
       'image',
       (self: any) =>
