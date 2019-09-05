@@ -10925,10 +10925,10 @@ react-native-permissions@^1.1.1:
   resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-1.1.1.tgz#4876004681ff8556454613d85249b01baff9b35b"
   integrity sha512-t0Ujm177bagjUOSzhpmkSz+LqFW04HnY9TeZFavDCmV521fQvFz82aD+POXqWsAdsJVOK3umJYBNNqCjC3g0hQ==
 
-react-native-pure-jwt@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-pure-jwt/-/react-native-pure-jwt-2.1.0.tgz#f04f4a8c8024b3d591091ed62a58f7bad5426f45"
-  integrity sha512-beIq+duckGD58Nf1IV/ed+bY/XcGAoCML/Sc+zMlQHNgV4vp+3xopX0HN7OrlWl2nD7XEmk+1w409fhfes/g/g==
+react-native-pure-jwt@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-pure-jwt/-/react-native-pure-jwt-2.1.1.tgz#9f42bceb7cd1344fa83fbe3b91f94e8303c4d543"
+  integrity sha512-2G4AlRyngxv3H2NL93Mm7tIiWh3RpJhyotfqnR9UgjQTm6UdpgrDXDTsA5e4DG7pA48cW9GeGlVg/97RSWcbJw==
 
 react-native-push-notification@^3.1.9:
   version "3.1.9"
