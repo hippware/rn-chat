@@ -287,6 +287,8 @@ dependencies {
   implementation "com.google.firebase:firebase-auth:18.1.0"
   // Dynamic Links
   implementation "com.google.firebase:firebase-dynamic-links:18.0.0"
+  // Added for: https://github.com/hippware/rn-chat/issues/4070
+  implementation "com.google.firebase:firebase-invites:17.0.0"
   // Cloud Messaging / FCM
   implementation "com.google.firebase:firebase-messaging:19.0.1"
 
