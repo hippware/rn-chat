@@ -98,7 +98,7 @@
     "validate.js": "github:hippware/validate.js#969b4fb274b0bb5234b8fe4199cc07dc1acb536e"
   },
   "devDependencies": {
-    "@babel/core": "^7.3.4",
+    "@babel/core": "^7.5.5",
     "@babel/node": "^7.2.2",
     "@babel/plugin-proposal-decorators": "^7.3.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.3.1",
