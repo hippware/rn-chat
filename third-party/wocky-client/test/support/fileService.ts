@@ -5,6 +5,10 @@ const denodeify = require('denodeify')
 const mkdir = denodeify(fs.mkdir)
 
 export class FileService implements IFileService {
+  async upload() {
+    throw new Error('not implemented')
+  }
+
   get tempDir() {
     return require('os').tmpdir()
   }
