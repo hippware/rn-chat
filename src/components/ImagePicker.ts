@@ -49,7 +49,9 @@ async function launchImageLibrary(cropping: boolean): Promise<PickerImage | void
         // cropperCircleOverlay: false,
         compressImageMaxWidth: IMG_DEFAULT_SIZE,
         compressImageMaxHeight: IMG_DEFAULT_SIZE,
-        // compressImageQuality: 0.5,
+        // A value for compressImageQuality is a work-around for
+        //   https://github.com/hippware/rn-chat/issues/3941
+        compressImageQuality: 0.8,
       })
       const image: Image = result[0] || result
 
@@ -75,6 +77,7 @@ async function launchCamera(cropping: boolean): Promise<PickerImage | void> {
       width: IMG_DEFAULT_SIZE,
       height: IMG_DEFAULT_SIZE,
       cropping,
+      compressImageQuality: 0.8,
       cropperToolbarTitle: 'Crop Image',
     })
     return {

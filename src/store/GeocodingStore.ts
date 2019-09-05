@@ -91,7 +91,10 @@ const GeocodingStore = types.model('GeocodingStore', {}).actions(self => {
     }
   }
 
-  const reverse = flow(function*({latitude, longitude}) {
+  const reverse = flow(function*(loc) {
+    if (!loc) return null
+
+    const {latitude, longitude} = loc
     try {
       const url = `${googleApiUrl}?key=${apiKey}&latlng=${latitude},${longitude}`
       const response = yield fetch(url).catch(() => {

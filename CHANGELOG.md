@@ -4,6 +4,29 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Remove detox temporarily
+
+# 4.22.1 - 2019 Sep 4
+
+* Speculative fixes:
+  * TypeError in src/components/map/AddressBar.tsx:84 (#4078)
+  * TypeError in src/store/GeocodingStore.ts:94 (#4077)
+* [android] RNBGL `foregroundService` to be true (#4087)
+* Error in MainActivity (#3957)
+* e in src/components/event-cards/EventCard.tsx:39 (#4079)
+
+# 4.22.0 - 2019 Aug 29
+
+* Tweak memoryWarning listener. (PR #4056)
+* [dev] React hooks + mobx-react v6 (#3779, PR #4054, PR #4062)
+* RNBGL debugging for invisible/standalone mode. (PR #4059, PR #4063)
+* Images sent from Android are rotated when received on iPhone (#3941)
+* [android] Open from the Play Store seems to crash on initial tap (#4070)
+* More accurate geolocation watching. (PR #4072)
+  * [android] Owners pin moves to new location with invisible mode (#4050)
+  * [android] Foreground location tracking (invisible mode) is poor (#4065)
+* [android] Like the app? screen does not function (#4068)
+
 # 4.21.0 - 2019 Aug 22
 
 * Lag with back caret & pin location (#3991)

@@ -107,10 +107,12 @@ const LocationStore = types
       const config = {
         batchSync: true,
         desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
+        foregroundService: true, // android only
         maxRecordsToPersist: 20,
         notification: {
           // android only
           channelName: 'Location Service',
+          priority: BackgroundGeolocation.NOTIFICATION_PRIORITY_MIN,
         },
         startOnBoot: true,
         stopOnTerminate: false,
@@ -142,7 +144,16 @@ const LocationStore = types
     let watcherID
 
     function onLocation(position) {
-      log(prefix, 'location: ', JSON.stringify(position))
+      if (__DEV__ || settings.isStaging) {
+        const text = `${position.isStandalone ? 'Standalone ' : ''}location: ${JSON.stringify(
+          position
+        )}`
+        log(prefix, text)
+
+        if (position.isStandalone) {
+          BackgroundGeolocation.logger.info(`${prefix} ${text}`)
+        }
+      }
       self.setPosition(position.coords)
 
       if (profile) {
@@ -252,17 +263,39 @@ const LocationStore = types
     }
 
     function startStandaloneGeolocation() {
-      stopStandaloneGeolocation()
-      watcherID = navigator.geolocation.watchPosition(onLocation, error =>
-        warn('GPS ERROR:', error)
+      log(prefix, `startStandaloneGeolocation`)
+      BackgroundGeolocation.logger.info(`${prefix} startStandaloneGeolocation`)
+
+      _stopStandaloneGeolocation()
+      watcherID = navigator.geolocation.watchPosition(
+        onStandaloneLocation,
+        error => warn('GPS ERROR:', error),
+        {
+          timeout: 20,
+          maximumAge: 1000,
+          enableHighAccuracy: true,
+          distanceFilter: 10,
+        }
       )
     }
 
     function stopStandaloneGeolocation() {
+      log(prefix, `stopStandaloneGeolocation`)
+      BackgroundGeolocation.logger.info(`${prefix} stopStandaloneGeolocation`)
+
+      _stopStandaloneGeolocation()
+    }
+
+    function _stopStandaloneGeolocation() {
       if (watcherID !== undefined) {
         navigator.geolocation.clearWatch(watcherID)
         watcherID = undefined
       }
+    }
+
+    function onStandaloneLocation(position) {
+      position.isStandalone = true
+      onLocation(position)
     }
 
     function emailLog(email) {
@@ -384,6 +417,8 @@ const LocationStore = types
   })
   .actions(self => ({
     hide: flow(function*(value: boolean, expires: Date | undefined) {
+      log(prefix, `Hide(${value}, ${expires})`)
+      BackgroundGeolocation.logger.info(`${prefix} hide(${value}, ${expires})`)
       self.finish()
       self.stopStandaloneGeolocation()
       if (value) {

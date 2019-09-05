@@ -1,5 +1,5 @@
 import React from 'react'
-import {Image, View, Linking} from 'react-native'
+import {Image, View, Linking, Platform} from 'react-native'
 import {Separator, RText, GradientButton} from './common'
 import {PINK, WHITE} from '../constants/colors'
 
@@ -29,7 +29,9 @@ const Attribution = () => (
         onPress={() => {
           // Note: this won't work in a simulator
           Linking.openURL(
-            'itms-apps://itunes.apple.com/us/app/id1295678402?mt=8&action=write-review'
+            Platform.OS === 'ios'
+              ? 'itms-apps://itunes.apple.com/us/app/id1295678402?mt=8&action=write-review'
+              : 'https://play.google.com/store/apps/details?id=com.hippware.android.tinyrobot'
           )
         }}
       >
