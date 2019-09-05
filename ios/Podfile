@@ -39,7 +39,8 @@ def testing_pods
   pod 'BugsnagReactNative', path: '../node_modules/bugsnag-react-native/'
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
   pod 'RNImageCropPicker', :path =>  '../node_modules/react-native-image-crop-picker'
-  
+  pod 'react-native-geolocation', path: '../node_modules/@react-native-community/geolocation'
+    
   # Add new pods below this line
 
 

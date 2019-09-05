@@ -10,6 +10,7 @@ import * as RNLocalize from 'react-native-localize'
 import moment from 'moment'
 import {log, warn} from '../utils/logger'
 import analytics from '../utils/analytics'
+import Geolocation from 'react-native-geolocation-service'
 
 const MAX_DATE1 = '2030-01-01-17:00'
 const MAX_DATE2 = '2030-01-01-18:00'
@@ -267,7 +268,7 @@ const LocationStore = types
       BackgroundGeolocation.logger.info(`${prefix} startStandaloneGeolocation`)
 
       _stopStandaloneGeolocation()
-      watcherID = navigator.geolocation.watchPosition(
+      watcherID = Geolocation.watchPosition(
         onStandaloneLocation,
         error => warn('GPS ERROR:', error),
         {
@@ -288,7 +289,7 @@ const LocationStore = types
 
     function _stopStandaloneGeolocation() {
       if (watcherID !== undefined) {
-        navigator.geolocation.clearWatch(watcherID)
+        Geolocation.clearWatch(watcherID)
         watcherID = undefined
       }
     }
