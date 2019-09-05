@@ -10,6 +10,10 @@ YellowBox.ignoreWarnings([
   'Warning: ViewPagerAndroid', // todo: see #3424,
   'Warning: Async Storage has been extracted',
   'RCTBridge required dispatch_sync to load',
+
+  // todo: remove these after all dependencies have updated to using hooks
+  'Warning: componentWillUpdate',
+  'Warning: componentWillReceiveProps',
 ])
 
 // Uncomment for storybook
