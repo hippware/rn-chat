@@ -19,7 +19,7 @@ export default class Report extends React.Component<Props> {
   keyboardHeight: number = 0
   text: any
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
     Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this))
   }

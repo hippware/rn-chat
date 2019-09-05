@@ -34,7 +34,7 @@ class Notifications extends React.Component<Props> {
     },
   })
 
-  async componentWillMount() {
+  async UNSAFE_componentWillMount() {
     // send all injected props + bot "up" to static context
     this.props.navigation.setParams({wocky: this.props.wocky})
 

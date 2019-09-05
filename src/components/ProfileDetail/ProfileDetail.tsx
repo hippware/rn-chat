@@ -25,11 +25,11 @@ export default class ProfileDetail extends React.Component<Props> {
   list: any
   @observable profile?: IProfile
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.load()
   }
 
-  componentWillReceiveProps(nextProps: Props) {
+  UNSAFE_componentWillReceiveProps(nextProps: Props) {
     if (nextProps && nextProps.refresh) {
       this.load()
     }

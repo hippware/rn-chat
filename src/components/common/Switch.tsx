@@ -42,7 +42,7 @@ export default class Switch extends React.Component<Props> {
     icon: null,
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const toValue = nextProps.isOn ? this.dimensions.width - this.dimensions.translateX : 0
 
     Animated.timing(this.offsetX, {

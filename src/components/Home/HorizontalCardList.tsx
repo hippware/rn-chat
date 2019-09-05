@@ -47,7 +47,7 @@ export default class HorizontalCardList extends React.Component<Props, State> {
 
   list: any
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (newProps.enabled !== this.props.enabled) {
       Animated.spring(this.state.translateY, {
         toValue: newProps.enabled ? 0 : totalHeight - buttonPadding,
