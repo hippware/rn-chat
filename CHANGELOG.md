@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Remove detox temporarily
+
 # 4.22.1 - 2019 Sep 4
 
 * Speculative fixes:
