@@ -1,6 +1,7 @@
 import {log} from './logger'
 import PushNotification from 'react-native-push-notification'
-import {Linking, Platform, PushNotificationIOS} from 'react-native'
+import {Linking, Platform} from 'react-native'
+import PushNotificationIOS from '@react-native-community/push-notification-ios'
 import analytics from './analytics'
 import BackgroundGeolocation from 'react-native-background-geolocation'
 import {RemoteMessage} from 'react-native-firebase/messaging'
