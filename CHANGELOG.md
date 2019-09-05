@@ -4,11 +4,14 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.22.1 - 2019 Sep 4
+
 * Speculative fixes:
   * TypeError in src/components/map/AddressBar.tsx:84 (#4078)
   * TypeError in src/store/GeocodingStore.ts:94 (#4077)
 * [android] RNBGL `foregroundService` to be true (#4087)
 * Error in MainActivity (#3957)
+* e in src/components/event-cards/EventCard.tsx:39 (#4079)
 
 # 4.22.0 - 2019 Aug 29
 
