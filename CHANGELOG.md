@@ -4,9 +4,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-**React Native upgrade to 0.60.0**
+**React Native upgrade to 0.60.5**
 
-* React Native 0.60.0 upgrade (#3886, PR #4005)
+* React Native 0.60.5 upgrade (#3886, PR #4005)
 
 # 4.22.1 - 2019 Sep 4
 
