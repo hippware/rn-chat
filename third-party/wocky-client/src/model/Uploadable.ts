@@ -1,6 +1,6 @@
-import {flow, types} from 'mobx-state-tree'
+import {flow, types, getEnv} from 'mobx-state-tree'
 import {Base} from './Base'
-import {upload} from '../transport/FileService'
+import {IFileService} from '../transport/FileService'
 import {MediaUploadParams} from '../transport/types'
 
 type FileType = {
@@ -24,9 +24,10 @@ export function createUploadable(property: string, accessParam: string | ((self)
     }))
     .actions(self => ({
       requestUpload: flow(function*({file, size, access}) {
+        const fs: IFileService = getEnv(self).fileService
         const data = yield self.transport.requestUpload({file, size, access})
         try {
-          yield upload(data)
+          yield fs.upload(data)
           return data.reference_url
         } catch (e) {
           yield self.transport.removeUpload(data.reference_url)

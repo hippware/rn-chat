@@ -14,6 +14,23 @@ class FileService implements IFileService {
     return fs.mkdir(folder)
   }
 
+  async upload({method, headers, url, file}: any) {
+    const resheaders: any = {}
+    const headerArr = headers.header ? headers.header : []
+    for (const header of headerArr) {
+      resheaders[header.name] = header.value
+    }
+    const res = await fs.uploadFiles({
+      toUrl: url,
+      method,
+      headers: resheaders,
+      files: [{name: file.name, filename: file.name, filetype: 'image/jpeg', filepath: file.uri}],
+    }).promise
+    if (res.statusCode !== 200) {
+      throw new Error('Server error')
+    }
+  }
+
   async getImageSize(uri: string): Promise<{width: number; height: number}> {
     return new Promise<{width; height}>((resolve, reject) =>
       Image.getSize(

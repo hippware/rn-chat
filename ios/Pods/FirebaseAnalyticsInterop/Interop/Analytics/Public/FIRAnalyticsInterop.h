@@ -16,7 +16,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class FIRAConditionalUserProperty;
+@protocol FIRAnalyticsInteropListener;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -24,17 +24,18 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol FIRAnalyticsInterop
 
 /// Sets user property when trigger event is logged. This API is only available in the SDK.
-- (void)setConditionalUserProperty:(FIRAConditionalUserProperty *)conditionalUserProperty;
+- (void)setConditionalUserProperty:(NSDictionary<NSString *, id> *)conditionalUserProperty;
 
 /// Clears user property if set.
 - (void)clearConditionalUserProperty:(NSString *)userPropertyName
+                           forOrigin:(NSString *)origin
                       clearEventName:(NSString *)clearEventName
-                clearEventParameters:(NSDictionary *)clearEventParameters;
+                clearEventParameters:(NSDictionary<NSString *, NSString *> *)clearEventParameters;
 
 /// Returns currently set user properties.
-- (NSArray<FIRAConditionalUserProperty *> *)conditionalUserProperties:(NSString *)origin
-                                                   propertyNamePrefix:
-                                                       (NSString *)propertyNamePrefix;
+- (NSArray<NSDictionary<NSString *, NSString *> *> *)conditionalUserProperties:(NSString *)origin
+                                                            propertyNamePrefix:
+                                                                (NSString *)propertyNamePrefix;
 
 /// Returns the maximum number of user properties.
 - (NSInteger)maxUserProperties:(NSString *)origin;
@@ -46,6 +47,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Sets user property.
 - (void)setUserPropertyWithOrigin:(NSString *)origin name:(NSString *)name value:(id)value;
+
+/// Registers an Analytics listener for the given origin.
+- (void)registerAnalyticsListener:(id<FIRAnalyticsInteropListener>)listener
+                       withOrigin:(NSString *)origin;
+
+/// Unregisters an Analytics listener for the given origin.
+- (void)unregisterAnalyticsListenerWithOrigin:(NSString *)origin;
 
 @end
 

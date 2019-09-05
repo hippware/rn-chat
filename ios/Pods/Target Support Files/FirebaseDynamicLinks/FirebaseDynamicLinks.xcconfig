@@ -1,8 +1,7 @@
 CONFIGURATION_BUILD_DIR = ${PODS_CONFIGURATION_BUILD_DIR}/FirebaseDynamicLinks
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/FirebaseAnalytics/Frameworks" "${PODS_ROOT}/FirebaseInstanceID/Frameworks" "${PODS_ROOT}/GoogleAppMeasurement/Frameworks"
 GCC_C_LANGUAGE_STANDARD = c99
-GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1 FIRDynamicLinks_VERSION=3.3.0 FIRDynamicLinks3P GIN_SCION_LOGGING
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/FirebaseDynamicLinks" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/FirebaseAnalyticsInterop" "${PODS_ROOT}/Headers/Public/FirebaseCore" "${PODS_ROOT}/Headers/Public/FirebaseDynamicLinks" "${PODS_ROOT}/Headers/Public/GoogleUtilities" "${PODS_ROOT}/Headers/Public/nanopb" "${PODS_TARGET_SRCROOT}"/Firebase
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1 FIRDynamicLinks_VERSION=4.0.2 FIRDynamicLinks3P GIN_SCION_LOGGING
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/FirebaseDynamicLinks" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/FirebaseAnalyticsInterop" "${PODS_ROOT}/Headers/Public/FirebaseCore" "${PODS_ROOT}/Headers/Public/FirebaseCoreDiagnostics" "${PODS_ROOT}/Headers/Public/FirebaseCoreDiagnosticsInterop" "${PODS_ROOT}/Headers/Public/FirebaseDynamicLinks" "${PODS_ROOT}/Headers/Public/GoogleDataTransport" "${PODS_ROOT}/Headers/Public/GoogleDataTransportCCTSupport" "${PODS_ROOT}/Headers/Public/GoogleUtilities" "${PODS_ROOT}/Headers/Public/nanopb" "${PODS_TARGET_SRCROOT}"/Firebase
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_ROOT = ${SRCROOT}

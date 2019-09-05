@@ -1,5 +1,6 @@
 import React from 'react'
-import {AppState, NetInfo} from 'react-native'
+import {AppState} from 'react-native'
+import NetInfo from '@react-native-community/netinfo'
 import {reaction, observable} from 'mobx'
 import {inject} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
