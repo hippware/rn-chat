@@ -4,12 +4,16 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Update: react-native-code-push (PR #4098)
+* [android] Remove build and auto-generated files from patches (PR #4103)
+
 # 4.23.0 - 2019 Sep 5
 
 **React Native upgrade to 0.60.5**
 
 * React Native 0.60.5 upgrade (#3886, PR #4005)
 * Update lots of components.
+* [android] Owners avatar is a google pin (#4018)
 
 # 4.22.1 - 2019 Sep 4
 
