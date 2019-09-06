@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {
   View,
   FlatList,
@@ -8,7 +8,8 @@ import {
   Image,
   ViewStyle,
 } from 'react-native'
-import {observer, inject} from 'mobx-react'
+import {inject} from 'mobx-react'
+
 import {colors} from '../../constants'
 import ActiveGeofenceBot from './ActiveGeofenceBot'
 import HeaderLocationOverlay from './HeaderLocationOverlay'
@@ -21,10 +22,10 @@ import InvisibleModeOverlay from './InvisibleModeOverlay'
 import {settings} from '../../globals'
 import {INavStore} from '../../store/NavStore'
 import {IHomeStore} from '../../store/HomeStore'
-import {computed} from 'mobx'
 import {ILocationShare} from 'third-party/wocky-client/src/model/LocationShare'
 import {getType} from 'mobx-state-tree'
 import ActiveLocationSharer from './ActiveLocationSharer'
+import {observer} from 'mobx-react-lite'
 
 type Props = {
   wocky?: IWocky
@@ -34,47 +35,45 @@ type Props = {
   enabled: boolean
 }
 
-type State = {
-  yOffset: Animated.Value
-}
-
 export interface IActiveBannerItem {
   outerStyle: ViewStyle
   innerStyle: ViewStyle
 }
 
-@inject('wocky', 'analytics', 'homeStore', 'navStore')
-@observer
-export default class ActiveGeoBotBanner extends React.Component<Props, State> {
-  state: State = {
-    yOffset: new Animated.Value(0),
-  }
+const ActiveGeoBotBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
+  observer(({enabled, wocky, navStore, homeStore, analytics}: Props) => {
+    const [yOffset] = useState(new Animated.Value(0))
 
-  @computed
-  get bannerItems(): Array<ILocationShare | IBot> {
-    const {profile, activeBots} = this.props.wocky!
-    return profile ? [...profile.locationSharers.list.slice(), ...activeBots.slice()] : []
-  }
+    const {profile, activeBots} = wocky!
+    const bannerItems = profile
+      ? [...profile.locationSharers.list.slice(), ...activeBots.slice()]
+      : []
 
-  UNSAFE_componentWillReceiveProps(newProps) {
-    if (newProps.enabled !== this.props.enabled) {
-      const hide = !newProps.enabled
-      Animated.spring(this.state.yOffset, {
-        toValue: hide ? -180 : 0,
+    useEffect(() => {
+      Animated.spring(yOffset, {
+        toValue: enabled ? 0 : -180,
         // speed: 6,
       }).start()
-    }
-  }
+    }, [enabled])
 
-  render() {
-    const {wocky, navStore, homeStore} = this.props
+    const renderActiveBot = ({item}: {item: IBot | ILocationShare}) =>
+      getType(item).name === 'Bot' ? (
+        <ActiveGeofenceBot bot={item as IBot} outerStyle={styles.outer} innerStyle={styles.inner} />
+      ) : (
+        <ActiveLocationSharer
+          sharer={item as ILocationShare}
+          outerStyle={styles.outer}
+          innerStyle={styles.inner}
+        />
+      )
+
     return (
       <Animated.View
         style={{
-          transform: [{translateY: this.state.yOffset}],
+          transform: [{translateY: yOffset}],
         }}
         onStartShouldSetResponder={() => {
-          this.props.analytics.track(analyticsGeoWidgetTap)
+          analytics.track(analyticsGeoWidgetTap)
           return false
         }}
         pointerEvents="box-none"
@@ -91,10 +90,10 @@ export default class ActiveGeoBotBanner extends React.Component<Props, State> {
           }}
         >
           <FlatList
-            data={this.bannerItems}
+            data={bannerItems}
             horizontal
-            keyExtractor={this.keyExtractor}
-            renderItem={this.renderActiveBot}
+            keyExtractor={item => item.id}
+            renderItem={renderActiveBot}
             showsHorizontalScrollIndicator={false}
             ListEmptyComponent={<ActiveBannerPlaceholder />}
             style={{paddingLeft: 8 * k}}
@@ -108,21 +107,10 @@ export default class ActiveGeoBotBanner extends React.Component<Props, State> {
         )}
       </Animated.View>
     )
-  }
+  })
+)
 
-  keyExtractor = item => item.id
-
-  renderActiveBot = ({item}: {item: IBot | ILocationShare}) =>
-    getType(item).name === 'Bot' ? (
-      <ActiveGeofenceBot bot={item as IBot} outerStyle={styles.outer} innerStyle={styles.inner} />
-    ) : (
-      <ActiveLocationSharer
-        sharer={item as ILocationShare}
-        outerStyle={styles.outer}
-        innerStyle={styles.inner}
-      />
-    )
-}
+export default ActiveGeoBotBanner
 
 const Buttons = ({mapType}) => (
   <View
