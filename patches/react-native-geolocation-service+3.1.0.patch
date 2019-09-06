@@ -1,0 +1,25 @@
+diff --git a/node_modules/react-native-geolocation-service/android/build.gradle b/node_modules/react-native-geolocation-service/android/build.gradle
+index 6f3c063..5ff2298 100644
+--- a/node_modules/react-native-geolocation-service/android/build.gradle
++++ b/node_modules/react-native-geolocation-service/android/build.gradle
+@@ -25,6 +25,6 @@ dependencies {
+     def supportLibVersion = rootProject.hasProperty('supportLibVersion') ? rootProject.supportLibVersion : DEFAULT_SUPPORT_LIB_VERSION
+ 
+     implementation "com.facebook.react:react-native:+"
+-    implementation "com.android.support:appcompat-v7:$supportLibVersion"
++    implementation 'androidx.appcompat:appcompat:1.0.2'
+     implementation "com.google.android.gms:play-services-location:$googlePlayServicesVersion"
+ }
+diff --git a/node_modules/react-native-geolocation-service/android/src/main/java/com/agontuk/RNFusedLocation/LocationUtils.java b/node_modules/react-native-geolocation-service/android/src/main/java/com/agontuk/RNFusedLocation/LocationUtils.java
+index ce962c8..3cddd5f 100644
+--- a/node_modules/react-native-geolocation-service/android/src/main/java/com/agontuk/RNFusedLocation/LocationUtils.java
++++ b/node_modules/react-native-geolocation-service/android/src/main/java/com/agontuk/RNFusedLocation/LocationUtils.java
+@@ -7,7 +7,7 @@ import android.Manifest;
+ import android.os.Build;
+ import android.text.TextUtils;
+ import android.provider.Settings;
+-import android.support.v4.app.ActivityCompat;
++import androidx.core.app.ActivityCompat;
+ 
+ import com.facebook.react.bridge.Arguments;
+ import com.facebook.react.bridge.WritableMap;

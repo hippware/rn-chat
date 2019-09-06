@@ -163,7 +163,7 @@ const LocationStore = types
           lon: position.coords.longitude,
           accuracy: position.coords.accuracy,
           createdAt: new Date(position.timestamp),
-          // .activity does not exist if called from navigator.geolocation
+          // .activity does not exist if called from Geolocation
           activity: position.activity ? position.activity.type : null,
           activityConfidence: position.activity ? position.activity.confidence : null,
         })
