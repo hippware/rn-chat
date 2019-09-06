@@ -50,7 +50,7 @@
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
     "libphonenumber-js": "^1.6.4",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "mobx": "^5.9.0",
     "mobx-react": "^5.4.3",
     "mobx-react-lite": "^1.4.0",
