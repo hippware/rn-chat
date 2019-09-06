@@ -51,8 +51,10 @@ export class MyContact {
 
   @computed
   get displayName(): string {
-    const {givenName, familyName} = this.contact
-    return `${givenName} ${familyName}`.trim()
+    const parts: string[] = []
+    if (this.contact.givenName) parts.push(this.contact.givenName)
+    if (this.contact.familyName) parts.push(this.contact.familyName)
+    return parts.join(' ').trim()
   }
 
   @action
