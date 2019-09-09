@@ -48,7 +48,7 @@ class CurrentLocation extends React.Component<Props, State> {
       this.timeout = undefined
     }
   }
-  componentWillReceiveProps(props) {
+  UNSAFE_componentWillReceiveProps(props) {
     if (props.enabled !== undefined && this.props.enabled !== props.enabled) {
       this.toggle(props.enabled)
     }

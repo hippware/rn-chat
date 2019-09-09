@@ -36,7 +36,7 @@ class SignUp extends React.Component<Props> {
     )
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.routeName === 'signUp') {
       runInAction(
         () =>

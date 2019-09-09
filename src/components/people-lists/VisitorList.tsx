@@ -36,7 +36,7 @@ export default class VisitorList extends React.Component<Props> {
 
   @observable bot?: IBot
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.bot = this.props.wocky!.getBot({id: this.props.botId})
     // TODO: refactor (remove?), it doesn't look good because we already load bot within BotDetails
     this.bot.visitors.load!({force: true})

@@ -52,7 +52,7 @@ class MyAccount extends React.Component<Props> {
   lastName: any
   email: any
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     if (this.props.wocky!.profile) {
       this.vProfile = new ValidatableProfile(this.props.wocky!.profile!)
       this.props.profileValidationStore.setProfile(this.vProfile)

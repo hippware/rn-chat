@@ -26,7 +26,7 @@ export default class CreationHeader extends React.Component<Props> {
   @observable bot?: IBot
   trackTimeout: any
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.createBot()
     this.props.homeStore!.stopFollowingUserOnMap()
     this.trackTimeout = setTimeout(() => this.props.analytics.track('botcreate_start'), 1000)

@@ -56,7 +56,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props, State> {
     return profile ? [...profile.locationSharers.list.slice(), ...activeBots.slice()] : []
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (newProps.enabled !== this.props.enabled) {
       const hide = !newProps.enabled
       Animated.spring(this.state.yOffset, {
