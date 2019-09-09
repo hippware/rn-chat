@@ -5,7 +5,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Update: react-native-code-push (PR #4098)
-* [android] Remove build and auto-generated files from patches (PR #4103)
+  * react-native-pure-jwt (PR #4100), lodash (PR #4097)
+* [android] Remove auto-generated files from patches (PR #4103)
+* Error in pushNotifications.ts:27: Native module cannot be null (#4104)
 
 # 4.23.0 - 2019 Sep 5
 
