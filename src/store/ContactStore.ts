@@ -51,8 +51,10 @@ export class MyContact {
 
   @computed
   get displayName(): string {
-    const {givenName, familyName} = this.contact
-    return `${givenName} ${familyName}`.trim()
+    const parts: string[] = []
+    if (this.contact.givenName) parts.push(this.contact.givenName)
+    if (this.contact.familyName) parts.push(this.contact.familyName)
+    return parts.join(' ').trim()
   }
 
   @action
@@ -91,8 +93,7 @@ class ContactStore {
       ensure the contact fits the following criteria:
       1. has at least 1 phone #
       2. has either a first or last name
-      3. is not already a friend
-      4. has a matched phone number (in case the phone # is shared with a different contact)
+      3. has a matched phone number (in case the phone # is shared with a different contact)
     */
 
     const filtered = this.contacts
@@ -101,7 +102,6 @@ class ContactStore {
         c =>
           c.contact.phoneNumbers.length > 0 &&
           (c.contact.familyName || c.contact.givenName) &&
-          c.relationship !== 'FRIEND' &&
           c.phoneNumber
       )
 
