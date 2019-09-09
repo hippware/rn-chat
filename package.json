@@ -74,7 +74,7 @@
     "react-native-config": "^0.11.7",
     "react-native-contacts": "^5.0.1",
     "react-native-country-picker-modal": "^0.8.0",
-    "react-native-device-info": "3.0.0-beta.1",
+    "react-native-device-info": "3.0.0-rc.4",
     "react-native-emoji-selector": "^0.1.6",
     "react-native-extra-dimensions-android": "^1.2.5",
     "react-native-firebase": "^5.5.6",

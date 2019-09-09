@@ -37,12 +37,12 @@ import {autorun} from 'mobx'
 import {settings} from '../globals'
 
 const jsVersion = require('../../package.json').version
-const transport = new Transport(DeviceInfo.getUniqueID())
+const transport = new Transport(DeviceInfo.getUniqueIdSync())
 const {geolocation} = navigator
 const auth = firebase.auth()
 
 const appInfo = {
-  nativeVersion: DeviceInfo.getVersion(),
+  nativeVersion: DeviceInfo.getVersionSync(),
   jsVersion,
 }
 
@@ -161,7 +161,7 @@ export async function createStore() {
     const oldBinaryVersion: string | undefined =
       (storeData && storeData.version) ||
       (storeData && storeData.appInfo && storeData.appInfo.nativeVersion)
-    const isNewBinaryVersion = oldBinaryVersion && oldBinaryVersion !== DeviceInfo.getVersion()
+    const isNewBinaryVersion = oldBinaryVersion && oldBinaryVersion !== DeviceInfo.getVersionSync()
 
     // on a codepush update or new binary version, reset the cache
     if (pendingCodepush || isNewBinaryVersion) {
