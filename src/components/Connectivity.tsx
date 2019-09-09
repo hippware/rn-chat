@@ -31,11 +31,12 @@ export default class Connectivity extends React.Component<Props> {
   intervalId: any
   connectionInfo: any
   disconnectHandler: any
+  netInfoUnsubscribe: any = null
 
   componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange)
-    NetInfo.addEventListener('connectionChange', this._handleConnectionInfoChange)
-    NetInfo.getConnectionInfo().then(reach => {
+    this.netInfoUnsubscribe = NetInfo.addEventListener(this._handleConnectionInfoChange)
+    NetInfo.fetch().then(reach => {
       log('NETINFO INITIAL:', reach)
       this._handleConnectionInfoChange(reach)
     })
@@ -65,7 +66,10 @@ export default class Connectivity extends React.Component<Props> {
     clearInterval(this.intervalId)
     if (this.handler) this.handler()
     AppState.removeEventListener('change', this._handleAppStateChange)
-    NetInfo.removeEventListener('connectionChange', this._handleConnectionInfoChange)
+    if (this.netInfoUnsubscribe) {
+      this.netInfoUnsubscribe()
+      this.netInfoUnsubscribe = null
+    }
 
     this.props.locationStore!.willUnmount()
   }
