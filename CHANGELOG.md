@@ -6,8 +6,15 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Update: react-native-code-push (PR #4098)
   * react-native-pure-jwt (PR #4100), lodash (PR #4097)
+  * appcenter-cli (PR #4110)
 * [android] Remove auto-generated files from patches (PR #4103)
 * Error in pushNotifications.ts:27: Native module cannot be null (#4104)
+* [RN 0.60] Invisible mode does not work (#4076)
+* Get rid of dev warnings after RN 0.60 upgrade (PR #4108)
+* [android] Find Friends: When empty, name is showing null (#4096)
+* Find Friends: Current friends not showing the Friends button (#3880)
+* [dev] [iOS] Convert UIWebView -> WKWebView (#4074)
+  * Upgrade react-native-device-info (PR #4107)
 
 # 4.23.0 - 2019 Sep 5
 
