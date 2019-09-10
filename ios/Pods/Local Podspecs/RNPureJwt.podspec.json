@@ -1,6 +1,6 @@
 {
   "name": "RNPureJwt",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "summary": "React Native Pure JWT implementation",
   "license": "MIT",
   "authors": "Luis Felipe Zaguini",
@@ -11,7 +11,7 @@
   },
   "source": {
     "git": "https://github.com/zaguiini/react-native-pure-jwt.git",
-    "tag": "2.1.0"
+    "tag": "2.1.1"
   },
   "source_files": "ios/**/*.{h,m}",
   "dependencies": {

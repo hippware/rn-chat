@@ -11,7 +11,7 @@ PODS:
   - CocoaLumberjack (3.5.3):
     - CocoaLumberjack/Core (= 3.5.3)
   - CocoaLumberjack/Core (3.5.3)
-  - CodePush (5.6.0):
+  - CodePush (5.7.0):
     - Base64 (~> 1.1)
     - JWT (~> 3.0.0-beta.7)
     - React
@@ -199,7 +199,7 @@ PODS:
   - react-native-mixpanel (0.0.6):
     - Mixpanel (~> 3.4.5)
     - React
-  - react-native-netinfo (4.1.4):
+  - react-native-netinfo (4.2.0):
     - React
   - react-native-splash-screen (3.2.0):
     - React
@@ -235,7 +235,7 @@ PODS:
     - React
   - RNCPushNotificationIOS (1.0.2):
     - React
-  - RNDeviceInfo (2.2.2):
+  - RNDeviceInfo (3.0.0-rc.4):
     - React
   - RNFirebase (5.5.6):
     - Firebase/Core
@@ -257,7 +257,7 @@ PODS:
     - RSKImageCropper
   - RNLocalize (1.1.4):
     - React
-  - RNPureJwt (2.1.0):
+  - RNPureJwt (2.1.1):
     - JWT (= 3.0.0-beta.11)
     - React
   - RNTouchThroughView (1.1.0-beta.0):
@@ -451,7 +451,7 @@ SPEC CHECKSUMS:
   BugsnagReactNative: 3ece9f1c9c8b5ac0eba71f1ddb5b08f4865dab26
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   CocoaLumberjack: 2f44e60eb91c176d471fdba43b9e3eae6a721947
-  CodePush: 300e90b3481fa82569090406165b83745de3613a
+  CodePush: d2e54ad42df82a8db65b2d23d8191b950ba945e1
   Crashlytics: 2dfd686bcb918dc10ee0e76f7f853fe42c7bd552
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
@@ -493,7 +493,7 @@ SPEC CHECKSUMS:
   react-native-google-maps: 88d750ad441b19c24885f20d43a55ecac25939b5
   react-native-maps: 190c02ca533fddac5bb49cf17bdece3644612107
   react-native-mixpanel: f7ca1a4a436f1d3c19d9ca5d57aa47b848e97292
-  react-native-netinfo: 2aa34e02a38ae66e583bcae8c489ae0edd32b31f
+  react-native-netinfo: df39948777747f41363d6d57ed5ee1366b5b94cb
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   React-RCTActionSheet: b0f1ea83f4bf75fb966eae9bfc47b78c8d3efd90
   React-RCTAnimation: 359ba1b5690b1e87cc173558a78e82d35919333e
@@ -509,13 +509,13 @@ SPEC CHECKSUMS:
   RNBackgroundFetch: c6dd741d7f86ad981f1f03279415c5151397559a
   RNBackgroundGeolocation: 8cc02b38a945bd3bb8f0793bfe4ba65f191c86fa
   RNCPushNotificationIOS: 0b8d06ff190d84627dd17501bfb96652375970e4
-  RNDeviceInfo: 1215084f45c1059b031c530281442dc7079ccf0a
+  RNDeviceInfo: 23d34ba043d5a510b169c039484658c1cc72c258
   RNFirebase: ac0de8b24c6f91ae9459575491ed6a77327619c6
   RNFS: a8fbe7060fa49157d819466404794ad9c58e58cf
   RNGestureHandler: 5329a942fce3d41c68b84c2c2276ce06a696d8b0
   RNImageCropPicker: 0a731d984e64ee4c28bddaa7ce52262e4b80979f
   RNLocalize: 62a949d2ec5bee0eb8f39a80a48f01e2f4f67080
-  RNPureJwt: 720616d8e6d5c60f322a2af17c087d98080bd5c3
+  RNPureJwt: b9e795e38e2b6808d3b8934ce413a508e2f76863
   RNTouchThroughView: 5284ae282dc6204339198c9e89c58a020281bbac
   RSKImageCropper: a446db0e8444a036b34f3c43db01b2373baa4b2a
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23

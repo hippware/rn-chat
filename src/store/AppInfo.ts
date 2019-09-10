@@ -7,8 +7,8 @@ const jwt = require('react-native-pure-jwt').default
 
 const systemName = DeviceInfo.getSystemName()
 const systemVersion = DeviceInfo.getSystemVersion()
-const deviceId = DeviceInfo.getDeviceId()
-const uniqueId = DeviceInfo.getUniqueID()
+const deviceId = DeviceInfo.getDeviceIdSync()
+const uniqueId = DeviceInfo.getUniqueIdSync()
 
 export type Credentials = {typ: string; sub: string; phone_number?: string}
 
@@ -29,8 +29,8 @@ export const AppInfo = types
         const extras: string[] = [`${systemName} ${systemVersion}`, deviceId]
 
         if (Platform.OS === 'android') {
-          extras.push(DeviceInfo.getManufacturer())
-          extras.push(DeviceInfo.getModel())
+          extras.push(DeviceInfo.getManufacturerSync())
+          extras.push(DeviceInfo.getModelSync())
         }
 
         if (codePushStore.updateInfo) {
