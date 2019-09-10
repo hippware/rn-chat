@@ -32,7 +32,7 @@ class CurrentLocation extends React.Component<Props, State> {
   }
   timeout
 
-  componentDidMount() {
+  UNSAFE_componentDidMount() {
     const {locationStore, geocodingStore /*, enabled*/} = this.props
     // this.toggle(enabled)
     this.timeout = setTimeout(async () => {
@@ -42,7 +42,7 @@ class CurrentLocation extends React.Component<Props, State> {
       }
     })
   }
-  componentWillUnmount() {
+  UNSAFE_componentWillUnmount() {
     if (this.timeout) {
       clearTimeout(this.timeout)
       this.timeout = undefined

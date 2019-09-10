@@ -33,7 +33,7 @@ export default class Connectivity extends React.Component<Props> {
   disconnectHandler: any
   netInfoUnsubscribe: any = null
 
-  componentDidMount() {
+  UNSAFE_componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange)
     this.netInfoUnsubscribe = NetInfo.addEventListener(this._handleConnectionInfoChange)
     NetInfo.fetch().then(reach => {
@@ -62,7 +62,7 @@ export default class Connectivity extends React.Component<Props> {
     setTimeout(() => this._handleAppStateChange('active'))
   }
 
-  componentWillUnmount() {
+  UNSAFE_componentWillUnmount() {
     clearInterval(this.intervalId)
     if (this.handler) this.handler()
     AppState.removeEventListener('change', this._handleAppStateChange)

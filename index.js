@@ -12,7 +12,6 @@ YellowBox.ignoreWarnings([
   'RCTBridge required dispatch_sync to load',
 
   // todo: remove these after all dependencies have updated to using hooks
-  'Warning: componentWillUpdate',
   'Warning: componentWillReceiveProps',
 ])
 

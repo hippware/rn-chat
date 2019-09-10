@@ -42,7 +42,7 @@ class Notifications extends React.Component<Props> {
     this.props.wocky!.notifications.readAll()
   }
 
-  componentWillUnmount() {
+  UNSAFE_componentWillUnmount() {
     this.props.wocky!.notifications.setMode(1) // reset
   }
 

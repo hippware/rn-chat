@@ -24,7 +24,7 @@ export default class Report extends React.Component<Props> {
     Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this))
   }
 
-  componentDidMount() {
+  UNSAFE_componentDidMount() {
     this.mounted = true
     // hack for Android. Something about autoFocus inside Modals has been weird off for a while with no clear solutions.
     setTimeout(() => this.text.focus(), 200)

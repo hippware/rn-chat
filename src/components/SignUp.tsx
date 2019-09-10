@@ -28,7 +28,7 @@ class SignUp extends React.Component<Props> {
   email: any
   when: any
 
-  componentDidMount() {
+  UNSAFE_componentDidMount() {
     runInAction(
       () =>
         (this.vProfile =

@@ -33,7 +33,7 @@ export default class ReportUser extends React.Component<Props> {
 
   @observable profile: any
 
-  componentDidMount() {
+  UNSAFE_componentDidMount() {
     this.props.wocky.getProfile(this.props.userId).then(profile => (this.profile = profile))
   }
 

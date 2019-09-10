@@ -67,7 +67,7 @@ type Props = {
 @inject('wocky', 'locationStore', 'iconStore', 'analytics', 'homeStore', 'navStore', 'authStore')
 @observer
 class TinyRobotRouter extends React.Component<Props> {
-  componentDidMount() {
+  UNSAFE_componentDidMount() {
     const {locationStore, navStore, wocky} = this.props
 
     reaction(() => this.props.navStore!.scene, () => Keyboard.dismiss())

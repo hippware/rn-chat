@@ -23,7 +23,7 @@ class FollowersList extends React.Component<Props> {
   @observable profile: any
   searchText: any
 
-  componentDidMount() {
+  UNSAFE_componentDidMount() {
     this.getList()
   }
 
