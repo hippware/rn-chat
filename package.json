@@ -108,7 +108,7 @@
     "@babel/plugin-transform-flow-strip-types": "^7.2.3",
     "@babel/preset-typescript": "^7.1.0",
     "@babel/runtime": "^7.3.4",
-    "@jest/reporters": "^24.8.0",
+    "@jest/reporters": "^24.9.0",
     "@storybook/addon-actions": "^4.1.16",
     "@storybook/addon-links": "^4.1.16",
     "@storybook/addons": "^4.1.16",
