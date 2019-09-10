@@ -9,7 +9,7 @@ import {
 } from 'mobx-state-tree'
 import {simpleActionLogger} from 'mst-middlewares'
 // todo: use react-native-community version instead
-import {AsyncStorage, Geolocation} from 'react-native'
+import {Geolocation} from 'react-native'
 import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
 import {Transport, Wocky} from 'wocky-client'
@@ -35,6 +35,7 @@ import reportStore from './ReportStore'
 import {log} from 'src/utils/logger'
 import {autorun} from 'mobx'
 import {settings} from '../globals'
+import AsyncStorage from '@react-native-community/async-storage'
 
 const jsVersion = require('../../package.json').version
 const transport = new Transport(DeviceInfo.getUniqueIdSync())
