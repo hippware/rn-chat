@@ -21,7 +21,7 @@ type Props = {
 @observer
 class LocationWarning extends React.Component<Props> {
   handler
-  async componentDidMount() {
+  async UNSAFE_componentDidMount() {
     if (Platform.OS === 'android') {
       try {
         await this.props.locationStore!.getCurrentPosition()
@@ -38,7 +38,7 @@ class LocationWarning extends React.Component<Props> {
     )
   }
 
-  componentWillUnmount() {
+  UNSAFE_componentWillUnmount() {
     this.handler()
   }
 

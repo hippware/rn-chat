@@ -36,7 +36,7 @@ class AddressBar extends React.Component<Props> {
   handler2?: () => void
   wrappedInstance: any // mobx-react property for use by ancestors
 
-  componentDidMount() {
+  UNSAFE_componentDidMount() {
     this.handler = reaction(
       () => ({
         searchEnabled: this.searchEnabled,
@@ -63,7 +63,7 @@ class AddressBar extends React.Component<Props> {
     )
   }
 
-  componentWillUnmount() {
+  UNSAFE_componentWillUnmount() {
     if (this.handler) this.handler()
   }
 

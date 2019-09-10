@@ -20,7 +20,7 @@ class NotificationBanner extends React.Component<any, State> {
     y: new Animated.Value(0),
   }
 
-  componentDidMount() {
+  UNSAFE_componentDidMount() {
     autorun(() => {
       const {notificationStore} = this.props
       if (notificationStore.current) {

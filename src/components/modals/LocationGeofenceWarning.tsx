@@ -22,7 +22,7 @@ type Props = {
 @observer
 class LocationGeofenceWarning extends React.Component<Props> {
   handler: any
-  componentDidMount() {
+  UNSAFE_componentDidMount() {
     this.handler = reaction(
       () => this.props.locationStore!.alwaysOn,
       alwaysOn => {
@@ -32,7 +32,7 @@ class LocationGeofenceWarning extends React.Component<Props> {
       }
     )
   }
-  componentWillUnmount() {
+  UNSAFE_componentWillUnmount() {
     this.handler()
   }
   render() {
