@@ -121,7 +121,7 @@
     "@types/react-native": "^0.57.38",
     "@types/react-test-renderer": "^16.8.1",
     "appcenter-cli": "^2.1.2",
-    "babel-jest": "^24.1.0",
+    "babel-jest": "^24.9.0",
     "bugsnag-sourcemaps": "^1.1.0",
     "detox": "^13.0.2",
     "form-data": "^1.0.0-rc4",
