@@ -38,14 +38,9 @@ import {settings} from '../globals'
 import AsyncStorage from '@react-native-community/async-storage'
 
 const jsVersion = require('../../package.json').version
-const transport = new Transport(DeviceInfo.getUniqueIdSync())
 const {geolocation} = navigator
 const auth = firebase.auth()
-
-const appInfo = {
-  nativeVersion: DeviceInfo.getVersionSync(),
-  jsVersion,
-}
+let nativeVersion: string | null = null
 
 const STORE_NAME = 'MainStore'
 
@@ -55,14 +50,6 @@ export type IEnv = {
   firebase: Firebase
   fileService: any
   geolocation: Geolocation
-}
-
-const env: IEnv = {
-  transport,
-  auth,
-  firebase,
-  fileService,
-  geolocation,
 }
 
 const cleanState = {
@@ -110,7 +97,7 @@ const Store = types
       const newState = {
         ...cleanState,
         ...getMinimalStoreData(parsed),
-        appInfo,
+        appInfo: {jsVersion: jsVersion as string, nativeVersion: nativeVersion as string},
       }
       self.wocky.beforeDestroy()
       applySnapshot(self, newState)
@@ -162,7 +149,8 @@ export async function createStore() {
     const oldBinaryVersion: string | undefined =
       (storeData && storeData.version) ||
       (storeData && storeData.appInfo && storeData.appInfo.nativeVersion)
-    const isNewBinaryVersion = oldBinaryVersion && oldBinaryVersion !== DeviceInfo.getVersionSync()
+    nativeVersion = await DeviceInfo.getVersion()
+    const isNewBinaryVersion = oldBinaryVersion && oldBinaryVersion !== nativeVersion
 
     // on a codepush update or new binary version, reset the cache
     if (pendingCodepush || isNewBinaryVersion) {
@@ -173,11 +161,22 @@ export async function createStore() {
     log('hydration error', err, storeData)
     storeData = getMinimalStoreData(storeData)
   }
+
+  const transport = new Transport(await DeviceInfo.getUniqueId())
+
+  const env: IEnv = {
+    transport,
+    auth,
+    firebase,
+    fileService,
+    geolocation,
+  }
+
   const mstStore = Store.create(
     {
       ...cleanState,
       ...storeData,
-      appInfo,
+      appInfo: {jsVersion, nativeVersion},
     },
     env
   )

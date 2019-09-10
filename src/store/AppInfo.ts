@@ -5,12 +5,9 @@ import {Platform} from 'react-native'
 import DeviceInfo from 'react-native-device-info'
 const jwt = require('react-native-pure-jwt').default
 
-const systemName = DeviceInfo.getSystemName()
-const systemVersion = DeviceInfo.getSystemVersion()
-const deviceId = DeviceInfo.getDeviceIdSync()
-const uniqueId = DeviceInfo.getUniqueIdSync()
-
 export type Credentials = {typ: string; sub: string; phone_number?: string}
+
+let manufacturer, model, systemName, systemVersion, deviceId, uniqueId
 
 export const AppInfo = types
   .model('AppInfo', {
@@ -29,8 +26,8 @@ export const AppInfo = types
         const extras: string[] = [`${systemName} ${systemVersion}`, deviceId]
 
         if (Platform.OS === 'android') {
-          extras.push(DeviceInfo.getManufacturerSync())
-          extras.push(DeviceInfo.getModelSync())
+          extras.push(manufacturer)
+          extras.push(model)
         }
 
         if (codePushStore.updateInfo) {
@@ -55,6 +52,14 @@ export const AppInfo = types
         alg: 'HS512',
       })
     }),
+    afterCreate() {
+      DeviceInfo.getManufacturer().then(m => (manufacturer = m))
+      DeviceInfo.getModel().then(m => (model = m))
+      DeviceInfo.getSystemName().then(n => (systemName = n))
+      DeviceInfo.getSystemVersion().then(v => (systemVersion = v))
+      DeviceInfo.getDeviceId().then(i => (deviceId = i))
+      DeviceInfo.getUniqueId().then(i => (uniqueId = i))
+    },
   }))
 
 export interface IAppInfo extends Instance<typeof AppInfo> {}

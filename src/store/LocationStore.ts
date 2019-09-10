@@ -299,12 +299,12 @@ const LocationStore = types
       onLocation(position)
     }
 
-    function emailLog(email) {
+    async function emailLog(email) {
       // emailLog doesn't work in iOS simulator so fetch and dump instead
-      if (DeviceInfo.isEmulator()) {
-        BackgroundGeolocation.getLog(log)
+      if (await DeviceInfo.isEmulator()) {
+        await BackgroundGeolocation.getLog(log)
       } else {
-        BackgroundGeolocation.emailLog(email)
+        await BackgroundGeolocation.emailLog(email)
       }
     }
 
