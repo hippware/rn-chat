@@ -4,9 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-* Update: react-native-code-push (PR #4098)
+* Update: react-native-code-push (PR #4098), react-native-netinfo
   * react-native-pure-jwt (PR #4100), lodash (PR #4097)
   * appcenter-cli (PR #4110)
+  * Various pods (PR #4107)
 * [android] Remove auto-generated files from patches (PR #4103)
 * Error in pushNotifications.ts:27: Native module cannot be null (#4104)
 * [RN 0.60] Invisible mode does not work (#4076)
