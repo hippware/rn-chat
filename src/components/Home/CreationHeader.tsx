@@ -1,51 +1,45 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {View, TouchableOpacity, StyleSheet} from 'react-native'
-import {observer, inject} from 'mobx-react'
+import {inject} from 'mobx-react'
 import {CloseButton, RText} from '../common'
 import AddressBar from '../map/AddressBar'
-import {observable} from 'mobx'
 import {IWocky, IBot} from 'wocky-client'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
-import IconStore from '../../store/IconStore'
 import {IHomeStore} from 'src/store/HomeStore'
+import {observer} from 'mobx-react-lite'
 
 type Props = {
   wocky?: IWocky
   analytics?: any
-  iconStore: IconStore
-  focused: boolean
   homeStore?: IHomeStore
 }
 
-@inject('wocky', 'analytics', 'iconStore', 'homeStore')
-@observer
-export default class CreationHeader extends React.Component<Props> {
-  @observable bot?: IBot
-  trackTimeout: any
+const CreationHeader = inject('wocky', 'analytics', 'iconStore', 'homeStore')(
+  observer(({wocky, analytics, homeStore}: Props) => {
+    let trackTimeout: any
 
-  UNSAFE_componentWillMount() {
-    this.createBot()
-    this.props.homeStore!.stopFollowingUserOnMap()
-    this.trackTimeout = setTimeout(() => this.props.analytics.track('botcreate_start'), 1000)
-  }
+    const [bot, setBot] = useState<IBot | null>(null)
 
-  componentWillUnmount() {
-    clearTimeout(this.trackTimeout)
-  }
+    useEffect(() => {
+      wocky!.createBot().then(b => {
+        setBot(b)
+        homeStore!.stopFollowingUserOnMap()
+        trackTimeout = setTimeout(() => analytics.track('botcreate_start'), 1000)
+      })
 
-  createBot = async () => {
-    this.bot = await this.props.wocky!.createBot()
-  }
+      return () => {
+        clearTimeout(trackTimeout)
+      }
+    }, [])
 
-  next = () => {
-    this.props.analytics.track('botcreate_chooselocation', getSnapshot(this.bot!))
-    Actions.botCompose({botId: this.bot!.id})
-  }
+    function next() {
+      analytics.track('botcreate_chooselocation', getSnapshot(bot!))
+      Actions.botCompose({botId: bot!.id})
+    }
 
-  render() {
     return (
       <View style={styles.container}>
         <View style={styles.nav}>
@@ -56,8 +50,8 @@ export default class CreationHeader extends React.Component<Props> {
             Pin Location
           </RText>
           <View style={{width: 100}}>
-            {this.bot && (
-              <TouchableOpacity onPress={this.next} style={{alignSelf: 'flex-end'}}>
+            {bot && (
+              <TouchableOpacity onPress={next} style={{alignSelf: 'flex-end'}}>
                 <RText size={17} color={colors.PINK}>
                   Next
                 </RText>
@@ -65,11 +59,13 @@ export default class CreationHeader extends React.Component<Props> {
             )}
           </View>
         </View>
-        <AddressBar focused={this.props.focused} bot={this.bot!} />
+        <AddressBar bot={bot!} />
       </View>
     )
-  }
-}
+  })
+)
+
+export default CreationHeader
 
 const styles = StyleSheet.create({
   container: {
