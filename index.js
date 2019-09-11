@@ -12,6 +12,7 @@ YellowBox.ignoreWarnings([
 
   // todo: remove these after all dependencies have updated to using hooks
   'Warning: componentWillReceiveProps',
+  'Warning: componentWillUpdate',
 ])
 
 // Uncomment for storybook

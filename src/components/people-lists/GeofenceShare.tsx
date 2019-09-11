@@ -26,7 +26,7 @@ class GeofenceShare extends React.Component<Props> {
   static rightButton = (props: Props) => <RightButton {...props} />
   @observable bot?: IBot
 
-  UNSAFE_componentDidMount() {
+  componentDidMount() {
     const {getBot, profile} = this.props.wocky!
     this.bot = getBot({id: this.props.botId})
     this.props.searchStore!.localResult.setList(profile!.sortedFriends.map(f => ({profile: f})))
