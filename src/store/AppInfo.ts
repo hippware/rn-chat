@@ -1,13 +1,11 @@
-import {types, Instance, getParent, flow} from 'mobx-state-tree'
+import {types, Instance, getParent, flow, getEnv} from 'mobx-state-tree'
 import uuid from 'uuid/v1'
 import {IStore} from './store'
 import {Platform} from 'react-native'
-import DeviceInfo from 'react-native-device-info'
+import {TRDeviceInfo} from '../utils/deviceInfoFetch'
 const jwt = require('react-native-pure-jwt').default
 
 export type Credentials = {typ: string; sub: string; phone_number?: string}
-
-let manufacturer, model, systemName, systemVersion, deviceId, uniqueId
 
 export const AppInfo = types
   .model('AppInfo', {
@@ -16,6 +14,8 @@ export const AppInfo = types
   })
   .views(self => {
     const {codePushStore} = getParent<IStore>(self)
+    const {systemName, systemVersion, deviceId, manufacturer, model} = getEnv(self)
+      .deviceInfo as TRDeviceInfo
     return {
       get longVersion(): string {
         return `${self.jsVersion}${
@@ -43,7 +43,7 @@ export const AppInfo = types
         aud: 'Wocky',
         jti: uuid(),
         iss: self.uaString,
-        dvc: uniqueId,
+        dvc: getEnv(self).deviceInfo.uniqueId,
         ...credentials,
       }
 
@@ -52,14 +52,6 @@ export const AppInfo = types
         alg: 'HS512',
       })
     }),
-    afterCreate() {
-      DeviceInfo.getManufacturer().then(m => (manufacturer = m))
-      DeviceInfo.getModel().then(m => (model = m))
-      DeviceInfo.getSystemName().then(n => (systemName = n))
-      DeviceInfo.getSystemVersion().then(v => (systemVersion = v))
-      DeviceInfo.getDeviceId().then(i => (deviceId = i))
-      DeviceInfo.getUniqueId().then(i => (uniqueId = i))
-    },
   }))
 
 export interface IAppInfo extends Instance<typeof AppInfo> {}

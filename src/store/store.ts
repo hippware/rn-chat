@@ -36,11 +36,11 @@ import {log} from 'src/utils/logger'
 import {autorun} from 'mobx'
 import {settings} from '../globals'
 import AsyncStorage from '@react-native-community/async-storage'
+import deviceInfoFetch, {TRDeviceInfo} from 'src/utils/deviceInfoFetch'
 
 const jsVersion = require('../../package.json').version
 const {geolocation} = navigator
 const auth = firebase.auth()
-let nativeVersion: string | null = null
 
 const STORE_NAME = 'MainStore'
 
@@ -50,6 +50,7 @@ export type IEnv = {
   firebase: Firebase
   fileService: any
   geolocation: Geolocation
+  deviceInfo: TRDeviceInfo
 }
 
 const cleanState = {
@@ -97,7 +98,10 @@ const Store = types
       const newState = {
         ...cleanState,
         ...getMinimalStoreData(parsed),
-        appInfo: {jsVersion: jsVersion as string, nativeVersion: nativeVersion as string},
+        appInfo: {
+          jsVersion: jsVersion as string,
+          nativeVersion: (getEnv(self).deviceInfo as TRDeviceInfo).binaryVersion,
+        },
       }
       self.wocky.beforeDestroy()
       applySnapshot(self, newState)
@@ -135,6 +139,7 @@ function tryMigrate(parsed): object {
  */
 export async function createStore() {
   let storeData
+  const deviceInfo = await deviceInfoFetch()
   try {
     const data = await AsyncStorage.getItem(STORE_NAME)
     storeData = data && JSON.parse(data)
@@ -149,8 +154,8 @@ export async function createStore() {
     const oldBinaryVersion: string | undefined =
       (storeData && storeData.version) ||
       (storeData && storeData.appInfo && storeData.appInfo.nativeVersion)
-    nativeVersion = await DeviceInfo.getVersion()
-    const isNewBinaryVersion = oldBinaryVersion && oldBinaryVersion !== nativeVersion
+
+    const isNewBinaryVersion = oldBinaryVersion && oldBinaryVersion !== deviceInfo.binaryVersion
 
     // on a codepush update or new binary version, reset the cache
     if (pendingCodepush || isNewBinaryVersion) {
@@ -170,13 +175,14 @@ export async function createStore() {
     firebase,
     fileService,
     geolocation,
+    deviceInfo,
   }
 
   const mstStore = Store.create(
     {
       ...cleanState,
       ...storeData,
-      appInfo: {jsVersion, nativeVersion},
+      appInfo: {jsVersion, nativeVersion: deviceInfo.binaryVersion},
     },
     env
   )
