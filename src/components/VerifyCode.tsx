@@ -82,8 +82,8 @@ export default class VerifyCode extends React.Component<Props> {
     try {
       const {firebaseStore} = this.props
       this.isConfirming = true
-      await firebaseStore!.confirmCode({code: this.code, resource: DeviceInfo.getUniqueIdSync()})
-      // nav will occur as a reaction in componentDidMount
+      await firebaseStore!.confirmCode({code: this.code, resource: await DeviceInfo.getUniqueId()})
+      // nav will occur as a reaction in UNSAFE_componentDidMount
     } finally {
       this.isConfirming = false
     }
