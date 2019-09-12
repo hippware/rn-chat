@@ -17,6 +17,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Find Friends: Current friends not showing the Friends button (#3880)
 * [dev] [iOS] Convert UIWebView -> WKWebView (#4074)
   * Upgrade react-native-device-info (PR #4107)
+  * Use async DeviceInfo methods. (PR #4126)
 * Switch to new AsyncStorage (PR #4118)
 * Work in progress: [dev] React hooks + mobx-react v6 (#3779, PR #4117)
 
@@ -25,6 +26,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 **React Native upgrade to 0.60.5**
 
 * React Native 0.60.5 upgrade (#3886, PR #4005)
+* [dev] image uploads fail with RN0.60 upgrade (#4061)
 * Update lots of components.
 * [android] Owners avatar is a google pin (#4018)
 
