@@ -152,10 +152,10 @@ describe('Geofence', () => {
     await enterBot(user1)
     await enterBot(user2)
     await waitFor(() => bot.visitorsSize === 2, 'bot visitors to increment')
-    await sleep(5000)
-    expect(user1.activeBots.length).toEqual(2)
-    // expect(user1.activeBots[0].title).toEqual('Test bot')
-    // expect(user1.activeBots[1].title).toEqual('Test bot2')
+    await waitFor(() => user1.activeBots.length === 2, 'active bots to increment')
+    // Order is not guaranteed
+    expect(user1.activeBots[0].title).toContain('Test bot')
+    expect(user1.activeBots[1].title).toContain('Test bot')
   })
 
   it('verify activeBots after refresh', async () => {
