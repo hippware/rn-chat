@@ -21,7 +21,7 @@ class FollowedList extends React.Component<Props> {
   @observable profile: any
   disposer: any
 
-  async UNSAFE_componentDidMount() {
+  async componentDidMount() {
     this.profile = await this.props.wocky.getProfile(this.props.userId)
     if (!this.profile) {
       // console.error(`Cannot load profile for user:${this.props.userId}`)

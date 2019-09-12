@@ -21,7 +21,7 @@ type Props = {
 @inject('wocky', 'notificationStore', 'store', 'analytics', 'searchStore')
 @observer
 export default class LiveLocationShare extends React.Component<Props> {
-  UNSAFE_componentDidMount() {
+  componentDidMount() {
     const {profile} = this.props.wocky!
     this.props.searchStore!.localResult.setList(profile!.sortedFriends.map(f => ({profile: f})))
   }

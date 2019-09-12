@@ -7,12 +7,12 @@ export default class HackMarker extends React.Component<IProps> {
   mounted = false
   state = {tracking: true}
 
-  UNSAFE_componentDidMount() {
+  componentDidMount() {
     this.mounted = true
     setTimeout(() => this.mounted && this.setState({tracking: false}), 1000)
   }
 
-  UNSAFE_componentWillUnmount() {
+  componentWillUnmount() {
     this.mounted = false
   }
 

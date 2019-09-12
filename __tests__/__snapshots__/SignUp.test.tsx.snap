@@ -172,6 +172,14 @@ exports[`Signup renders 1`] = `
               rejectResponderTermination={true}
               returnKeyType="next"
               selectionColor="rgb(89, 176, 242)"
+              store={
+                ValidateItem {
+                  "errorMessage": "",
+                  "isValid": undefined,
+                  "key": "handle",
+                  "value": "southerneer",
+                }
+              }
               style={
                 Object {
                   "color": "rgb(63,50,77)",
@@ -184,6 +192,7 @@ exports[`Signup renders 1`] = `
               }
               testID="signUpUsername"
               underlineColorAndroid="transparent"
+              value="southerneer"
             />
             <View
               style={

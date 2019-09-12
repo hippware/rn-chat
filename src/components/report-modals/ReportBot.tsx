@@ -33,7 +33,7 @@ export default class ReportBot extends React.Component<Props> {
 
   @observable bot: any
 
-  UNSAFE_componentDidMount() {
+  componentDidMount() {
     this.bot = this.props.wocky.getBot({id: this.props.botId})
   }
 

@@ -45,7 +45,7 @@ export default class VerifyCode extends React.Component<Props> {
   input: any
   disposer: any
 
-  UNSAFE_componentDidMount() {
+  componentDidMount() {
     this.disposer = when(
       () => this.props.firebaseStore!.registered,
       () => {
@@ -55,7 +55,7 @@ export default class VerifyCode extends React.Component<Props> {
     )
   }
 
-  UNSAFE_componentWillUnmount() {
+  componentWillUnmount() {
     if (this.disposer) {
       this.disposer()
       this.disposer = undefined
@@ -83,7 +83,7 @@ export default class VerifyCode extends React.Component<Props> {
       const {firebaseStore} = this.props
       this.isConfirming = true
       await firebaseStore!.confirmCode({code: this.code, resource: DeviceInfo.getUniqueIdSync()})
-      // nav will occur as a reaction in UNSAFE_componentDidMount
+      // nav will occur as a reaction in componentDidMount
     } finally {
       this.isConfirming = false
     }
