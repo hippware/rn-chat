@@ -16,7 +16,7 @@ export default class HackMarker extends React.Component<IProps> {
     this.mounted = false
   }
 
-  UNSAFE_componentDidUpdate(_0, previousState) {
+  componentDidUpdate(_0, previousState) {
     if (previousState.tracking && !this.state.tracking) {
       return
     }
