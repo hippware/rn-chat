@@ -25,9 +25,10 @@ export function createUploadable(property: string, accessParam: string | ((self)
     .actions(self => ({
       requestUpload: flow(function*({file, size, access}) {
         const fs: IFileService = getEnv(self).fileService
+        const {isEmulator} = getEnv(self).deviceInfo
         const data = yield self.transport.requestUpload({file, size, access})
         try {
-          yield fs.upload(data)
+          yield fs.upload({...data, isEmulator})
           return data.reference_url
         } catch (e) {
           yield self.transport.removeUpload(data.reference_url)
