@@ -54,7 +54,7 @@ export default class MapHome extends React.Component<Props> {
     }
   }
 
-  UNSAFE_componentDidMount() {
+  componentDidMount() {
     const {homeStore} = this.props
 
     this.reactions = [
@@ -68,7 +68,7 @@ export default class MapHome extends React.Component<Props> {
     ]
   }
 
-  UNSAFE_componentWillUnmount() {
+  componentWillUnmount() {
     this.reactions.forEach(disposer => disposer())
     this.reactions = []
   }

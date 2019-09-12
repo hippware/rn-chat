@@ -32,7 +32,7 @@ export default class CreationHeader extends React.Component<Props> {
     this.trackTimeout = setTimeout(() => this.props.analytics.track('botcreate_start'), 1000)
   }
 
-  UNSAFE_componentWillUnmount() {
+  componentWillUnmount() {
     clearTimeout(this.trackTimeout)
   }
 

@@ -45,7 +45,7 @@ export default class VerifyCode extends React.Component<Props> {
   input: any
   disposer: any
 
-  UNSAFE_componentDidMount() {
+  componentDidMount() {
     this.disposer = when(
       () => this.props.firebaseStore!.registered,
       () => {
@@ -55,7 +55,7 @@ export default class VerifyCode extends React.Component<Props> {
     )
   }
 
-  UNSAFE_componentWillUnmount() {
+  componentWillUnmount() {
     if (this.disposer) {
       this.disposer()
       this.disposer = undefined
