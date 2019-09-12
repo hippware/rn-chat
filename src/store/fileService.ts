@@ -1,6 +1,8 @@
 import fs from 'react-native-fs'
 import {Image} from 'react-native'
 import {IFileService} from 'wocky-client'
+import RNFetchBlob from 'rn-fetch-blob'
+
 class FileService implements IFileService {
   get tempDir() {
     return fs.CachesDirectoryPath
@@ -20,15 +22,26 @@ class FileService implements IFileService {
     for (const header of headerArr) {
       resheaders[header.name] = header.value
     }
-    const res = await fs.uploadFiles({
-      toUrl: url,
-      method,
-      headers: resheaders,
-      files: [{name: file.name, filename: file.name, filetype: 'image/jpeg', filepath: file.uri}],
-    }).promise
-    if (res.statusCode !== 200) {
+    // const res = await fs.uploadFiles({
+    //   toUrl: url,
+    //   method,
+    //   headers: resheaders,
+    //   files: [{name: file.name, filename: file.name, filetype: 'image/jpeg', filepath: file.uri}],
+    // }).promise
+    // if (res.statusCode !== 200) {
+    //   throw new Error('Server error')
+    // }
+    const res = await RNFetchBlob.fetch('POST', url, resheaders, {
+      name: file.name,
+      filename: file.name,
+      type: 'image/jpeg',
+      data: RNFetchBlob.wrap(file.uri),
+    })
+    if (res.respInfo.status !== 200) {
       throw new Error('Server error')
     }
+    // const res = await fetch('POST', {method: url, headers: resheaders, body: {uri: file.uri}})
+    // console.warn('RESPONSE1: ', res)
   }
 
   async getImageSize(uri: string): Promise<{width: number; height: number}> {
