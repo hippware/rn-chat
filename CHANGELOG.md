@@ -20,6 +20,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Use async DeviceInfo methods. (PR #4126)
 * Switch to new AsyncStorage (PR #4118)
 * Work in progress: [dev] React hooks + mobx-react v6 (#3779, PR #4117)
+* "Upload error: Error. Socket is closed" when uploading photo (#4114)
+  * Reworks: [dev] image uploads fail with RN0.60 upgrade (#4061)
 
 # 4.23.0 - 2019 Sep 5
 
