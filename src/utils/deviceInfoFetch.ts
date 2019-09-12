@@ -9,6 +9,7 @@ export type TRDeviceInfo = {
   deviceId: string
   uniqueId: string
   binaryVersion: string
+  isEmulator: boolean
 }
 
 export default async (): Promise<TRDeviceInfo> => {
@@ -20,9 +21,10 @@ export default async (): Promise<TRDeviceInfo> => {
     DeviceInfo.getDeviceId(),
     DeviceInfo.getUniqueId(),
     DeviceInfo.getVersion(),
+    DeviceInfo.isEmulator(),
   ]
 
-  const res = await Promise.all(promises)
+  const res = await Promise.all<any>(promises)
 
   return {
     model: res[0],
@@ -32,5 +34,6 @@ export default async (): Promise<TRDeviceInfo> => {
     deviceId: res[4],
     uniqueId: res[5],
     binaryVersion: res[6],
+    isEmulator: res[7],
   }
 }
