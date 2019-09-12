@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.24.0 - 2019 Sep 12
+
 * Update: react-native-code-push (PR #4098), react-native-netinfo
   * react-native-pure-jwt (PR #4100), lodash (PR #4097)
   * appcenter-cli (PR #4110), Various pods (PR #4107)
