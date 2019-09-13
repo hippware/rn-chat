@@ -22,7 +22,7 @@ const EditNote = withKeyboardHOC(
 
       useEffect(() => {
         setBot(props.wocky!.getBot({id: props.botId}))
-      })
+      }, [])
 
       return bot ? (
         <View>
