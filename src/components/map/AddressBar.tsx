@@ -7,14 +7,11 @@ import UseCurrentLocation from './UseCurrentLocation'
 import {RText, Separator} from '../common'
 import {observable, reaction, computed} from 'mobx'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
-// import {Actions} from 'react-native-router-flux'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 import {IHomeStore} from '../../store/HomeStore'
 import {formatText} from '../../utils/maps'
 import {IBot} from 'wocky-client'
-
-// import {getSnapshot} from 'mobx-state-tree'
 
 type Props = {
   bot: IBot
@@ -22,7 +19,7 @@ type Props = {
   geocodingStore?: any
   analytics?: any
   homeStore?: IHomeStore
-  focused?: boolean
+  isActive?: boolean
 }
 
 @inject('geocodingStore', 'analytics', 'homeStore')
@@ -31,7 +28,7 @@ class AddressBar extends React.Component<Props> {
   input: any
   @observable text: string = ''
   readonly suggestions = observable.array([])
-  @observable searchEnabled: boolean = this.props.focused === undefined ? true : this.props.focused
+  @observable searchEnabled: boolean = this.props.isActive!
   handler?: () => void
   handler2?: () => void
   wrappedInstance: any // mobx-react property for use by ancestors

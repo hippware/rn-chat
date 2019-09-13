@@ -1,15 +1,16 @@
-import React from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import {Animated, StyleSheet, View, TouchableOpacity, Image} from 'react-native'
 import {width, k, minHeight, s} from '../Global'
 import Carousel from 'react-native-snap-carousel'
 import BotCard from '../home-cards/BotCard'
 import TutorialCard from '../home-cards/TutorialCard'
 import YouCard from '../home-cards/YouCard'
-import {observer, inject} from 'mobx-react'
+import {inject} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
 import {colors} from '../../constants'
 import LocationSharerCard from '../home-cards/LocationSharerCard'
 import {Card, IHomeStore} from '../../store/HomeStore'
+import {observer} from 'mobx-react-lite'
 
 type Props = {
   enabled: boolean
@@ -17,10 +18,6 @@ type Props = {
   list: Card[]
   index: number
   homeStore?: IHomeStore
-}
-
-type State = {
-  translateY: Animated.Value
 }
 
 const cardMap = {
@@ -38,31 +35,24 @@ const marginBottom = 14 * s
 const totalHeight = height + marginBottom
 const buttonPadding = 10
 
-@inject('homeStore')
-@observer
-export default class HorizontalCardList extends React.Component<Props, State> {
-  state = {
-    translateY: new Animated.Value(0),
-  }
+const HorizontalCardList = inject('homeStore')(
+  observer(({enabled, setIndex, list, index, homeStore}: Props) => {
+    const [translateY] = useState(new Animated.Value(0))
+    const cardList = useRef(null)
 
-  list: any
-
-  UNSAFE_componentWillReceiveProps(newProps) {
-    if (newProps.enabled !== this.props.enabled) {
-      Animated.spring(this.state.translateY, {
-        toValue: newProps.enabled ? 0 : totalHeight - buttonPadding,
+    useEffect(() => {
+      Animated.spring(translateY, {
+        toValue: enabled ? 0 : totalHeight - buttonPadding,
       }).start()
-    }
+    }, [enabled])
 
-    if (newProps.index !== this.props.index && newProps.index !== this.list.currentIndex) {
-      this.list.snapToItem(newProps.index, true, false)
-    }
-  }
+    useEffect(() => {
+      if (index !== (cardList.current! as any).currentIndex) {
+        ;(cardList.current! as any).snapToItem(index, true, false)
+      }
+    }, [index])
 
-  render() {
-    const {list, setIndex, index, enabled, homeStore} = this.props
     const {mapType} = homeStore!
-    const {translateY} = this.state
     return (
       <Animated.View
         style={{alignSelf: 'flex-end', transform: [{translateY}]}}
@@ -79,9 +69,12 @@ export default class HorizontalCardList extends React.Component<Props, State> {
         >
           <Carousel
             key={`carousel${enabled}`}
-            ref={r => (this.list = r)}
+            ref={cardList}
             data={list}
-            renderItem={this.renderItem}
+            renderItem={({item}: {item: Card}) => {
+              const RenderClass = cardMap[item.name]
+              return <RenderClass {...item} />
+            }}
             firstItem={index}
             sliderWidth={width}
             itemWidth={width - 50 * k}
@@ -93,16 +86,13 @@ export default class HorizontalCardList extends React.Component<Props, State> {
         </View>
       </Animated.View>
     )
-  }
+  })
+)
 
-  renderItem = ({item, index}: {item: Card; index: number}) => {
-    const RenderClass = cardMap[item.name]
-    return <RenderClass {...item} />
-  }
-}
+export default HorizontalCardList
 
 const ButtonColumn = inject('homeStore', 'navStore', 'locationStore', 'wocky')(
-  observer(({homeStore, navStore, locationStore, wocky}) =>
+  observer(({homeStore, navStore, locationStore, wocky}: any) =>
     navStore.scene !== 'botCompose' ? (
       <View
         style={{

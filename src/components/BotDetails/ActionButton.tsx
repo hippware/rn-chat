@@ -22,19 +22,17 @@ const BotButtons = inject('wocky', 'locationStore')(
   observer((props: Props) => {
     const {bot, wocky, locationStore, style} = props
     let actionSheet: any
-    let handler: any = () => null
 
     useEffect(() => {
-      handler = autorun(() => {
+      const handler = autorun(() => {
         if (wocky!.connected && bot.isSubscribed) {
           if (!locationStore!.alwaysOn) {
             Actions.geofenceWarning({bot})
             bot.unsubscribe()
           }
         }
-
-        return handler
       })
+      return handler
     }, [])
 
     function getActions() {
