@@ -37,7 +37,7 @@ describe('New GraphQL conversation tests', () => {
     chat = alice.chats.createChat(bob.username!)
     chat.message!.setBody('hello')
     chat.sendMessage()
-    await sleep(500)
+    await waitFor(() => alice.chats.list.length === 1 && alice.chats.list[0].messages.length === 1)
     chat.message!.setBody('hello2')
     chat.sendMessage()
     await waitFor(() => alice.chats.list.length === 1 && alice.chats.list[0].messages.length === 2)
