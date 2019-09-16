@@ -132,7 +132,7 @@
     "metro-react-native-babel-preset": "0.51.0",
     "node-fetch": "^2.1.2",
     "prettier": "^1.16.4",
-    "pretty-quick": "^1.10.0",
+    "pretty-quick": "^1.11.1",
     "promise": "^8.0.3",
     "react-dom": "^16.9.0",
     "react-test-renderer": "16.8.3",
