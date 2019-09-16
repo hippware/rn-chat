@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {StyleSheet, Text, Image, Linking, View, Platform} from 'react-native'
 import {colors} from '../../constants'
 import {k, s, minHeight} from '../Global'
 import {when} from 'mobx'
-import {observer, inject} from 'mobx-react'
+import {inject} from 'mobx-react'
 import {BlurView} from 'react-native-blur'
 import {GradientButton, RText, Separator} from '../common'
 import {WHITE, TRANSLUCENT_WHITE} from 'src/constants/colors'
@@ -17,32 +17,19 @@ type Props = {
   locationStore?: ILocationStore
 }
 
-@inject('locationStore')
-@observer
-class LocationWarning extends React.Component<Props> {
-  handler
-  async componentDidMount() {
+const LocationWarning = inject('locationStore')(({afterLocationAlwaysOn, locationStore}: Props) => {
+  useEffect(() => {
     if (Platform.OS === 'android') {
-      try {
-        await this.props.locationStore!.getCurrentPosition()
-      } catch (e) {
+      locationStore!.getCurrentPosition().catch(e => {
         // ignore error
-      }
+      })
     }
 
-    this.handler = when(
-      () => this.props.locationStore!.alwaysOn,
-      () => {
-        setTimeout(() => this.props.afterLocationAlwaysOn())
-      }
-    )
-  }
+    const disposer = when(() => locationStore!.alwaysOn, afterLocationAlwaysOn)
+    return disposer
+  }, [])
 
-  componentWillUnmount() {
-    this.handler()
-  }
-
-  onPress = async () => {
+  const onPress = () => {
     if (Platform.OS === 'ios') {
       Linking.openURL('app-settings:{1}')
     } else {
@@ -50,14 +37,12 @@ class LocationWarning extends React.Component<Props> {
     }
   }
 
-  render() {
-    return Platform.OS === 'ios' ? (
-      <LocationWarningIOS onPress={this.onPress} />
-    ) : (
-      <LocationWarningAndroid onPress={this.onPress} />
-    )
-  }
-}
+  return Platform.OS === 'ios' ? (
+    <LocationWarningIOS onPress={onPress} />
+  ) : (
+    <LocationWarningAndroid onPress={onPress} />
+  )
+})
 
 export const LocationWarningIOS = ({onPress}) => (
   <View
