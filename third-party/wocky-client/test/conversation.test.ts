@@ -23,7 +23,7 @@ describe('New GraphQL conversation tests', () => {
       handle: 'b' + bob.profile!.phoneNumber!.replace('+', ''),
       firstName: 'bob',
       lastName: 'boberts',
-      email: 'b' + alice.profile!.phoneNumber!.replace('+', '') + '@hippware.com',
+      email: 'b' + bob.profile!.phoneNumber!.replace('+', '') + '@hippware.com',
     })
     await bob.profile!.save()
     await dumpProfile(bob, 'SECOND USER')
