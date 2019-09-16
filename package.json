@@ -49,7 +49,7 @@
     "bugsnag-react-native": "^2.21.1",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
-    "libphonenumber-js": "^1.6.4",
+    "libphonenumber-js": "^1.7.24",
     "lodash": "^4.17.13",
     "mobx": "^5.9.0",
     "mobx-react": "^5.4.3",
