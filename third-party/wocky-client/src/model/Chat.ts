@@ -73,7 +73,7 @@ export const Chat = types
       })
       self.messages.setRequest(self._loadMessages)
     },
-    sendMessage(file?: any) {
+    sendMessage: flow(function*(file?: any) {
       const id = Date.now() + ''
       self.messages.addToTop({
         ...self.message,
@@ -84,9 +84,9 @@ export const Chat = types
       if (file) {
         self.messages.first.setFile(file)
       }
-      self.messages.first.send()
+      yield self.messages.first.send()
       self.message.clear()
-    },
+    }),
   }))
   .postProcessSnapshot((snapshot: any) => {
     const res: any = {...snapshot}
