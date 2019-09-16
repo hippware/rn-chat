@@ -88,6 +88,19 @@ export async function createUser(num?: number, phoneNum?: string): Promise<IWock
   }
 }
 
+export async function dumpProfile(user: IWocky, label: string = 'USER') {
+  console.log(
+    `${label}: ${JSON.stringify({
+      id: user.profile!.id,
+      firstName: user.profile!.firstName,
+      lastName: user.profile!.lastName,
+      handle: user.profile!.handle,
+      phoneNumber: user.profile!.phoneNumber,
+      email: user.profile!.email,
+    })}`
+  )
+}
+
 export async function waitFor(
   condition: () => boolean,
   errorMessage: string = '',

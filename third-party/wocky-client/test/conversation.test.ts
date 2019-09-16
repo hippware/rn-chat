@@ -1,4 +1,4 @@
-import {createUser, waitFor, sleep} from './support/testuser'
+import {createUser, dumpProfile, waitFor, sleep} from './support/testuser'
 import {IWocky, IChat} from '../src'
 
 let alice: IWocky, bob: IWocky, chat: IChat
@@ -15,14 +15,18 @@ describe('New GraphQL conversation tests', () => {
       handle: 'a' + alice.profile!.phoneNumber!.replace('+', ''),
       firstName: 'alice',
       lastName: 'alerson',
+      email: 'a' + alice.profile!.phoneNumber!.replace('+', '') + '@hippware.com',
     })
     await alice.profile!.save()
+    await dumpProfile(alice, 'FIRST USER')
     await bob.profile!.update({
       handle: 'b' + bob.profile!.phoneNumber!.replace('+', ''),
       firstName: 'bob',
       lastName: 'boberts',
+      email: 'b' + alice.profile!.phoneNumber!.replace('+', '') + '@hippware.com',
     })
     await bob.profile!.save()
+    await dumpProfile(bob, 'SECOND USER')
   })
 
   it('make them friends so they can exchange messages', async () => {
