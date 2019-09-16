@@ -1,4 +1,4 @@
-import {createUser, sleep, waitFor} from './support/testuser'
+import {createUser, fillAndSaveProfile, dumpProfile, sleep, waitFor} from './support/testuser'
 import {IWocky, IProfile} from '../src'
 import {getSnapshot} from 'mobx-state-tree'
 
@@ -42,20 +42,11 @@ describe('New GraphQL profile tests', () => {
     expect(user.profile!.phoneNumber).toBeTruthy()
     user1phone = user.profile!.phoneNumber!
     user2phone = user2.profile!.phoneNumber!
-    await user.profile!.update({
-      handle: 'a' + user1phone.replace('+', ''),
-      firstName: 'name1',
-      lastName: 'lname1',
-      email: 'a@aa.com',
-    })
-    await user.profile!.save()
-    await user2.profile!.update({
-      handle: 'b' + user1phone.replace('+', ''),
-      firstName: 'name2',
-      lastName: 'lname2',
-      email: 'b@bb.com',
-    })
-    await user2.profile!.save()
+
+    await fillAndSaveProfile(user, 'name1', 'lname1')
+    await fillAndSaveProfile(user2, 'name2', 'lname2')
+    await dumpProfile(user, 'USER1')
+    await dumpProfile(user2, 'USER2')
   })
 
   it('update clientData', async () => {

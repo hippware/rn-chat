@@ -1,4 +1,4 @@
-import {createUser, sleep, waitFor} from './support/testuser'
+import {createUser, fillAndSaveProfile, dumpProfile, sleep, waitFor} from './support/testuser'
 import {IWocky, IBot, ILocation, IEventBotInvite, IEventBotGeofence} from '../src'
 
 describe('Notifications (static)', () => {
@@ -19,18 +19,10 @@ describe('Notifications (static)', () => {
   })
 
   it('update profiles with handles', async () => {
-    await alice.profile!.update({
-      handle: 'a' + alice.profile!.phoneNumber!.replace('+', ''),
-      firstName: 'alice',
-      lastName: 'alerson',
-    })
-    await alice.profile!.save()
-    await bob.profile!.update({
-      handle: 'b' + bob.profile!.phoneNumber!.replace('+', ''),
-      firstName: 'bob',
-      lastName: 'boberts',
-    })
-    await bob.profile!.save()
+    await fillAndSaveProfile(alice, 'alice', 'alerson')
+    await fillAndSaveProfile(bob, 'bob', 'boberts')
+    await dumpProfile(alice, 'ALICE')
+    await dumpProfile(bob, 'BOB')
   })
 
   it('make them friends', async () => {

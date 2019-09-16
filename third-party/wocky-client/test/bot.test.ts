@@ -1,4 +1,4 @@
-import {createUser, waitFor} from './support/testuser'
+import {createUser, fillAndSaveProfile, dumpProfile, waitFor} from './support/testuser'
 import {IWocky} from '../src'
 import {IBot} from '../src/model/Bot'
 import {Location} from '../src/model/Location'
@@ -11,8 +11,14 @@ const icon = '\u00A9\uFE0F\u00A9'
 describe('NewGraphQL tests', () => {
   beforeAll(async () => {
     jest.setTimeout(10000)
+
     user = await createUser()
     user2 = await createUser()
+    await fillAndSaveProfile(user, 'user', 'user')
+    await fillAndSaveProfile(user2, 'user2', 'user2')
+    await dumpProfile(user, 'USER')
+    await dumpProfile(user2, 'USER2')
+
     bot = await user.createBot()
     // expect(bot.icon).toBe('')
     // expect(bot.isNew).toBe(true)

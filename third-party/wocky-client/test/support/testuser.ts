@@ -88,6 +88,32 @@ export async function createUser(num?: number, phoneNum?: string): Promise<IWock
   }
 }
 
+// Fills in some common fields with commonly-used patterns
+export async function fillAndSaveProfile(user: IWocky, firstName: string, lastName: string) {
+  const handle = 'user' + user.profile!.phoneNumber!.replace('+', '')
+  await user.profile!.update({
+    handle,
+    firstName,
+    lastName,
+    // @hippware.com is useful for debugging
+    email: handle + '@hippware.com',
+  })
+  await user.profile!.save()
+}
+
+export async function dumpProfile(user: IWocky, label: string = 'USER') {
+  console.log(
+    `${label}: ${JSON.stringify({
+      id: user.profile!.id,
+      firstName: user.profile!.firstName,
+      lastName: user.profile!.lastName,
+      handle: user.profile!.handle,
+      phoneNumber: user.profile!.phoneNumber,
+      email: user.profile!.email,
+    })}`
+  )
+}
+
 export async function waitFor(
   condition: () => boolean,
   errorMessage: string = '',

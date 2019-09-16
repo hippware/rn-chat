@@ -1,4 +1,4 @@
-import {createUser, waitFor, sleep} from './support/testuser'
+import {createUser, fillAndSaveProfile, dumpProfile, waitFor, sleep} from './support/testuser'
 import {IWocky, IChat} from '../src'
 
 let alice: IWocky, bob: IWocky, chat: IChat
@@ -11,18 +11,10 @@ describe('New GraphQL conversation tests', () => {
   })
 
   it('update profiles with handles so they can send messages', async () => {
-    await alice.profile!.update({
-      handle: 'a' + alice.profile!.phoneNumber!.replace('+', ''),
-      firstName: 'alice',
-      lastName: 'alerson',
-    })
-    await alice.profile!.save()
-    await bob.profile!.update({
-      handle: 'b' + bob.profile!.phoneNumber!.replace('+', ''),
-      firstName: 'bob',
-      lastName: 'boberts',
-    })
-    await bob.profile!.save()
+    await fillAndSaveProfile(alice, 'alice', 'alerson')
+    await fillAndSaveProfile(bob, 'bob', 'boberts')
+    await dumpProfile(alice, 'ALICE')
+    await dumpProfile(bob, 'BOB')
   })
 
   it('make them friends so they can exchange messages', async () => {

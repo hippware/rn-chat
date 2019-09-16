@@ -1,4 +1,11 @@
-import {createUser, sleep, timestamp, waitFor} from './support/testuser'
+import {
+  createUser,
+  fillAndSaveProfile,
+  dumpProfile,
+  sleep,
+  timestamp,
+  waitFor,
+} from './support/testuser'
 import {IWocky} from '../src'
 import {getSnapshot} from 'mobx-state-tree'
 import {UserActivityType} from '../src/transport/types'
@@ -25,11 +32,14 @@ describe('Live Locations', () => {
   beforeAll(async () => {
     timestamp()
     jest.setTimeout(30000)
-    console.log('CREATE FIRST USER')
+
     bob = await createUser()
-    console.log('CREATE SECOND USER')
     alice = await createUser()
-    console.log('CREATION IS COMPLETE')
+
+    await fillAndSaveProfile(bob, 'bob', 'bob')
+    await fillAndSaveProfile(alice, 'alice', 'alice')
+    await dumpProfile(bob, 'BOB')
+    await dumpProfile(alice, 'ALICE')
   })
 
   it('make friends, share location', async () => {
