@@ -1,196 +1,173 @@
-import React from 'react'
+import React, {useRef, useState} from 'react'
 import {View, Image, TextInput, StyleSheet, FlatList, TouchableOpacity} from 'react-native'
-import {observer, inject} from 'mobx-react'
+import {inject} from 'mobx-react'
 import {k, minHeight} from '../Global'
 import {colors} from '../../constants'
 import UseCurrentLocation from './UseCurrentLocation'
 import {RText, Separator} from '../common'
-import {observable, reaction, computed} from 'mobx'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 import {IHomeStore} from '../../store/HomeStore'
 import {formatText} from '../../utils/maps'
 import {IBot} from 'wocky-client'
+import {observer} from 'mobx-react-lite'
+import _ from 'lodash'
 
 type Props = {
   bot: IBot
-  edit?: boolean
   geocodingStore?: any
   analytics?: any
   homeStore?: IHomeStore
   isActive?: boolean
 }
 
-@inject('geocodingStore', 'analytics', 'homeStore')
-@observer
-class AddressBar extends React.Component<Props> {
-  input: any
-  @observable text: string = ''
-  readonly suggestions = observable.array([])
-  @observable searchEnabled: boolean = this.props.isActive!
-  handler?: () => void
-  handler2?: () => void
-  wrappedInstance: any // mobx-react property for use by ancestors
+const getSuggestions = _.debounce(
+  (text, loc, query, after) => {
+    query(text, loc).then(data => {
+      after(data)
+    })
+  },
+  500,
+  {maxWait: 600}
+)
 
-  componentDidMount() {
-    this.handler = reaction(
-      () => ({
-        searchEnabled: this.searchEnabled,
-        text: this.text,
-        loc: this.props.homeStore!.mapCenterLocation,
-      }),
-      ({searchEnabled, text, loc}) => {
-        if (searchEnabled) {
-          if (!text) {
-            this.suggestions.clear()
-          } else if (loc) {
-            // log.log('GQUERY:', text, JSON.stringify(loc))
-            this.props.geocodingStore.query(text, loc).then(data => {
-              this.suggestions.replace(data)
-            })
-          }
-        } else if (loc) {
-          this.props.geocodingStore.reverse(loc).then(data => {
-            this.text = data.address
-          })
-        }
-      },
-      {delay: 500, name: 'AddressBar: update address suggestions on search view'}
-    )
-  }
+const AddressBar = inject('geocodingStore', 'analytics', 'homeStore')(
+  observer(({geocodingStore, analytics, homeStore, bot, isActive}: Props) => {
+    const input = useRef<TextInput>(null)
+    const [text, setText] = useState('')
+    const [suggestions, setSuggestions] = useState([])
+    const [searchEnabled, setSearchEnabled] = useState<boolean>(isActive!)
 
-  componentWillUnmount() {
-    if (this.handler) this.handler()
-  }
-
-  onSuggestionSelect = async placeId => {
-    const data = await this.props.geocodingStore.details(placeId)
-    this.onLocationSelect({...data, isCurrent: false})
-  }
-
-  onLocationSelect = async ({location, address, placeName}) => {
-    const {analytics, bot, homeStore} = this.props
-    this.searchEnabled = false
-    this.text = address
-    this.input.blur()
-    homeStore!.setFocusedLocation(location)
-
-    // leave time for the map animate to the location
-    if (bot) {
-      setTimeout(() => {
-        Actions.botCompose({botId: bot.id, title: placeName})
-        analytics.track('botcreate_chooselocation', getSnapshot(bot))
-      }, 1000)
+    async function onSuggestionSelect(placeId) {
+      const data = await geocodingStore.details(placeId)
+      onLocationSelect({...data, isCurrent: false})
     }
-  }
 
-  suggestion = ({item}) => {
-    const wrapBold = (text: string, key: string) => (
-      <RText key={key} weight="Bold" size={16}>
-        {text}
-      </RText>
-    )
+    async function onLocationSelect({location, address, placeName}) {
+      setSearchEnabled(false)
+      setText(address)
+      input.current!.blur()
+      homeStore!.setFocusedLocation(location)
 
-    // have to add unique place id to the key to avoid warning (text could be the same)
-    const formatSuggestion = row =>
-      formatText(row.main_text, row.main_text_matched_substrings, wrapBold, `${item.place_id}main`)
-        .concat(['\n'])
-        .concat(
-          formatText(
-            row.secondary_text,
-            row.secondary_text_matched_substrings,
-            wrapBold,
-            `${item.place_id}second`
-          )
+      // leave time for the map animate to the location
+      if (bot) {
+        setTimeout(() => {
+          Actions.botCompose({botId: bot.id, title: placeName})
+          analytics.track('botcreate_chooselocation', getSnapshot(bot))
+        }, 1000)
+      }
+    }
+
+    function suggestion({item}) {
+      const wrapBold = (t: string, key: string) => (
+        <RText key={key} weight="Bold" size={16}>
+          {t}
+        </RText>
+      )
+
+      // have to add unique place id to the key to avoid warning (text could be the same)
+      const formatSuggestion = row =>
+        formatText(
+          row.main_text,
+          row.main_text_matched_substrings,
+          wrapBold,
+          `${item.place_id}main`
         )
+          .concat(['\n'])
+          .concat(
+            formatText(
+              row.secondary_text,
+              row.secondary_text_matched_substrings,
+              wrapBold,
+              `${item.place_id}second`
+            )
+          )
 
-    return (
-      <TouchableOpacity
-        key={`${item.place_id}vjew`}
-        onPress={() => this.onSuggestionSelect(item.place_id)}
-        hitSlop={{top: 10, right: 10, bottom: 10, left: 10}}
-      >
-        <View style={styles.suggestionRow}>
+      return (
+        <TouchableOpacity
+          key={`${item.place_id}vjew`}
+          onPress={() => onSuggestionSelect(item.place_id)}
+          hitSlop={{top: 10, right: 10, bottom: 10, left: 10}}
+        >
+          <View style={styles.suggestionRow}>
+            <Image
+              style={{width: 14, marginRight: 20 * k, marginLeft: 8 * k}}
+              source={require('../../../images/iconBotLocationPink.png')}
+            />
+            <RText
+              color={colors.DARK_PURPLE}
+              style={{flex: 1, paddingLeft: 5 * k}}
+              size={16}
+              numberOfLines={2}
+            >
+              {formatSuggestion(item)}
+            </RText>
+          </View>
+        </TouchableOpacity>
+      )
+    }
+
+    const searchToggleBtn = () =>
+      searchEnabled && text.trim() !== '' ? (
+        <TouchableOpacity
+          onPress={() => {
+            // text = botStore.bot.address;
+            setSearchEnabled(false)
+          }}
+        >
           <Image
-            style={{width: 14, marginRight: 20 * k, marginLeft: 8 * k}}
-            source={require('../../../images/iconBotLocationPink.png')}
+            style={styles.searchToggleButton}
+            source={require('../../../images/leftChevronGray.png')}
           />
-          <RText
-            color={colors.DARK_PURPLE}
-            style={{flex: 1, paddingLeft: 5 * k}}
-            size={16}
-            numberOfLines={2}
-          >
-            {formatSuggestion(item)}
-          </RText>
-        </View>
-      </TouchableOpacity>
-    )
-  }
-
-  searchToggleBtn = () =>
-    this.searchEnabled && this.text.trim() !== '' ? (
-      <TouchableOpacity
-        onPress={() => {
-          // this.text = botStore.bot.address;
-          this.searchEnabled = false
-        }}
-      >
+        </TouchableOpacity>
+      ) : (
         <Image
           style={styles.searchToggleButton}
-          source={require('../../../images/leftChevronGray.png')}
+          source={require('../../../images/iconBotLocationPink.png')}
         />
-      </TouchableOpacity>
-    ) : (
-      <Image
-        style={styles.searchToggleButton}
-        source={require('../../../images/iconBotLocationPink.png')}
-      />
-    )
+      )
 
-  blur = () => (this.searchEnabled = false)
-
-  @computed
-  get showList() {
-    return this.searchEnabled && this.text.trim() !== ''
-  }
-
-  @computed
-  get showCurrentLocation() {
-    return this.searchEnabled && this.text.trim() === ''
-  }
-
-  render() {
     return (
       <View pointerEvents="box-none" style={{flex: 1, overflow: 'hidden'}}>
-        <View style={[this.showList && {flex: 1}]}>
+        <View style={[searchEnabled && text.trim() !== '' && {flex: 1}]}>
           <View style={styles.searchContainer}>
-            {this.searchToggleBtn()}
+            {searchToggleBtn()}
             <TextInput
-              autoFocus={this.searchEnabled}
+              autoFocus={searchEnabled}
               style={styles.textInput}
               autoCorrect={false}
               clearButtonMode="while-editing"
               placeholder="Enter a place or address"
-              onChangeText={text => (this.text = text)}
-              value={this.text}
-              onFocus={() => (this.searchEnabled = true)}
+              onChangeText={t => {
+                setText(t)
+                getSuggestions(
+                  t,
+                  homeStore!.mapCenterLocation,
+                  geocodingStore!.query,
+                  setSuggestions
+                )
+              }}
+              value={text}
+              onFocus={() => setSearchEnabled(true)}
               returnKeyType="search"
-              ref={r => (this.input = r)}
+              ref={input}
               selectionColor={colors.COVER_BLUE}
             />
           </View>
-          <UseCurrentLocation enabled={this.showCurrentLocation} onPress={this.onLocationSelect} />
-          {this.searchEnabled && (
+          <UseCurrentLocation
+            enabled={searchEnabled && text.trim() === ''}
+            onPress={onLocationSelect}
+          />
+          {searchEnabled && (
             <KeyboardAwareScrollView
               style={{flex: 1, backgroundColor: colors.WHITE}}
               keyboardShouldPersistTaps="always"
             >
               <FlatList
                 keyboardShouldPersistTaps="always"
-                data={this.suggestions.slice()}
-                renderItem={this.suggestion}
+                data={suggestions}
+                renderItem={suggestion}
                 keyExtractor={(item: any) => item.place_id}
                 ItemSeparatorComponent={Separator}
               />
@@ -199,8 +176,8 @@ class AddressBar extends React.Component<Props> {
         </View>
       </View>
     )
-  }
-}
+  })
+)
 export default AddressBar
 
 const styles = StyleSheet.create({
