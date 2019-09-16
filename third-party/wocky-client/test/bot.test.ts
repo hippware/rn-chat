@@ -35,7 +35,7 @@ describe('NewGraphQL tests', () => {
     const profile = await user.loadProfile(user2.username!)
     const profile2 = await user2.loadProfile(user.username!)
     await profile.invite()
-    await waitFor(() => profile2.hasSentInvite)
+    await waitFor(() => profile2.hasSentInvite, 'user invitation notification')
     await profile2.invite() // become friends!
   })
 

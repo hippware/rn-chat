@@ -21,7 +21,7 @@ describe('New GraphQL conversation tests', () => {
     const aliceBobProfile = await alice.loadProfile(bob.username!)
     const bobAliceProfile = await bob.loadProfile(alice.username!)
     await aliceBobProfile.invite()
-    await waitFor(() => bobAliceProfile.hasSentInvite)
+    await waitFor(() => bobAliceProfile.hasSentInvite, 'user invitation notification')
     await bobAliceProfile.invite() // become friends!
   })
 
@@ -31,7 +31,10 @@ describe('New GraphQL conversation tests', () => {
     chat.sendMessage()
     chat.message!.setBody('hello2')
     chat.sendMessage()
-    await waitFor(() => alice.chats.list.length === 1 && alice.chats.list[0].messages.length === 2)
+    await waitFor(
+      () => alice.chats.list.length === 1 && alice.chats.list[0].messages.length === 2,
+      'second message to arrive'
+    )
   })
 
   it("bob receives alice's messages via subscription", async () => {

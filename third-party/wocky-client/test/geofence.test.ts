@@ -40,7 +40,7 @@ describe('Geofence', () => {
     const profile1 = await user2.loadProfile(user1.username!)
     const profile2 = await user1.loadProfile(user2.username!)
     await profile1.invite()
-    await waitFor(() => profile2.hasSentInvite)
+    await waitFor(() => profile2.hasSentInvite, 'user invitation notification')
     await profile2.invite() // become friends!
   })
 
@@ -105,7 +105,7 @@ describe('Geofence', () => {
 
   it('user1 checks subscriber count after reload', async () => {
     const loadedBot2 = await user1.loadBot(bot.id)
-    await waitFor(() => !loadedBot2.loading, 'bot to load')
+    await waitFor(() => !loadedBot2.loading, 'bot2 to load')
     expect(loadedBot2.followersSize).toEqual(0)
   })
 

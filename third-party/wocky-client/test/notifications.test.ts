@@ -29,7 +29,7 @@ describe('Notifications (static)', () => {
     const aliceBobProfile = await alice.loadProfile(bob.username!)
     const bobAliceProfile = await bob.loadProfile(alice.username!)
     await aliceBobProfile.invite()
-    await waitFor(() => bobAliceProfile.hasSentInvite)
+    await waitFor(() => bobAliceProfile.hasSentInvite, 'user invitation notification')
     await bobAliceProfile.invite() // become friends!
   })
 
