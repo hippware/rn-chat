@@ -1,4 +1,11 @@
-import {createUser, fillAndSaveProfile, dumpProfile, sleep, waitFor} from './support/testuser'
+import {
+  createUser,
+  fillAndSaveProfile,
+  dumpProfile,
+  dumpBot,
+  sleep,
+  waitFor,
+} from './support/testuser'
 import {IWocky, IBot, ILocation, IEventBotInvite, IEventBotGeofence} from '../src'
 
 describe('Notifications (static)', () => {
@@ -54,6 +61,7 @@ describe('Notifications (static)', () => {
       addressData: {city: 'Los Angeles', country: 'California'},
     })
     await aliceBot.save()
+    dumpBot(aliceBot, 'aliceBot')
 
     // alice invites bob to the bot (NOTE: this is different from `share`)
     await aliceBot.invite([bob.username!])
@@ -61,6 +69,8 @@ describe('Notifications (static)', () => {
     await bob.notifications.load()
     expect(bob.notifications.count).toEqual(2)
     const invite: IEventBotInvite = bob.notifications.list[0] as IEventBotInvite
+
+    dumpBot(invite.bot, 'invite.bot')
     expect(invite).toHaveProperty('sender')
     expect(invite.sender.id).toEqual(alice.username)
     expect(invite.bot!.invitation!.accepted).toEqual(false)
@@ -73,6 +83,7 @@ describe('Notifications (static)', () => {
       longitude: 20.1,
       accuracy: 5,
     } as ILocation)
+    dumpBot(bobsAliceBot, 'bobsAliceBot')
     await sleep(1000)
     await alice.notifications.load()
     expect(alice.notifications.count).toEqual(1)
@@ -89,6 +100,7 @@ describe('Notifications (static)', () => {
     bobsAliceBot = await bob.loadBot(aliceBot.id)
     const post = bobsAliceBot.createPost('cool bot!')
     await post.publish()
+    dumpBot(bobsAliceBot, 'bobsAliceBot')
     await sleep(1000)
     await alice.notifications.load()
     expect(alice.notifications.count).toEqual(2)
@@ -125,6 +137,7 @@ describe('Notifications (static)', () => {
 
   afterAll(async () => {
     try {
+      // removing users will remove their bots
       // don't do these in parallel because of https://github.com/hippware/wocky/issues/2083
       await alice.remove()
       await bob.remove()

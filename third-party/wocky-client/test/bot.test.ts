@@ -1,4 +1,4 @@
-import {createUser, fillAndSaveProfile, dumpProfile, waitFor} from './support/testuser'
+import {createUser, fillAndSaveProfile, dumpProfile, dumpBot, waitFor} from './support/testuser'
 import {IWocky} from '../src'
 import {IBot} from '../src/model/Bot'
 import {Location} from '../src/model/Location'
@@ -40,6 +40,7 @@ describe('NewGraphQL tests', () => {
   })
 
   it('checks the bot', () => {
+    dumpBot(bot, 'bot')
     expect(bot.icon).toBe(icon)
     expect(bot.isNew).toBe(false)
     expect(bot.title).toBe('Test bot')
@@ -52,6 +53,7 @@ describe('NewGraphQL tests', () => {
       location: {latitude: 1.21, longitude: 2.21},
       title: 'Test bot!',
     })
+    dumpBot(bot, 'bot')
     expect(bot.isNew).toBe(false)
     expect(bot.title).toBe('Test bot!')
     expect(bot.location!.latitude).toBe(1.21)
@@ -66,6 +68,7 @@ describe('NewGraphQL tests', () => {
       location: {latitude: 1.2, longitude: 2.2},
       title: 'Test bot2',
     })
+    dumpBot(bot2, 'bot2')
     expect(bot2.title).toBe('Test bot2')
     expect(bot2.location!.latitude).toBe(1.2)
     expect(bot2.location!.longitude).toBe(2.2)
@@ -144,6 +147,7 @@ describe('NewGraphQL tests', () => {
     const loadedBot = await user2.loadBot(bot.id)
     await loadedBot.acceptInvitation(Location.create({latitude: 50, longitude: 50, accuracy: 5}))
     await user2.loadBot(bot.id)
+    dumpBot(bot, 'loadedBot')
     expect(loadedBot.followersSize).toEqual(1)
     // TODO: figure out why guests not incrementing after accepted invitation
     // await waitFor(
@@ -155,12 +159,7 @@ describe('NewGraphQL tests', () => {
 
   afterAll(async () => {
     try {
-      await user.removeBot(bot.id)
-      await user.removeBot(bot2.id)
-    } catch (e) {
-      // console.warn('error removing bot', e)
-    }
-    try {
+      // removing users will remove their bots
       await user.remove()
     } catch (e) {
       // console.warn('error removing user 1', e)

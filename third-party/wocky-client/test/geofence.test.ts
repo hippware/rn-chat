@@ -1,4 +1,11 @@
-import {createUser, fillAndSaveProfile, dumpProfile, sleep, waitFor} from './support/testuser'
+import {
+  createUser,
+  fillAndSaveProfile,
+  dumpProfile,
+  dumpBot,
+  sleep,
+  waitFor,
+} from './support/testuser'
 import {IWocky} from '../src'
 import {IBot} from '../src/model/Bot'
 import {Location} from '../src/model/Location'
@@ -53,6 +60,7 @@ describe('Geofence', () => {
       title: 'Test bot',
       addressData: {city: 'Koper', country: 'Slovenia'},
     })
+    dumpBot(bot, 'bot')
     expect(bot.visitorsSize).toEqual(0)
   })
 
@@ -73,6 +81,7 @@ describe('Geofence', () => {
       title: 'Test bot2',
       addressData: {city: 'Koper', country: 'Slovenia'},
     })
+    dumpBot(bot2, 'bot2')
     expect(bot2.visitorsSize).toEqual(0)
   })
 
@@ -179,16 +188,7 @@ describe('Geofence', () => {
 
   afterAll(async () => {
     try {
-      await user2.removeBot(loadedBot.id)
-    } catch (e) {
-      // noop
-    }
-    try {
-      await user1.removeBot(bot.id)
-    } catch (e) {
-      // noop
-    }
-    try {
+      // removing users will remove their bots
       await user1.remove()
       await user2.remove()
     } catch (e) {

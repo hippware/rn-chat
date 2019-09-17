@@ -1,4 +1,5 @@
 import {Wocky, IWocky, Transport} from '../../src'
+import {IBot} from '../../src/model/Bot'
 import fileService from './fileService'
 import {simpleActionLogger} from 'mst-middlewares'
 import {addMiddleware, setLivelynessChecking} from 'mobx-state-tree'
@@ -112,6 +113,10 @@ export async function dumpProfile(user: IWocky, label: string = 'USER') {
       email: user.profile!.email,
     })}`
   )
+}
+
+export async function dumpBot(bot: IBot, label: string = 'BOT') {
+  console.log(`${label}: ${JSON.stringify(bot)}`)
 }
 
 export async function waitFor(
