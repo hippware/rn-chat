@@ -1,4 +1,11 @@
-import {createUser, sleep, waitFor} from './support/testuser'
+import {
+  createUser,
+  fillAndSaveProfile,
+  dumpProfile,
+  dumpBot,
+  sleep,
+  waitFor,
+} from './support/testuser'
 import {IWocky} from '../src'
 import {IBot} from '../src/model/Bot'
 import {Location} from '../src/model/Location'
@@ -31,27 +38,16 @@ describe('Geofence', () => {
   it('update users with handles', async () => {
     await waitFor(() => user1.profile !== null, 'user1 profile to load')
     await waitFor(() => user2.profile !== null, 'user2 profile to load')
-    const user1phone = user1.profile!.phoneNumber
-    const user2phone = user2.profile!.phoneNumber
-    await user1.profile!.update({
-      handle: 'd' + user1phone!.replace('+', ''),
-      firstName: 'name1',
-      lastName: 'lname1',
-      email: 'a@aa.com',
-    })
-    await user1.profile!.save()
-    await user2.profile!.update({
-      handle: 'e' + user2phone!.replace('+', ''),
-      firstName: 'name2',
-      lastName: 'lname2',
-      email: 'a2@aa.com',
-    })
-    await user2.profile!.save()
+
+    await fillAndSaveProfile(user1, 'name1', 'lname1')
+    await fillAndSaveProfile(user2, 'name2', 'lname2')
+    await dumpProfile(user1, 'USER1')
+    await dumpProfile(user2, 'USER2')
 
     const profile1 = await user2.loadProfile(user1.username!)
     const profile2 = await user1.loadProfile(user2.username!)
     await profile1.invite()
-    await waitFor(() => profile2.hasSentInvite)
+    await waitFor(() => profile2.hasSentInvite, 'user invitation notification')
     await profile2.invite() // become friends!
   })
 
@@ -64,6 +60,7 @@ describe('Geofence', () => {
       title: 'Test bot',
       addressData: {city: 'Koper', country: 'Slovenia'},
     })
+    dumpBot(bot, 'bot')
     expect(bot.visitorsSize).toEqual(0)
   })
 
@@ -84,6 +81,7 @@ describe('Geofence', () => {
       title: 'Test bot2',
       addressData: {city: 'Koper', country: 'Slovenia'},
     })
+    dumpBot(bot2, 'bot2')
     expect(bot2.visitorsSize).toEqual(0)
   })
 
@@ -116,7 +114,7 @@ describe('Geofence', () => {
 
   it('user1 checks subscriber count after reload', async () => {
     const loadedBot2 = await user1.loadBot(bot.id)
-    await waitFor(() => !loadedBot2.loading, 'bot to load')
+    await waitFor(() => !loadedBot2.loading, 'bot2 to load')
     expect(loadedBot2.followersSize).toEqual(0)
   })
 
@@ -190,16 +188,7 @@ describe('Geofence', () => {
 
   afterAll(async () => {
     try {
-      await user2.removeBot(loadedBot.id)
-    } catch (e) {
-      // noop
-    }
-    try {
-      await user1.removeBot(bot.id)
-    } catch (e) {
-      // noop
-    }
-    try {
+      // removing users will remove their bots
       await user1.remove()
       await user2.remove()
     } catch (e) {
