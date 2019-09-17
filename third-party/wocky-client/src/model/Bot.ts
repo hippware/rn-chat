@@ -19,6 +19,7 @@ import {createUpdatable} from './Updatable'
 import {createPaginable} from './PaginableList'
 import {Base} from './Base'
 import {IPaginableList} from '../transport/types'
+import {IGeocodingService} from '../transport/IGeocodingService'
 
 const Invitation = types.model('BotInvitation', {
   id: types.string,
@@ -178,9 +179,9 @@ export const Bot = types
   .actions(self => {
     return {
       save: flow(function*() {
-        const {geocodingStore} = getRoot(self)
-        if (geocodingStore) {
-          const data = yield geocodingStore.reverse(self.location)
+        const geocodingStore = getRoot(self).geocodingStore as IGeocodingService
+        if (geocodingStore && self.location) {
+          const data: any = yield geocodingStore.reverse(self.location)
           self.load({addressData: data.meta, address: data.address})
         }
         yield self.update({})

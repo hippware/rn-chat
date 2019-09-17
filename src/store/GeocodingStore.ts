@@ -11,10 +11,10 @@ const GeocodingStore = types.model('GeocodingStore', {}).actions(self => {
   const details = flow(function*(placeId: string) {
     try {
       const url = `${googlePlacesDetailsUrl}${placeId}`
-      const response = yield fetch(url).catch(() => {
+      const response: any = yield fetch(url).catch(() => {
         return Promise.reject(new Error('Error fetching data'))
       })
-      const json = yield response.json().catch(() => {
+      const json: any = yield response.json().catch(() => {
         return Promise.reject(new Error('Error parsing server response'))
       })
       if (json.status === 'ZERO_RESULTS') {
@@ -40,11 +40,11 @@ const GeocodingStore = types.model('GeocodingStore', {}).actions(self => {
         text
       )}&location=${latitude},${longitude}`
       // log.log('URL:', url);
-      const response = yield fetch(url).catch(() => {
+      const response: any = yield fetch(url).catch(() => {
         return Promise.reject(new Error('Error fetching data'))
       })
 
-      const json = yield response.json().catch(() => {
+      const json: any = yield response.json().catch(() => {
         return Promise.reject(new Error('Error parsing server response'))
       })
       if (json.status === 'ZERO_RESULTS') {
@@ -97,11 +97,11 @@ const GeocodingStore = types.model('GeocodingStore', {}).actions(self => {
     const {latitude, longitude} = loc
     try {
       const url = `${googleApiUrl}?key=${apiKey}&latlng=${latitude},${longitude}`
-      const response = yield fetch(url).catch(() => {
+      const response: any = yield fetch(url).catch(() => {
         return Promise.reject(new Error('Error fetching data'))
       })
 
-      const json = yield response.json().catch(() => {
+      const json: any = yield response.json().catch(() => {
         return Promise.reject(new Error('Error parsing server response'))
       })
 
