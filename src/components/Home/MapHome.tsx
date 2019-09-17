@@ -54,7 +54,7 @@ const MapHome = inject('locationStore', 'wocky', 'homeStore', 'navStore')(
 
     useEffect(() => {
       let reactions = [
-        autorun(() => setCenterCoordinate(homeStore!.focusedLocation), {
+        autorun(() => setCenterCoordinate(homeStore!.focusedLocation as ILocation), {
           name: 'MapHome: re-center map on focused card',
         }),
       ]
