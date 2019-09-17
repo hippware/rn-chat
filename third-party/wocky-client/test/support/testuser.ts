@@ -1,9 +1,9 @@
 import {Wocky, IWocky, Transport} from '../../src'
+import {waitFor as _waitFor} from '../../src/transport/utils'
 import {IBot} from '../../src/model/Bot'
 import fileService from './fileService'
 import {simpleActionLogger} from 'mst-middlewares'
 import {addMiddleware, setLivelynessChecking} from 'mobx-state-tree'
-import {when} from 'mobx'
 import _ from 'lodash'
 import jsrsasign from 'jsrsasign'
 import uuid from 'uuid/v1'
@@ -124,22 +124,5 @@ export async function waitFor(
   errorMessage: string = '',
   timeout: number = 10000
 ) {
-  const promise = new Promise((resolve, reject) => {
-    when(() => {
-      let res = false
-      try {
-        res = condition()
-      } catch (e) {
-        reject(e)
-      }
-      return res
-    }, resolve)
-  })
-  const timeoutPromise = new Promise((resolve, reject) => {
-    setTimeout(
-      () => reject(`waitFor timed out in ${timeout} milliseconds.\r\n${errorMessage}`),
-      timeout
-    )
-  })
-  return Promise.race([promise, timeoutPromise])
+  return _waitFor(condition, errorMessage, timeout)
 }
