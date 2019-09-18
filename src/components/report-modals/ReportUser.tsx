@@ -1,48 +1,50 @@
-import React from 'react'
-import {TouchableOpacity, Image} from 'react-native'
-import {observer, inject} from 'mobx-react'
-import {observable} from 'mobx'
-import Report, {afterReport} from './Report'
-import {k} from '../Global'
+import React, {useEffect, useState} from 'react'
+// import {TouchableOpacity, Image} from 'react-native'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
+import Report /*, {afterReport}*/ from './Report'
+// import {k} from '../Global'
+import {IProfile} from 'wocky-client'
 
 type Props = {
   userId: string
   wocky: any
 }
 
-const sendActive = require('../../../images/sendActive.png')
+// const sendActive = require('../../../images/sendActive.png')
 
-const Right = inject('wocky', 'reportStore')(({wocky, reportStore, userId}) => (
-  <TouchableOpacity
-    onPress={async () => {
-      if (reportStore.submitting) return
-      const profile = await wocky.getProfile(userId)
-      await reportStore.reportUser(profile, wocky.profile)
-      afterReport(reportStore)
-    }}
-    style={{marginRight: 10 * k}}
-  >
-    <Image source={sendActive} />
-  </TouchableOpacity>
-))
+// const Right = inject('wocky', 'reportStore')(({wocky, reportStore, userId}) => (
+//   <TouchableOpacity
+//     onPress={async () => {
+//       if (reportStore.submitting) return
+//       const profile = await wocky.getProfile(userId)
+//       await reportStore.reportUser(profile, wocky.profile)
+//       afterReport(reportStore)
+//     }}
+//     style={{marginRight: 10 * k}}
+//   >
+//     <Image source={sendActive} />
+//   </TouchableOpacity>
+// ))
 
-@inject('wocky', 'reportStore')
-@observer
-export default class ReportUser extends React.Component<Props> {
-  static rightButton = ({userId}) => <Right userId={userId} />
+const ReportUser = inject('wocky')(
+  observer(({userId, wocky}: Props) => {
+    // todo: how to specify this in rnrf in functional components?
+    // static rightButton = ({userId}) => <Right userId={userId} />
 
-  @observable profile: any
+    const [profile, setProfile] = useState<IProfile | null>(null)
 
-  componentDidMount() {
-    this.props.wocky.getProfile(this.props.userId).then(profile => (this.profile = profile))
-  }
+    useEffect(() => {
+      wocky.getProfile(userId).then(p => setProfile(p))
+    }, [])
 
-  render() {
     return (
       <Report
-        subtitle={this.profile ? `@${this.profile.handle}` : ''}
+        subtitle={profile ? `@${profile.handle}` : ''}
         placeholder="Please describe why you are reporting this user (e.g. spam, inappropriate content, etc.)"
       />
     )
-  }
-}
+  })
+)
+
+export default ReportUser
