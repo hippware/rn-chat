@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import {
   View,
   TextInput,
@@ -9,8 +9,9 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native'
 import DeviceInfo from 'react-native-device-info'
-import {observer, inject} from 'mobx-react'
-import {observable, when} from 'mobx'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
+import {when} from 'mobx'
 import {k} from './Global'
 import {colors} from '../constants'
 import {RText} from './common'
@@ -22,75 +23,53 @@ type Props = {
   firebaseStore?: IFirebaseStore
 }
 
-@inject('firebaseStore')
-@observer
-export default class VerifyCode extends React.Component<Props> {
-  static left = () => (
-    <TouchableOpacity
-      onPress={() => Actions.pop()}
-      style={{left: 27 * k, flexDirection: 'row', alignItems: 'center'}}
-    >
-      <Image source={require('../../images/left-chevron-small.png')} style={{marginRight: 3 * k}} />
-      <RText size={15} color={colors.WARM_GREY_2}>
-        Edit Number
-      </RText>
-    </TouchableOpacity>
-  )
+const VerifyCode = inject('firebaseStore')(
+  observer(({firebaseStore}: Props) => {
+    const [code, setCode] = useState('______')
+    const [hiddenCode, setHiddenCode] = useState('')
+    const [isConfirming, setIsConfirming] = useState(false)
+    const [isResending, setIsResending] = useState(false)
+    const [isResent, setIsResent] = useState(false)
 
-  @observable code: string = '______'
-  @observable hiddenCode = ''
-  @observable isConfirming: boolean = false
-  @observable isResending: boolean = false
-  @observable isResent: boolean = false
-  input: any
-  disposer: any
+    const input = useRef<TextInput>(null)
 
-  componentDidMount() {
-    this.disposer = when(
-      () => this.props.firebaseStore!.registered,
-      () => {
-        this.isConfirming = false
-        Actions.checkProfile()
+    useEffect(() => {
+      const disposer = when(
+        () => firebaseStore!.registered,
+        () => {
+          setIsConfirming(false)
+          Actions.checkProfile()
+        }
+      )
+      return () => disposer()
+    }, [])
+
+    const processText = (text: string): void => {
+      setHiddenCode(text)
+      setCode(`${text}______`.slice(0, 6))
+    }
+
+    const resend = async () => {
+      setIsResending(true)
+      processText('')
+      // only allow one resend?
+      if (await firebaseStore!.resendCode()) {
+        setIsResent(true)
+        input.current!.focus()
       }
-    )
-  }
-
-  componentWillUnmount() {
-    if (this.disposer) {
-      this.disposer()
-      this.disposer = undefined
+      setIsResending(false)
     }
-  }
 
-  processText = (text: string): void => {
-    this.hiddenCode = text
-    this.code = `${text}______`.slice(0, 6)
-  }
-
-  resend = async () => {
-    this.isResending = true
-    this.processText('')
-    // only allow one resend?
-    if (await this.props.firebaseStore!.resendCode()) {
-      this.isResent = true
-      this.input.focus()
+    const verify = async () => {
+      try {
+        setIsConfirming(true)
+        await firebaseStore!.confirmCode({code, resource: await DeviceInfo.getUniqueId()})
+        // nav will occur as a reaction in UNSAFE_componentDidMount
+      } finally {
+        setIsConfirming(false)
+      }
     }
-    this.isResending = false
-  }
 
-  verify = async () => {
-    try {
-      const {firebaseStore} = this.props
-      this.isConfirming = true
-      await firebaseStore!.confirmCode({code: this.code, resource: await DeviceInfo.getUniqueId()})
-      // nav will occur as a reaction in UNSAFE_componentDidMount
-    } finally {
-      this.isConfirming = false
-    }
-  }
-
-  render() {
-    const {firebaseStore} = this.props
     return (
       <KeyboardAwareScrollView
         style={{flex: 1}}
@@ -117,7 +96,7 @@ export default class VerifyCode extends React.Component<Props> {
           <RText size={12.5} weight="Bold" color={colors.PINK}>
             {firebaseStore!.errorMessage}
           </RText>
-          <TouchableWithoutFeedback onPress={() => this.input.focus()}>
+          <TouchableWithoutFeedback onPress={() => input.current!.focus()}>
             {/* need inner view because of https://github.com/facebook/react-native/issues/10180 */}
             <View>
               <RText
@@ -126,7 +105,7 @@ export default class VerifyCode extends React.Component<Props> {
                 color={colors.PINK}
                 style={{letterSpacing: 15, paddingLeft: 15}}
               >
-                {this.code}
+                {code}
               </RText>
             </View>
           </TouchableWithoutFeedback>
@@ -134,11 +113,11 @@ export default class VerifyCode extends React.Component<Props> {
 
         <View style={{flexDirection: 'row', marginHorizontal: 20}}>
           <TouchableOpacity
-            disabled={this.isResent || this.isConfirming}
-            onPress={this.resend}
+            disabled={isResent || isConfirming}
+            onPress={resend}
             style={[styles.button, styles.resendBtn]}
           >
-            {this.isResent ? (
+            {isResent ? (
               <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
                 <Image
                   style={{marginRight: 10}}
@@ -147,34 +126,47 @@ export default class VerifyCode extends React.Component<Props> {
                 <Text style={styles.resendTxt}>Code Sent</Text>
               </View>
             ) : (
-              <Text style={styles.resendTxt}>
-                {this.isResending ? 'Resending...' : 'Resend Code'}
-              </Text>
+              <Text style={styles.resendTxt}>{isResending ? 'Resending...' : 'Resend Code'}</Text>
             )}
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={this.verify}
+            onPress={verify}
             style={styles.button}
-            disabled={this.hiddenCode.length < 6 || this.isConfirming}
+            disabled={hiddenCode.length < 6 || isConfirming}
           >
             <Text style={styles.verifyTxt}>{firebaseStore!.buttonText}</Text>
           </TouchableOpacity>
         </View>
         <TextInput
-          value={this.hiddenCode}
-          onChangeText={this.processText}
+          value={hiddenCode}
+          onChangeText={processText}
           style={styles.hiddenText}
           autoFocus
           autoCorrect={false}
           keyboardType="numeric"
-          ref={r => (this.input = r)}
+          ref={input}
           maxLength={6}
           caretHidden
         />
       </KeyboardAwareScrollView>
     )
-  }
+  })
+)
+;(VerifyCode as any).navigationOptions = {
+  headerLeft: (
+    <TouchableOpacity
+      onPress={() => Actions.pop()}
+      style={{left: 27 * k, flexDirection: 'row', alignItems: 'center'}}
+    >
+      <Image source={require('../../images/left-chevron-small.png')} style={{marginRight: 3 * k}} />
+      <RText size={15} color={colors.WARM_GREY_2}>
+        Edit Number
+      </RText>
+    </TouchableOpacity>
+  ),
 }
+
+export default VerifyCode
 
 const styles = StyleSheet.create({
   button: {
