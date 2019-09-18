@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import MapView from 'react-native-maps'
-import {StyleSheet, Text, Image, View, MapViewRegion} from 'react-native'
-import {observer, inject} from 'mobx-react'
-import {observable, reaction} from 'mobx'
+import {StyleSheet, Text, Image, View} from 'react-native'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
+import {autorun} from 'mobx'
 import {IWocky, ILocation} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 import {IHomeStore} from '../../store/HomeStore'
@@ -16,7 +17,6 @@ import ProfileMarker from './map-markers/ProfileMarker'
 import {INavStore} from '../../store/NavStore'
 import {k} from '../Global'
 import _ from 'lodash'
-import {warn} from '../../utils/logger'
 
 const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
@@ -24,9 +24,9 @@ const TRANS_DELTA = DEFAULT_DELTA + 0.005
 
 type Props = {
   locationStore?: ILocationStore
-  wocky?: IWocky
   homeStore?: IHomeStore
   navStore?: INavStore
+  wocky?: IWocky
 }
 
 const markerMap: {[key: string]: any} = {
@@ -35,104 +35,94 @@ const markerMap: {[key: string]: any} = {
   LocationSharerCard: ProfileMarker,
 }
 
-@inject('locationStore', 'wocky', 'homeStore', 'navStore')
-@observer
-export default class MapHome extends React.Component<Props> {
-  static defaultProps = {
-    autoZoom: true,
-  }
-  @observable areaTooLarge = false
+const MapHome = inject('locationStore', 'wocky', 'homeStore', 'navStore')(
+  observer((props: Props) => {
+    const {locationStore, homeStore, navStore, wocky} = props
+    const {
+      list,
+      detailsMode,
+      creationMode,
+      fullScreenMode,
+      mapType,
+      setMapCenter,
+      setFocusedLocation,
+    } = homeStore!
+    const {location} = locationStore!
 
-  mapRef: MapView | null = null
-  reactions: any[] = []
-  animating: boolean = false
+    const [areaTooLarge, setAreaTooLarge] = useState(false)
+    const mapRef = useRef<MapView>(null)
 
-  setCenterCoordinate = (location: ILocation) => {
-    if (this.mapRef && location) {
-      this.animating = true
-      this.mapRef.animateCamera({center: location})
-    }
-  }
-
-  componentDidMount() {
-    const {homeStore} = this.props
-
-    this.reactions = [
-      reaction(
-        () => homeStore!.focusedLocation,
-        (location: any) => this.setCenterCoordinate(location),
-        {
+    useEffect(() => {
+      let reactions = [
+        autorun(() => setCenterCoordinate(homeStore!.focusedLocation as ILocation), {
           name: 'MapHome: re-center map on focused card',
-        }
-      ),
-    ]
-  }
+        }),
+      ]
 
-  componentWillUnmount() {
-    this.reactions.forEach(disposer => disposer())
-    this.reactions = []
-  }
+      return () => {
+        reactions.forEach(disposer => disposer())
+        reactions = []
+      }
+    }, [])
 
-  // NOTE: this runs _very_ often while panning/scrolling the map...thus the throttling
-  onRegionChange = _.throttle(({latitudeDelta}: MapViewRegion) => {
-    if (latitudeDelta) {
-      this.props.homeStore!.setMapType(latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard')
-    }
-  }, 1000)
-
-  onRegionChangeComplete = async (region: MapViewRegion) => {
-    this.animating = false
-    const {creationMode, setMapCenter, setFocusedLocation} = this.props.homeStore!
-    setMapCenter(region as any)
-    setFocusedLocation(null) // reset bot focused location, otherwise 'current location' CTA will not work
-
-    // don't add bot during creation mode (to avoid replacing of new location)
-    if (!creationMode) {
-      try {
-        await this.props.wocky!.loadLocalBots(region)
-        this.areaTooLarge = false
-      } catch (e) {
-        warn(e)
-        this.areaTooLarge = true
+    const setCenterCoordinate = (loc: ILocation) => {
+      if (mapRef && loc) {
+        mapRef.current!.animateCamera({center: loc})
       }
     }
-  }
-  // TODO MapView typing doesn't work for latest version - (value: { coordinate: LatLng, position: Point }) => void;
-  createFromLongPress = (value: any) => {
-    if (!this.props.homeStore!.creationMode) {
-      const newCoordinate = value.nativeEvent.coordinate
-      Actions.createBot({focused: false})
-      setTimeout(() => {
-        this.animating = true
-        this.setCenterCoordinate(newCoordinate)
-      }, 1000)
-    }
-  }
 
-  onMapPress = () => {
-    const {homeStore, navStore} = this.props
-    if (['botCompose', 'botEdit', 'createBot'].includes(navStore!.scene)) {
-      return
-    } else if (navStore!.scene !== 'home') {
-      Actions.popTo('home')
-    } else {
-      homeStore!.toggleFullscreen()
-    }
-  }
+    // NOTE: this runs _very_ often while panning/scrolling the map...thus the throttling
+    const onRegionChange = _.throttle(({latitudeDelta}) => {
+      if (latitudeDelta) {
+        homeStore!.setMapType(latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard')
+      }
+    }, 1000)
 
-  // HACK: more details at https://github.com/hippware/rn-chat/issues/3692#issuecomment-492857934
-  onMapTapOrPan = event => {
-    const {followingUser, stopFollowingUserOnMap} = this.props.homeStore!
-    if (followingUser) {
-      stopFollowingUserOnMap()
-    }
-    return false
-  }
+    const onRegionChangeComplete = async region => {
+      setMapCenter(region)
+      setFocusedLocation(null) // reset bot focused location, otherwise 'current location' CTA will not work
 
-  render() {
-    const {locationStore, homeStore} = this.props
-    const {list, detailsMode, creationMode, fullScreenMode, mapType} = homeStore!
-    const {location} = locationStore!
+      // don't add bot during creation mode (to avoid replacing of new location)
+      if (!creationMode) {
+        try {
+          await wocky!.loadLocalBots(region)
+          setAreaTooLarge(false)
+        } catch (e) {
+          // warn(e)
+          setAreaTooLarge(true)
+        }
+      }
+    }
+    // // TODO MapView typing doesn't work for latest version - (value: { coordinate: LatLng, position: Point }) => void;
+    const createFromLongPress = (value: any) => {
+      if (!homeStore!.creationMode) {
+        const newCoordinate = value.nativeEvent.coordinate
+        Actions.createBot({focused: false})
+        setTimeout(() => {
+          setCenterCoordinate(newCoordinate)
+        }, 1000)
+      }
+    }
+
+    function onMapPress() {
+      if (['botCompose', 'botEdit', 'createBot'].includes(navStore!.scene)) {
+        return
+      } else if (navStore!.scene !== 'home') {
+        Actions.popTo('home')
+      } else {
+        homeStore!.toggleFullscreen()
+      }
+    }
+
+    // HACK: more details at https://github.com/hippware/rn-chat/issues/3692#issuecomment-492857934
+    function onMapTapOrPan(event) {
+      const {followingUser, stopFollowingUserOnMap} = homeStore!
+      if (followingUser) {
+        stopFollowingUserOnMap()
+      }
+      return false
+    }
+
     if (!location) {
       return (
         <View style={[StyleSheet.absoluteFill, {bottom: -50 * k}, styles.container]}>
@@ -145,9 +135,9 @@ export default class MapHome extends React.Component<Props> {
       <View style={[StyleSheet.absoluteFill, {bottom: -50 * k}]}>
         <MapView
           provider={'google'}
-          ref={r => (this.mapRef = r)}
-          onPress={this.onMapPress}
-          onLongPress={this.createFromLongPress}
+          ref={mapRef}
+          onPress={onMapPress}
+          onLongPress={createFromLongPress}
           initialRegion={{
             latitude,
             longitude,
@@ -157,21 +147,21 @@ export default class MapHome extends React.Component<Props> {
           style={StyleSheet.absoluteFill}
           customMapStyle={mapStyle}
           scrollEnabled={!detailsMode}
-          onStartShouldSetResponder={this.onMapTapOrPan}
+          onStartShouldSetResponder={onMapTapOrPan}
           mapType={mapType as any}
-          onRegionChange={this.onRegionChange}
-          onRegionChangeComplete={this.onRegionChangeComplete}
+          onRegionChange={onRegionChange}
+          onRegionChangeComplete={onRegionChangeComplete}
           rotateEnabled={false}
           pitchEnabled={false}
-          {...this.props}
+          {...props}
         >
           {list.map((card, i) => {
             const Card = markerMap[card.name]
-            return Card && <Card {...this.props} key={`card${i}`} card={card} />
+            return Card && <Card {...props} key={`card${i}`} card={card} />
           })}
         </MapView>
         {creationMode && <UberMarker />}
-        {this.areaTooLarge && (
+        {areaTooLarge && (
           <View style={[styles.areaTooLargeView, {bottom: fullScreenMode ? 40 : 160 * k}]}>
             <Image source={require('../../../images/areaTooLarge.png')} />
             <Text style={styles.areaTooLargeText}>Zoom In To See Locations</Text>
@@ -179,8 +169,10 @@ export default class MapHome extends React.Component<Props> {
         )}
       </View>
     )
-  }
-}
+  })
+)
+
+export default MapHome
 
 const styles = StyleSheet.create({
   container: {

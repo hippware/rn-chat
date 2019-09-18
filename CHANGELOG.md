@@ -4,6 +4,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* WIP: [dev] React hooks + mobx-react v6 (#3779, PR #4137, PR #4147)
+* Update: mobx-react-lite (PR #4145), libphonenumber-js (PR #4144)
+  * husky, pretty-quick (PR #4146), plugin-proposal-decorators (PR #4142)
+  * @storybook/react-native (PR #4143)
+* [dev] wocky-client test improvements (#2839)
+
 # 4.24.0 - 2019 Sep 12
 
 * Update: react-native-code-push (PR #4098), react-native-netinfo

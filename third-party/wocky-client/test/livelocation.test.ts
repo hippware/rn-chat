@@ -1,4 +1,11 @@
-import {createUser, sleep, timestamp, waitFor} from './support/testuser'
+import {
+  createUser,
+  fillAndSaveProfile,
+  dumpProfile,
+  sleep,
+  timestamp,
+  waitFor,
+} from './support/testuser'
 import {IWocky} from '../src'
 import {getSnapshot} from 'mobx-state-tree'
 import {UserActivityType} from '../src/transport/types'
@@ -25,11 +32,14 @@ describe('Live Locations', () => {
   beforeAll(async () => {
     timestamp()
     jest.setTimeout(30000)
-    console.log('CREATE FIRST USER')
+
     bob = await createUser()
-    console.log('CREATE SECOND USER')
     alice = await createUser()
-    console.log('CREATION IS COMPLETE')
+
+    await fillAndSaveProfile(bob, 'bob', 'bob')
+    await fillAndSaveProfile(alice, 'alice', 'alice')
+    await dumpProfile(bob, 'BOB')
+    await dumpProfile(alice, 'ALICE')
   })
 
   it('make friends, share location', async () => {
@@ -51,7 +61,7 @@ describe('Live Locations', () => {
     expect(alicesBobProfile.location).toBeUndefined()
     // update location
     await bob.setLocation(theLocation)
-    await waitFor(() => !!alicesBobProfile.location)
+    await waitFor(() => !!alicesBobProfile.location, 'user location did not arrive')
     expect(getSnapshot(alicesBobProfile.location!)).toEqual(theLocation)
   })
 
@@ -85,7 +95,7 @@ describe('Live Locations', () => {
     // update location
     await bob.setLocation(theLocation)
     // wait location to be updated
-    await waitFor(() => alice.notifications.length === 2)
+    await waitFor(() => alice.notifications.length === 2, 'should be two notifications')
     // check that user still has old location (not updated)
     expect(alicesBobProfile.location!.latitude).toBe(differentLocation.latitude)
     expect(alicesBobProfile.location!.longitude).toBe(differentLocation.longitude)
@@ -103,7 +113,7 @@ describe('Live Locations', () => {
     timestamp()
     await alice.logout()
     alice = await createUser(undefined, alicesPhone)
-    await waitFor(() => alice.notifications.length === 2)
+    await waitFor(() => alice.notifications.length === 2, 'should be two notifications')
     const notification: any = alice.notifications.list[0]
     expect(notification.sharedEndWith).toBeTruthy()
     expect(notification.sharedEndWith.id).toBe(bob.profile!.id)

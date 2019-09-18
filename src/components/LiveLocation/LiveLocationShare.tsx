@@ -1,5 +1,6 @@
-import React from 'react'
-import {observer, inject} from 'mobx-react'
+import React, {useEffect} from 'react'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import {Actions} from 'react-native-router-flux'
 import Screen from '../Screen'
 import {RText, BottomButton} from '../common'
@@ -10,24 +11,17 @@ import {View} from 'react-native'
 import {minHeight} from '../Global'
 
 type Props = {
-  botId: string
   wocky: IWocky
-  notificationStore: any // TODO proper
-  store: any // TODO proper type
-  analytics?: any
   searchStore?: ISearchStore
 }
 
-@inject('wocky', 'notificationStore', 'store', 'analytics', 'searchStore')
-@observer
-export default class LiveLocationShare extends React.Component<Props> {
-  componentDidMount() {
-    const {profile} = this.props.wocky!
-    this.props.searchStore!.localResult.setList(profile!.sortedFriends.map(f => ({profile: f})))
-  }
+const LiveLocationShare = inject('wocky', 'searchStore')(
+  observer(({wocky, searchStore}: Props) => {
+    useEffect(() => {
+      searchStore!.localResult.setList(wocky.profile!.sortedFriends.map(f => ({profile: f})))
+    }, [])
 
-  render() {
-    const selection = this.props.searchStore!.localResult
+    const selection = searchStore!.localResult
     const selected = selection.selected.length > 0
     return (
       <Screen>
@@ -47,5 +41,7 @@ export default class LiveLocationShare extends React.Component<Props> {
         </BottomButton>
       </Screen>
     )
-  }
-}
+  })
+)
+
+export default LiveLocationShare

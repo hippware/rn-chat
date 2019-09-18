@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, TouchableOpacity, Image} from 'react-native'
-import {observer, inject} from 'mobx-react'
+import {inject} from 'mobx-react'
 
 import FriendCard from './FriendCard'
 import {colors} from '../../constants'
@@ -10,6 +10,7 @@ import InviteFriendsRowNew from './InviteFriendsRowNew'
 import {IWocky} from 'wocky-client'
 import {Actions} from 'react-native-router-flux'
 import {placeholderStyle} from '../styles'
+import {observer} from 'mobx-react-lite'
 
 type Props = {
   wocky?: IWocky
@@ -18,66 +19,59 @@ type Props = {
 
 const searchIcon = require('../../../images/search.png')
 
-@inject('wocky')
-@observer
-class FriendList extends React.Component<Props> {
-  static navigationOptions = {
-    fadeNavConfig: {
-      back: true,
-      title: (
-        <RText size={16} color={colors.DARK_PURPLE}>
-          Friends
-        </RText>
-      ),
-    },
-  }
-  list: any
+const FriendList = inject('wocky')(
+  observer(({wocky, isActive}: Props) => {
+    const renderHeader = () => {
+      return (
+        <View style={{width: '90%', alignSelf: 'center'}}>
+          <InviteFriendsRowNew />
+          <View
+            style={{
+              flexDirection: 'row',
+              marginTop: 20,
+              justifyContent: 'space-between',
+              marginBottom: 5,
+            }}
+          >
+            <FriendCount count={wocky!.profile!.friends.list.length} />
+            <TouchableOpacity style={{alignSelf: 'flex-end'}} onPress={Actions.friendSearch}>
+              <Image source={searchIcon} />
+            </TouchableOpacity>
+          </View>
+          {wocky!.profile!.friends.list.length <= 0 ? (
+            <View>
+              <RText weight="Regular" color={colors.GREY} style={placeholderStyle.placeholderText}>
+                Start Adding Friends!
+              </RText>
+            </View>
+          ) : null}
+        </View>
+      )
+    }
 
-  renderItem = ({item}) => <FriendCard profile={item.user} />
-
-  render() {
     // Sometimes wocky.profile is null. Race condition?
     return (
       <DraggablePopupList
-        headerInner={this.props.wocky!.profile ? this.renderHeader() : undefined}
-        renderItem={this.renderItem}
+        headerInner={wocky!.profile ? renderHeader() : undefined}
+        renderItem={({item}) => <FriendCard profile={item.user} />}
         keyExtractor={item => item.user.id}
-        data={this.props.wocky!.profile ? this.props.wocky!.profile!.friends.list.slice() : []}
+        data={wocky!.profile ? wocky!.profile!.friends.list.slice() : []}
         keyboardShouldPersistTaps="handled"
-        isActive={this.props.isActive}
+        isActive={isActive}
         // keyboardDismissMode="interactive"
       />
     )
-  }
-
-  renderHeader = () => {
-    const {wocky} = this.props
-    return (
-      <View style={{width: '90%', alignSelf: 'center'}}>
-        <InviteFriendsRowNew />
-        <View
-          style={{
-            flexDirection: 'row',
-            marginTop: 20,
-            justifyContent: 'space-between',
-            marginBottom: 5,
-          }}
-        >
-          <FriendCount count={wocky!.profile!.friends.list.length} />
-          <TouchableOpacity style={{alignSelf: 'flex-end'}} onPress={Actions.friendSearch}>
-            <Image source={searchIcon} />
-          </TouchableOpacity>
-        </View>
-        {wocky!.profile!.friends.list.length <= 0 ? (
-          <View>
-            <RText weight="Regular" color={colors.GREY} style={placeholderStyle.placeholderText}>
-              Start Adding Friends!
-            </RText>
-          </View>
-        ) : null}
-      </View>
-    )
-  }
+  })
+)
+;(FriendList as any).navigationOptions = {
+  fadeNavConfig: {
+    back: true,
+    title: (
+      <RText size={16} color={colors.DARK_PURPLE}>
+        Friends
+      </RText>
+    ),
+  },
 }
 
 const FriendCount = ({count}) =>

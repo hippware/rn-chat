@@ -1,8 +1,9 @@
 import {Wocky, IWocky, Transport} from '../../src'
+import {waitFor as _waitFor} from '../../src/transport/utils'
+import {IBot} from '../../src/model/Bot'
 import fileService from './fileService'
 import {simpleActionLogger} from 'mst-middlewares'
 import {addMiddleware, setLivelynessChecking} from 'mobx-state-tree'
-import {when} from 'mobx'
 import _ from 'lodash'
 import jsrsasign from 'jsrsasign'
 import uuid from 'uuid/v1'
@@ -88,27 +89,40 @@ export async function createUser(num?: number, phoneNum?: string): Promise<IWock
   }
 }
 
+// Fills in some common fields with commonly-used patterns
+export async function fillAndSaveProfile(user: IWocky, firstName: string, lastName: string) {
+  const handle = 'user' + user.profile!.phoneNumber!.replace('+', '')
+  await user.profile!.update({
+    handle,
+    firstName,
+    lastName,
+    // @hippware.com is useful for debugging
+    email: handle + (process.env.WOCKY_VERBOSE ? '@hippware.com' : '@example.com'),
+  })
+  await user.profile!.save()
+}
+
+export async function dumpProfile(user: IWocky, label: string = 'USER') {
+  console.log(
+    `${label}: ${JSON.stringify({
+      id: user.profile!.id,
+      firstName: user.profile!.firstName,
+      lastName: user.profile!.lastName,
+      handle: user.profile!.handle,
+      phoneNumber: user.profile!.phoneNumber,
+      email: user.profile!.email,
+    })}`
+  )
+}
+
+export async function dumpBot(bot: IBot, label: string = 'BOT') {
+  console.log(`${label}: ${JSON.stringify(bot)}`)
+}
+
 export async function waitFor(
   condition: () => boolean,
   errorMessage: string = '',
   timeout: number = 10000
 ) {
-  const promise = new Promise((resolve, reject) => {
-    when(() => {
-      let res = false
-      try {
-        res = condition()
-      } catch (e) {
-        reject(e)
-      }
-      return res
-    }, resolve)
-  })
-  const timeoutPromise = new Promise((resolve, reject) => {
-    setTimeout(
-      () => reject(`waitFor timed out in ${timeout} milliseconds.\r\n${errorMessage}`),
-      timeout
-    )
-  })
-  return Promise.race([promise, timeoutPromise])
+  return _waitFor(condition, errorMessage, timeout)
 }

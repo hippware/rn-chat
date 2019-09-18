@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {StyleSheet, TouchableOpacity, Image, View} from 'react-native'
-import {observer, inject} from 'mobx-react'
-import {observable} from 'mobx'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import alert from '../../utils/alert'
 import {IProfile} from 'wocky-client'
 import {colors} from 'src/constants'
@@ -16,49 +16,45 @@ type Props = {
 
 const imgFollowing = require('../../../images/button_friends.png')
 
-@inject('analytics')
-@observer
-class ConnectButton extends React.Component<Props> {
-  @observable pendingFollowChange: boolean = false
+const ConnectButton = inject('analytics')(
+  observer(({profile, analytics, myProfile}: Props) => {
+    const [pendingFollowChange, setPendingFollowChange] = useState(false)
 
-  toggleFollow = async () => {
-    const {profile} = this.props
-    if (profile.isFriend) {
-      alert(null, `Are you sure you want to unfriend @${profile.handle}?`, [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-          onPress: () => {
-            this.pendingFollowChange = false
+    const toggleFollow = async () => {
+      if (profile.isFriend) {
+        alert(null, `Are you sure you want to unfriend @${profile.handle}?`, [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+            onPress: () => {
+              setPendingFollowChange(false)
+            },
           },
-        },
-        {
-          text: 'Unfriend',
-          style: 'destructive',
-          onPress: async () => {
-            this.pendingFollowChange = true
-            await profile.unfriend()
-            this.props.analytics.track('user_unfollow', this.props.myProfile.toJSON())
-            this.pendingFollowChange = false
+          {
+            text: 'Unfriend',
+            style: 'destructive',
+            onPress: async () => {
+              setPendingFollowChange(true)
+              await profile.unfriend()
+              analytics.track('user_unfollow', myProfile.toJSON())
+              setPendingFollowChange(false)
+            },
           },
-        },
-      ])
-    } else {
-      await profile.invite()
-      this.props.analytics.track('user_follow', this.props.myProfile.toJSON())
-      this.pendingFollowChange = false
+        ])
+      } else {
+        await profile.invite()
+        analytics.track('user_follow', myProfile.toJSON())
+        setPendingFollowChange(false)
+      }
     }
-  }
 
-  render() {
-    const {profile} = this.props
     return !profile.isOwn ? (
       <TouchableOpacity
-        onPress={this.toggleFollow}
+        onPress={toggleFollow}
         style={styles.followButton}
-        disabled={this.pendingFollowChange}
+        disabled={pendingFollowChange}
       >
-        {this.pendingFollowChange ? (
+        {pendingFollowChange ? (
           <Spinner color="pink" />
         ) : profile.isFriend ? (
           <Image source={imgFollowing} />
@@ -91,8 +87,8 @@ class ConnectButton extends React.Component<Props> {
         </View>
       </TouchableOpacity>
     )
-  }
-}
+  })
+)
 
 export default ConnectButton
 

@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {View, TouchableOpacity, Image} from 'react-native'
 import {RText, Separator} from '../common'
 import {minHeight} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import LinearGradient from 'react-native-linear-gradient'
-import {observer, inject} from 'mobx-react'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import {ISearchStore} from '../../store/SearchStore'
 import {ILocationStore} from '../../store/LocationStore'
 import {IWocky, IProfile} from 'wocky-client'
@@ -15,12 +16,6 @@ type Props = {
   searchStore?: ISearchStore
   locationStore?: ILocationStore
   profile?: IProfile
-  duration?: number
-}
-
-type State = {
-  option: number
-  duration: number
 }
 
 const select = require('../../../images/contactSelect.png')
@@ -48,61 +43,56 @@ const CHOICES = [
 ]
 const UNTIL_OFF = Date.now() + 24 * HOUR * 365
 
-@inject('wocky', 'searchStore', 'locationStore')
-@observer
-export default class LiveLocationCompose extends React.Component<Props, State> {
-  Checkbox = ({value, children}) => (
-    <TouchableOpacity
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-      }}
-      onPress={() => this.setState({option: value})}
-    >
-      <Image style={{marginRight: 13}} source={this.state.option === value ? select : unselect} />
-      <View>{children}</View>
-    </TouchableOpacity>
-  )
-  state = {
-    option: 1,
-    duration: 2,
-  }
-  share = async () => {
-    const {locationStore, searchStore, wocky, profile} = this.props
+const LiveLocationCompose = inject('wocky', 'searchStore', 'locationStore')(
+  observer(({wocky, searchStore, locationStore, profile}: Props) => {
+    const [option, setOption] = useState(1)
+    const [duration, setDuration] = useState(2)
     const selection = profile ? {selected: [profile]} : searchStore!.localResult
-    const expireAt = new Date(
-      this.state.option ? UNTIL_OFF : Date.now() + CHOICES[this.state.duration].value
+
+    const Checkbox = ({value, children}) => (
+      <TouchableOpacity
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}
+        onPress={() => setOption(value)}
+      >
+        <Image style={{marginRight: 13}} source={option === value ? select : unselect} />
+        <View>{children}</View>
+      </TouchableOpacity>
     )
-    // disable invisible mode
-    if (wocky!.profile!.hidden.enabled) {
-      await wocky!.profile!.hide(false, undefined)
+
+    const share = async () => {
+      const expireAt = new Date(option ? UNTIL_OFF : Date.now() + CHOICES[duration].value)
+      // disable invisible mode
+      if (wocky!.profile!.hidden.enabled) {
+        await wocky!.profile!.hide(false, undefined)
+      }
+      // TODO modify server-side API to pass array of usr_ids ?
+      for (const el of selection.selected) {
+        await el.shareLocation(expireAt)
+      }
+      // send location
+      if (locationStore!.location) {
+        await wocky!.setLocation(locationStore!.location!)
+      }
+      Actions.popTo('home')
     }
-    // TODO modify server-side API to pass array of usr_ids ?
-    for (const el of selection.selected) {
-      await el.shareLocation(expireAt)
-    }
-    // send location
-    if (locationStore!.location) {
-      await wocky!.setLocation(locationStore!.location!)
-    }
-    Actions.popTo('home')
-  }
-  render() {
-    const {profile} = this.props
-    const selection = profile ? {selected: [profile]} : this.props.searchStore!.localResult
+
     const selected = selection.selected.length
+
     if (!selected) {
       throw new Error(' No profile is selected') // it should never happen
     }
+
     const untilDate =
-      moment(Date.now()).format('L') ===
-      moment(Date.now() + CHOICES[this.state.duration].value).format('L')
-        ? moment(Date.now() + CHOICES[this.state.duration].value).format('LT')
-        : moment(Date.now() + CHOICES[this.state.duration].value).format('MMM D, LT')
+      moment(Date.now()).format('L') === moment(Date.now() + CHOICES[duration].value).format('L')
+        ? moment(Date.now() + CHOICES[duration].value).format('LT')
+        : moment(Date.now() + CHOICES[duration].value).format('MMM D, LT')
+
     return (
       <View
         style={{
-          postion: 'absolute',
           bottom: 0,
           width: '100%',
           backgroundColor: 'white',
@@ -144,17 +134,18 @@ export default class LiveLocationCompose extends React.Component<Props, State> {
               alignItems: 'center',
             }}
           >
-            <this.Checkbox value={0}>
-              <RText size={16}>For {CHOICES[this.state.duration].text}</RText>
+            <Checkbox value={0}>
+              <RText size={16}>For {CHOICES[duration].text}</RText>
               <RText size={14} color={'#9b9b9b'}>
                 Until {untilDate}
               </RText>
-            </this.Checkbox>
+            </Checkbox>
             <View style={{position: 'absolute', flexDirection: 'row', right: 0}}>
               <TouchableOpacity
-                onPress={() =>
-                  this.setState({option: 0, duration: Math.max(0, this.state.duration - 1)})
-                }
+                onPress={() => {
+                  setOption(0)
+                  setDuration(Math.max(0, duration - 1))
+                }}
               >
                 <Image
                   style={{marginHorizontal: 10}}
@@ -162,12 +153,10 @@ export default class LiveLocationCompose extends React.Component<Props, State> {
                 />
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() =>
-                  this.setState({
-                    option: 0,
-                    duration: Math.min(this.state.duration + 1, CHOICES.length - 1),
-                  })
-                }
+                onPress={() => {
+                  setOption(0)
+                  setDuration(Math.min(duration + 1, CHOICES.length - 1))
+                }}
               >
                 <Image
                   style={{marginHorizontal: 10}}
@@ -185,12 +174,12 @@ export default class LiveLocationCompose extends React.Component<Props, State> {
               marginHorizontal: '8%',
             }}
           >
-            <this.Checkbox value={1}>
+            <Checkbox value={1}>
               <RText size={16}>Until you turn this off</RText>
-            </this.Checkbox>
+            </Checkbox>
           </View>
         </View>
-        <TouchableOpacity style={{width: '100%', height: 50 * minHeight}} onPress={this.share}>
+        <TouchableOpacity style={{width: '100%', height: 50 * minHeight}} onPress={share}>
           <LinearGradient
             start={{x: 0, y: 0.5}}
             end={{x: 1, y: 0.5}}
@@ -205,11 +194,13 @@ export default class LiveLocationCompose extends React.Component<Props, State> {
           >
             <RText color="white" size={15}>
               Share Live Location
-              {this.state.option ? '' : ' For ' + CHOICES[this.state.duration].text}
+              {option ? '' : ' For ' + CHOICES[duration].text}
             </RText>
           </LinearGradient>
         </TouchableOpacity>
       </View>
     )
-  }
-}
+  })
+)
+
+export default LiveLocationCompose

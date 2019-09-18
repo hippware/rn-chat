@@ -27,7 +27,7 @@ const BotButtons = inject('wocky', 'locationStore')(
       const handler = autorun(() => {
         if (wocky!.connected && bot.isSubscribed) {
           if (!locationStore!.alwaysOn) {
-            Actions.geofenceWarning({bot})
+            Actions.geofenceWarning()
             bot.unsubscribe()
           }
         }

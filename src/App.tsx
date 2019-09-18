@@ -13,18 +13,19 @@ const App = () => {
   const [store, setStore] = useState()
 
   useEffect(() => {
+    // This seems to be undocumented event.
+    AppState.addEventListener('memoryWarning', () => {
+      const extras = {currentState: AppState.currentState}
+      bugsnagNotify(new Error('AppState.memoryWarning fired'), 'memory_warning', extras)
+      analytics.track('memory_warning', extras)
+    })
+
     createStore().then(s => {
       setStore(s)
     })
   }, [])
 
-  // This seems to be undocumented event.
-  AppState.addEventListener('memoryWarning', () => {
-    const extras = {currentState: AppState.currentState}
-    bugsnagNotify(new Error('AppState.memoryWarning fired'), 'memory_warning', extras)
-    analytics.track('memory_warning', extras)
-  })
-
+  // todo: how long does store creation take? Should we show something while it's being created?
   if (!store) return null
   const {mstStore, ...rest} = store
 

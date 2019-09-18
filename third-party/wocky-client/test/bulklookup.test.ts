@@ -1,4 +1,4 @@
-import {createUser, waitFor, sleep} from './support/testuser'
+import {createUser, fillAndSaveProfile, dumpProfile, waitFor, sleep} from './support/testuser'
 import {IWocky} from '../src'
 
 let user1: IWocky
@@ -11,14 +11,8 @@ describe('User bulk lookup', () => {
 
   it('update user with handles', async () => {
     await waitFor(() => user1.profile !== null, 'user1 profile to load')
-    const user1phone = user1.profile!.phoneNumber
-    await user1.profile!.update({
-      handle: 'd' + user1phone!.replace('+', ''),
-      firstName: 'name1',
-      lastName: 'lname1',
-      email: 'a@aa.com',
-    })
-    await user1.profile!.save()
+    await fillAndSaveProfile(user1, 'name1', 'lname1')
+    await dumpProfile(user1)
   })
 
   it('bulk uploads some phone numbers', async () => {

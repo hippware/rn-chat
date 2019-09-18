@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {isAlive} from 'mobx-state-tree'
-import {observer, inject} from 'mobx-react'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import {IWocky, IEvent} from 'wocky-client'
 import {RText} from './common'
 import DraggablePopupList from './common/DraggablePopupList'
@@ -18,42 +19,22 @@ type Props = {
   navigation: any
 }
 
-@inject('wocky')
-@observer
-class Notifications extends React.Component<Props> {
-  static navigationOptions = ({
-    navigation: {
-      state: {
-        params: {wocky},
-      },
-    },
-  }) => ({
-    fadeNavConfig: {
-      back: true,
-      title: wocky && <RText style={navBarStyle.titleStyle}>{wocky.notifications.title}</RText>,
-    },
-  })
+const Notifications = inject('wocky')(
+  observer(({wocky, isActive, navigation}: Props) => {
+    useEffect(() => {
+      // send all injected props + bot "up" to static context
+      navigation.setParams({wocky})
+      wocky!.notifications.load().then(() => wocky!.notifications.readAll())
+      return () => wocky!.notifications.setMode(1) // reset
+    }, [])
 
-  async UNSAFE_componentWillMount() {
-    // send all injected props + bot "up" to static context
-    this.props.navigation.setParams({wocky: this.props.wocky})
-
-    await this.props.wocky!.notifications.load()
-    this.props.wocky!.notifications.readAll()
-  }
-
-  componentWillUnmount() {
-    this.props.wocky!.notifications.setMode(1) // reset
-  }
-
-  render() {
-    const {profile, notifications} = this.props.wocky!
+    const {profile, notifications} = wocky!
     if (!profile || !isAlive(profile)) {
       return null
     }
     return (
       <DraggablePopupList
-        isActive={this.props.isActive}
+        isActive={isActive}
         headerInner={
           <View style={{flex: 1, alignItems: 'center'}}>
             <SwitchButton
@@ -81,8 +62,8 @@ class Notifications extends React.Component<Props> {
           </View>
         }
         data={notifications.data}
-        renderItem={this.renderItem}
-        keyExtractor={this.keyExtractor}
+        renderItem={({item}: {item: IEvent}) => <EventCard item={item} />}
+        keyExtractor={(item: IEvent) => item.id}
         onEndReachedThreshold={0.5}
         onEndReached={() => notifications.load()}
         ListFooterComponent={observer(() => (
@@ -107,12 +88,20 @@ class Notifications extends React.Component<Props> {
         ))}
       />
     )
-  }
-
-  renderItem = ({item}: {item: IEvent}) => <EventCard item={item} />
-
-  keyExtractor = (item: any) => item.id
-}
+  })
+)
+;(Notifications as any).navigationOptions = ({
+  navigation: {
+    state: {
+      params: {wocky},
+    },
+  },
+}) => ({
+  fadeNavConfig: {
+    back: true,
+    title: wocky && <RText style={navBarStyle.titleStyle}>{wocky.notifications.title}</RText>,
+  },
+})
 
 const styles = StyleSheet.create({
   newDot: {

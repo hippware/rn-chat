@@ -2,15 +2,13 @@ import React from 'react'
 import {TouchableOpacity} from 'react-native'
 import t from 'tcomb-form-native'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
-import {inject, observer} from 'mobx-react'
-import moment from 'moment'
-
+import {inject} from 'mobx-react'
 import {ILocationStore, BG_STATE_PROPS} from '../store/LocationStore'
 import Screen from './Screen'
 import _ from 'lodash'
-import {IWocky} from 'wocky-client'
 import {RText} from './common'
 import {colors} from '../constants'
+import {observer} from 'mobx-react-lite'
 
 const Form = t.form.Form
 
@@ -37,20 +35,11 @@ const options = {
 
 type Props = {
   locationStore?: ILocationStore
-  wocky?: IWocky
 }
 
-@inject('locationStore', 'wocky')
-@observer
-export default class LocationDebug extends React.Component<Props> {
-  renderLocation = (l, index) => (
-    <RText size={13} key={l.createdAt}>
-      {`${index + 1}. ${moment(l.createdAt).calendar()}: ${l.lat}, ${l.lon}`}
-    </RText>
-  )
-
-  render() {
-    const {backgroundOptions, debugSounds} = this.props.locationStore!
+const LocationDebug = inject('locationStore')(
+  observer(({locationStore}: Props) => {
+    const {backgroundOptions, debugSounds} = locationStore!
     if (!backgroundOptions) return null
     let value = _.pick(backgroundOptions, BG_STATE_PROPS)
     value = _.assign(value, {debugSounds})
@@ -61,13 +50,13 @@ export default class LocationDebug extends React.Component<Props> {
           <Form
             type={debuggerSettings}
             options={options}
-            onChange={this.props.locationStore!.setBackgroundConfig}
+            onChange={locationStore!.setBackgroundConfig}
             value={value}
           />
           <TouchableOpacity
             // Calling emailLog with empty string seems to work
             onPress={() => {
-              this.props.locationStore!.emailLog('')
+              locationStore!.emailLog('')
             }}
             style={{
               backgroundColor: colors.PINK,
@@ -85,5 +74,7 @@ export default class LocationDebug extends React.Component<Props> {
         </KeyboardAwareScrollView>
       </Screen>
     )
-  }
-}
+  })
+)
+
+export default LocationDebug
