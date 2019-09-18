@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import {View, Image, StyleSheet, Text, Linking, TouchableOpacity} from 'react-native'
-import {observable, runInAction} from 'mobx'
-import {observer, inject} from 'mobx-react'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import {Actions} from 'react-native-router-flux'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {k, avatarScale, minHeight, height} from './Global'
@@ -16,64 +16,47 @@ import alert from '../utils/alert'
 type Props = {
   wocky?: IWocky
   analytics?: any
+  routeName: string
 }
 
-@inject('wocky', 'analytics')
-@observer
-class SignUp extends React.Component<Props> {
-  @observable vProfile: ValidatableProfile | null = null
-  handle: any
-  firstName: any
-  lastName: any
-  email: any
-  when: any
+const SignUp = inject('wocky', 'analytics')(
+  observer(({wocky, analytics, routeName}: Props) => {
+    const [vProfile, setVProfile] = useState<ValidatableProfile | null>(null)
+    const handle = useRef<FormTextInput>(null)
 
-  componentDidMount() {
-    runInAction(
-      () =>
-        (this.vProfile =
-          this.props.wocky!.profile && new ValidatableProfile(this.props.wocky!.profile!))
-    )
-  }
+    const {profile} = wocky!
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.routeName === 'signUp') {
-      runInAction(
-        () =>
-          (this.vProfile =
-            this.props.wocky!.profile && new ValidatableProfile(this.props.wocky!.profile!))
-      )
-    }
-  }
-
-  done = async () => {
-    if (!this.vProfile!.isValid) return
-    const {profile} = this.props.wocky!
-    if (!profile || profile!.updating) return
-    try {
-      await profile!.update(this.vProfile!.asObject)
-      Actions.checkOnboarded()
-      this.props.analytics.track('createprofile_complete', {
-        profile: getSnapshot(this.props.wocky!.profile!),
-      })
-    } catch (err) {
-      // notificationStore is probably not good here, user must read and confirm
-      try {
-        // display first error if it is GraphQL error
-        const error = JSON.parse(err.message)[0].message
-        alert(null, error)
-      } catch {
-        alert(null, err.message)
+    useEffect(() => {
+      if (routeName === 'signUp' && profile) {
+        setVProfile(new ValidatableProfile(profile!))
       }
-      this.props.analytics.track('createprofile_fail', {
-        profile: this.vProfile!.asObject, // send entered data to mixpanel, not original profile
-        error: err,
-      })
-    }
-  }
+    }, [routeName])
 
-  render() {
-    const {profile} = this.props.wocky!
+    const done = async () => {
+      if (!vProfile!.isValid) return
+      if (!profile || profile!.updating) return
+      try {
+        await profile!.update(vProfile!.asObject)
+        Actions.checkOnboarded()
+        analytics.track('createprofile_complete', {
+          profile: getSnapshot(wocky!.profile!),
+        })
+      } catch (err) {
+        // notificationStore is probably not good here, user must read and confirm
+        try {
+          // display first error if it is GraphQL error
+          const error = JSON.parse(err.message)[0].message
+          alert(null, error)
+        } catch {
+          alert(null, err.message)
+        }
+        analytics.track('createprofile_fail', {
+          profile: vProfile!.asObject, // send entered data to mixpanel, not original profile
+          error: err,
+        })
+      }
+    }
+
     if (!profile) {
       return (
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -81,7 +64,7 @@ class SignUp extends React.Component<Props> {
         </View>
       )
     }
-    const buttonDisabled = (this.vProfile && !this.vProfile.isValid) || profile.updating
+    const buttonDisabled = (vProfile && !vProfile.isValid) || profile.updating
     return (
       <KeyboardAwareScrollView>
         <View
@@ -124,11 +107,11 @@ class SignUp extends React.Component<Props> {
           >
             <FormTextInput
               icon={require('../../images/iconUsernameNew.png')}
-              ref={r => (this.handle = r)}
+              ref={handle}
               label="Username"
               autoCapitalize="none"
-              onSubmitEditing={() => this.done()}
-              store={this.vProfile ? this.vProfile.handle : undefined}
+              onSubmitEditing={() => done()}
+              store={vProfile ? vProfile.handle : undefined}
               testID="signUpUsername"
               selectionColor={colors.COVER_BLUE}
             />
@@ -160,8 +143,8 @@ class SignUp extends React.Component<Props> {
           </RText>
           <TouchableOpacity
             testID="signUpDone"
-            disabled={buttonDisabled || !this.props.wocky!.connected}
-            onPress={this.done}
+            disabled={buttonDisabled || !wocky!.connected}
+            onPress={done}
             style={styles.submitButton}
           >
             <RText size={17.5} color="white" style={{letterSpacing: 0.8, textAlign: 'center'}}>
@@ -171,8 +154,8 @@ class SignUp extends React.Component<Props> {
         </View>
       </KeyboardAwareScrollView>
     )
-  }
-}
+  })
+)
 
 export default SignUp
 
