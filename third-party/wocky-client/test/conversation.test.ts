@@ -43,9 +43,9 @@ describe('New GraphQL conversation tests', () => {
       "expected chat for bob doesn't load in time"
     )
     expect(bob.chats.list.length).toBe(1)
-    expect(bob.chats.list[0].messages.list.length).toBe(2)
-    expect(bob.chats.list[0].messages.last!.content).toBe('hello')
-    expect(bob.chats.list[0].messages.first!.content).toBe('hello2')
+    expect(bob.chats.list[0].sortedMessages.length).toBe(2)
+    expect(bob.chats.list[0].sortedMessages[1].content).toBe('hello')
+    expect(bob.chats.list[0].sortedMessages[0].content).toBe('hello2')
     expect(bob.chats.list[0].messages.list.filter(x => x.unread).length).toBe(2)
     await bob.chats.list[0].readAll()
     expect(bob.chats.list[0].messages.list.filter(x => x.unread).length).toBe(0)
