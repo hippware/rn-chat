@@ -1,48 +1,55 @@
-import React from 'react'
-import {TouchableOpacity, Image} from 'react-native'
-import {observer, inject} from 'mobx-react'
-import {observable} from 'mobx'
-import Report, {afterReport} from './Report'
-import {k} from '../Global'
+import React, {useState, useEffect} from 'react'
+// import {TouchableOpacity, Image} from 'react-native'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
+import Report /*, {afterReport}*/ from './Report'
+// import {k} from '../Global'
+import {IBot} from 'wocky-client'
+import {ReportStore} from '../../store/ReportStore'
+// import {iconClose} from '../Router'
 
 type Props = {
   botId: string
-  wocky: any
+  wocky?: any
+  reportStore?: ReportStore
 }
 
-const sendActive = require('../../../images/sendActive.png')
+// const sendActive = require('../../../images/sendActive.png')
 
-const Right = inject('wocky', 'reportStore')(({wocky, reportStore, botId}) => (
-  <TouchableOpacity
-    onPress={async () => {
-      if (reportStore.submitting) return
-      const bot = wocky.getBot({id: botId})
-      await reportStore.reportBot(bot, wocky.profile)
-      afterReport(reportStore)
-    }}
-    style={{marginRight: 10 * k}}
-  >
-    <Image source={sendActive} />
-  </TouchableOpacity>
-))
+// const Right = inject('wocky', 'reportStore')(({wocky, reportStore, botId}: Props) => (
+//   <TouchableOpacity
+//     onPress={async () => {
+//       if (reportStore!.submitting) return
+//       const bot = wocky.getBot({id: botId})
+//       await reportStore!.reportBot(bot, wocky.profile)
+//       afterReport(reportStore)
+//     }}
+//     style={{marginRight: 10 * k}}
+//   >
+//     <Image source={sendActive} />
+//   </TouchableOpacity>
+// ))
 
-@inject('wocky')
-@observer
-export default class ReportBot extends React.Component<Props> {
-  static rightButton = ({botId}) => <Right botId={botId} />
+const ReportBot = inject('wocky')(
+  observer(({wocky, botId}: Props) => {
+    const [bot, setBot] = useState<IBot | null>(null)
 
-  @observable bot: any
+    useEffect(() => {
+      setBot(wocky.getBot({id: botId}))
+    }, [])
 
-  componentDidMount() {
-    this.bot = this.props.wocky.getBot({id: this.props.botId})
-  }
-
-  render() {
     return (
       <Report
-        subtitle={`${this.bot ? this.bot.title : ''}`}
+        subtitle={`${bot ? bot.title : ''}`}
         placeholder="Please describe why you are reporting this location (e.g. spam, inappropriate content, etc.)"
       />
     )
-  }
-}
+  })
+)
+
+// todo: how to get a custom right button? Uncommenting below adds a button to the internal *and* external navigator.
+// ;(ReportBot as any).navigationOptions = ({navigation}) => ({
+//   headerRight: <Right botId={navigation.state.params.botId} />,
+// })
+
+export default ReportBot
