@@ -16,7 +16,7 @@ import alert from '../utils/alert'
 type Props = {
   wocky?: IWocky
   analytics?: any
-  routeName: string
+  routeName?: string
 }
 
 const SignUp = inject('wocky', 'analytics')(
