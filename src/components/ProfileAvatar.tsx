@@ -2,7 +2,7 @@ import React from 'react'
 import {View} from 'react-native'
 import Avatar from './common/Avatar'
 import {IProfile} from 'wocky-client'
-import MessageButton from './ProfileDetail/MessagProfileCTA'
+import MessageProfileCTA from './ProfileDetail/MessagProfileCTA'
 import {observer} from 'mobx-react'
 
 type Props = {
@@ -37,7 +37,7 @@ const ProfileAvatar = observer((props: Props) => {
         fontSize={fontSize}
         fontFamily={fontFamily}
       />
-      {messageBtn && <MessageButton profile={profile} />}
+      {messageBtn && <MessageProfileCTA profile={profile} />}
     </View>
   )
 })
