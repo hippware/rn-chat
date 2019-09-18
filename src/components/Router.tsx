@@ -147,15 +147,6 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Scene key="codePush" component={CodePushScene} title="CodePush" back />,
                   ]}
                 </Stack>
-                <Scene
-                  key="searchUsers"
-                  component={peopleLists.SearchUsers}
-                  leftButtonImage={iconClose}
-                  onLeft={this.resetSearchStore}
-                  title="Search Users"
-                  rightButtonImage={null}
-                  wrap
-                />
                 <Scene key="reportUser" component={ReportUser} title="Report User" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
                 <Scene key="reportBot" component={ReportBot} title="Report Location" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
 
