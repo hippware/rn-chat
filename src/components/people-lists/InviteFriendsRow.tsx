@@ -4,7 +4,8 @@ import {StyleSheet, View, Image, TouchableOpacity, Share, Platform} from 'react-
 import {k, minHeight} from '../Global'
 import {colors} from '../../constants'
 import {RText} from '../common'
-import {inject, observer} from 'mobx-react'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import {IWocky} from 'wocky-client'
 
 type Props = {
@@ -17,11 +18,29 @@ type Props = {
 
 const icon = require('../../../images/followers.png')
 
-@inject('wocky', 'analytics')
-@observer
-class InviteFriendsRow extends React.Component<Props> {
-  render() {
-    const {style, subtext, botTitle, wocky} = this.props
+const InviteFriendsRow = inject('wocky', 'analytics')(
+  observer(({style, subtext, botTitle, wocky, analytics}: Props) => {
+    const share = async m => {
+      analytics!.track('invite_friends')
+      const url =
+        'https://itunes.apple.com/app/apple-store/id1295678402?pt=117841011&ct=Invite%20Friends&mt=8'
+
+      // https://facebook.github.io/react-native/docs/share
+      const {action, activityType} = await (Share as any).share(
+        {
+          message: `${m} Download the app at${Platform.OS === 'android' ? ` ${url}` : ''}`,
+          // title: 'title',
+          url,
+        },
+        {
+          subject: 'Check out tinyrobot',
+          // excludedActivityTypes: [],
+          // tintColor: ''
+        }
+      )
+      analytics!.track('invite_friends_action_sheet', {action, activityType})
+    }
+
     const {profile} = wocky!
     const handle = profile ? profile.handle : ''
     const message = botTitle
@@ -40,7 +59,7 @@ class InviteFriendsRow extends React.Component<Props> {
           },
           style,
         ]}
-        onPress={() => this.share(message)}
+        onPress={() => share(message)}
       >
         <Image
           source={require('../../../images/iconBot.png')}
@@ -68,28 +87,7 @@ class InviteFriendsRow extends React.Component<Props> {
         </View>
       </TouchableOpacity>
     )
-  }
-
-  share = async message => {
-    this.props.analytics!.track('invite_friends')
-    const url =
-      'https://itunes.apple.com/app/apple-store/id1295678402?pt=117841011&ct=Invite%20Friends&mt=8'
-
-    // https://facebook.github.io/react-native/docs/share
-    const {action, activityType} = await (Share as any).share(
-      {
-        message: `${message} Download the app at${Platform.OS === 'android' ? ` ${url}` : ''}`,
-        // title: 'title',
-        url,
-      },
-      {
-        subject: 'Check out tinyrobot',
-        // excludedActivityTypes: [],
-        // tintColor: ''
-      }
-    )
-    this.props.analytics!.track('invite_friends_action_sheet', {action, activityType})
-  }
-}
+  })
+)
 
 export default InviteFriendsRow
