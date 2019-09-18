@@ -150,7 +150,7 @@ describe('Geofence', () => {
     await enterBot(user1)
     await enterBot(user2)
     await waitFor(() => bot.visitorsSize === 2, 'bot visitors to increment')
-    expect(user1.activeBots.length).toEqual(2)
+    await waitFor(() => user1.activeBots.length === 2, 'active bots to increment')
     // expect(user1.activeBots[0].title).toEqual('Test bot')
     // expect(user1.activeBots[1].title).toEqual('Test bot2')
   })
