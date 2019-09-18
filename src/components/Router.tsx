@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {when, autorun, reaction} from 'mobx'
-import {observer, inject} from 'mobx-react'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import {settings} from '../globals'
 import {Keyboard, Platform} from 'react-native'
 import {Actions, Router, Scene, Stack, Modal, Lightbox, Tabs} from 'react-native-router-flux'
-import {IWocky} from 'wocky-client'
+import {IWocky, IProfile} from 'wocky-client'
 import {ILocationStore} from '../store/LocationStore'
 import {INavStore} from '../store/NavStore'
 import SelectChatUser from './Chats/SelectChatUser'
@@ -42,7 +43,6 @@ import Notifications from './Notifications'
 import Attribution from './Attribution'
 import {navBarStyle} from './styles'
 import IconStore from '../store/IconStore'
-import {IStore} from 'src/store/store'
 import OnboardingSwiper from './Onboarding/OnboardingSwiper'
 import {IAuthStore} from 'src/store/AuthStore'
 import LiveLocationCompose from './LiveLocation/LiveLocationCompose'
@@ -59,41 +59,63 @@ type Props = {
   navStore?: INavStore
   homeStore?: IHomeStore
   iconStore?: IconStore
-  store?: IStore
   authStore?: IAuthStore
   analytics?: any
 }
 
-@inject('wocky', 'locationStore', 'iconStore', 'analytics', 'homeStore', 'navStore', 'authStore')
-@observer
-class TinyRobotRouter extends React.Component<Props> {
-  componentDidMount() {
-    const {locationStore, navStore, wocky} = this.props
+const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics', 'homeStore', 'navStore', 'authStore')(
+  observer(({wocky, locationStore, navStore, homeStore, iconStore, authStore, analytics}: Props) => {
+    useEffect(() => {
+      reaction(() => navStore!.scene, () => Keyboard.dismiss())
 
-    reaction(() => this.props.navStore!.scene, () => Keyboard.dismiss())
-
-    autorun(
-      () => {
-        const onboarded = wocky!.profile && wocky!.profile.onboarded
-        const {scene} = navStore!
-        const {alwaysOn} = locationStore!
-        if (onboarded && !alwaysOn) {
-          if (scene !== 'locationWarning'){
-            if (Actions.locationWarning) Actions.locationWarning({afterLocationAlwaysOn: () => Actions.popTo('home')})
+      autorun(
+        () => {
+          const onboarded = wocky!.profile && wocky!.profile.onboarded
+          const {scene} = navStore!
+          const {alwaysOn} = locationStore!
+          if (onboarded && !alwaysOn) {
+            if (scene !== 'locationWarning'){
+              if (Actions.locationWarning) Actions.locationWarning({afterLocationAlwaysOn: () => Actions.popTo('home')})
+            }
           }
-        }
-      },
-      {delay: 1000}
-    )
+        },
+        {delay: 1000}
+      )
+    }, [])
 
-  }
+    const onDeepLink = async ({action, params}) => {
+      analytics.track('deeplink', {action, params})
+      if (Actions[action]) {
+        // wait until connected
+        when(
+          () => wocky!.connected,
+          async () => {
+            try {
+              analytics.track('deeplink_try', {action, params})
+              if (action === 'home') {
+                homeStore!.select(params.userId)
+                Actions.reset('home')
+                const user = await wocky!.getProfile(params.userId) as IProfile
+                when(() => !!(user && user.location), () => homeStore!.followUserOnMap(user))
+              } else if (action === 'notifications') {
+                wocky!.notifications.setMode(2)
+                Actions.notifications()
+              } else {
+                Actions[action](params)
+              }
+              analytics.track('deeplink_success', {action, params})
+            } catch (err) {
+              analytics.track('deeplink_fail', {error: err, action, params})
+            }
+          }
+        )
+      }
+    }
 
-  render() {
-    const {iconStore, wocky, navStore, authStore} = this.props
     const uriPrefix = Platform.select({ios: settings.uriPrefix, android: settings.uriPrefix.toLowerCase()})
 
     return (
-      <Router onStateChange={() => navStore!.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
+      <Router onStateChange={() => navStore!.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={onDeepLink}>
         <Tabs hideNavBar hideTabBar>
           <Lightbox hideNavBar type="replace">
             <Scene key="checkCredentials" component={Launch} on={() => authStore!.canLogin} success="checkProfile" failure="preConnection" />
@@ -163,42 +185,6 @@ class TinyRobotRouter extends React.Component<Props> {
       </Router>
     )
   }
-
-  onDeepLink = async ({action, params}) => {
-    const {analytics, homeStore, wocky} = this.props
-    analytics.track('deeplink', {action, params})
-    if (Actions[action]) {
-      // wait until connected
-      when(
-        () => this.props.wocky!.connected,
-        async () => {
-          try {
-            analytics.track('deeplink_try', {action, params})
-            if (action === 'home') {
-              homeStore!.select(params.userId)
-              Actions.reset('home')
-              const user = await wocky!.getProfile(params.userId)
-              when(() => !!(user && user.location), () => homeStore!.followUserOnMap(user))
-            } else if (action === 'notifications') {
-              wocky!.notifications.setMode(2)
-              Actions.notifications()
-            } else {
-              Actions[action](params)
-            }
-            analytics.track('deeplink_success', {action, params})
-          } catch (err) {
-            analytics.track('deeplink_fail', {error: err, action, params})
-          }
-        }
-      )
-    }
-  }
-
-  // TODO: Move it outside
-  resetSearchStore = () => {
-    this.props.store!.searchStore.setGlobal('')
-    Actions.pop()
-  }
-}
+))
 
 export default TinyRobotRouter
