@@ -1,12 +1,12 @@
-import React from 'react'
-import {observer, inject} from 'mobx-react'
+import React, {useEffect, useState} from 'react'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import {IWocky, IProfile} from 'wocky-client'
 import {isAlive} from 'mobx-state-tree'
 import BottomPopup from '../BottomPopup'
 import {RText, Pill} from '../common'
 import {colors} from 'src/constants'
 import {View, StyleSheet} from 'react-native'
-import {observable} from 'mobx'
 import ConnectButton from './ConnectButton'
 import ProfileAvatar from '../ProfileAvatar'
 import {minHeight} from '../Global'
@@ -14,36 +14,20 @@ import BlockReport from './BlockReport'
 
 type Props = {
   item: string
-  refresh?: boolean
   wocky?: IWocky
 }
 
-@inject('wocky')
-@observer
-export default class ProfileDetail extends React.Component<Props> {
-  handler: any
-  list: any
-  @observable profile?: IProfile
+const ProfileDetail = inject('wocky')(
+  observer(({item, wocky}: Props) => {
+    const [theProfile, setProfile] = useState<IProfile | null>(null)
 
-  UNSAFE_componentWillMount() {
-    this.load()
-  }
+    useEffect(() => {
+      setProfile(wocky!.profiles.get(item))
+      wocky!.loadProfile(item)
+    }, [])
 
-  UNSAFE_componentWillReceiveProps(nextProps: Props) {
-    if (nextProps && nextProps.refresh) {
-      this.load()
-    }
-  }
-
-  load = () => {
-    this.profile = this.props.wocky!.profiles.get(this.props.item)
-    this.props.wocky!.loadProfile(this.props.item)
-  }
-
-  render() {
-    const {wocky} = this.props
     const {profile} = wocky!
-    if (!this.profile || !isAlive(this.profile)) {
+    if (!theProfile || !isAlive(theProfile)) {
       return null
     }
     return (
@@ -58,12 +42,12 @@ export default class ProfileDetail extends React.Component<Props> {
           }}
           testID="profileDetail"
         >
-          <BlockReport profile={this.profile} />
+          <BlockReport profile={theProfile} />
           <ProfileAvatar
             size={74}
             style={{borderWidth: 0}}
             borderColor={colors.PINK}
-            profile={this.profile}
+            profile={theProfile}
             tappable={false}
             fontFamily="regular"
             fontSize="large"
@@ -76,19 +60,21 @@ export default class ProfileDetail extends React.Component<Props> {
             style={styles.displayName}
             numberOfLines={1}
           >
-            @{this.profile.handle}
+            @{theProfile.handle}
           </RText>
           <View style={{flexDirection: 'row', justifyContent: 'center'}}>
             <Pill>
-              {this.profile.botsSize} Location{this.profile.botsSize !== 1 && 's'}
+              {theProfile.botsSize} Location{theProfile.botsSize !== 1 && 's'}
             </Pill>
           </View>
-          <ConnectButton profile={this.profile!} myProfile={profile!} />
+          <ConnectButton profile={theProfile!} myProfile={profile!} />
         </View>
       </BottomPopup>
     )
-  }
-}
+  })
+)
+
+export default ProfileDetail
 
 const styles = StyleSheet.create({
   displayName: {
