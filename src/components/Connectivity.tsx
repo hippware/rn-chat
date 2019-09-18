@@ -1,7 +1,7 @@
-import React from 'react'
+import {useEffect} from 'react'
 import {AppState} from 'react-native'
 import NetInfo from '@react-native-community/netinfo'
-import {reaction, observable} from 'mobx'
+import {reaction} from 'mobx'
 import {inject} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
 import {log} from '../utils/logger'
@@ -22,64 +22,58 @@ type Props = {
   authStore?: IAuthStore
 }
 
-@inject('wocky', 'homeStore', 'notificationStore', 'locationStore', 'analytics', 'authStore')
-export default class Connectivity extends React.Component<Props> {
-  @observable lastDisconnected = Date.now()
-  retryDelay = 1000
-  isActive = true
-  handler: any
-  intervalId: any
-  connectionInfo: any
-  disconnectHandler: any
-  netInfoUnsubscribe: any = null
+const Connectivity = inject(
+  'wocky',
+  'homeStore',
+  'notificationStore',
+  'locationStore',
+  'analytics',
+  'authStore'
+)(({wocky, homeStore, notificationStore, locationStore, analytics, authStore}: Props) => {
+  let lastDisconnected = Date.now()
+  let retryDelay = 1000
+  let isActive = true
+  let connectionInfo: any
 
-  componentDidMount() {
-    AppState.addEventListener('change', this._handleAppStateChange)
-    this.netInfoUnsubscribe = NetInfo.addEventListener(this._handleConnectionInfoChange)
+  useEffect(() => {
+    AppState.addEventListener('change', _handleAppStateChange)
+    const netInfoUnsubscribe = NetInfo.addEventListener(_handleConnectionInfoChange)
     NetInfo.fetch().then(reach => {
       log('NETINFO INITIAL:', reach)
-      this._handleConnectionInfoChange(reach)
+      _handleConnectionInfoChange(reach)
     })
-    // todo: refactor. Since interval is hardcoded here exponential backoff won't work...it checks every second regardless of changes to retryDelay
-    this.intervalId = setInterval(async () => {
-      const model = this.props.wocky!
+
+    const intervalId = setInterval(async () => {
+      const model = wocky!
       if (
-        this.isActive &&
+        isActive &&
         !model.connected &&
         !model.connecting &&
-        this.props.authStore!.canLogin &&
-        Date.now() - this.lastDisconnected >= this.retryDelay
+        authStore!.canLogin &&
+        Date.now() - lastDisconnected >= retryDelay
       ) {
-        await this.tryReconnect(`retry: ${this.retryDelay}`)
+        await tryReconnect(`retry: ${retryDelay}`)
       }
     }, 1000)
-    this.handler = reaction(
-      () => !this.props.wocky!.connected,
-      () => (this.lastDisconnected = Date.now())
-    )
+    const disposer = reaction(() => !wocky!.connected, () => (lastDisconnected = Date.now()))
 
-    this.props.locationStore!.didMount()
-    setTimeout(() => this._handleAppStateChange('active'))
-  }
+    locationStore!.didMount()
+    setTimeout(() => _handleAppStateChange('active'))
 
-  componentWillUnmount() {
-    clearInterval(this.intervalId)
-    if (this.handler) this.handler()
-    AppState.removeEventListener('change', this._handleAppStateChange)
-    if (this.netInfoUnsubscribe) {
-      this.netInfoUnsubscribe()
-      this.netInfoUnsubscribe = null
+    return () => {
+      clearInterval(intervalId)
+      disposer()
+      AppState.removeEventListener('change', _handleAppStateChange)
+      netInfoUnsubscribe()
+      locationStore!.willUnmount()
     }
-
-    this.props.locationStore!.willUnmount()
-  }
+  }, [])
 
   // reason: A string indicating why tryReconnect() was called.
   //         Useful for logging/debugging
-  tryReconnect = async reason => {
+  const tryReconnect = async reason => {
     const info = {reason, currentState: AppState.currentState}
-    const model = this.props.wocky!
-    const {authStore} = this.props
+    const model = wocky!
     if (
       AppState.currentState === 'active' &&
       !model.connected &&
@@ -87,24 +81,24 @@ export default class Connectivity extends React.Component<Props> {
       authStore!.canLogin
     ) {
       try {
-        this.props.analytics.track('reconnect_try', {
+        analytics.track('reconnect_try', {
           ...info,
-          delay: this.retryDelay,
-          connectionInfo: this.connectionInfo,
+          delay: retryDelay,
+          connectionInfo,
         })
         await authStore!.login()
-        this.props.analytics.track('reconnect_success', {...info})
-        this.retryDelay = 1000
+        analytics.track('reconnect_success', {...info})
+        retryDelay = 1000
       } catch (e) {
         bugsnagNotify(e, 'reconnect_fail', info)
-        this.props.analytics.track('reconnect_fail', {...info, error: e})
+        analytics.track('reconnect_fail', {...info, error: e})
         // todo: error message will be different with GraphQL (?)
         if (e.toString().indexOf('invalid') !== -1) {
-          this.retryDelay = 1e9
+          retryDelay = 1e9
           Actions.logout()
         } else {
-          this.retryDelay = this.retryDelay >= 5 * 1000 ? this.retryDelay : this.retryDelay * 1.5
-          this.lastDisconnected = Date.now()
+          retryDelay = retryDelay >= 5 * 1000 ? retryDelay : retryDelay * 1.5
+          lastDisconnected = Date.now()
         }
       }
     }
@@ -112,60 +106,54 @@ export default class Connectivity extends React.Component<Props> {
 
   // Warning: This NetInfo handler can get called when the app is in
   //   the background on a switch from wifi to cellular (and vice versa)
-  _handleConnectionInfoChange = connectionInfo => {
-    const oldInfo = this.connectionInfo || {}
-    log('CONNECTIVITY:', connectionInfo)
-    this.connectionInfo = connectionInfo
+  const _handleConnectionInfoChange = ci => {
+    const oldInfo = connectionInfo || {}
+    log('& CONNECTIVITY:', ci)
+    connectionInfo = ci
     if (connectionInfo.type === 'unknown') {
-      // @TODO: mixpanel submit info?
       return
     }
     if (connectionInfo.type !== 'none') {
-      this.debouncedDisconnect.cancel()
+      debouncedDisconnect.cancel()
       setTimeout(
         () =>
-          this.tryReconnect(
+          tryReconnect(
             `Connectivity: ` +
               `old=(${oldInfo.type},${oldInfo.effectiveType}), ` +
               `new=(${connectionInfo.type},${connectionInfo.effectiveType})`
           ),
         500
       )
-    } else if (this.props.wocky!.connected && !this.props.wocky!.connecting) {
-      this.debouncedDisconnect()
+    } else if (wocky!.connected && !wocky!.connecting) {
+      debouncedDisconnect()
     }
   }
 
-  _handleAppStateChange = async currentAppState => {
-    this.retryDelay = 1000
-    const {notificationStore, locationStore, homeStore} = this.props
+  const _handleAppStateChange = async currentAppState => {
+    retryDelay = 1000
     log('CURRENT APPSTATE:', currentAppState)
     // reconnect automatically
     if (currentAppState === 'active') {
-      this.debouncedDisconnect.cancel()
-      this.isActive = true
+      debouncedDisconnect.cancel()
+      isActive = true
       notificationStore!.start()
       locationStore!.start()
       homeStore!.start()
-      await this.tryReconnect('currentAppState: active')
+      await tryReconnect('currentAppState: active')
     }
     if (currentAppState === 'background') {
-      this.isActive = false
-      this.debouncedDisconnect()
+      isActive = false
+      debouncedDisconnect()
       notificationStore!.finish()
       locationStore!.finish()
       homeStore!.finish()
     }
   }
 
-  public render() {
-    return null
-  }
-
-  debouncedDisconnect = _.debounce(
+  const debouncedDisconnect = _.debounce(
     () => {
-      if (!this.isActive) {
-        this.props.wocky!.disconnect()
+      if (!isActive) {
+        wocky!.disconnect()
       }
     },
     60000,
@@ -173,4 +161,8 @@ export default class Connectivity extends React.Component<Props> {
       trailing: true,
     }
   )
-}
+
+  return null
+})
+
+export default Connectivity

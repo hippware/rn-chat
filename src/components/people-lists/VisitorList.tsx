@@ -1,6 +1,6 @@
-import React from 'react'
-import {observable} from 'mobx'
-import {observer, inject} from 'mobx-react'
+import React, {useState, useEffect} from 'react'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import {RText} from '../common'
 import {IBot, IWocky} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
@@ -20,55 +20,55 @@ type Props = {
 
 const KeyboardAwareDraggablePopupList: any = withKeyboardHOC(DraggablePopupList)
 
-@inject('wocky', 'locationStore')
-@observer
-export default class VisitorList extends React.Component<Props> {
-  static navigationOptions = {
-    fadeNavConfig: {
-      back: true,
-      title: (
-        <RText size={18} color={colors.PURPLE}>
-          Who's Here
-        </RText>
-      ),
-    },
-  }
+const VisitorList = inject('wocky', 'locationStore')(
+  observer(({botId, wocky, locationStore, isActive}: Props) => {
+    const [bot, setBot] = useState<IBot | null>(null)
 
-  @observable bot?: IBot
+    useEffect(() => {
+      const tempBot = wocky!.getBot({id: botId})
+      setBot(tempBot)
+      // TODO: refactor (remove?), it doesn't look good because we already load bot within BotDetails
+      tempBot.visitors.load!({force: true})
+      wocky!.loadBot(botId)
+    }, [])
 
-  UNSAFE_componentWillMount() {
-    this.bot = this.props.wocky!.getBot({id: this.props.botId})
-    // TODO: refactor (remove?), it doesn't look good because we already load bot within BotDetails
-    this.bot.visitors.load!({force: true})
-    this.props.wocky!.loadBot(this.props.botId)
-  }
+    const renderItem = ({item}) => <FriendCard profile={item} />
 
-  renderItem = ({item}) => <FriendCard profile={item} />
+    const renderHeader = () => (
+      <RText
+        size={16}
+        color={colors.PURPLE}
+        weight="Medium"
+        style={{width: '90%', alignSelf: 'center', marginBottom: 5 * k}}
+      >
+        {"Who's Here"}
+      </RText>
+    )
 
-  render() {
     // TODO display spinner during loading
     return (
       <KeyboardAwareDraggablePopupList
-        headerInner={this.renderHeader()}
-        renderItem={this.renderItem}
+        headerInner={renderHeader()}
+        renderItem={renderItem}
         keyExtractor={item => item.id}
-        data={this.bot && isAlive(this.bot) ? this!.bot!.visitors.list.slice() : []}
+        data={bot && isAlive(bot) ? bot!.visitors.list.slice() : []}
         keyboardShouldPersistTaps="handled"
         onEndReachedThreshold={0.5}
-        onEndReached={() => this!.bot!.visitors.load()}
-        isActive={this.props.isActive}
+        onEndReached={() => bot!.visitors.load()}
+        isActive={isActive}
       />
     )
-  }
-
-  renderHeader = () => (
-    <RText
-      size={16}
-      color={colors.PURPLE}
-      weight="Medium"
-      style={{width: '90%', alignSelf: 'center', marginBottom: 5 * k}}
-    >
-      {"Who's Here"}
-    </RText>
-  )
+  })
+)
+;(VisitorList as any).navigationOptions = {
+  fadeNavConfig: {
+    back: true,
+    title: (
+      <RText size={18} color={colors.PURPLE}>
+        Who's Here
+      </RText>
+    ),
+  },
 }
+
+export default VisitorList

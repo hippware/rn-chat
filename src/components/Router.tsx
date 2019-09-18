@@ -137,11 +137,6 @@ class TinyRobotRouter extends React.Component<Props> {
                   <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
                   <Scene key="liveLocationSelectFriends" component={LiveLocationShare} title="Select Friends" />
                   <Scene key="myAccount" component={MyAccount} editMode back />
-
-                  {/* currently unused
-                  <Scene key="followers" path="followers" component={peopleLists.FollowersList} title="Followers" back />
-                  <Scene key="followed" component={peopleLists.FollowedList} title="Following" back />
-                  */}
                   
                   <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked Users" back />
                   <Scene key="attribution" component={Attribution} leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
@@ -152,15 +147,6 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Scene key="codePush" component={CodePushScene} title="CodePush" back />,
                   ]}
                 </Stack>
-                <Scene
-                  key="searchUsers"
-                  component={peopleLists.SearchUsers}
-                  leftButtonImage={iconClose}
-                  onLeft={this.resetSearchStore}
-                  title="Search Users"
-                  rightButtonImage={null}
-                  wrap
-                />
                 <Scene key="reportUser" component={ReportUser} title="Report User" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
                 <Scene key="reportBot" component={ReportBot} title="Report Location" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
 
