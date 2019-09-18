@@ -2,7 +2,7 @@ module.exports = {
   preset: 'react-native',
   setupFiles: ['./__tests__/utils/testSetup.ts'],
   transformIgnorePatterns: [
-    'node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation-deprecated-tab-navigator|@react-navigation|apsl-react-native-button)',
+    'node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation-deprecated-tab-navigator|@react-navigation|apsl-react-native-button|react-navigation)',
   ],
   modulePaths: ['<rootDir>', '<rootDir>/third-party/wocky-client/src'],
   transform: {
