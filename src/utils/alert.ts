@@ -4,8 +4,7 @@ export default (
   title: any,
   message?: string,
   buttons?: AlertButton[],
-  options?: AlertOptions,
-  type?: string
+  options?: AlertOptions
 ): void => {
-  Alert.alert(title, message, buttons, options, type)
+  Alert.alert(title, message, buttons, options)
 }
