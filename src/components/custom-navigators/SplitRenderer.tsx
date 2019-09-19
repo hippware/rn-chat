@@ -60,8 +60,6 @@ const SplitRenderer = (props: Props) => {
     <Transitioner
       screenProps={props.screenProps}
       descriptors={props.descriptors}
-      // NOTE: our transition animations don't need to be configurable
-      configureTransition={null}
       navigation={props.navigation}
       render={_render}
       onTransitionStart={() => scrollY.setValue(0)}

@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react'
 import MapView from 'react-native-maps'
-import {StyleSheet, Text, Image, View, MapViewRegion} from 'react-native'
+import {StyleSheet, Text, Image, View} from 'react-native'
 import {inject} from 'mobx-react'
 import {observer} from 'mobx-react-lite'
 import {autorun} from 'mobx'
@@ -72,14 +72,14 @@ const MapHome = inject('locationStore', 'wocky', 'homeStore', 'navStore')(
     }
 
     // NOTE: this runs _very_ often while panning/scrolling the map...thus the throttling
-    const onRegionChange = _.throttle(({latitudeDelta}: MapViewRegion) => {
+    const onRegionChange = _.throttle(({latitudeDelta}) => {
       if (latitudeDelta) {
         homeStore!.setMapType(latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard')
       }
     }, 1000)
 
-    const onRegionChangeComplete = async (region: MapViewRegion) => {
-      setMapCenter(region as any)
+    const onRegionChangeComplete = async region => {
+      setMapCenter(region)
       setFocusedLocation(null) // reset bot focused location, otherwise 'current location' CTA will not work
 
       // don't add bot during creation mode (to avoid replacing of new location)
