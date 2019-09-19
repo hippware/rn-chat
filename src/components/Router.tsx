@@ -50,8 +50,7 @@ import LiveLocationSettings from './LiveLocation/LiveLocationSettings'
 import LiveLocationShare from './LiveLocation/LiveLocationShare'
 import  {IHomeStore} from 'src/store/HomeStore';
 
-const iconClose = require('../../images/iconClose.png')
-const sendActive = require('../../images/sendActive.png')
+export const iconClose = require('../../images/iconClose.png')
 
 type Props = {
   wocky?: IWocky
@@ -169,8 +168,8 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
                     <Scene key="codePush" component={CodePushScene} title="CodePush" back />,
                   ]}
                 </Stack>
-                <Scene key="reportUser" component={ReportUser} title="Report User" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
-                <Scene key="reportBot" component={ReportBot} title="Report Location" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
+                <Scene key="reportUser" component={ReportUser} title="Report User" />
+                <Scene key="reportBot" component={ReportBot} title="Report Location" />
 
               </Modal>
             </Stack>

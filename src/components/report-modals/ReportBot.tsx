@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react'
-// import {TouchableOpacity, Image} from 'react-native'
+import {TouchableOpacity, Image} from 'react-native'
 import {inject} from 'mobx-react'
 import {observer} from 'mobx-react-lite'
-import Report /*, {afterReport}*/ from './Report'
-// import {k} from '../Global'
+import Report, {afterReport} from './Report'
+import {k} from '../Global'
 import {IBot} from 'wocky-client'
 import {ReportStore} from '../../store/ReportStore'
-// import {iconClose} from '../Router'
+import {iconClose} from '../Router'
+import {Actions} from 'react-native-router-flux'
 
 type Props = {
   botId: string
@@ -14,21 +15,21 @@ type Props = {
   reportStore?: ReportStore
 }
 
-// const sendActive = require('../../../images/sendActive.png')
+const sendActive = require('../../../images/sendActive.png')
 
-// const Right = inject('wocky', 'reportStore')(({wocky, reportStore, botId}: Props) => (
-//   <TouchableOpacity
-//     onPress={async () => {
-//       if (reportStore!.submitting) return
-//       const bot = wocky.getBot({id: botId})
-//       await reportStore!.reportBot(bot, wocky.profile)
-//       afterReport(reportStore)
-//     }}
-//     style={{marginRight: 10 * k}}
-//   >
-//     <Image source={sendActive} />
-//   </TouchableOpacity>
-// ))
+const Right = inject('wocky', 'reportStore')(({wocky, reportStore, botId}: Props) => (
+  <TouchableOpacity
+    onPress={async () => {
+      if (reportStore!.submitting) return
+      const bot = wocky.getBot({id: botId})
+      await reportStore!.reportBot(bot, wocky.profile)
+      afterReport(reportStore)
+    }}
+    style={{marginRight: 10 * k}}
+  >
+    <Image source={sendActive} />
+  </TouchableOpacity>
+))
 
 const ReportBot = inject('wocky')(
   observer(({wocky, botId}: Props) => {
@@ -46,10 +47,14 @@ const ReportBot = inject('wocky')(
     )
   })
 )
-
-// todo: how to get a custom right button? Uncommenting below adds a button to the internal *and* external navigator.
-// ;(ReportBot as any).navigationOptions = ({navigation}) => ({
-//   headerRight: <Right botId={navigation.state.params.botId} />,
-// })
+;(ReportBot as any).navigationOptions = ({navigation}) => ({
+  headerRight: <Right botId={navigation.state.params.botId} />,
+  title: 'Report Location',
+  headerLeft: (
+    <TouchableOpacity onPress={() => Actions.pop()} style={{marginLeft: 15}}>
+      <Image source={iconClose} />
+    </TouchableOpacity>
+  ),
+})
 
 export default ReportBot
