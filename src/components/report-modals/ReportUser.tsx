@@ -46,5 +46,8 @@ const ReportUser = inject('wocky')(
     )
   })
 )
+// ;(ReportUser as any).navigationOptions = ({navigation}) => ({
+//   rightButton: <Right botId={navigation.state.params.botId} />,
+// })
 
 export default ReportUser
