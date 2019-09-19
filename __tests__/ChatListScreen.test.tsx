@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer'
 import ChatListScreen from '../src/components/Chats/ChatListScreen'
 import mockStore from './utils/mockStore'
 import {Animated} from 'react-native'
-import {Provider} from 'mobx-react/native'
+import {Provider} from 'mobx-react'
 
 describe('ChatListScreen', () => {
   it('renders with no data', () => {
