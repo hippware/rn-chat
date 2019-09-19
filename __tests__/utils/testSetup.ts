@@ -1,5 +1,3 @@
-jest.mock('mobx-react', () => require('mobx-react/custom'))
-
 jest.mock('NativeAnimatedHelper')
 
 jest.mock('Linking', () => {

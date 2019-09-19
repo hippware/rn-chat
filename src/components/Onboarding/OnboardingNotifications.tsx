@@ -32,11 +32,7 @@ const OnboardingNotifications = ({onPress}: Props) => (
       <Image source={require('../../../images/notificationIcn.png')} />
     </View>
 
-    <GradientButton
-      isPink
-      style={{height: 50, width: '80%', borderRadius: 4}}
-      onPress={this.props.onPress}
-    >
+    <GradientButton isPink style={{height: 50, width: '80%', borderRadius: 4}} onPress={onPress}>
       <RText color={WHITE} size={18.5}>
         Allow Notifications
       </RText>

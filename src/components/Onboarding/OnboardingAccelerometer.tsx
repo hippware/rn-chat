@@ -36,7 +36,7 @@ const OnboardingAccelerometer = ({onPress}: Props) => (
     <GradientButton
       isPink
       style={{height: 50, width: '80%', borderRadius: 4}}
-      onPress={this.props.onPress}
+      onPress={onPress}
       testID="accelerometerPermissionButton"
     >
       <RText color={WHITE} size={18.5}>
