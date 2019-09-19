@@ -14,8 +14,7 @@ interface IProps extends TextInputProperties {
   imageStyle?: any
 }
 
-@observer
-export default class FormTextInput extends React.Component<IProps> {
+class FormTextInput extends React.Component<IProps> {
   input: any
 
   focus = () => {
@@ -92,3 +91,5 @@ export default class FormTextInput extends React.Component<IProps> {
     )
   }
 }
+
+export default observer(FormTextInput)

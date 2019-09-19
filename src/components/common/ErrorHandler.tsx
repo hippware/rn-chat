@@ -17,8 +17,6 @@ type Props = {
   analytics?: any
 }
 
-@inject('wocky', 'store', 'analytics')
-@observer
 class ErrorHandler extends React.Component<Props> {
   @observable error
   @observable errorInfo
@@ -117,4 +115,4 @@ const TheButton = ({reload}) => (
   </Button>
 )
 
-export default ErrorHandler
+export default inject('wocky', 'store', 'analytics')(observer(ErrorHandler))
