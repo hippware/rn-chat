@@ -11,6 +11,7 @@ import {ILocation} from '../model/Location'
 import {IMessageIn} from '../model/Message'
 import {IEventLocationShareEndData} from '../model/EventLocationShareEnd'
 import {IEventLocationShareData} from '../model/EventLocationShare'
+import {log} from '../logger'
 
 export async function waitFor(
   condition: () => boolean,
@@ -463,7 +464,8 @@ export function convertNotification(edge: any): IEventData | null {
       }
       return locationShareNotification
     default:
-      throw new Error('Failed to process notification: ' + JSON.stringify(edge))
+      log('Failed to process notification: ' + JSON.stringify(edge))
+      return null
   }
 }
 
