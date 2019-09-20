@@ -91,15 +91,14 @@ export const Bot = types
       }
     }) as (postId: string) => Promise<void>,
     acceptInvitation: flow(function*(userLocation: ILocation) {
-      if (!self.invitation) {
-        throw new Error('Invitation is not set for the bot')
+      if (self.invitation) {
+        yield self.service._acceptBotInvitation(self.invitation.id, userLocation)
+        self.invitation.accepted = true
+        self.isSubscribed = true
+        self.service.profile!.subscribedBots.addToTop(self)
+        self.service.geofenceBots.addToTop(self)
+        self.service.localBots.add(self.id)
       }
-      yield self.service._acceptBotInvitation(self.invitation.id, userLocation)
-      self.invitation.accepted = true
-      self.isSubscribed = true
-      self.service.profile!.subscribedBots.addToTop(self)
-      self.service.geofenceBots.addToTop(self)
-      self.service.localBots.add(self.id)
     }),
     unsubscribe: flow(function*() {
       self.isSubscribed = false
