@@ -23,7 +23,7 @@ import OnboardingSlideshow from './OnboardingSlideshowScene'
 import * as peopleLists from './people-lists'
 import FriendSearch from './people-lists/FriendSearch'
 import VisitorList from './people-lists/VisitorList'
-import ReportUser from './report-modals/ReportUser'
+import ReportUser, {ReportUserRightButton} from './report-modals/ReportUser'
 import ReportBot from './report-modals/ReportBot'
 import SignIn from './SignIn'
 import VerifyCode from './VerifyCode'
@@ -168,7 +168,7 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
                     <Scene key="codePush" component={CodePushScene} title="CodePush" back />,
                   ]}
                 </Stack>
-                <Scene key="reportUser" component={ReportUser} title="Report User" />
+                <Scene key="reportUser" component={ReportUser} wrap right={ReportUserRightButton} title="Report User" leftButtonImage={iconClose} onLeft={Actions.pop} />
                 <Scene key="reportBot" component={ReportBot} title="Report Location" />
 
               </Modal>
