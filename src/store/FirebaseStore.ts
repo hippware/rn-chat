@@ -225,7 +225,18 @@ const FirebaseStore = types
           throw new Error('Phone not verified')
         }
         analytics.track('verify_confirmation_try', {code, resource})
-        yield confirmResult.confirm(code)
+
+        // Some weird iOS situation. Sometimes `confirmResult.confirm(code)`
+        //   gets called twice (implying this handler is called twice?)
+        // On the second time, if the user is already logged in, this
+        //   triggers an error auth/code-expired or ERROR_SESSION_EXPIRED
+        //   and the error message is 'The SMS code has expired. Please
+        //   re-send the verification code to try again.'
+        // Insert a guard and don't called `confirmResult.confirm` if logged in
+        if (!auth.currentUser) {
+          yield confirmResult.confirm(code)
+        }
+
         register()
         analytics.track('verify_confirmation_success')
       } catch (err) {
