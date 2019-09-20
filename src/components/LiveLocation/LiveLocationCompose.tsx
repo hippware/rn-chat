@@ -82,7 +82,8 @@ const LiveLocationCompose = inject('wocky', 'searchStore', 'locationStore')(
     const selected = selection.selected.length
 
     if (!selected) {
-      throw new Error(' No profile is selected') // it should never happen
+      // Abort
+      Actions.popTo('home')
     }
 
     const untilDate =
@@ -120,7 +121,7 @@ const LiveLocationCompose = inject('wocky', 'searchStore', 'locationStore')(
                 marginTop: 11,
               }}
             >
-              Share your live location with @{selection.selected[0].handle}
+              Share your live location with @{selected > 0 ? selection.selected[0].handle : ''}
               {selected > 1 && ` and ${selected - 1} others.`}
             </RText>
           </View>
