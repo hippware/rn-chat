@@ -17,34 +17,26 @@ type ButtonProps = {
   style?: any
   text: string
 }
-const ExpireButton = ({onPress, text, style}: ButtonProps) => (
-  <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
-    <RText color={colors.PINK} size={17.5}>
-      {text}
-    </RText>
-  </TouchableOpacity>
-)
 
-@inject('wocky')
-@observer
-export default class InvisibleExpirationSelector extends React.Component<Props> {
-  dismiss = () => {
-    Actions.pop()
-  }
+const InvisibleExpirationSelector = inject('wocky')(
+  observer(({wocky}: Props) => {
+    const {profile} = wocky!
 
-  // closure that returns onPress function to hide user and set expire date
-  expire = (hours?: number) => () => {
-    const date = hours ? new Date(Date.now() + hours * 3600 * 1000) : undefined
-    const {profile} = this.props.wocky!
-    if (profile) {
-      profile!.hide(true, date)
+    const dismiss = () => {
+      Actions.pop()
     }
-    this.dismiss()
-  }
 
-  render() {
+    // closure that returns onPress function to hide user and set expire date
+    const expire = (hours?: number) => () => {
+      const date = hours ? new Date(Date.now() + hours * 3600 * 1000) : undefined
+      if (profile) {
+        profile!.hide(true, date)
+      }
+      dismiss()
+    }
+
     return (
-      <ModalContainer onPress={this.dismiss}>
+      <ModalContainer onPress={dismiss}>
         <View style={styles.inner} pointerEvents="box-none">
           <Image
             source={require('../../../images/invisibleIcon.png')}
@@ -56,15 +48,23 @@ export default class InvisibleExpirationSelector extends React.Component<Props> 
             <Text style={styles.bold}>{'invisible'}</Text>
             {'?\r\nYou will stop seeing visits to your favorite locations.'}
           </RText>
-          <ExpireButton onPress={this.expire(3)} text="3 hours" />
-          <ExpireButton onPress={this.expire(24)} text="24 hours" />
-          <ExpireButton onPress={this.expire()} text="Stay Invisible" />
-          <ExpireButton onPress={this.dismiss} style={{borderWidth: 0}} text="Cancel" />
+          <ExpireButton onPress={expire(3)} text="3 hours" />
+          <ExpireButton onPress={expire(24)} text="24 hours" />
+          <ExpireButton onPress={expire()} text="Stay Invisible" />
+          <ExpireButton onPress={dismiss} style={{borderWidth: 0}} text="Cancel" />
         </View>
       </ModalContainer>
     )
-  }
-}
+  })
+)
+
+const ExpireButton = ({onPress, text, style}: ButtonProps) => (
+  <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
+    <RText color={colors.PINK} size={17.5}>
+      {text}
+    </RText>
+  </TouchableOpacity>
+)
 
 const styles = StyleSheet.create({
   inner: {
@@ -92,3 +92,5 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
 })
+
+export default InvisibleExpirationSelector

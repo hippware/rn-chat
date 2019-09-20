@@ -1,4 +1,4 @@
-import {createUser, waitFor, sleep} from './support/testuser'
+import {createUser, fillAndSaveProfile, dumpProfile, waitFor, sleep} from './support/testuser'
 import {IWocky, IChat} from '../src'
 
 let alice: IWocky, bob: IWocky, chat: IChat
@@ -11,25 +11,17 @@ describe('New GraphQL conversation tests', () => {
   })
 
   it('update profiles with handles so they can send messages', async () => {
-    await alice.profile!.update({
-      handle: 'a' + alice.profile!.phoneNumber!.replace('+', ''),
-      firstName: 'alice',
-      lastName: 'alerson',
-    })
-    await alice.profile!.save()
-    await bob.profile!.update({
-      handle: 'b' + bob.profile!.phoneNumber!.replace('+', ''),
-      firstName: 'bob',
-      lastName: 'boberts',
-    })
-    await bob.profile!.save()
+    await fillAndSaveProfile(alice, 'alice', 'alerson')
+    await fillAndSaveProfile(bob, 'bob', 'boberts')
+    await dumpProfile(alice, 'ALICE')
+    await dumpProfile(bob, 'BOB')
   })
 
   it('make them friends so they can exchange messages', async () => {
     const aliceBobProfile = await alice.loadProfile(bob.username!)
     const bobAliceProfile = await bob.loadProfile(alice.username!)
     await aliceBobProfile.invite()
-    await waitFor(() => bobAliceProfile.hasSentInvite)
+    await waitFor(() => bobAliceProfile.hasSentInvite, 'user invitation notification')
     await bobAliceProfile.invite() // become friends!
   })
 
@@ -39,7 +31,10 @@ describe('New GraphQL conversation tests', () => {
     chat.sendMessage()
     chat.message!.setBody('hello2')
     chat.sendMessage()
-    await waitFor(() => alice.chats.list.length === 1 && alice.chats.list[0].messages.length === 2)
+    await waitFor(
+      () => alice.chats.list.length === 1 && alice.chats.list[0].messages.length === 2,
+      'second message to arrive'
+    )
   })
 
   it("bob receives alice's messages via subscription", async () => {
@@ -48,9 +43,9 @@ describe('New GraphQL conversation tests', () => {
       "expected chat for bob doesn't load in time"
     )
     expect(bob.chats.list.length).toBe(1)
-    expect(bob.chats.list[0].messages.list.length).toBe(2)
-    expect(bob.chats.list[0].messages.last!.content).toBe('hello')
-    expect(bob.chats.list[0].messages.first!.content).toBe('hello2')
+    expect(bob.chats.list[0].sortedMessages.length).toBe(2)
+    expect(bob.chats.list[0].sortedMessages[1].content).toBe('hello')
+    expect(bob.chats.list[0].sortedMessages[0].content).toBe('hello2')
     expect(bob.chats.list[0].messages.list.filter(x => x.unread).length).toBe(2)
     await bob.chats.list[0].readAll()
     expect(bob.chats.list[0].messages.list.filter(x => x.unread).length).toBe(0)

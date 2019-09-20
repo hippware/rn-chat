@@ -1,49 +1,45 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {Animated, StyleSheet} from 'react-native'
-import {observer, inject} from 'mobx-react'
+import {inject} from 'mobx-react'
 import {autorun} from 'mobx'
 import {k} from './Global'
 import {RText} from './common'
 import {colors} from '../constants'
-
-type State = {
-  y: any
-}
+import NotificationStore from 'src/store/NotificationStore'
+import {observer} from 'mobx-react-lite'
 
 const height = 100
 const duration = 500
 
-@inject('notificationStore')
-@observer
-class NotificationBanner extends React.Component<any, State> {
-  state: State = {
-    y: new Animated.Value(0),
-  }
+type Props = {notificationStore?: NotificationStore}
 
-  componentDidMount() {
-    autorun(() => {
-      const {notificationStore} = this.props
-      if (notificationStore.current) {
-        const {isOpening, isClosing} = notificationStore.current
-        if (isOpening) {
-          Animated.timing(this.state.y, {
-            toValue: height,
-            duration,
-            useNativeDriver: true,
-          }).start()
-        } else if (isClosing) {
-          Animated.timing(this.state.y, {
-            toValue: 0,
-            duration,
-            useNativeDriver: true,
-          }).start()
+const NotificationBanner = inject('notificationStore')(
+  observer(({notificationStore}: Props) => {
+    const [y] = useState(new Animated.Value(0))
+
+    useEffect(() => {
+      autorun(() => {
+        if (notificationStore!.current) {
+          const {isOpening, isClosing} = notificationStore!.current
+          if (isOpening) {
+            Animated.timing(y, {
+              toValue: height,
+              duration,
+              useNativeDriver: true,
+            }).start()
+          } else if (isClosing) {
+            Animated.timing(y, {
+              toValue: 0,
+              duration,
+              useNativeDriver: true,
+            }).start()
+          }
         }
-      }
-    })
-  }
+      })
+    }, [])
 
-  render() {
-    const {current} = this.props.notificationStore
+    const {current} = notificationStore!
+
     return current ? (
       <Animated.View
         pointerEvents="none"
@@ -53,7 +49,7 @@ class NotificationBanner extends React.Component<any, State> {
           {
             transform: [
               {
-                translateY: this.state.y,
+                translateY: y,
               },
             ],
           },
@@ -68,8 +64,8 @@ class NotificationBanner extends React.Component<any, State> {
         </RText>
       </Animated.View>
     ) : null
-  }
-}
+  })
+)
 
 export default NotificationBanner
 

@@ -1,41 +1,38 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {View, StyleSheet, Image, TouchableOpacity, Linking} from 'react-native'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {RText, Separator} from '../common'
 import {Actions} from 'react-native-router-flux'
-import {observer, inject} from 'mobx-react'
-import {reaction} from 'mobx'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
+import {autorun} from 'mobx'
 import ModalContainer from './ModalContainer'
-import {IBot} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 
 const footprint = require('../../../images/footprint.png')
 
 type Props = {
-  bot: IBot
   locationStore?: ILocationStore
   analytics?: any
 }
 
-@inject('locationStore', 'analytics')
-@observer
-class LocationGeofenceWarning extends React.Component<Props> {
-  handler: any
-  componentDidMount() {
-    this.handler = reaction(
-      () => this.props.locationStore!.alwaysOn,
-      alwaysOn => {
-        if (alwaysOn) {
+const LocationGeofenceWarning = inject('locationStore', 'analytics')(
+  observer(({locationStore, analytics}: Props) => {
+    useEffect(() => {
+      const disposer = autorun(() => {
+        if (locationStore!.alwaysOn) {
           Actions.pop()
         }
-      }
-    )
-  }
-  componentWillUnmount() {
-    this.handler()
-  }
-  render() {
+      })
+      return disposer
+    }, [])
+
+    const cancel = () => {
+      analytics.track('location_overlay_cancel')
+      Actions.pop()
+    }
+
     return (
       <ModalContainer>
         <Image
@@ -55,14 +52,14 @@ class LocationGeofenceWarning extends React.Component<Props> {
             style={styles.button}
             onPress={() => {
               Linking.openURL('app-settings:{1}')
-              this.props.analytics.track('location_overlay_change_settings')
+              analytics.track('location_overlay_change_settings')
             }}
           >
             <RText color="white" size={17.5}>
               Always Allow
             </RText>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.buttonCancel]} onPress={this.cancel}>
+          <TouchableOpacity style={[styles.button, styles.buttonCancel]} onPress={cancel}>
             <RText color="white" size={17.5}>
               Cancel
             </RText>
@@ -70,13 +67,8 @@ class LocationGeofenceWarning extends React.Component<Props> {
         </View>
       </ModalContainer>
     )
-  }
-
-  cancel = () => {
-    this.props.analytics.track('location_overlay_cancel')
-    Actions.pop()
-  }
-}
+  })
+)
 
 export default LocationGeofenceWarning
 

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {Provider} from 'mobx-react/native'
+import {Provider} from 'mobx-react'
 import {Router, Stack, Scene, Actions} from 'react-native-router-flux'
 import {navBarStyle} from '../../src/components/styles'
 import SplitRenderer from 'src/components/custom-navigators/SplitRenderer'
@@ -119,7 +119,7 @@ export const MessagesRouterStory = () => (
   </Provider>
 )
 
-export const ChatUserSearchScreen = () => <SelectChatUser {...store as any} />
+export const ChatUserSearchScreen = () => <SelectChatUser {...(store as any)} />
 
 const otherUser = {
   id: '1',

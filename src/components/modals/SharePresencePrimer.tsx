@@ -4,7 +4,7 @@ import {colors} from '../../constants'
 import {k} from '../Global'
 import {RText, GradientButton} from '../common'
 import {Actions} from 'react-native-router-flux'
-import {observer, inject} from 'mobx-react'
+import {inject} from 'mobx-react'
 import ModalContainer from './ModalContainer'
 import {IWocky} from 'wocky-client'
 
@@ -14,39 +14,33 @@ type Props = {
 
 const icon = require('../../../images/footOpaqueGradient.png')
 
-@inject('wocky')
-@observer
-class SharePresencePrimer extends React.Component<Props> {
-  handler: any
-
-  dismiss = () => {
-    this.props.wocky!.profile!.clientData.flip('sharePresencePrimed')
+const SharePresencePrimer = inject('wocky')(({wocky}: Props) => {
+  const dismiss = () => {
+    wocky!.profile!.clientData.flip('sharePresencePrimed')
     Actions.pop()
   }
 
-  render() {
-    return (
-      <ModalContainer onPress={this.dismiss}>
-        <View style={styles.inner} pointerEvents="box-none">
-          <Image source={icon} style={{alignSelf: 'center', marginBottom: 10}} />
-          <RText style={styles.title} weight="Light" size={28} color={colors.PINK}>
-            {'Know when friends arrive and depart'}
-          </RText>
-          <RText style={styles.muted} color={colors.WARM_GREY_2} size={15} weight="Light">
-            {"Invite to share each other's\r\npresence at this location!"}
-          </RText>
-          <View style={{marginTop: 15 * k, alignSelf: 'stretch', alignItems: 'stretch'}}>
-            <GradientButton style={styles.button} isPink onPress={this.dismiss}>
-              <RText color="white" size={17.5}>
-                OK
-              </RText>
-            </GradientButton>
-          </View>
+  return (
+    <ModalContainer onPress={dismiss}>
+      <View style={styles.inner} pointerEvents="box-none">
+        <Image source={icon} style={{alignSelf: 'center', marginBottom: 10}} />
+        <RText style={styles.title} weight="Light" size={28} color={colors.PINK}>
+          {'Know when friends arrive and depart'}
+        </RText>
+        <RText style={styles.muted} color={colors.WARM_GREY_2} size={15} weight="Light">
+          {"Invite to share each other's\r\npresence at this location!"}
+        </RText>
+        <View style={{marginTop: 15 * k, alignSelf: 'stretch', alignItems: 'stretch'}}>
+          <GradientButton style={styles.button} isPink onPress={dismiss}>
+            <RText color="white" size={17.5}>
+              OK
+            </RText>
+          </GradientButton>
         </View>
-      </ModalContainer>
-    )
-  }
-}
+      </View>
+    </ModalContainer>
+  )
+})
 
 export default SharePresencePrimer
 
@@ -72,14 +66,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     margin: 10 * k,
     justifyContent: 'center',
-  },
-  buttonCancel: {
-    backgroundColor: 'transparent',
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'white',
-  },
-  footIcon: {
-    width: 23,
-    height: 18,
   },
 })

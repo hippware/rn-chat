@@ -17,8 +17,7 @@ interface IProps<T> extends FlatListProps<T> {
 // https://github.com/mobxjs/mobx-react/issues/717
 // https://mobx-react.js.org/recipes-inject
 
-@inject('scrollY')
-export default class DraggablePopupList<T> extends React.Component<IProps<T>> {
+class DraggablePopupList<T> extends React.Component<IProps<T>> {
   list: any
 
   render() {
@@ -94,3 +93,5 @@ const DraggablePopupListHeader = ({headerInner, isActive}: IProps<any>) => {
     </>
   )
 }
+
+export default inject('scrollY')(DraggablePopupList)

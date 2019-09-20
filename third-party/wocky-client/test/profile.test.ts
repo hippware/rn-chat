@@ -1,4 +1,4 @@
-import {createUser, sleep, waitFor} from './support/testuser'
+import {createUser, fillAndSaveProfile, dumpProfile, sleep, waitFor} from './support/testuser'
 import {IWocky, IProfile} from '../src'
 import {getSnapshot} from 'mobx-state-tree'
 
@@ -42,20 +42,11 @@ describe('New GraphQL profile tests', () => {
     expect(user.profile!.phoneNumber).toBeTruthy()
     user1phone = user.profile!.phoneNumber!
     user2phone = user2.profile!.phoneNumber!
-    await user.profile!.update({
-      handle: 'a' + user1phone.replace('+', ''),
-      firstName: 'name1',
-      lastName: 'lname1',
-      email: 'a@aa.com',
-    })
-    await user.profile!.save()
-    await user2.profile!.update({
-      handle: 'b' + user1phone.replace('+', ''),
-      firstName: 'name2',
-      lastName: 'lname2',
-      email: 'b@bb.com',
-    })
-    await user2.profile!.save()
+
+    await fillAndSaveProfile(user, 'name1', 'lname1')
+    await fillAndSaveProfile(user2, 'name2', 'lname2')
+    await dumpProfile(user, 'USER1')
+    await dumpProfile(user2, 'USER2')
   })
 
   it('update clientData', async () => {
@@ -87,7 +78,7 @@ describe('New GraphQL profile tests', () => {
     expect(user.profile!.sentInvitations.length).toBe(1)
     expect(user.profile!.sentInvitations.list[0].id).toBe(user2.username)
     expect(user1user2Profile!.hasReceivedInvite).toBeTruthy()
-    await waitFor(() => user2user1Profile!.hasSentInvite)
+    await waitFor(() => user2user1Profile!.hasSentInvite, 'user invitation notification')
     expect(user2.profile!.receivedInvitations.list[0].id).toBe(user.username)
   })
 
@@ -116,7 +107,7 @@ describe('New GraphQL profile tests', () => {
   })
 
   it('check for notification', async () => {
-    await waitFor(() => user1user2Profile!.isFriend)
+    await waitFor(() => user1user2Profile!.isFriend, 'user relationship should be friends')
     expect(user.profile!.friends.length).toBe(1)
     expect(user.profile!.friends.list[0].id).toBe(user2.username)
     expect(user.profile!.receivedInvitations.length).toBe(0)
@@ -159,7 +150,7 @@ describe('New GraphQL profile tests', () => {
     expect(user1user2Profile!.isFriend).toBeFalsy()
     expect(user.profile!.friends.length).toBe(0)
     // wait for 'NONE' contact notification processing
-    await waitFor(() => !user2user1Profile!.isFriend)
+    await waitFor(() => !user2user1Profile!.isFriend, 'user relationship should be none')
     expect(user2.profile!.friends.length).toBe(0)
     expect(user2user1Profile!.isFriend).toBeFalsy()
   })

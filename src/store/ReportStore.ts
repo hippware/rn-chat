@@ -2,7 +2,7 @@ import base64 from 'base-64'
 import {observable} from 'mobx'
 import {IProfile, IBot} from 'wocky-client'
 
-class ReportStore {
+export class ReportStore {
   @observable text: string = ''
   @observable submitting: boolean = false
 

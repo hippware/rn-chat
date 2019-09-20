@@ -11,24 +11,36 @@ import {ILocation} from '../model/Location'
 import {IMessageIn} from '../model/Message'
 import {IEventLocationShareEndData} from '../model/EventLocationShareEnd'
 import {IEventLocationShareData} from '../model/EventLocationShare'
+import {log} from '../logger'
 
-export async function waitFor(condition: () => boolean) {
-  return new Promise((resolve, reject) => {
-    when(
-      () => {
-        let res = false
-        try {
-          res = condition()
-        } catch (e) {
-          reject(e)
-        }
-        return res
-      },
-      () => {
-        resolve()
+export async function waitFor(
+  condition: () => boolean,
+  errorMessage: string = '',
+  timeout: number = 0
+) {
+  const promise = new Promise((resolve, reject) => {
+    when(() => {
+      let res = false
+      try {
+        res = condition()
+      } catch (e) {
+        reject(e)
       }
-    )
+      return res
+    }, resolve)
   })
+
+  return timeout > 0
+    ? Promise.race([
+        promise,
+        new Promise((resolve, reject) => {
+          setTimeout(
+            () => reject(`waitFor timed out in ${timeout} milliseconds.\r\n${errorMessage}`),
+            timeout
+          )
+        }),
+      ])
+    : promise
 }
 
 function pad(n: number, width: number, z: string = '0') {
@@ -452,7 +464,8 @@ export function convertNotification(edge: any): IEventData | null {
       }
       return locationShareNotification
     default:
-      throw new Error('Failed to process notification: ' + JSON.stringify(edge))
+      log('Failed to process notification: ' + JSON.stringify(edge))
+      return null
   }
 }
 

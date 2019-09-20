@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import {
   TouchableOpacity,
   View,
@@ -7,13 +7,13 @@ import {
   Alert,
   TouchableOpacityProps,
 } from 'react-native'
-import {observer, inject} from 'mobx-react'
-import {observable} from 'mobx'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import {minHeight} from './Global'
 import SignUpAvatar from './SignUpAvatar'
 import {Actions} from 'react-native-router-flux'
 import Cell from './Cell'
-import FormTextInput from './FormTextInput'
+import {FormTextInput} from './FormTextInput'
 import {colors} from '../constants'
 import {RText, Separator} from './common'
 import {ValidatableProfile} from '../utils/formValidation'
@@ -28,44 +28,33 @@ type Props = {
   profileValidationStore?: any
 }
 
-@inject('wocky', 'profileValidationStore')
-@observer
-class MyAccount extends React.Component<Props> {
-  static renderTitle = () => <Title />
-  static rightButton = () => <Right />
-
-  static submit = async profileValidationStore => {
-    try {
-      await profileValidationStore.save()
-      Actions.pop()
-      // need to force refresh of ProfileDetails after this change
-      setTimeout(() => Actions.refresh({refresh: new Date()}))
-    } catch (e) {
-      Alert.alert(e)
-    }
-  }
-
-  @observable saving: boolean = false
-  @observable vProfile?: ValidatableProfile
-  handle: any
-  firstName: any
-  lastName: any
-  email: any
-
-  UNSAFE_componentWillMount() {
-    if (this.props.wocky!.profile) {
-      this.vProfile = new ValidatableProfile(this.props.wocky!.profile!)
-      this.props.profileValidationStore.setProfile(this.vProfile)
-    }
-  }
-
-  render() {
-    const {wocky} = this.props
+const MyAccount = inject('wocky', 'profileValidationStore')(
+  observer(({wocky, profileValidationStore}: Props) => {
     const {profile} = wocky!
-    if (!profile || !this.vProfile) {
+
+    const [vProfile, setVProfile] = useState<ValidatableProfile | null>(null)
+    const handle = useRef<FormTextInput>(null)
+    const firstName = useRef<FormTextInput>(null)
+    const lastName = useRef<FormTextInput>(null)
+    const email = useRef<FormTextInput>(null)
+    // const phone = useRef<FormTextInput>(null)
+
+    useEffect(() => {
+      if (profile) {
+        const vProf = new ValidatableProfile(profile)
+        setVProfile(vProf)
+        profileValidationStore.setProfile(vProf)
+
+        // set the "static" context
+        ;(MyAccount as any).profileValidationStore = profileValidationStore
+      }
+    }, [])
+
+    if (!profile || !vProfile) {
       // error('NULL PROFILE')
       return <View style={{flex: 1, backgroundColor: 'white'}} />
     }
+
     return (
       <KeyboardAwareScrollView testID="myAccountScrollView">
         <View style={styles.headerOuter}>
@@ -79,26 +68,27 @@ class MyAccount extends React.Component<Props> {
             </RText>
 
             <FormTextInput
-              ref={r => (this.handle = r)}
+              ref={handle}
               label="Username"
-              store={this.vProfile && this.vProfile.handle}
+              store={vProfile && vProfile.handle}
               autoCapitalize="none"
               icon={require('../../images/iconUsernameNew.png')}
-              onSubmitEditing={() => this.email.focus()}
+              onSubmitEditing={() => firstName.current!.focus()}
               selectionColor={colors.COVER_BLUE}
             />
             <FormTextInput
+              ref={firstName}
               label="First Name"
-              store={this.vProfile && this.vProfile.firstName}
+              store={vProfile && vProfile.firstName}
               icon={require('../../images/iconSubsNew.png')}
-              onSubmitEditing={() => this.lastName.focus()}
+              onSubmitEditing={() => lastName.current!.focus()}
               selectionColor={colors.COVER_BLUE}
             />
             <FormTextInput
-              ref={r => (this.lastName = r)}
+              ref={lastName}
               label="Last Name"
-              store={this.vProfile && this.vProfile.lastName}
-              onSubmitEditing={() => this.handle.focus()}
+              store={vProfile && vProfile.lastName}
+              onSubmitEditing={() => email.current!.focus()}
               selectionColor={colors.COVER_BLUE}
             />
 
@@ -119,11 +109,11 @@ class MyAccount extends React.Component<Props> {
               // value={format({phone: profile.phoneNumber.replace('+', ''), country: 'US'}, 'E.164')}
             />
             <FormTextInput
-              ref={r => (this.email = r)}
+              ref={email}
               label="Email"
-              store={this.vProfile && this.vProfile.email}
+              store={vProfile && vProfile.email}
               icon={require('../../images/iconEmailNew.png')}
-              onSubmitEditing={() => MyAccount.submit(this.props.profileValidationStore)}
+              onSubmitEditing={submit}
               selectionColor={colors.COVER_BLUE}
             />
 
@@ -213,7 +203,16 @@ class MyAccount extends React.Component<Props> {
         </View>
       </KeyboardAwareScrollView>
     )
-  }
+  })
+)
+;(MyAccount as any).navigationOptions = () => ({
+  headerRight: <Right />,
+  headerTitle: 'Edit Profile',
+})
+
+const submit = async () => {
+  await (MyAccount as any).profileValidationStore.save()
+  Actions.pop()
 }
 
 export default MyAccount
@@ -230,35 +229,16 @@ const LinkButton = ({
   </TouchableOpacity>
 )
 
-const Title = inject('wocky')(
-  observer(({wocky}) =>
-    wocky.profile ? (
-      <RText
-        size={18}
-        style={{
-          letterSpacing: 0.5,
-          color: colors.DARK_PURPLE,
-        }}
-      >
-        Edit Profile
-      </RText>
-    ) : null
-  )
-)
-
-const Right = inject('profileValidationStore', 'wocky')(
-  observer(({profileValidationStore, wocky}) => {
-    const {profile} = wocky
+const Right = inject('wocky', 'profileValidationStore')(
+  observer(({wocky, profileValidationStore}: Props) => {
+    const {profile} = wocky!
     const disabled =
       !profile ||
       profile.updating ||
       profile.uploading ||
       (profile.avatar && profile.avatar.loading)
     return profile ? (
-      <TouchableOpacity
-        onPress={() => MyAccount.submit(profileValidationStore)}
-        disabled={disabled}
-      >
+      <TouchableOpacity onPress={submit} disabled={disabled as boolean}>
         <RText
           size={16}
           style={{

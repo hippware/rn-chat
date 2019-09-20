@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import {Alert, StyleSheet, View, TextInput, Keyboard} from 'react-native'
-import {observer, inject} from 'mobx-react'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import {k} from '../Global'
 import {colors} from '../../constants'
 import {RText} from '../common'
@@ -12,40 +13,28 @@ type Props = {
   reportStore?: any
 }
 
-@inject('reportStore')
-@observer
-export default class Report extends React.Component<Props> {
-  mounted: boolean = false
-  keyboardHeight: number = 0
-  text: any
+const Report = inject('reportStore')(
+  observer(({subtitle, placeholder, reportStore}: Props) => {
+    const [keyboardHeight, setKeyboardHeight] = useState(0)
+    const text = useRef<TextInput | null>(null)
 
-  UNSAFE_componentWillMount() {
-    Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
-    Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this))
-  }
+    useEffect(() => {
+      const kwh = () => setKeyboardHeight(0)
+      const kws = e => setKeyboardHeight(e.endCoordinates.height)
+      Keyboard.addListener('keyboardWillShow', kws)
+      Keyboard.addListener('keyboardWillHide', kwh)
+      return () => {
+        Keyboard.removeListener('keyboardWillShow', kws)
+        Keyboard.removeListener('keyboardWillHide', kwh)
+      }
+    }, [])
 
-  componentDidMount() {
-    this.mounted = true
-    // hack for Android. Something about autoFocus inside Modals has been weird off for a while with no clear solutions.
-    setTimeout(() => this.text.focus(), 200)
-  }
-
-  keyboardWillShow = e => {
-    if (this.mounted) this.keyboardHeight = e.endCoordinates.height
-  }
-
-  keyboardWillHide = () => {
-    if (this.mounted) this.keyboardHeight = 0
-  }
-
-  render() {
-    const {placeholder, subtitle, reportStore} = this.props
     return (
       <View
         style={{
           flex: 1,
           marginBottom: 5 * k,
-          paddingBottom: this.keyboardHeight,
+          paddingBottom: keyboardHeight,
           backgroundColor: colors.WHITE,
         }}
       >
@@ -69,17 +58,17 @@ export default class Report extends React.Component<Props> {
             }}
             multiline
             value={reportStore.text}
-            onChangeText={text => (reportStore.text = text)}
+            onChangeText={t => (reportStore.text = t)}
             placeholder={placeholder}
             maxLength={1000}
             editable={!reportStore.submitting}
-            ref={r => (this.text = r)}
+            ref={text}
           />
         </View>
       </View>
     )
-  }
-}
+  })
+)
 
 export const afterReport = reportStore =>
   Alert.alert('Thank You', 'We have received your report.', [
@@ -99,3 +88,5 @@ const styles = StyleSheet.create({
     paddingVertical: 14 * k,
   },
 })
+
+export default Report

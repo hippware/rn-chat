@@ -1,5 +1,3 @@
-jest.mock('mobx-react/native', () => require('mobx-react/custom'))
-
 jest.mock('NativeAnimatedHelper')
 
 jest.mock('Linking', () => {
@@ -20,3 +18,27 @@ jest.mock('moment', () => ({
 
 // prevent "window is undefined" error in @absinthe/socket
 ;(global as any).window = global
+
+jest.mock('NativeModules', () => ({
+  UIManager: {
+    RCTView: () => {},
+  },
+  RNGestureHandlerModule: {
+    attachGestureHandler: jest.fn(),
+    createGestureHandler: jest.fn(),
+    dropGestureHandler: jest.fn(),
+    updateGestureHandler: jest.fn(),
+    State: {},
+    Directions: {},
+  },
+  KeyboardObserver: {},
+}))
+
+jest.mock('Keyboard', () => ({
+  addListener: jest.fn(),
+}))
+
+// https://github.com/kmagiera/react-native-reanimated/pull/276/files
+jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'))
+
+jest.mock('@react-native-community/async-storage', () => {})

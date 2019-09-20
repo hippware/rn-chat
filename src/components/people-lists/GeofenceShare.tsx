@@ -1,7 +1,6 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {Alert, TouchableOpacity, StyleSheet, View} from 'react-native'
-import {observer, inject} from 'mobx-react'
-import {observable} from 'mobx'
+import {inject} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
 import Screen from '../Screen'
 import FriendMultiSelect from './FriendMultiSelect'
@@ -11,82 +10,89 @@ import {IWocky, IBot} from 'wocky-client'
 
 import {RText, BottomButton} from '../common'
 import {ISearchStore} from '../../store/SearchStore'
+import NotificationStore from '../../store/NotificationStore'
+import {observer} from 'mobx-react-lite'
 
 type Props = {
   botId: string
   wocky: IWocky
-  notificationStore: any // TODO proper
+  notificationStore: NotificationStore
   analytics?: any
   searchStore?: ISearchStore
 }
 
-@inject('wocky', 'notificationStore', 'analytics', 'searchStore')
-@observer
-class GeofenceShare extends React.Component<Props> {
-  static rightButton = (props: Props) => <RightButton {...props} />
-  @observable bot?: IBot
+const GeofenceShare = inject('wocky', 'notificationStore', 'analytics', 'searchStore')(
+  observer(({botId, wocky, notificationStore, analytics, searchStore}: Props) => {
+    const [bot, setBot] = useState<IBot | null>(null)
 
-  componentDidMount() {
-    const {getBot, profile} = this.props.wocky!
-    this.bot = getBot({id: this.props.botId})
-    this.props.searchStore!.localResult.setList(profile!.sortedFriends.map(f => ({profile: f})))
-    if (!this.props.wocky!.profile!.clientData!.sharePresencePrimed) {
-      // NOTE: had to add a delay to prevent immediately closing
-      setTimeout(() => Actions.sharePresencePrimer(), 2000)
+    useEffect(() => {
+      const {getBot, profile} = wocky!
+      const tempBot = getBot({id: botId})
+      setBot(tempBot)
+      searchStore!.localResult.setList(profile!.sortedFriends.map(f => ({profile: f})))
+      if (!wocky!.profile!.clientData!.sharePresencePrimed) {
+        // NOTE: had to add a delay to prevent immediately closing
+        setTimeout(() => Actions.sharePresencePrimer(), 2000)
+      }
+    }, [])
+
+    const share = async () => {
+      const shareSelect = searchStore!.localResult.selected.map(sp => sp.id)
+      try {
+        // TODO: implement share (no accept needed) later when we restore public bots
+        // bot!.share(shareSelect, '', 'geofence share')
+
+        await bot!.invite(shareSelect)
+
+        const firstFriend = wocky!.profiles.get(shareSelect[0])
+        const num = shareSelect.length
+        notificationStore.flash(
+          `Invited ${
+            num === 1 ? `@${firstFriend.handle}` : `${num} friends`
+          } to follow the location`
+        )
+        Actions.popTo('home')
+        Actions.botDetails({botId, isNew: true})
+        analytics.track('bot_share_geo')
+      } catch (e) {
+        Alert.alert('There was a problem sharing the location.')
+        // console.warn(e)
+      }
     }
-  }
 
-  share = async () => {
-    const shareSelect = this.props.searchStore!.localResult.selected.map(sp => sp.id)
-    try {
-      // TODO: implement share (no accept needed) later when we restore public bots
-      // this.bot!.share(shareSelect, '', 'geofence share')
-
-      await this.bot!.invite(shareSelect)
-
-      const firstFriend = this.props.wocky!.profiles.get(shareSelect[0])
-      const num = shareSelect.length
-      this.props.notificationStore.flash(
-        `Invited ${num === 1 ? `@${firstFriend.handle}` : `${num} friends`} to follow the location`
-      )
-      Actions.popTo('home')
-      Actions.botDetails({botId: this.props.botId, isNew: true})
-      this.props.analytics.track('bot_share_geo')
-    } catch (e) {
-      Alert.alert('There was a problem sharing the location.')
-      // console.warn(e)
-    }
-  }
-
-  render() {
-    const selection = this.props.searchStore!.localResult
+    const selection = searchStore!.localResult
     const selected = selection.selected.length > 0
     return (
       <Screen>
         <View style={{marginBottom: 50 * minHeight, flex: 1}}>
           <FriendMultiSelect
             selection={selection}
-            botTitle={this.bot && this.bot.title ? this.bot.title : ''}
+            botTitle={bot && bot.title ? bot.title : ''}
             inviteMessage="To share presence!"
           />
         </View>
 
-        <BottomButton isDisabled={!selected} onPress={this.share}>
+        <BottomButton isDisabled={!selected} onPress={share}>
           <RText size={15} color="white" style={styles.shareText}>
             Invite to Follow Location
           </RText>
         </BottomButton>
       </Screen>
     )
+  })
+)
+;(GeofenceShare as any).navigationOptions = ({navigation}) => {
+  const props = navigation.state.params
+  return {
+    headerRight: <RightButton {...props} />,
   }
 }
 
 const RightButton = inject('analytics')(
-  observer(({botId, analytics}) => {
+  observer(({botId, analytics}: Props) => {
     return (
       <TouchableOpacity
         style={{marginRight: 15 * k}}
-        // tslint:disable-next-line
         onPress={() => {
           // TODO: fix hacky nav animation
           Actions.pop({animated: false})
@@ -105,12 +111,6 @@ const RightButton = inject('analytics')(
 export default GeofenceShare
 
 const styles = StyleSheet.create({
-  shareButton: {
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    // borderRadius: 0,
-    backgroundColor: colors.PINK,
-  },
   shareText: {
     letterSpacing: 0.8,
   },

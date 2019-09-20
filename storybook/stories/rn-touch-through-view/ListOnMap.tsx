@@ -1,6 +1,6 @@
 import React from 'react'
 import MapHome from 'src/components/Home/MapHome'
-import {Provider} from 'mobx-react/native'
+import {Provider} from 'mobx-react'
 import DraggablePopupList from 'src/components/common/DraggablePopupList'
 import {View, Text, TextInput, Animated} from 'react-native'
 import FriendSearch, {

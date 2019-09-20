@@ -1,9 +1,12 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {TouchableOpacity, Image} from 'react-native'
-import {observer, inject} from 'mobx-react'
-import {observable} from 'mobx'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import Report, {afterReport} from './Report'
 import {k} from '../Global'
+import {IProfile} from 'wocky-client'
+import {iconClose} from '../Router'
+import {Actions} from 'react-native-router-flux'
 
 type Props = {
   userId: string
@@ -26,23 +29,33 @@ const Right = inject('wocky', 'reportStore')(({wocky, reportStore, userId}) => (
   </TouchableOpacity>
 ))
 
-@inject('wocky', 'reportStore')
-@observer
-export default class ReportUser extends React.Component<Props> {
-  static rightButton = ({userId}) => <Right userId={userId} />
+const ReportUser = inject('wocky')(
+  observer(({userId, wocky}: Props) => {
+    // todo: how to specify this in rnrf in functional components?
+    // static rightButton = ({userId}) => <Right userId={userId} />
 
-  @observable profile: any
+    const [profile, setProfile] = useState<IProfile | null>(null)
 
-  componentDidMount() {
-    this.props.wocky.getProfile(this.props.userId).then(profile => (this.profile = profile))
-  }
+    useEffect(() => {
+      wocky.getProfile(userId).then(p => setProfile(p))
+    }, [])
 
-  render() {
     return (
       <Report
-        subtitle={this.profile ? `@${this.profile.handle}` : ''}
+        subtitle={profile ? `@${profile.handle}` : ''}
         placeholder="Please describe why you are reporting this user (e.g. spam, inappropriate content, etc.)"
       />
     )
-  }
-}
+  })
+)
+;(ReportUser as any).navigationOptions = ({navigation}) => ({
+  headerRight: <Right userId={navigation.state.params.userId} />,
+  title: 'Report User',
+  headerLeft: (
+    <TouchableOpacity onPress={() => Actions.pop()} style={{marginLeft: 15}}>
+      <Image source={iconClose} />
+    </TouchableOpacity>
+  ),
+})
+
+export default ReportUser

@@ -4,7 +4,8 @@ import {StyleSheet, View, Image, TouchableOpacity, Share, Platform} from 'react-
 import {k} from '../Global'
 import {colors} from '../../constants'
 import {RText} from '../common'
-import {inject, observer} from 'mobx-react'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import {IWocky} from 'wocky-client'
 import {IFirebaseStore} from '../../store/FirebaseStore'
 
@@ -19,18 +20,34 @@ type Props = {
 
 const icon = require('../../../images/followers.png')
 
-@inject('wocky', 'analytics', 'firebaseStore')
-@observer
-export default class InviteFriendsRowNew extends React.Component<Props> {
-  render() {
-    const {style, subtext, botTitle, wocky} = this.props
+const InviteFriendsRowNew = inject('wocky', 'analytics', 'firebaseStore')(
+  observer(({style, subtext, botTitle, wocky, analytics, firebaseStore}: Props) => {
+    const share = async m => {
+      analytics!.track('invite_friends')
+      const url = await firebaseStore!.getFriendInviteLink()
+
+      // https://facebook.github.io/react-native/docs/share
+      const {action, activityType} = await (Share as any).share(
+        {
+          message: `${m} Download the app at${Platform.OS === 'android' ? ` ${url}` : ''}`,
+          // title: 'title',
+          url,
+        },
+        {
+          subject: 'Check out tinyrobot',
+          // excludedActivityTypes: [],
+          // tintColor: ''
+        }
+      )
+      analytics!.track('invite_friends_action_sheet', {action, activityType})
+    }
     const {profile} = wocky!
     const handle = profile ? profile.handle : ''
     const message = botTitle
       ? `Hey, @${handle} invited you to check out "${botTitle}" on tinyrobot!`
       : `Hey! Check out my favorite places in the world on tinyrobot! Add me as @${handle}.`
     return (
-      <TouchableOpacity style={[styles.container, style]} onPress={() => this.share(message)}>
+      <TouchableOpacity style={[styles.container, style]} onPress={() => share(message)}>
         <Image source={icon} style={{height: 37 * k, width: 37 * k}} resizeMode="contain" />
         <View style={{marginLeft: 13 * k}}>
           <RText size={16} weight="Medium" color={colors.PINK}>
@@ -42,28 +59,8 @@ export default class InviteFriendsRowNew extends React.Component<Props> {
         </View>
       </TouchableOpacity>
     )
-  }
-
-  share = async message => {
-    this.props.analytics!.track('invite_friends')
-    const url = await this.props.firebaseStore!.getFriendInviteLink()
-
-    // https://facebook.github.io/react-native/docs/share
-    const {action, activityType} = await (Share as any).share(
-      {
-        message: `${message} Download the app at${Platform.OS === 'android' ? ` ${url}` : ''}`,
-        // title: 'title',
-        url,
-      },
-      {
-        subject: 'Check out tinyrobot',
-        // excludedActivityTypes: [],
-        // tintColor: ''
-      }
-    )
-    this.props.analytics!.track('invite_friends_action_sheet', {action, activityType})
-  }
-}
+  })
+)
 
 const styles = StyleSheet.create({
   container: {
@@ -79,3 +76,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 })
+
+export default InviteFriendsRowNew

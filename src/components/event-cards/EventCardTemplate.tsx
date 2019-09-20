@@ -85,4 +85,4 @@ const EventCardTemplate = observer(
   }
 )
 
-export default observer(EventCardTemplate)
+export default EventCardTemplate

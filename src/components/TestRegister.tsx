@@ -1,42 +1,32 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {View, Image, Text, TextInput, StyleSheet, TouchableOpacity} from 'react-native'
-import {inject, observer} from 'mobx-react'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import {Actions} from 'react-native-router-flux'
 import {k, width} from './Global'
 import {colors} from '../constants'
 import {INavStore} from '../store/NavStore'
-import {IWocky} from 'wocky-client'
 import {IAuthStore} from 'src/store/AuthStore'
 
 type Props = {
-  wocky?: IWocky
-  analytics?: any
   navStore?: INavStore
   name: string
   authStore: IAuthStore
 }
 
-type State = {
-  text: string
-}
+const TestRegister = inject('wocky', 'analytics', 'navStore', 'authStore')(
+  observer(({navStore, name, authStore}: Props) => {
+    const [text, setText] = useState('')
 
-@inject('wocky', 'analytics', 'navStore', 'authStore')
-@observer
-class TestRegister extends React.Component<Props, State> {
-  state: State = {
-    text: '',
-  }
+    const onRegister = async () => {
+      if (navStore!.scene !== name) {
+        return
+      }
 
-  onRegister = async () => {
-    if (this.props.navStore!.scene !== this.props.name) {
-      return
+      authStore!.register(`+1555${text}`, 'bypass')
+      Actions.connect()
     }
 
-    this.props.authStore!.register(`+1555${this.state.text}`, 'bypass')
-    Actions.connect()
-  }
-
-  render() {
     return (
       <View style={{flex: 1, alignItems: 'center', paddingTop: 83 * k}}>
         <Image source={require('../../images/logoMark.png')} />
@@ -90,8 +80,8 @@ class TestRegister extends React.Component<Props, State> {
             autoFocus
             maxLength={7}
             keyboardType="phone-pad"
-            onChangeText={text => this.setState({text})}
-            value={this.state.text}
+            onChangeText={setText}
+            value={text}
             style={{
               paddingLeft: 10 * k,
               fontSize: 16 * k,
@@ -111,7 +101,7 @@ class TestRegister extends React.Component<Props, State> {
         />
 
         <TouchableOpacity
-          onPress={this.onRegister}
+          onPress={onRegister}
           style={styles.buttonStyle}
           testID="bypassRegisterButton"
         >
@@ -119,8 +109,8 @@ class TestRegister extends React.Component<Props, State> {
         </TouchableOpacity>
       </View>
     )
-  }
-}
+  })
+)
 
 const styles = StyleSheet.create({
   buttonStyle: {

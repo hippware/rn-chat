@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer'
 import ChatScreen from '../src/components/Chats/ChatScreen'
 import './utils/mockTextInput'
 import mockStore from './utils/mockStore'
-import {Provider} from 'mobx-react/native'
+import {Provider} from 'mobx-react'
 
 describe('ChatScreen', () => {
   it('renders with no data', () => {
