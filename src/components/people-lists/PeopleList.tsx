@@ -14,39 +14,36 @@ type Props = {
   ListFooterComponent?: any
 }
 
-@observer
-class PeopleList extends React.Component<Props> {
-  render() {
-    const SL = SectionList as any
-    return this.props.sections.length ? (
-      <SL
-        keyExtractor={item => item.id}
-        SectionSeparatorComponent={() => (
-          <View style={{height: k, backgroundColor: colors.WARM_GREY}} />
-        )}
-        ItemSeparatorComponent={() => (
-          <View style={{height: k, marginLeft: 55 * k, backgroundColor: colors.WARM_GREY}} />
-        )}
-        stickySectionHeadersEnabled
-        onEndReached={this.props.loadMore}
-        onEndReachedThreshold={0.3}
-        {...this.props}
-      />
-    ) : (
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: '#f1f2f4',
-        }}
-      >
-        <RText size={18} color={colors.PINKISH_GREY}>
-          No Results Found
-        </RText>
-      </View>
-    )
-  }
-}
+const PeopleList = observer((props: Props) => {
+  const SL = SectionList as any
+  return props.sections.length ? (
+    <SL
+      keyExtractor={item => item.id}
+      SectionSeparatorComponent={() => (
+        <View style={{height: k, backgroundColor: colors.WARM_GREY}} />
+      )}
+      ItemSeparatorComponent={() => (
+        <View style={{height: k, marginLeft: 55 * k, backgroundColor: colors.WARM_GREY}} />
+      )}
+      stickySectionHeadersEnabled
+      onEndReached={props.loadMore}
+      onEndReachedThreshold={0.3}
+      {...props}
+    />
+  ) : (
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#f1f2f4',
+      }}
+    >
+      <RText size={18} color={colors.PINKISH_GREY}>
+        No Results Found
+      </RText>
+    </View>
+  )
+})
 
 export default PeopleList

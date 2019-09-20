@@ -3,7 +3,7 @@ import React from 'react'
 import renderer from 'react-test-renderer'
 import SignUp from '../src/components/SignUp'
 import mockStore from './utils/mockStore'
-import {Provider} from 'mobx-react/native'
+import {Provider} from 'mobx-react'
 
 describe('Signup', () => {
   it('renders', () => {

@@ -1,10 +1,10 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {TouchableOpacity, ImageURISource} from 'react-native'
 import {avatarScale} from './Global'
 import {showImagePicker} from './ImagePicker'
-import {observer, inject} from 'mobx-react'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import {Spinner, Avatar} from './common'
-import {observable} from 'mobx'
 import {colors} from '../constants'
 import {warn} from '../utils/logger'
 
@@ -14,17 +14,31 @@ type Props = {
 
 const AVATAR_DIMENSION = 80 * avatarScale
 
-@inject('wocky')
-@observer
-class SignUpAvatar extends React.Component<Props> {
-  @observable imgSrc?: ImageURISource
+const SignUpAvatar = inject('wocky')(
+  observer(({wocky}: Props) => {
+    const [imgSrc, setImgSrc] = useState<ImageURISource | null>(null)
+    const {profile, username, profiles} = wocky!
 
-  render() {
-    const {profile} = this.props.wocky!
+    const selectImage = async () => {
+      const image = await showImagePicker()
+      if (image) {
+        try {
+          profile.setFile(image)
+          await profile.upload()
+          // change data within profiles cache!
+          profiles.get(username, {...profile})
+          setImgSrc(image)
+        } catch (err) {
+          // TODO handle upload error
+          warn('upload error', err)
+        }
+      }
+    }
+
     const {avatar} = profile
     const theAvatar =
       (avatar && avatar.loaded && avatar.thumbnail) ||
-      this.imgSrc ||
+      imgSrc ||
       require('../../images/addPhoto.png')
 
     const avatarProps = avatar &&
@@ -33,7 +47,7 @@ class SignUpAvatar extends React.Component<Props> {
     return (
       <TouchableOpacity
         style={{alignItems: 'center', justifyContent: 'center'}}
-        onPress={this.selectImage}
+        onPress={selectImage}
       >
         {avatar && (avatar.loading || profile.uploading) ? (
           <Spinner />
@@ -42,24 +56,7 @@ class SignUpAvatar extends React.Component<Props> {
         )}
       </TouchableOpacity>
     )
-  }
-
-  selectImage = async () => {
-    const image = await showImagePicker()
-    if (image) {
-      const {profile, username, profiles} = this.props.wocky
-      try {
-        profile.setFile(image)
-        await profile.upload()
-        // change data within profiles cache!
-        profiles.get(username, {...profile})
-        this.imgSrc = image
-      } catch (err) {
-        // TODO handle upload error
-        warn('upload error', err)
-      }
-    }
-  }
-}
+  })
+)
 
 export default SignUpAvatar

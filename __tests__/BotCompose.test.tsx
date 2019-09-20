@@ -1,7 +1,7 @@
 import 'react-native'
 import React from 'react'
 import renderer from 'react-test-renderer'
-import {Provider} from 'mobx-react/native'
+import {Provider} from 'mobx-react'
 
 import './utils/mockMap'
 import mockStore from './utils/mockStore'

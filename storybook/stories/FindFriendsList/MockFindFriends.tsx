@@ -1,6 +1,6 @@
 import React from 'react'
 import OnboardingFindFriendsList from '../../../src/components/Onboarding/OnboardingFindFriendsList'
-import {Provider} from 'mobx-react/native'
+import {Provider} from 'mobx-react'
 import {MyContact} from '../../../src/store/ContactStore'
 import {observable, computed} from 'mobx'
 import {Profile} from 'wocky-client'
