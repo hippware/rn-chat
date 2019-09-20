@@ -5,8 +5,6 @@ import {observer} from 'mobx-react-lite'
 import Report, {afterReport} from './Report'
 import {k} from '../Global'
 import {IProfile} from 'wocky-client'
-import {iconClose} from '../Router'
-import {Actions} from 'react-native-router-flux'
 
 type Props = {
   userId: string
@@ -28,12 +26,10 @@ const Right = inject('wocky', 'reportStore')(({wocky, reportStore, userId}) => (
     <Image source={sendActive} />
   </TouchableOpacity>
 ))
+export const ReportUserRightButton = ({userId}) => <Right userId={userId} />
 
 const ReportUser = inject('wocky')(
   observer(({userId, wocky}: Props) => {
-    // todo: how to specify this in rnrf in functional components?
-    // static rightButton = ({userId}) => <Right userId={userId} />
-
     const [profile, setProfile] = useState<IProfile | null>(null)
 
     useEffect(() => {
@@ -48,14 +44,5 @@ const ReportUser = inject('wocky')(
     )
   })
 )
-;(ReportUser as any).navigationOptions = ({navigation}) => ({
-  headerRight: <Right userId={navigation.state.params.userId} />,
-  title: 'Report User',
-  headerLeft: (
-    <TouchableOpacity onPress={() => Actions.pop()} style={{marginLeft: 15}}>
-      <Image source={iconClose} />
-    </TouchableOpacity>
-  ),
-})
 
 export default ReportUser
