@@ -5,6 +5,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Remove detox (PR #4158)
+* [dev] React hooks + mobx-react v6 (#3779, PR #4159)
+* Crash on unknown in-app notification type (#4161)
+* Fix: Throwing errors without catchers (#4162)
+* Error in src/components/LiveLocation/LiveLocationCompose.tsx:95 (#4166)
+* Fix false alarms of: Unable to login to the app (#3750)
 
 # 4.25.0 - 2019 Sep 19
 
