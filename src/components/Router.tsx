@@ -24,7 +24,7 @@ import * as peopleLists from './people-lists'
 import FriendSearch from './people-lists/FriendSearch'
 import VisitorList from './people-lists/VisitorList'
 import ReportUser, {ReportUserRightButton} from './report-modals/ReportUser'
-import ReportBot from './report-modals/ReportBot'
+import ReportBot, {ReportBotRightButton} from './report-modals/ReportBot'
 import SignIn from './SignIn'
 import VerifyCode from './VerifyCode'
 import LocationDebug from './LocationDebug'
@@ -168,8 +168,8 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
                     <Scene key="codePush" component={CodePushScene} title="CodePush" back />,
                   ]}
                 </Stack>
-                <Scene key="reportUser" component={ReportUser} wrap right={ReportUserRightButton} title="Report User" leftButtonImage={iconClose} onLeft={Actions.pop} />
-                <Scene key="reportBot" component={ReportBot} title="Report Location" />
+                <Scene key="reportUser" component={ReportUser} wrap title="Report User" leftButtonImage={iconClose} onLeft={Actions.pop} right={ReportUserRightButton} />
+                <Scene key="reportBot" component={ReportBot} wrap title="Report Location" leftButtonImage={iconClose} onLeft={Actions.pop} right={ReportBotRightButton}  />
 
               </Modal>
             </Stack>

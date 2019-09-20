@@ -6,8 +6,6 @@ import Report, {afterReport} from './Report'
 import {k} from '../Global'
 import {IBot} from 'wocky-client'
 import {ReportStore} from '../../store/ReportStore'
-import {iconClose} from '../Router'
-import {Actions} from 'react-native-router-flux'
 
 type Props = {
   botId: string
@@ -31,6 +29,8 @@ const Right = inject('wocky', 'reportStore')(({wocky, reportStore, botId}: Props
   </TouchableOpacity>
 ))
 
+export const ReportBotRightButton = ({botId}) => <Right botId={botId} />
+
 const ReportBot = inject('wocky')(
   observer(({wocky, botId}: Props) => {
     const [bot, setBot] = useState<IBot | null>(null)
@@ -47,14 +47,5 @@ const ReportBot = inject('wocky')(
     )
   })
 )
-;(ReportBot as any).navigationOptions = ({navigation}) => ({
-  headerRight: <Right botId={navigation.state.params.botId} />,
-  title: 'Report Location',
-  headerLeft: (
-    <TouchableOpacity onPress={() => Actions.pop()} style={{marginLeft: 15}}>
-      <Image source={iconClose} />
-    </TouchableOpacity>
-  ),
-})
 
 export default ReportBot
