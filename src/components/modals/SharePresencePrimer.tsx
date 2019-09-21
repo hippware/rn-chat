@@ -4,19 +4,15 @@ import {colors} from '../../constants'
 import {k} from '../Global'
 import {RText, GradientButton} from '../common'
 import {Actions} from 'react-native-router-flux'
-import {inject} from 'mobx-react'
 import ModalContainer from './ModalContainer'
-import {IWocky} from 'wocky-client'
-
-type Props = {
-  wocky?: IWocky
-}
+import {useWocky} from 'src/utils/injectors'
 
 const icon = require('../../../images/footOpaqueGradient.png')
 
-const SharePresencePrimer = inject('wocky')(({wocky}: Props) => {
+const SharePresencePrimer = () => {
+  const {profile} = useWocky()
   const dismiss = () => {
-    wocky!.profile!.clientData.flip('sharePresencePrimed')
+    profile!.clientData.flip('sharePresencePrimed')
     Actions.pop()
   }
 
@@ -40,7 +36,7 @@ const SharePresencePrimer = inject('wocky')(({wocky}: Props) => {
       </View>
     </ModalContainer>
   )
-})
+}
 
 export default SharePresencePrimer
 

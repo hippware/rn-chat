@@ -1,87 +1,82 @@
 import React, {useEffect} from 'react'
 import {View, Image, TouchableOpacity} from 'react-native'
-import {inject} from 'mobx-react'
-import {observer} from 'mobx-react-lite'
 import {Actions} from 'react-native-router-flux'
 import ChatCard from './ChatCard'
 import {RText} from '../common'
 import {colors} from '../../constants'
-import {IWocky} from 'wocky-client'
 import DraggablePopupList from '../common/DraggablePopupList'
+import {useWocky} from 'src/utils/injectors'
 
 const sendMessageImg = require('../../../images/sendMessage.png')
 
 type Props = {
-  wocky?: IWocky
   isActive: boolean
 }
 
-const ChatListScreen = inject('wocky')(
-  observer(({wocky, isActive}: Props) => {
-    useEffect(() => {
-      wocky!.chats.loadChats()
-    }, [])
+const ChatListScreen = ({isActive}: Props) => {
+  const {chats} = useWocky()
+  useEffect(() => {
+    chats.loadChats()
+  }, [])
 
-    const {chats} = wocky!
-    return (
-      <DraggablePopupList
-        contentContainerStyle={{marginTop: chats.unreadCount > 0 ? 47 : 10}}
-        data={chats.list.slice()}
-        initialNumToRender={6}
-        headerInner={
-          <>
-            <TouchableOpacity
-              onPress={() => Actions.selectChatUser()}
-              style={{
-                borderColor: colors.PINK,
-                borderWidth: 1,
-                borderRadius: 12,
-                flexDirection: 'row',
-                padding: 10,
-                alignItems: 'center',
-                justifyContent: 'center',
-                // todo: how do I do this with flex?
-                width: 200,
-                alignSelf: 'center',
-              }}
-            >
-              <Image source={sendMessageImg} style={{marginRight: 8}} />
-              <RText color={colors.PINK} size={14} style={{}}>
-                Send Message
-              </RText>
-            </TouchableOpacity>
-            {chats.list.length ? (
-              <RText
-                weight="Medium"
-                size={16}
-                style={{paddingLeft: 10, paddingTop: 25, paddingBottom: 10}}
-              >
-                Messages
-              </RText>
-            ) : null}
-          </>
-        }
-        // todo: figure out a flexible height setting
-        ListEmptyComponent={
-          <View style={{height: 200, alignItems: 'center', justifyContent: 'center'}}>
-            <RText color={colors.DARK_GREY} size={16}>
-              No messages
+  return (
+    <DraggablePopupList
+      contentContainerStyle={{marginTop: chats.unreadCount > 0 ? 47 : 10}}
+      data={chats.list.slice()}
+      initialNumToRender={6}
+      headerInner={
+        <>
+          <TouchableOpacity
+            onPress={() => Actions.selectChatUser()}
+            style={{
+              borderColor: colors.PINK,
+              borderWidth: 1,
+              borderRadius: 12,
+              flexDirection: 'row',
+              padding: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+              // todo: how do I do this with flex?
+              width: 200,
+              alignSelf: 'center',
+            }}
+          >
+            <Image source={sendMessageImg} style={{marginRight: 8}} />
+            <RText color={colors.PINK} size={14} style={{}}>
+              Send Message
             </RText>
-          </View>
-        }
-        renderItem={({item}) => (
-          <ChatCard
-            chat={item}
-            onPress={() => Actions.chat({item: item.id})}
-            style={{paddingHorizontal: 30}}
-          />
-        )}
-        keyExtractor={({id}) => id}
-        isActive={isActive}
-      />
-    )
-  })
-)
+          </TouchableOpacity>
+          {chats.list.length ? (
+            <RText
+              weight="Medium"
+              size={16}
+              style={{paddingLeft: 10, paddingTop: 25, paddingBottom: 10}}
+            >
+              Messages
+            </RText>
+          ) : null}
+        </>
+      }
+      // todo: figure out a flexible height setting
+      ListEmptyComponent={
+        <View style={{height: 200, alignItems: 'center', justifyContent: 'center'}}>
+          <RText color={colors.DARK_GREY} size={16}>
+            No messages
+          </RText>
+        </View>
+      }
+      renderItem={({item}) => (
+        <ChatCard
+          chat={item}
+          onPress={() => Actions.chat({item: item.id})}
+          style={{paddingHorizontal: 30}}
+        />
+      )}
+      keyExtractor={({id}) => id}
+      isActive={isActive}
+    />
+  )
+}
 ;(ChatListScreen as any).navigationOptions = {
   fadeNavConfig: {
     back: true,
