@@ -7,6 +7,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Remove detox (PR #4158)
 * [dev] React hooks + mobx-react v6 (#3779, PR #4159)
   * Use RNRF right button setup instead of react-navigation API (PR #4171)
+  * Put ReportBot header nav config in Router.tsx (PR #4172)
 * Crash on unknown in-app notification type (#4161)
 * Fix: Throwing errors without catchers (#4162)
 * Error in src/components/LiveLocation/LiveLocationCompose.tsx:95 (#4166)
