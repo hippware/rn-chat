@@ -1,0 +1,13 @@
+diff --git a/node_modules/react-native-emoji-selector/index.js b/node_modules/react-native-emoji-selector/index.js
+index a8fc5b5..8b6e22e 100644
+--- a/node_modules/react-native-emoji-selector/index.js
++++ b/node_modules/react-native-emoji-selector/index.js
+@@ -314,7 +314,7 @@ export default class EmojiSelector extends Component {
+           {showSearchBar && Searchbar}
+           {isReady ? (
+             <View style={{flex: 1}}>
+-              <View style={styles.container}>
++              <View style={{flex: 1}}>
+                 {showSectionTitles && <Text style={styles.sectionHeader}>{title}</Text>}
+                 <FlatList
+                   style={styles.scrollview}

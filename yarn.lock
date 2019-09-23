@@ -7656,7 +7656,7 @@ react-native-device-info@3.0.0-rc.5:
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-3.0.0-rc.5.tgz#0e11303abc28580f7e478a529026d6347e396d88"
   integrity sha512-UHv5McBzx3dlb6Y8Fe5bHCE5brTsPezNOIu6HLAn3+c5m4cClrAFR/Ub/pHbJ1pGr5+VgRkvcQmsq2EvDxbgGw==
 
-react-native-emoji-selector@^0.1.6:
+react-native-emoji-selector@^0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/react-native-emoji-selector/-/react-native-emoji-selector-0.1.7.tgz#3accc2440aa40974fb4058605ed1c1148d19425c"
   integrity sha512-T5KiJZyXbOfejDAYf7qd3WUkLNbohYdNESMG0sbotzdlgP84fiqKRjT7LNX/8OKVtgOpgD7+ymw9UTjtA4acHg==
