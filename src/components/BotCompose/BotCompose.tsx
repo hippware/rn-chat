@@ -138,45 +138,47 @@ const BotCompose = inject(
 
     return bot ? (
       <View>
-        <View
-          style={{
-            shadowColor: 'rgba(254, 92, 108, 0.3)',
-            shadowOffset: {
-              width: 0,
-              height: 0,
-            },
-            shadowRadius: 12,
-            shadowOpacity: 1,
-            height: props.iconStore!.isEmojiKeyboardShown ? emojiKeyboardHeight : 0,
-            backgroundColor: Platform.select({
-              ios: 'transparent',
-              android: 'white',
-            }),
-          }}
-        >
-          {/* todo: add blurview on Android hacks: https://github.com/react-native-community/react-native-blur#android */}
-          {Platform.OS === 'ios' && (
-            <BlurView
-              blurType="light"
-              blurAmount={5}
-              style={
-                [
-                  StyleSheet.absoluteFill,
-                  {
-                    backgroundColor: 'rgba(255,255,255,0.5)',
-                    overflow: 'hidden',
-                  },
-                ] as any
-              }
+        {props.iconStore!.isEmojiKeyboardShown && (
+          <View
+            style={{
+              shadowColor: 'rgba(254, 92, 108, 0.3)',
+              shadowOffset: {
+                width: 0,
+                height: 0,
+              },
+              shadowRadius: 12,
+              shadowOpacity: 1,
+              height: emojiKeyboardHeight,
+              backgroundColor: Platform.select({
+                ios: 'transparent',
+                android: 'white',
+              }),
+            }}
+          >
+            {/* todo: add blurview on Android hacks: https://github.com/react-native-community/react-native-blur#android */}
+            {Platform.OS === 'ios' && (
+              <BlurView
+                blurType="light"
+                blurAmount={5}
+                style={
+                  [
+                    StyleSheet.absoluteFill,
+                    {
+                      backgroundColor: 'rgba(255,255,255,0.5)',
+                      overflow: 'hidden',
+                    },
+                  ] as any
+                }
+              />
+            )}
+            <EmojiSelector
+              showHistory
+              onEmojiSelected={onEmojiSelected}
+              showSearchBar={false}
+              columns={8}
             />
-          )}
-          <EmojiSelector
-            showHistory
-            onEmojiSelected={onEmojiSelected}
-            showSearchBar={false}
-            columns={8}
-          />
-        </View>
+          </View>
+        )}
         {!props.iconStore!.isEmojiKeyboardShown && (
           <View>
             <TextInput
