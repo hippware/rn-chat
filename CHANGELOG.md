@@ -17,6 +17,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Users are unable to scroll to bottom of emoji selector (#4135)
 * Update: react-native-keyboard-aware-scroll-view (PR #4180)
   * graphql (PR #4179), @react-native-community/netinfo (PR #4178)
+  * react-native-background-geolocation (PR #4176)
+* EXC_BAD_ACCESS in TSHttpService.m:253 (#4029)
 
 # 4.25.0 - 2019 Sep 19
 
