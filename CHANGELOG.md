@@ -12,6 +12,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Fix: Throwing errors without catchers (#4162)
 * Error in src/components/LiveLocation/LiveLocationCompose.tsx:95 (#4166)
 * Fix false alarms of: Unable to login to the app (#3750)
+* Creation Flow: 
+  * Emoji screen visible when user taps Pin Location button (#4115)
+  * Users are unable to scroll to bottom of emoji selector (#4135)
+* Update: react-native-keyboard-aware-scroll-view (PR #4180)
+  * graphql (PR #4179), @react-native-community/netinfo (PR #4178)
 
 # 4.25.0 - 2019 Sep 19
 
