@@ -1,39 +1,34 @@
 import React from 'react'
 import {StyleSheet, View, ViewStyle} from 'react-native'
-import {observer, inject} from 'mobx-react'
+import {observer} from 'mobx-react'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import {ProfileHandle} from '../common'
 import ProfileAvatar from '../ProfileAvatar'
-import {ILocationStore} from '../../store/LocationStore'
 import {IProfile} from 'wocky-client'
 import {botProfileStyle} from '../styles'
 
 type Props = {
   profile: IProfile
   style?: ViewStyle
-  copyAddress?: () => void
-  locationStore?: ILocationStore
 }
 
-const UserInfoRow = inject('locationStore')(
-  observer(({profile, style, copyAddress, locationStore}: Props) => {
-    return profile ? (
-      <View style={[styles.container, style]}>
-        <View style={styles.userInfoRow}>
-          <ProfileAvatar profile={profile} size={40} fontFamily="regular" />
-          <ProfileHandle
-            style={botProfileStyle.userInfoRow}
-            onPress={() => Actions.profileDetails({item: profile.id})}
-            size={16}
-            profile={profile}
-          />
-        </View>
+const UserInfoRow = observer(({profile, style}: Props) => {
+  return profile ? (
+    <View style={[styles.container, style]}>
+      <View style={styles.userInfoRow}>
+        <ProfileAvatar profile={profile} size={40} fontFamily="regular" />
+        <ProfileHandle
+          style={botProfileStyle.userInfoRow}
+          onPress={() => Actions.profileDetails({item: profile.id})}
+          size={16}
+          profile={profile}
+        />
       </View>
-    ) : null
-  })
-)
+    </View>
+  ) : null
+})
 
 export default UserInfoRow
 
