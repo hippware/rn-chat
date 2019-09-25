@@ -2,6 +2,7 @@ import {MobXProviderContext, useObserver} from 'mobx-react'
 import React from 'react'
 import {IWocky} from 'wocky-client'
 import {ILocationStore} from 'src/store/LocationStore'
+import {IHomeStore} from 'src/store/HomeStore'
 
 // https://mobx-react.js.org/recipes-migration
 function getStores() {
@@ -16,4 +17,9 @@ export function useWocky(): IWocky {
 export function useLocationStore(): ILocationStore {
   const {locationStore}: {locationStore: ILocationStore} = getStores()
   return useObserver(() => locationStore)
+}
+
+export function useHomeStore(): IHomeStore {
+  const {homeStore}: {homeStore: IHomeStore} = getStores()
+  return useObserver(() => homeStore)
 }
