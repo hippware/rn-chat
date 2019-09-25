@@ -3,10 +3,11 @@ import EventCardTemplate from './EventCardTemplate'
 import {IEventFriendInvite, IProfile} from 'wocky-client'
 import {StyleSheet, Image, View, TouchableOpacity} from 'react-native'
 import alert from '../../utils/alert'
-import {inject, observer} from 'mobx-react'
+import {observer} from 'mobx-react'
 import {RText} from '../common'
 import {colors} from '../../constants'
 import GradientButton from '../common/GradientButton'
+import {useAnalytics} from 'src/utils/injectors'
 
 type Props = {
   item: IEventFriendInvite
@@ -27,42 +28,40 @@ export default EventFriendInviteRequestCard
 
 type ConnectProps = {
   item: IEventFriendInvite
-  analytics?: any
 }
 
-const ConnectButton = inject('analytics')(
-  observer(({item, analytics}: ConnectProps) => {
-    const profile = item.user
-    const {isFriend} = profile
-    return isFriend ? (
-      <GradientButton
-        style={[styles.button, isFriend ? styles.friend : styles.notFriend]}
-        isPink={isFriend}
-        offColor="white"
-        onPress={async () => {
-          if (isFriend) {
-            await unfriend(profile)
-          } else {
-            await invite(item, analytics)
-          }
-        }}
-      >
-        <RText size={10.5} weight="Medium" color={isFriend ? 'white' : colors.PINK}>
-          FRIENDS
-        </RText>
-      </GradientButton>
-    ) : (
-      <View style={{flexDirection: 'row'}}>
-        <TouchableOpacity onPress={() => invite(item, analytics)}>
-          <Image style={{marginRight: 5}} source={require('../../../images/friendAccept.png')} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => decline(item)}>
-          <Image source={require('../../../images/friendDecline.png')} />
-        </TouchableOpacity>
-      </View>
-    )
-  })
-)
+const ConnectButton = observer(({item}: ConnectProps) => {
+  const analytics = useAnalytics()
+  const profile = item.user
+  const {isFriend} = profile
+  return isFriend ? (
+    <GradientButton
+      style={[styles.button, isFriend ? styles.friend : styles.notFriend]}
+      isPink={isFriend}
+      offColor="white"
+      onPress={async () => {
+        if (isFriend) {
+          await unfriend(profile)
+        } else {
+          await invite(item, analytics)
+        }
+      }}
+    >
+      <RText size={10.5} weight="Medium" color={isFriend ? 'white' : colors.PINK}>
+        FRIENDS
+      </RText>
+    </GradientButton>
+  ) : (
+    <View style={{flexDirection: 'row'}}>
+      <TouchableOpacity onPress={() => invite(item, analytics)}>
+        <Image style={{marginRight: 5}} source={require('../../../images/friendAccept.png')} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => decline(item)}>
+        <Image source={require('../../../images/friendDecline.png')} />
+      </TouchableOpacity>
+    </View>
+  )
+})
 
 const invite = async (item: IEventFriendInvite, analytics: any) => {
   const profile = item.user

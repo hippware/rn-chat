@@ -1,43 +1,50 @@
 import React from 'react'
 import {TouchableOpacity, StyleSheet, Image, View} from 'react-native'
-import {observer, inject} from 'mobx-react'
+import {observer} from 'mobx-react'
 import {colors} from '../../constants'
 import {Actions} from 'react-native-router-flux'
 import ProfileItem from './ProfileItem'
 import {RText, GradientButton} from '../common'
 import {k} from '../Global'
 import alert from '../../utils/alert'
+import {useAnalytics} from 'src/utils/injectors'
 
-const FollowButton = inject('analytics')(({profile, analytics}) => (
-  <TouchableOpacity
-    style={[styles.button, styles.follow]}
-    onPress={async () => {
-      await profile.follow()
-      analytics.track('user_follow', profile.toJSON())
-    }}
-  >
-    <View style={{flexDirection: 'row'}}>
-      <Image source={require('../../../images/followPlus.png')} style={{marginRight: 7 * k}} />
-      <RText size={10} color={colors.DARK_GREY}>
-        FOLLOW
+const FollowButton = ({profile}) => {
+  const {track} = useAnalytics()
+  return (
+    <TouchableOpacity
+      style={[styles.button, styles.follow]}
+      onPress={async () => {
+        await profile.follow()
+        track('user_follow', profile.toJSON())
+      }}
+    >
+      <View style={{flexDirection: 'row'}}>
+        <Image source={require('../../../images/followPlus.png')} style={{marginRight: 7 * k}} />
+        <RText size={10} color={colors.DARK_GREY}>
+          FOLLOW
+        </RText>
+      </View>
+    </TouchableOpacity>
+  )
+}
+
+const FollowingButton = ({profile}) => {
+  const {track} = useAnalytics()
+  return (
+    <TouchableOpacity
+      style={[styles.button, styles.following]}
+      onPress={async () => {
+        await unfollow(profile)
+        track('user_unfollow', profile.toJSON())
+      }}
+    >
+      <RText size={10} color={colors.WHITE}>
+        FOLLOWING
       </RText>
-    </View>
-  </TouchableOpacity>
-))
-
-const FollowingButton = inject('analytics')(({profile, analytics}) => (
-  <TouchableOpacity
-    style={[styles.button, styles.following]}
-    onPress={async () => {
-      await unfollow(profile)
-      analytics.track('user_unfollow', profile.toJSON())
-    }}
-  >
-    <RText size={10} color={colors.WHITE}>
-      FOLLOWING
-    </RText>
-  </TouchableOpacity>
-))
+    </TouchableOpacity>
+  )
+}
 
 const unfollow = async (profile: any) => {
   return new Promise(resolve => {
