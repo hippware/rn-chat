@@ -6,10 +6,11 @@ import {RText, GradientButton} from '../common'
 import {Actions} from 'react-native-router-flux'
 import ModalContainer from './ModalContainer'
 import {useWocky} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 const icon = require('../../../images/footOpaqueGradient.png')
 
-const SharePresencePrimer = () => {
+const SharePresencePrimer = observer(() => {
   const {profile} = useWocky()
   const dismiss = () => {
     profile!.clientData.flip('sharePresencePrimed')
@@ -36,7 +37,7 @@ const SharePresencePrimer = () => {
       </View>
     </ModalContainer>
   )
-}
+})
 
 export default SharePresencePrimer
 

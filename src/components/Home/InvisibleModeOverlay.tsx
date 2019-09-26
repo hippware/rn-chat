@@ -6,10 +6,11 @@ import {RText} from '../common'
 import {colors} from '../../constants'
 import {disableInvisibleMode} from '../BottomMenu'
 import {useWocky} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 const foot = require('../../../images/footOpaquePink.png')
 
-const InvisibleModeOverlay = () => {
+const InvisibleModeOverlay = observer(() => {
   const {profile} = useWocky()
   if (!profile || (profile!.hidden && !profile!.hidden.enabled)) {
     return null
@@ -29,7 +30,7 @@ const InvisibleModeOverlay = () => {
       </View>
     </HeaderOverlay>
   )
-}
+})
 
 export default InvisibleModeOverlay
 

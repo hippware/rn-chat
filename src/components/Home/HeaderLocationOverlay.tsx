@@ -6,10 +6,11 @@ import {k} from '../Global'
 import {RText} from '../common'
 import {colors} from '../../constants'
 import {useLocationStore} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 const foot = require('../../../images/footOpaquePink.png')
 
-const HeaderLocationOverlay = () => {
+const HeaderLocationOverlay = observer(() => {
   const {alwaysOn} = useLocationStore()
   return alwaysOn ? null : (
     <HeaderOverlay>
@@ -29,7 +30,7 @@ const HeaderLocationOverlay = () => {
       </View>
     </HeaderOverlay>
   )
-}
+})
 
 export default HeaderLocationOverlay
 

@@ -7,12 +7,13 @@ import BotIcon from 'src/components/common/BotIcon'
 import {BotCard} from '../../../store/HomeStore'
 import {colors} from 'src/constants'
 import {useHomeStore} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 type Props = {
   card: BotCard
 }
 
-const BotMarker = ({card}: Props) => {
+const BotMarker = observer(({card}: Props) => {
   const {selectedId, detailsMode, select} = useHomeStore()
   const isSelected = card.id === selectedId
   let bot: IBot
@@ -57,6 +58,6 @@ const BotMarker = ({card}: Props) => {
       </Bubble>
     </HackMarker>
   )
-}
+})
 
 export default BotMarker

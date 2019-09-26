@@ -36,7 +36,7 @@ const marginBottom = 14 * s
 const totalHeight = height + marginBottom
 const buttonPadding = 10
 
-const HorizontalCardList = ({enabled, setIndex, list, index}: Props) => {
+const HorizontalCardList = observer(({enabled, setIndex, list, index}: Props) => {
   const [translateY] = useState(new Animated.Value(0))
   const cardList = useRef(null)
   const {mapType} = useHomeStore()
@@ -86,7 +86,7 @@ const HorizontalCardList = ({enabled, setIndex, list, index}: Props) => {
       </View>
     </Animated.View>
   )
-}
+})
 
 export default HorizontalCardList
 

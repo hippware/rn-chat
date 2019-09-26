@@ -10,12 +10,13 @@ import {colors} from '../../constants'
 import {minHeight} from '../Global'
 import {IActiveBannerItem} from './ActiveGeoBotBanner'
 import {useHomeStore, useAnalytics} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 interface IProps extends IActiveBannerItem {
   bot: IBot
 }
 
-const ActiveGeofenceBot = ({bot, outerStyle, innerStyle}: IProps) => {
+const ActiveGeofenceBot = observer(({bot, outerStyle, innerStyle}: IProps) => {
   const {select} = useHomeStore()
   const {track} = useAnalytics()
   function goToBot(): void {
@@ -61,6 +62,6 @@ const ActiveGeofenceBot = ({bot, outerStyle, innerStyle}: IProps) => {
       </View>
     </View>
   ) : null
-}
+})
 
 export default ActiveGeofenceBot

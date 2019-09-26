@@ -7,10 +7,11 @@ import {Actions} from 'react-native-router-flux'
 import {autorun} from 'mobx'
 import ModalContainer from './ModalContainer'
 import {useAnalytics, useLocationStore} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 const footprint = require('../../../images/footprint.png')
 
-const LocationGeofenceWarning = () => {
+const LocationGeofenceWarning = observer(() => {
   const {track} = useAnalytics()
   const {alwaysOn} = useLocationStore()
 
@@ -62,7 +63,7 @@ const LocationGeofenceWarning = () => {
       </View>
     </ModalContainer>
   )
-}
+})
 
 export default LocationGeofenceWarning
 

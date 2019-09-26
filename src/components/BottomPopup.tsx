@@ -1,12 +1,13 @@
 import React from 'react'
 import {View, Image, StyleSheet} from 'react-native'
 import {useHomeStore} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 type Props = {
   children: any
 }
 
-const BottomPopup = ({children}: Props) => {
+const BottomPopup = observer(({children}: Props) => {
   const {mapType} = useHomeStore()
   // TODO: style this with border radius and shadow rather than an image. Allows setting background color to white
   return (
@@ -23,7 +24,7 @@ const BottomPopup = ({children}: Props) => {
       {children}
     </View>
   )
-}
+})
 export default BottomPopup
 
 const styles = StyleSheet.create({

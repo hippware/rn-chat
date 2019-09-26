@@ -8,6 +8,7 @@ import withKeyboardHOC from '../common/withKeyboardHOC'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {useWocky} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 type Props = {
   botId: string
@@ -16,7 +17,7 @@ type Props = {
 
 const KeyboardAwareDraggablePopupList: any = withKeyboardHOC(DraggablePopupList)
 
-const VisitorList = ({botId, isActive}: Props) => {
+const VisitorList = observer(({botId, isActive}: Props) => {
   const [bot, setBot] = useState<IBot | null>(null)
   const {getBot, loadBot} = useWocky()
 
@@ -54,7 +55,7 @@ const VisitorList = ({botId, isActive}: Props) => {
       isActive={isActive}
     />
   )
-}
+})
 ;(VisitorList as any).navigationOptions = {
   fadeNavConfig: {
     back: true,

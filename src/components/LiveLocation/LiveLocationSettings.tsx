@@ -10,7 +10,7 @@ import PersonRow from '../people-lists/PersonRow'
 import {colors} from 'src/constants'
 import {useWocky} from 'src/utils/injectors'
 
-const LiveLocationSettings = () => {
+const LiveLocationSettings = observer(() => {
   const {profile} = useWocky()
   const buttonHeight = 50 * minHeight
   return (
@@ -104,7 +104,7 @@ const LiveLocationSettings = () => {
       </TouchableOpacity>
     </View>
   )
-}
+})
 
 const ProfileLocationShare = observer(
   ({locationShare: {forDuration, sharedWith}}: {locationShare: ILocationShare}) => {

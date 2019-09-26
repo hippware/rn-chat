@@ -8,6 +8,7 @@ import {GradientButton, RText, Separator} from '../common'
 import {WHITE, TRANSLUCENT_WHITE} from 'src/constants/colors'
 import AndroidOpenSettings from 'react-native-android-open-settings'
 import {useLocationStore} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 const footprint = require('../../../images/bigSmileBot.png')
 
@@ -15,7 +16,7 @@ type Props = {
   afterLocationAlwaysOn: () => void
 }
 
-const LocationWarning = ({afterLocationAlwaysOn}: Props) => {
+const LocationWarning = observer(({afterLocationAlwaysOn}: Props) => {
   const {getCurrentPosition, alwaysOn} = useLocationStore()
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -41,7 +42,7 @@ const LocationWarning = ({afterLocationAlwaysOn}: Props) => {
   ) : (
     <LocationWarningAndroid onPress={onPress} />
   )
-}
+})
 
 export const LocationWarningIOS = ({onPress}) => (
   <View
