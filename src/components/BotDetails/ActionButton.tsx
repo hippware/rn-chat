@@ -7,6 +7,7 @@ import {IBot} from 'wocky-client'
 import {isAlive} from 'mobx-state-tree'
 import alert from '../../utils/alert'
 import {useWocky, useLocationStore} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 type Props = {
   bot: IBot
@@ -14,7 +15,7 @@ type Props = {
   style?: ViewStyle
 }
 
-const BotButtons = (props: Props) => {
+const BotButtons = observer((props: Props) => {
   const {bot, style} = props
   let actionSheet: any
 
@@ -105,7 +106,7 @@ const BotButtons = (props: Props) => {
       />
     </>
   )
-}
+})
 
 export default BotButtons
 

@@ -19,36 +19,38 @@ type Props = {
 
 type StoreShape = {chat?: IChat; setChat: (c) => void}
 
-const ChatScreen = withKeyboardHOC((props: Props) => {
-  const {item, navigation} = props
-  const {chats} = useWocky()
+const ChatScreen = withKeyboardHOC(
+  observer((props: Props) => {
+    const {item, navigation} = props
+    const {chats} = useWocky()
 
-  const store = useLocalStore<StoreShape>(() => ({
-    chat: undefined,
-    setChat(c) {
-      store.chat = c
-    },
-  }))
+    const store = useLocalStore<StoreShape>(() => ({
+      chat: undefined,
+      setChat(c) {
+        store.chat = c
+      },
+    }))
 
-  useEffect(() => {
-    store.setChat(chats.createChat(item))
-    store.chat!.messages.load().then(() => {
-      store.chat!.readAll()
-    })
-    store.chat!.setActive(true)
+    useEffect(() => {
+      store.setChat(chats.createChat(item))
+      store.chat!.messages.load().then(() => {
+        store.chat!.readAll()
+      })
+      store.chat!.setActive(true)
 
-    // insert chat into props for accessing in navigationOptions
-    navigation.setParams({chat: store.chat})
+      // insert chat into props for accessing in navigationOptions
+      navigation.setParams({chat: store.chat})
 
-    return function cleanup() {
-      if (store.chat) {
-        store.chat.setActive(false)
+      return function cleanup() {
+        if (store.chat) {
+          store.chat.setActive(false)
+        }
       }
-    }
-  }, [])
+    }, [])
 
-  return store.chat && isAlive(store.chat) ? <ChatView chat={store.chat} /> : <Screen />
-})
+    return store.chat && isAlive(store.chat) ? <ChatView chat={store.chat} /> : <Screen />
+  })
+)
 ;(ChatScreen as any).navigationOptions = ({navigation}) => {
   const chat = navigation.getParam('chat')
   return {

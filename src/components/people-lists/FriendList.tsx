@@ -8,6 +8,7 @@ import InviteFriendsRowNew from './InviteFriendsRowNew'
 import {Actions} from 'react-native-router-flux'
 import {placeholderStyle} from '../styles'
 import {useWocky} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 type Props = {
   isActive: boolean
@@ -15,7 +16,7 @@ type Props = {
 
 const searchIcon = require('../../../images/search.png')
 
-const FriendList = ({isActive}: Props) => {
+const FriendList = observer(({isActive}: Props) => {
   const {profile} = useWocky()
   const renderHeader = () => {
     return (
@@ -57,7 +58,7 @@ const FriendList = ({isActive}: Props) => {
       // keyboardDismissMode="interactive"
     />
   )
-}
+})
 ;(FriendList as any).navigationOptions = {
   fadeNavConfig: {
     back: true,

@@ -10,12 +10,13 @@ import {ValidatableProfile} from '../utils/formValidation'
 import {getSnapshot} from 'mobx-state-tree'
 import alert from '../utils/alert'
 import {useAnalytics, useWocky} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 type Props = {
   routeName?: string
 }
 
-const SignUp = ({routeName}: Props) => {
+const SignUp = observer(({routeName}: Props) => {
   const [vProfile, setVProfile] = useState<ValidatableProfile | null>(null)
   const handle = useRef<FormTextInput>(null)
 
@@ -150,7 +151,7 @@ const SignUp = ({routeName}: Props) => {
       </View>
     </KeyboardAwareScrollView>
   )
-}
+})
 
 export default SignUp
 

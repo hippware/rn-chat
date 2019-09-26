@@ -18,7 +18,7 @@ type Props = {
   navigation: any
 }
 
-const Notifications = ({isActive, navigation}: Props) => {
+const Notifications = observer(({isActive, navigation}: Props) => {
   const wocky = useWocky()
   useEffect(() => {
     // send all injected props + bot "up" to static context
@@ -87,7 +87,7 @@ const Notifications = ({isActive, navigation}: Props) => {
       ))}
     />
   )
-}
+})
 ;(Notifications as any).navigationOptions = ({
   navigation: {
     state: {

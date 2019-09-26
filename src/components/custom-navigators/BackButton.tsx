@@ -4,12 +4,13 @@ import {Actions} from 'react-native-router-flux'
 import {navBarStyle} from '../styles'
 import {FADE_NAV_BAR_HEADER_HEIGHT} from './NavBarHeader'
 import {useHomeStore} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 type Props = {
   scene: any
 }
 
-const BackButton = ({scene}: Props) => {
+const BackButton = observer(({scene}: Props) => {
   const [offsetLeft] = useState(new Animated.Value(-100))
   const {mapType} = useHomeStore()
 
@@ -50,6 +51,6 @@ const BackButton = ({scene}: Props) => {
       </TouchableOpacity>
     </Animated.View>
   )
-}
+})
 
 export default BackButton

@@ -8,6 +8,7 @@ import _ from 'lodash'
 import {RText} from './common'
 import {colors} from '../constants'
 import {useLocationStore} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 const Form = t.form.Form
 
@@ -32,7 +33,7 @@ const options = {
   },
 }
 
-const LocationDebug = () => {
+const LocationDebug = observer(() => {
   const {backgroundOptions, debugSounds, setBackgroundConfig, emailLog} = useLocationStore()
   if (!backgroundOptions) return null
   let value = _.pick(backgroundOptions, BG_STATE_PROPS)
@@ -68,6 +69,6 @@ const LocationDebug = () => {
       </KeyboardAwareScrollView>
     </Screen>
   )
-}
+})
 
 export default LocationDebug

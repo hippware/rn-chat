@@ -6,10 +6,11 @@ import {Spinner, Avatar} from './common'
 import {colors} from '../constants'
 import {warn} from '../utils/logger'
 import {useWocky} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 const AVATAR_DIMENSION = 80 * avatarScale
 
-const SignUpAvatar = () => {
+const SignUpAvatar = observer(() => {
   const [imgSrc, setImgSrc] = useState<ImageURISource | null>(null)
   const {profile, username, profiles} = useWocky()
 
@@ -49,6 +50,6 @@ const SignUpAvatar = () => {
       )}
     </TouchableOpacity>
   )
-}
+})
 
 export default SignUpAvatar

@@ -5,6 +5,7 @@ import Report, {afterReport} from './Report'
 import {k} from '../Global'
 import {IProfile} from 'wocky-client'
 import {useWocky} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 type Props = {
   userId: string
@@ -28,7 +29,7 @@ const Right = inject('wocky', 'reportStore')(({wocky, reportStore, userId}) => (
 ))
 export const ReportUserRightButton = ({userId}) => <Right userId={userId} />
 
-const ReportUser = ({userId}: Props) => {
+const ReportUser = observer(({userId}: Props) => {
   const [profile, setProfile] = useState<IProfile | null>(null)
   const {getProfile} = useWocky()
 
@@ -42,6 +43,6 @@ const ReportUser = ({userId}: Props) => {
       placeholder="Please describe why you are reporting this user (e.g. spam, inappropriate content, etc.)"
     />
   )
-}
+})
 
 export default ReportUser
