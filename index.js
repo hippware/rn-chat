@@ -13,6 +13,8 @@ YellowBox.ignoreWarnings([
   // todo: remove these after all dependencies have updated to using hooks
   'Warning: componentWillReceiveProps',
   'Warning: componentWillUpdate',
+
+  'RCTRootView cancelTouches', // https://github.com/kmagiera/react-native-gesture-handler/issues/746
 ])
 
 // Uncomment for storybook
