@@ -4,8 +4,9 @@ import _ from 'lodash'
 import PeopleList from './PeopleList'
 import {BlockableProfileItem} from './customProfileItems'
 import {useWocky} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
-const BlockedList = () => {
+const BlockedList = observer(() => {
   const {profile} = useWocky()
   return (
     <Screen>
@@ -18,6 +19,6 @@ const BlockedList = () => {
       />
     </Screen>
   )
-}
+})
 
 export default BlockedList

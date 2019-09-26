@@ -10,6 +10,7 @@ import {IOwnProfile} from 'wocky-client'
 import {RText} from './common'
 import AnimatedLinearGradient from 'react-native-animated-linear-gradient'
 import {useWocky} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 interface IMenuItemProps extends TouchableOpacityProps {
   icon?: any
@@ -105,7 +106,7 @@ const LiveLocationButton = ({invisible, active}) => (
   </View>
 )
 
-const BottomMenu = () => {
+const BottomMenu = observer(() => {
   const {profile} = useWocky()
   if (!profile || !isAlive(profile)) {
     return null
@@ -181,7 +182,7 @@ const BottomMenu = () => {
       </View>
     </BottomPopup>
   )
-}
+})
 
 export default BottomMenu
 

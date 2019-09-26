@@ -8,57 +8,60 @@ import {Actions} from 'react-native-router-flux'
 import withKeyboardHOC from '../common/withKeyboardHOC'
 import {GradientButton} from '../common'
 import {useWocky} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 type Props = {
   botId: string
 }
 
-const EditNote = withKeyboardHOC((props: Props) => {
-  const [bot, setBot] = useState<IBot | undefined>(undefined)
-  const wocky = useWocky()
+const EditNote = withKeyboardHOC(
+  observer((props: Props) => {
+    const [bot, setBot] = useState<IBot | undefined>(undefined)
+    const wocky = useWocky()
 
-  useEffect(() => {
-    setBot(wocky.getBot({id: props.botId}))
-  }, [])
+    useEffect(() => {
+      setBot(wocky.getBot({id: props.botId}))
+    }, [])
 
-  return bot ? (
-    <View>
-      <TextInput
-        style={[
-          styles.textStyle,
-          {
+    return bot ? (
+      <View>
+        <TextInput
+          style={[
+            styles.textStyle,
+            {
+              width,
+              height: 150,
+              paddingTop: 15,
+              textAlignVertical: 'top',
+              alignContent: 'flex-start',
+              justifyContent: 'flex-start',
+            },
+          ]}
+          placeholder="Tell us about this place!"
+          onChangeText={text => bot!.load({description: text})}
+          value={bot!.description}
+          autoFocus
+          multiline
+          selectionColor={colors.COVER_BLUE}
+        />
+        <GradientButton
+          innerStyle={{
             width,
-            height: 150,
-            paddingTop: 15,
-            textAlignVertical: 'top',
-            alignContent: 'flex-start',
-            justifyContent: 'flex-start',
-          },
-        ]}
-        placeholder="Tell us about this place!"
-        onChangeText={text => bot!.load({description: text})}
-        value={bot!.description}
-        autoFocus
-        multiline
-        selectionColor={colors.COVER_BLUE}
-      />
-      <GradientButton
-        innerStyle={{
-          width,
-          // backgroundColor: colors.PINK, // TODO: gradient background
-          paddingVertical: 15 * k,
-          alignItems: 'center',
-        }}
-        isPink
-        onPress={() => Actions.pop()}
-      >
-        <RText color="white" size={15}>
-          Add Note
-        </RText>
-      </GradientButton>
-    </View>
-  ) : null
-})
+            // backgroundColor: colors.PINK, // TODO: gradient background
+            paddingVertical: 15 * k,
+            alignItems: 'center',
+          }}
+          isPink
+          onPress={() => Actions.pop()}
+        >
+          <RText color="white" size={15}>
+            Add Note
+          </RText>
+        </GradientButton>
+      </View>
+    ) : null
+  })
+)
 
 const styles = StyleSheet.create({
   textStyle: {

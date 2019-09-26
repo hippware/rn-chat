@@ -6,6 +6,7 @@ import {RText} from '../common'
 import {Actions} from 'react-native-router-flux'
 import ModalContainer from './ModalContainer'
 import {useWocky} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 type ButtonProps = {
   onPress: any
@@ -13,7 +14,7 @@ type ButtonProps = {
   text: string
 }
 
-const InvisibleExpirationSelector = () => {
+const InvisibleExpirationSelector = observer(() => {
   const {profile} = useWocky()
 
   const dismiss = () => {
@@ -49,7 +50,7 @@ const InvisibleExpirationSelector = () => {
       </View>
     </ModalContainer>
   )
-}
+})
 
 const ExpireButton = ({onPress, text, style}: ButtonProps) => (
   <TouchableOpacity style={[styles.button, style]} onPress={onPress}>

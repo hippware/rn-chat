@@ -10,12 +10,13 @@ import ProfileAvatar from '../ProfileAvatar'
 import {minHeight} from '../Global'
 import BlockReport from './BlockReport'
 import {useWocky} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 type Props = {
   item: string
 }
 
-const ProfileDetail = ({item}: Props) => {
+const ProfileDetail = observer(({item}: Props) => {
   const [theProfile, setProfile] = useState<IProfile | null>(null)
 
   const {profile, profiles, loadProfile} = useWocky()
@@ -69,7 +70,7 @@ const ProfileDetail = ({item}: Props) => {
       </View>
     </BottomPopup>
   )
-}
+})
 
 export default ProfileDetail
 

@@ -2,8 +2,9 @@ import React from 'react'
 import {Pill} from '../common'
 import ProfileCard from './ProfileCard'
 import {useWocky} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
-const YouCard = () => {
+const YouCard = observer(() => {
   const wocky = useWocky()
   if (!wocky.profile || !wocky.profile!.handle) {
     return null
@@ -15,5 +16,5 @@ const YouCard = () => {
       </Pill>
     </ProfileCard>
   )
-}
+})
 export default YouCard

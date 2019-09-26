@@ -8,13 +8,14 @@ import Card from './Card'
 import {Actions} from 'react-native-router-flux'
 import BotIcon from '../common/BotIcon'
 import {useHomeStore} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 type Props = {
   bot: IBot
   id: string
 }
 
-const BotCard = ({id, bot}: Props) => {
+const BotCard = observer(({id, bot}: Props) => {
   const {selectedId} = useHomeStore()
   const isSelected = selectedId === id
   return (
@@ -63,7 +64,7 @@ const BotCard = ({id, bot}: Props) => {
       </View>
     </Card>
   )
-}
+})
 
 export default BotCard
 

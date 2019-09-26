@@ -6,6 +6,7 @@ import {RText} from '../common'
 import {colors} from '../../constants'
 import DraggablePopupList from '../common/DraggablePopupList'
 import {useWocky} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 const sendMessageImg = require('../../../images/sendMessage.png')
 
@@ -13,7 +14,7 @@ type Props = {
   isActive: boolean
 }
 
-const ChatListScreen = ({isActive}: Props) => {
+const ChatListScreen = observer(({isActive}: Props) => {
   const {chats} = useWocky()
   useEffect(() => {
     chats.loadChats()
@@ -76,7 +77,7 @@ const ChatListScreen = ({isActive}: Props) => {
       isActive={isActive}
     />
   )
-}
+})
 ;(ChatListScreen as any).navigationOptions = {
   fadeNavConfig: {
     back: true,

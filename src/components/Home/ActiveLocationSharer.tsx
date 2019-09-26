@@ -7,12 +7,13 @@ import {colors} from '../../constants'
 import {IActiveBannerItem} from './ActiveGeoBotBanner'
 import LocationAvatar from './LocationAvatar'
 import {useHomeStore} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 interface IProps extends IActiveBannerItem {
   sharer: ILocationShare
 }
 
-const ActiveLocationSharer = ({sharer, outerStyle, innerStyle}: IProps) => {
+const ActiveLocationSharer = observer(({sharer, outerStyle, innerStyle}: IProps) => {
   const {followUserOnMap, select} = useHomeStore()
   return (
     <View style={outerStyle}>
@@ -42,6 +43,6 @@ const ActiveLocationSharer = ({sharer, outerStyle, innerStyle}: IProps) => {
       </TouchableOpacity>
     </View>
   )
-}
+})
 
 export default ActiveLocationSharer

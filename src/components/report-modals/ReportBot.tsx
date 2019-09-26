@@ -6,6 +6,7 @@ import {k} from '../Global'
 import {IBot} from 'wocky-client'
 import {ReportStore} from '../../store/ReportStore'
 import {useWocky} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
 
 type Props = {
   botId: string
@@ -31,7 +32,7 @@ const Right = inject('wocky', 'reportStore')(({wocky, reportStore, botId}: Props
 
 export const ReportBotRightButton = ({botId}) => <Right botId={botId} />
 
-const ReportBot = ({botId}: Props) => {
+const ReportBot = observer(({botId}: Props) => {
   const [bot, setBot] = useState<IBot | null>(null)
   const {getBot} = useWocky()
 
@@ -45,6 +46,6 @@ const ReportBot = ({botId}: Props) => {
       placeholder="Please describe why you are reporting this location (e.g. spam, inappropriate content, etc.)"
     />
   )
-}
+})
 
 export default ReportBot
