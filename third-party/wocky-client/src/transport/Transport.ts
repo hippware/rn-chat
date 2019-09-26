@@ -1313,6 +1313,7 @@ export class Transport {
               visitor {
                 id
               }
+              updatedAt
             }
           }
         `,
@@ -1324,7 +1325,7 @@ export class Transport {
         const update = result.data.botGuestVisitors
         this.botVisitor = {
           visitor: {id: update.visitor.id},
-          bot: convertBot(update.bot),
+          bot: convertBot({...update.bot, _accessedAt: new Date(update.updatedAt).getTime()}),
           action: update.action,
         }
       }),

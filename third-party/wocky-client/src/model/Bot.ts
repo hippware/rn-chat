@@ -54,6 +54,8 @@ export const Bot = types
       posts: types.optional(BotPostPaginableList, {}),
       error: '',
       invitation: types.maybeNull(Invitation),
+      // _accessedAt is a field that we compute. It does not exist at the server.
+      _accessedAt: types.optional(types.Date, () => new Date(0)),
     })
   )
   .volatile(() => ({
@@ -164,7 +166,11 @@ export const Bot = types
         })
       }
       delete data.posts
-      Object.assign(self, data)
+
+      // Only assign if _accessedAt is newer
+      if (self._accessedAt < data._accessedAt) {
+        Object.assign(self, data)
+      }
     },
   }))
   .postProcessSnapshot((snapshot: any) => {

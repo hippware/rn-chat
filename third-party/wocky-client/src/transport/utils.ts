@@ -358,6 +358,7 @@ export function convertBot({
   visitorCount,
   subscribers,
   posts,
+  _accessedAt,
   ...data
 }: any) {
   const relationships = subscribers.edges.length ? subscribers.edges[0].relationships : []
@@ -375,6 +376,8 @@ export function convertBot({
     location: {latitude: lat, longitude: lon},
     visitor: contains('VISITOR'),
     isSubscribed: contains('SUBSCRIBED'),
+    // _accessedAt defaults to 'now' unless supplied
+    _accessedAt: (_accessedAt ? new Date(_accessedAt) : new Date()).getTime(),
   }
 }
 
@@ -403,7 +406,7 @@ export function convertNotification(edge: any): IEventData | null {
       // console.log('& user follow:', friendInviteNotification)
       return friendInviteNotification
     case 'BotItemNotification':
-      bot = convertBot(data.bot)
+      bot = convertBot({...data.bot, _accessedAt: time})
       const botItemNotification: IEventBotPostData = {
         id,
         time,
@@ -421,7 +424,7 @@ export function convertNotification(edge: any): IEventData | null {
     case 'BotInvitationResponseNotification':
       // console.log('& invite notification', data.invitation)
       bot = {
-        ...convertBot(data.bot),
+        ...convertBot({...data.bot, _accessedAt: time}),
         invitation: {
           id: data.invitation.id,
           accepted: data.invitation.accepted === true,
@@ -439,7 +442,7 @@ export function convertNotification(edge: any): IEventData | null {
       return inviteNotification
     case 'GeofenceEventNotification':
       // console.log('& invite response notification', data.invitation)
-      bot = convertBot(data.bot)
+      bot = convertBot({...data.bot, _accessedAt: time})
       const geofenceNotification: IEventBotGeofenceData = {
         id,
         time,
