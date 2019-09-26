@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import {TouchableOpacity, Image} from 'react-native'
 import {inject} from 'mobx-react'
-import {observer} from 'mobx-react-lite'
 import Report, {afterReport} from './Report'
 import {k} from '../Global'
 import {IProfile} from 'wocky-client'
+import {useWocky} from 'src/utils/injectors'
 
 type Props = {
   userId: string
@@ -28,21 +28,20 @@ const Right = inject('wocky', 'reportStore')(({wocky, reportStore, userId}) => (
 ))
 export const ReportUserRightButton = ({userId}) => <Right userId={userId} />
 
-const ReportUser = inject('wocky')(
-  observer(({userId, wocky}: Props) => {
-    const [profile, setProfile] = useState<IProfile | null>(null)
+const ReportUser = ({userId}: Props) => {
+  const [profile, setProfile] = useState<IProfile | null>(null)
+  const {getProfile} = useWocky()
 
-    useEffect(() => {
-      wocky.getProfile(userId).then(p => setProfile(p))
-    }, [])
+  useEffect(() => {
+    getProfile(userId).then(p => setProfile(p))
+  }, [])
 
-    return (
-      <Report
-        subtitle={profile ? `@${profile.handle}` : ''}
-        placeholder="Please describe why you are reporting this user (e.g. spam, inappropriate content, etc.)"
-      />
-    )
-  })
-)
+  return (
+    <Report
+      subtitle={profile ? `@${profile.handle}` : ''}
+      placeholder="Please describe why you are reporting this user (e.g. spam, inappropriate content, etc.)"
+    />
+  )
+}
 
 export default ReportUser

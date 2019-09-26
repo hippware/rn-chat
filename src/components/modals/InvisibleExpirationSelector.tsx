@@ -4,13 +4,8 @@ import {colors} from '../../constants'
 import {k} from '../Global'
 import {RText} from '../common'
 import {Actions} from 'react-native-router-flux'
-import {observer, inject} from 'mobx-react'
 import ModalContainer from './ModalContainer'
-import {IWocky} from 'wocky-client'
-
-type Props = {
-  wocky?: IWocky
-}
+import {useWocky} from 'src/utils/injectors'
 
 type ButtonProps = {
   onPress: any
@@ -18,45 +13,43 @@ type ButtonProps = {
   text: string
 }
 
-const InvisibleExpirationSelector = inject('wocky')(
-  observer(({wocky}: Props) => {
-    const {profile} = wocky!
+const InvisibleExpirationSelector = () => {
+  const {profile} = useWocky()
 
-    const dismiss = () => {
-      Actions.pop()
+  const dismiss = () => {
+    Actions.pop()
+  }
+
+  // closure that returns onPress function to hide user and set expire date
+  const expire = (hours?: number) => () => {
+    const date = hours ? new Date(Date.now() + hours * 3600 * 1000) : undefined
+    if (profile) {
+      profile.hide(true, date)
     }
+    dismiss()
+  }
 
-    // closure that returns onPress function to hide user and set expire date
-    const expire = (hours?: number) => () => {
-      const date = hours ? new Date(Date.now() + hours * 3600 * 1000) : undefined
-      if (profile) {
-        profile!.hide(true, date)
-      }
-      dismiss()
-    }
-
-    return (
-      <ModalContainer onPress={dismiss}>
-        <View style={styles.inner} pointerEvents="box-none">
-          <Image
-            source={require('../../../images/invisibleIcon.png')}
-            style={{width: 52, height: 52, marginBottom: 25 * k}}
-            resizeMode="contain"
-          />
-          <RText style={styles.text} weight="Light" size={15} color={colors.DARK_GREY}>
-            {'Are you sure you want to go '}
-            <Text style={styles.bold}>{'invisible'}</Text>
-            {'?\r\nYou will stop seeing visits to your favorite locations.'}
-          </RText>
-          <ExpireButton onPress={expire(3)} text="3 hours" />
-          <ExpireButton onPress={expire(24)} text="24 hours" />
-          <ExpireButton onPress={expire()} text="Stay Invisible" />
-          <ExpireButton onPress={dismiss} style={{borderWidth: 0}} text="Cancel" />
-        </View>
-      </ModalContainer>
-    )
-  })
-)
+  return (
+    <ModalContainer onPress={dismiss}>
+      <View style={styles.inner} pointerEvents="box-none">
+        <Image
+          source={require('../../../images/invisibleIcon.png')}
+          style={{width: 52, height: 52, marginBottom: 25 * k}}
+          resizeMode="contain"
+        />
+        <RText style={styles.text} weight="Light" size={15} color={colors.DARK_GREY}>
+          {'Are you sure you want to go '}
+          <Text style={styles.bold}>{'invisible'}</Text>
+          {'?\r\nYou will stop seeing visits to your favorite locations.'}
+        </RText>
+        <ExpireButton onPress={expire(3)} text="3 hours" />
+        <ExpireButton onPress={expire(24)} text="24 hours" />
+        <ExpireButton onPress={expire()} text="Stay Invisible" />
+        <ExpireButton onPress={dismiss} style={{borderWidth: 0}} text="Cancel" />
+      </View>
+    </ModalContainer>
+  )
+}
 
 const ExpireButton = ({onPress, text, style}: ButtonProps) => (
   <TouchableOpacity style={[styles.button, style]} onPress={onPress}>

@@ -11,6 +11,7 @@ import {colors} from '../../constants'
 import LocationSharerCard from '../home-cards/LocationSharerCard'
 import {Card, IHomeStore} from '../../store/HomeStore'
 import {observer} from 'mobx-react-lite'
+import {useHomeStore} from 'src/utils/injectors'
 
 type Props = {
   enabled: boolean
@@ -35,59 +36,57 @@ const marginBottom = 14 * s
 const totalHeight = height + marginBottom
 const buttonPadding = 10
 
-const HorizontalCardList = inject('homeStore')(
-  observer(({enabled, setIndex, list, index, homeStore}: Props) => {
-    const [translateY] = useState(new Animated.Value(0))
-    const cardList = useRef(null)
+const HorizontalCardList = ({enabled, setIndex, list, index}: Props) => {
+  const [translateY] = useState(new Animated.Value(0))
+  const cardList = useRef(null)
+  const {mapType} = useHomeStore()
 
-    useEffect(() => {
-      Animated.spring(translateY, {
-        toValue: enabled ? 0 : totalHeight - buttonPadding,
-      }).start()
-    }, [enabled])
+  useEffect(() => {
+    Animated.spring(translateY, {
+      toValue: enabled ? 0 : totalHeight - buttonPadding,
+    }).start()
+  }, [enabled])
 
-    useEffect(() => {
-      if (index !== (cardList.current! as any).currentIndex) {
-        ;(cardList.current! as any).snapToItem(index, true, false)
-      }
-    }, [index])
+  useEffect(() => {
+    if (index !== (cardList.current! as any).currentIndex) {
+      ;(cardList.current! as any).snapToItem(index, true, false)
+    }
+  }, [index])
 
-    const {mapType} = homeStore!
-    return (
-      <Animated.View
-        style={{alignSelf: 'flex-end', transform: [{translateY}]}}
-        pointerEvents="box-none"
+  return (
+    <Animated.View
+      style={{alignSelf: 'flex-end', transform: [{translateY}]}}
+      pointerEvents="box-none"
+    >
+      <ButtonColumn />
+      <View
+        style={[
+          styles.carouselContainer,
+          {
+            shadowColor: mapType === 'hybrid' ? '#333' : colors.GREY,
+          },
+        ]}
       >
-        <ButtonColumn />
-        <View
-          style={[
-            styles.carouselContainer,
-            {
-              shadowColor: mapType === 'hybrid' ? '#333' : colors.GREY,
-            },
-          ]}
-        >
-          <Carousel
-            key={`carousel${enabled}`}
-            ref={cardList}
-            data={list}
-            renderItem={({item}: {item: Card}) => {
-              const RenderClass = cardMap[item.name]
-              return <RenderClass {...item} />
-            }}
-            firstItem={index}
-            sliderWidth={width}
-            itemWidth={width - 50 * k}
-            onSnapToItem={setIndex}
-            inactiveSlideOpacity={1}
-            initialNumToRender={list.length} // TODO: potential performance bottleneck with many bots
-            // contentContainerCustomStyle={{elevation: 3}}
-          />
-        </View>
-      </Animated.View>
-    )
-  })
-)
+        <Carousel
+          key={`carousel${enabled}`}
+          ref={cardList}
+          data={list}
+          renderItem={({item}: {item: Card}) => {
+            const RenderClass = cardMap[item.name]
+            return <RenderClass {...item} />
+          }}
+          firstItem={index}
+          sliderWidth={width}
+          itemWidth={width - 50 * k}
+          onSnapToItem={setIndex}
+          inactiveSlideOpacity={1}
+          initialNumToRender={list.length} // TODO: potential performance bottleneck with many bots
+          // contentContainerCustomStyle={{elevation: 3}}
+        />
+      </View>
+    </Animated.View>
+  )
+}
 
 export default HorizontalCardList
 

@@ -4,13 +4,12 @@ import BottomPopup from './BottomPopup'
 import {Actions} from 'react-native-router-flux'
 import {isAlive} from 'mobx-state-tree'
 import {colors} from '../constants'
-import {inject} from 'mobx-react'
-import {observer} from 'mobx-react-lite'
 import Avatar from './common/Avatar'
 import {k, minHeight, avatarScale} from './Global'
-import {IWocky, IOwnProfile} from 'wocky-client'
+import {IOwnProfile} from 'wocky-client'
 import {RText} from './common'
 import AnimatedLinearGradient from 'react-native-animated-linear-gradient'
+import {useWocky} from 'src/utils/injectors'
 
 interface IMenuItemProps extends TouchableOpacityProps {
   icon?: any
@@ -105,92 +104,84 @@ const LiveLocationButton = ({invisible, active}) => (
     </TouchableOpacity>
   </View>
 )
-type Props = {
-  wocky?: IWocky
-}
 
-const BottomMenu = inject('wocky')(
-  observer(({wocky}: Props) => {
-    const {profile} = wocky!
-    if (!profile || !isAlive(profile)) {
-      return null
+const BottomMenu = () => {
+  const {profile} = useWocky()
+  if (!profile || !isAlive(profile)) {
+    return null
+  }
+
+  function toggleInvisible() {
+    if (!profile!.hidden.enabled) {
+      Actions.invisibleExpirationSelector()
+    } else {
+      disableInvisibleMode(profile!)
     }
+  }
 
-    function toggleInvisible() {
-      if (!profile!.hidden.enabled) {
-        Actions.invisibleExpirationSelector()
-      } else {
-        disableInvisibleMode(profile!)
-      }
-    }
-
-    return (
-      <BottomPopup>
-        <MenuItemWrapper
-          style={{
-            marginTop: 35 * k,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-          testID="myAccountMenuItem"
+  return (
+    <BottomPopup>
+      <MenuItemWrapper
+        style={{
+          marginTop: 35 * k,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        testID="myAccountMenuItem"
+      >
+        <LiveLocationButton invisible={profile.hidden.enabled} active={profile.isLocationShared} />
+        <Avatar
+          size={74}
+          fontSize="large"
+          fontFamily="regular"
+          profile={profile}
+          style={{borderWidth: 0}}
+          borderColor={colors.PINK}
+          tappable
+          hideDot
+        />
+        <RText
+          color={profile.hidden.enabled ? colors.DARK_PURPLE : colors.PINK}
+          weight="Bold"
+          size={16}
+          style={styles.displayName}
         >
-          <LiveLocationButton
-            invisible={profile.hidden.enabled}
-            active={profile.isLocationShared}
-          />
-          <Avatar
-            size={74}
-            fontSize="large"
-            fontFamily="regular"
-            profile={profile}
-            style={{borderWidth: 0}}
-            borderColor={colors.PINK}
-            tappable
-            hideDot
-          />
-          <RText
-            color={profile.hidden.enabled ? colors.DARK_PURPLE : colors.PINK}
-            weight="Bold"
-            size={16}
-            style={styles.displayName}
-          >
-            @{profile.handle}
-          </RText>
-        </MenuItemWrapper>
-        <View style={styles.optionsWrapper}>
-          <MenuItem
-            onPress={() => Actions.friends()}
-            image={require('../../images/menuFriends.png')}
-            imageStyle={{width: 34 * avatarScale, height: 27 * avatarScale, marginVertical: 15}}
-          >
-            <RText style={styles.text}>Friends</RText>
-          </MenuItem>
-          <MenuItem
-            onPress={() => {
-              Actions.pop()
-              Actions.chats()
-            }}
-            image={require('../../images/menuMessages.png')}
-            imageStyle={{width: 30 * avatarScale, height: 27 * avatarScale, marginVertical: 15}}
-          >
-            <RText style={styles.text}>Messages</RText>
-          </MenuItem>
-          <MenuItem
-            image={profile.hidden.enabled ? invisibleOn : invisibleOff}
-            onPress={toggleInvisible}
-            imageStyle={{
-              width: 55 * avatarScale,
-              height: 41 * avatarScale,
-              marginLeft: 25 * avatarScale,
-            }}
-          >
-            <RText style={styles.text}>Invisible</RText>
-          </MenuItem>
-        </View>
-      </BottomPopup>
-    )
-  })
-)
+          @{profile.handle}
+        </RText>
+      </MenuItemWrapper>
+      <View style={styles.optionsWrapper}>
+        <MenuItem
+          onPress={() => Actions.friends()}
+          image={require('../../images/menuFriends.png')}
+          imageStyle={{width: 34 * avatarScale, height: 27 * avatarScale, marginVertical: 15}}
+        >
+          <RText style={styles.text}>Friends</RText>
+        </MenuItem>
+        <MenuItem
+          onPress={() => {
+            Actions.pop()
+            Actions.chats()
+          }}
+          image={require('../../images/menuMessages.png')}
+          imageStyle={{width: 30 * avatarScale, height: 27 * avatarScale, marginVertical: 15}}
+        >
+          <RText style={styles.text}>Messages</RText>
+        </MenuItem>
+        <MenuItem
+          image={profile.hidden.enabled ? invisibleOn : invisibleOff}
+          onPress={toggleInvisible}
+          imageStyle={{
+            width: 55 * avatarScale,
+            height: 41 * avatarScale,
+            marginLeft: 25 * avatarScale,
+          }}
+        >
+          <RText style={styles.text}>Invisible</RText>
+        </MenuItem>
+      </View>
+    </BottomPopup>
+  )
+}
 
 export default BottomMenu
 

@@ -12,6 +12,7 @@ import {RText, BottomButton} from '../common'
 import {ISearchStore} from '../../store/SearchStore'
 import NotificationStore from '../../store/NotificationStore'
 import {observer} from 'mobx-react-lite'
+import {useAnalytics} from 'src/utils/injectors'
 
 type Props = {
   botId: string
@@ -88,25 +89,24 @@ const GeofenceShare = inject('wocky', 'notificationStore', 'analytics', 'searchS
   }
 }
 
-const RightButton = inject('analytics')(
-  observer(({botId, analytics}: Props) => {
-    return (
-      <TouchableOpacity
-        style={{marginRight: 15 * k}}
-        onPress={() => {
-          // TODO: fix hacky nav animation
-          Actions.pop({animated: false})
-          Actions.botDetails({botId, isNew: true})
-          analytics.track('bot_share_geo_skip')
-        }}
-      >
-        <RText size={15} color={colors.DARK_GREY}>
-          Skip
-        </RText>
-      </TouchableOpacity>
-    )
-  })
-)
+const RightButton = ({botId}: Props) => {
+  const {track} = useAnalytics()
+  return (
+    <TouchableOpacity
+      style={{marginRight: 15 * k}}
+      onPress={() => {
+        // TODO: fix hacky nav animation
+        Actions.pop({animated: false})
+        Actions.botDetails({botId, isNew: true})
+        track('bot_share_geo_skip')
+      }}
+    >
+      <RText size={15} color={colors.DARK_GREY}>
+        Skip
+      </RText>
+    </TouchableOpacity>
+  )
+}
 
 export default GeofenceShare
 

@@ -3,29 +3,28 @@ import {StyleSheet, Text, Image, Linking, View, Platform} from 'react-native'
 import {colors} from '../../constants'
 import {k, s, minHeight} from '../Global'
 import {when} from 'mobx'
-import {inject} from 'mobx-react'
 import {BlurView} from 'react-native-blur'
 import {GradientButton, RText, Separator} from '../common'
 import {WHITE, TRANSLUCENT_WHITE} from 'src/constants/colors'
 import AndroidOpenSettings from 'react-native-android-open-settings'
-import {ILocationStore} from '../../store/LocationStore'
+import {useLocationStore} from 'src/utils/injectors'
 
 const footprint = require('../../../images/bigSmileBot.png')
 
 type Props = {
   afterLocationAlwaysOn: () => void
-  locationStore?: ILocationStore
 }
 
-const LocationWarning = inject('locationStore')(({afterLocationAlwaysOn, locationStore}: Props) => {
+const LocationWarning = ({afterLocationAlwaysOn}: Props) => {
+  const {getCurrentPosition, alwaysOn} = useLocationStore()
   useEffect(() => {
     if (Platform.OS === 'android') {
-      locationStore!.getCurrentPosition().catch(e => {
+      getCurrentPosition().catch(e => {
         // ignore error
       })
     }
 
-    const disposer = when(() => locationStore!.alwaysOn, afterLocationAlwaysOn)
+    const disposer = when(() => alwaysOn, afterLocationAlwaysOn)
     return disposer
   }, [])
 
@@ -42,7 +41,7 @@ const LocationWarning = inject('locationStore')(({afterLocationAlwaysOn, locatio
   ) : (
     <LocationWarningAndroid onPress={onPress} />
   )
-})
+}
 
 export const LocationWarningIOS = ({onPress}) => (
   <View

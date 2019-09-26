@@ -6,22 +6,21 @@ import {minHeight} from '../Global'
 import {colors} from '../../constants'
 import {IActiveBannerItem} from './ActiveGeoBotBanner'
 import LocationAvatar from './LocationAvatar'
-import {inject, observer} from 'mobx-react'
-import {IHomeStore} from 'src/store/HomeStore'
+import {useHomeStore} from 'src/utils/injectors'
 
 interface IProps extends IActiveBannerItem {
   sharer: ILocationShare
-  homeStore?: IHomeStore
 }
 
-const ActiveLocationSharer = inject('homeStore')(
-  observer(({sharer, outerStyle, innerStyle, homeStore}: IProps) => (
+const ActiveLocationSharer = ({sharer, outerStyle, innerStyle}: IProps) => {
+  const {followUserOnMap, select} = useHomeStore()
+  return (
     <View style={outerStyle}>
       <TouchableOpacity
         style={innerStyle}
         onPress={() => {
-          homeStore!.followUserOnMap(sharer.sharedWith)
-          homeStore!.select(sharer.sharedWith.id)
+          followUserOnMap(sharer.sharedWith)
+          select(sharer.sharedWith.id)
         }}
       >
         <LocationAvatar
@@ -42,7 +41,7 @@ const ActiveLocationSharer = inject('homeStore')(
         </RText>
       </TouchableOpacity>
     </View>
-  ))
-)
+  )
+}
 
 export default ActiveLocationSharer
