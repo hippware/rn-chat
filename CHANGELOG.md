@@ -4,6 +4,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.26.1 - 2019 Sep 26
+
+* Add back `observer` (PR #4189). Fixes PR #4174
+
+# 4.26.0 - 2019 Sep 26
+
 * Remove detox (PR #4158)
 * [dev] React hooks + mobx-react v6 (#3779, PR #4159)
   * Use RNRF right button setup instead of react-navigation API (PR #4171)
