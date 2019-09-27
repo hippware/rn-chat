@@ -4,6 +4,9 @@
   <uses-permission android:name="android.permission.VIBRATE" />
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
+  <!-- for react-native-contacts api level 22 and below -->
+  <uses-permission android:name="android.permission.READ_PROFILE" />
+
   <!-- for rn-image-crop-picker -->
   <uses-permission android:name="android.permission.CAMERA"/>
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
