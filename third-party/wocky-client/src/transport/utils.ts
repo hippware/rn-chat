@@ -358,7 +358,6 @@ export function convertBot({
   visitorCount,
   subscribers,
   posts,
-  _accessedAt,
   ...data
 }: any) {
   const relationships = subscribers.edges.length ? subscribers.edges[0].relationships : []
@@ -376,8 +375,6 @@ export function convertBot({
     location: {latitude: lat, longitude: lon},
     visitor: contains('VISITOR'),
     isSubscribed: contains('SUBSCRIBED'),
-    // _accessedAt defaults to 'now' unless supplied
-    _accessedAt: (_accessedAt ? new Date(_accessedAt) : new Date()).getTime(),
   }
 }
 
