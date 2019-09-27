@@ -27,6 +27,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * EXC_BAD_ACCESS in TSHttpService.m:253 (#4029)
 * New simplified, strongly typed inject (PR #4174)
 
+* [android] Emoji's on selector are faded (#3534)
+  * (Unsure when this was fixed)
+
 # 4.25.0 - 2019 Sep 19
 
 * WIP: [dev] React hooks + mobx-react v6 (#3779)
