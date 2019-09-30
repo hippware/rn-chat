@@ -193,28 +193,26 @@ const BotCompose = inject(
               selectionColor={colors.COVER_BLUE}
             />
             <View>
-              {!props.keyboardShowing && (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    backgroundColor: 'white',
-                    paddingVertical: 20 * k,
-                    paddingHorizontal: 30 * k,
-                  }}
-                >
-                  <EditCTA
-                    text="Note"
-                    icon={bot!.description ? noteIconDone : noteIcon}
-                    onPress={() => Actions.editNote({botId: bot!.id})}
-                  />
-                  <EditCTA
-                    text="Photo"
-                    icon={bot!.image ? photoIconDone : photoIcon}
-                    onPress={addPhoto}
-                    pending={uploadingPhoto}
-                  />
-                </View>
-              )}
+              <View
+                style={{
+                  flexDirection: 'row',
+                  backgroundColor: 'white',
+                  paddingVertical: 20 * k,
+                  paddingHorizontal: 30 * k,
+                }}
+              >
+                <EditCTA
+                  text="Note"
+                  icon={bot!.description ? noteIconDone : noteIcon}
+                  onPress={() => Actions.editNote({botId: bot!.id})}
+                />
+                <EditCTA
+                  text="Photo"
+                  icon={bot!.image ? photoIconDone : photoIcon}
+                  onPress={addPhoto}
+                  pending={uploadingPhoto}
+                />
+              </View>
               <TouchableOpacity
                 style={{width: '100%', height: 50 * minHeight}}
                 disabled={!text}
