@@ -121,7 +121,7 @@
     "appcenter-cli": "^2.1.2",
     "babel-jest": "^24.9.0",
     "bugsnag-sourcemaps": "^1.1.0",
-    "form-data": "^1.0.0-rc4",
+    "form-data": "^2.5.1",
     "husky": "^3.0.5",
     "jest": "^24.9.0",
     "jetifier": "^1.0.1",
