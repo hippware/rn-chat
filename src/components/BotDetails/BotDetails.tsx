@@ -77,7 +77,7 @@ const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore'
     })
 
     function scrollToNewestPost() {
-      ;(list.current as any).wrappedInstance.scrollToIndex({
+      ;(list.current as any).scrollToIndex({
         index: 0,
         viewPosition: 0.5,
       })
