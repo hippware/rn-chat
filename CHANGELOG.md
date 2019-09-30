@@ -4,6 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+**React Native upgrade to 0.61.1**
+
+* [dev] Upgrade RN to 0.61 (#4184)
+* java.lang.SecurityException: android.permission.READ_PROFILE (#4194)
+
 # 4.26.1 - 2019 Sep 26
 
 * Add back `observer` (PR #4189). Fixes PR #4174
