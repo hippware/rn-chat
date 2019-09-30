@@ -12,6 +12,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 # 4.26.1 - 2019 Sep 26
 
 * Add back `observer` (PR #4189). Fixes PR #4174
+  * Switching from Updates to the Request tap crashes the app (#4188)
 
 # 4.26.0 - 2019 Sep 26
 
