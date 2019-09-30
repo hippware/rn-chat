@@ -364,7 +364,7 @@ export function convertBot({
   const contains = (relationship: string): boolean => relationships.indexOf(relationship) !== -1
   return {
     ...data,
-    owner: convertProfile(owner),
+    owner: convertProfile({...owner, _accessedAt: data._accessedAt}),
     image: convertImage(media),
     addressData: addressData ? JSON.parse(addressData) : {},
     totalItems: items ? items.totalCount : 0,
@@ -398,7 +398,7 @@ export function convertNotification(edge: any): IEventData | null {
       const friendInviteNotification: IEventFriendInviteData = {
         id,
         time,
-        user: convertProfile(data.user),
+        user: convertProfile({...data.user, _accessedAt: time}),
       }
       // console.log('& user follow:', friendInviteNotification)
       return friendInviteNotification
@@ -409,7 +409,7 @@ export function convertNotification(edge: any): IEventData | null {
         time,
         post: {
           id: data.botItem.id,
-          profile: convertProfile(data.botItem.owner) as any,
+          profile: convertProfile({...data.botItem.owner, _accessedAt: time}) as any,
           title: '',
           content: '',
           image: null,
@@ -431,7 +431,7 @@ export function convertNotification(edge: any): IEventData | null {
         id,
         time,
         bot,
-        sender: convertProfile(data.user),
+        sender: convertProfile({...data.user, _accessedAt: time}),
         isResponse: __typename === 'BotInvitationResponseNotification',
         isAccepted: data.accepted,
         inviteId: data.invitation.id,
@@ -444,7 +444,7 @@ export function convertNotification(edge: any): IEventData | null {
         id,
         time,
         bot,
-        profile: convertProfile(data.user),
+        profile: convertProfile({...data.user, _accessedAt: time}),
         isEnter: data.event === 'ENTER',
       }
       return geofenceNotification
@@ -459,7 +459,7 @@ export function convertNotification(edge: any): IEventData | null {
       const locationShareNotification: IEventLocationShareData = {
         time,
         expiresAt: data.expiresAt ? iso8601toDate(data.expiresAt) : new Date(), // workaround for old notifications with null expiresAt
-        sharedWith: convertProfile(data.user),
+        sharedWith: convertProfile({...data.user, _accessedAt: time}),
         id,
       }
       return locationShareNotification
