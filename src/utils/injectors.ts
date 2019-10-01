@@ -10,6 +10,7 @@ import {INavStore} from 'src/store/NavStore'
 import {ICodePushStore} from 'src/store/CodePushStore'
 import {IPermissionStore} from 'src/store/PermissionStore'
 import {NotificationStore} from 'src/store/NotificationStore'
+import {IAppInfo} from 'src/store/AppInfo'
 
 // https://mobx-react.js.org/recipes-migration
 
@@ -26,6 +27,7 @@ type AllStores = {
   geocodingStore: any
   permissionStore: IPermissionStore
   notificationStore: NotificationStore
+  appInfo: IAppInfo
 }
 
 const getStores = (): AllStores => React.useContext(MobXProviderContext)
@@ -88,4 +90,9 @@ export function usePermissionStore() {
 export function useNotificationsStore() {
   const {notificationStore} = getStores()
   return useObserver(() => notificationStore)
+}
+
+export function useAppInfo() {
+  const {appInfo} = getStores()
+  return useObserver(() => appInfo)
 }
