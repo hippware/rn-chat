@@ -1271,6 +1271,7 @@ export class Transport {
               firstName
               lastName
               handle
+              updatedAt
               presence {
                 status
                 updatedAt

@@ -4,7 +4,7 @@ export const Loadable = types
   .model({
     loaded: types.optional(types.maybeNull(types.boolean), false),
     // _accessedAt is a field that we compute. It does not exist at the server.
-    _accessedAt: types.optional(types.number, 0),
+    _accessedAt: 0,
   })
   .actions((self: any) => ({
     load: data => {

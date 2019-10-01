@@ -10,7 +10,7 @@ export const MEDIA_PROPS = `
  }
  `
 
-export const PROFILE_PROPS = `id firstName lastName handle
+export const PROFILE_PROPS = `id firstName lastName handle updatedAt
   ${MEDIA_PROPS}
   bots(first:0, relationship: OWNED) { totalCount }
   presence {

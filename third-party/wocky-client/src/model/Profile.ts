@@ -220,6 +220,7 @@ export interface IProfilePartial {
   followersSize: number
   followedSize: number
   status: string
+  _accessedAt?: number
   hidden: {
     enabled: boolean
     expires: Date

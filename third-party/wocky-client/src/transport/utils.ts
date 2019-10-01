@@ -327,11 +327,19 @@ export function convertImage(image, preserveAspect: boolean = false) {
   }
 }
 
-export function convertProfile({media, bots, presence, ...data}): IProfilePartial {
+export function convertProfile({
+  media,
+  bots,
+  presence,
+  updatedAt,
+  _accessedAt,
+  ...data
+}): IProfilePartial {
   return {
     avatar: convertImage(media),
     status: presence ? presence.status : undefined,
     botsSize: bots ? bots.totalCount : undefined,
+    _accessedAt: _accessedAt || (updatedAt && new Date(updatedAt).getTime()),
     ...data,
   } as IProfilePartial
 }
@@ -364,7 +372,7 @@ export function convertBot({
   const contains = (relationship: string): boolean => relationships.indexOf(relationship) !== -1
   return {
     ...data,
-    owner: convertProfile({...owner, _accessedAt: data._accessedAt}),
+    owner: convertProfile(owner),
     image: convertImage(media),
     addressData: addressData ? JSON.parse(addressData) : {},
     totalItems: items ? items.totalCount : 0,
@@ -451,7 +459,7 @@ export function convertNotification(edge: any): IEventData | null {
     case 'LocationShareEndNotification':
       const locationShareEndNotification: IEventLocationShareEndData = {
         time,
-        sharedEndWith: convertProfile(data.user),
+        sharedEndWith: convertProfile({...data.user, _accessedAt: time}),
         id,
       }
       return locationShareEndNotification
