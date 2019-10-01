@@ -52,12 +52,12 @@ export function useAnalytics() {
 
 export function useFirebaseStore() {
   const {firebaseStore} = getStores()
-  return firebaseStore
+  return useObserver(() => firebaseStore)
 }
 
 export function useSearchStore() {
   const {searchStore} = getStores()
-  return searchStore
+  return useObserver(() => searchStore)
 }
 
 export function useProfileValidationStore() {
@@ -67,12 +67,12 @@ export function useProfileValidationStore() {
 
 export function useNavStore() {
   const {navStore} = getStores()
-  return navStore
+  return useObserver(() => navStore)
 }
 
 export function useCodepushStore() {
   const {codePushStore} = getStores()
-  return codePushStore
+  return useObserver(() => codePushStore)
 }
 
 export function useGeocodingStore() {
@@ -82,10 +82,10 @@ export function useGeocodingStore() {
 
 export function usePermissionStore() {
   const {permissionStore} = getStores()
-  return permissionStore
+  return useObserver(() => permissionStore)
 }
 
 export function useNotificationsStore() {
   const {notificationStore} = getStores()
-  return notificationStore
+  return useObserver(() => notificationStore)
 }
