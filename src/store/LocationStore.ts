@@ -1,6 +1,5 @@
 import {types, getEnv, flow, getParent, getRoot} from 'mobx-state-tree'
 import {autorun, IReactionDisposer} from 'mobx'
-import Permissions from 'react-native-permissions'
 import BackgroundGeolocation from 'react-native-background-geolocation'
 import DeviceInfo from 'react-native-device-info'
 import {settings} from '../globals'
@@ -10,6 +9,7 @@ import * as RNLocalize from 'react-native-localize'
 import moment from 'moment'
 import {log, warn} from '../utils/logger'
 import analytics from '../utils/analytics'
+import {checkLocation, checkLocationWhenInUse} from '../utils/permissions'
 import Geolocation from 'react-native-geolocation-service'
 
 const MAX_DATE1 = '2030-01-01-17:00'
@@ -329,14 +329,14 @@ const LocationStore = types
     let reactions: IReactionDisposer[] = []
 
     const start = flow(function*() {
-      const resp1 = yield Permissions.check('location', {type: 'always'})
-      if (resp1 === 'authorized') {
+      const resp1 = yield checkLocation()
+      if (resp1) {
         self.setAlwaysOn(true)
         self.setState({enabled: true})
       } else {
         self.setAlwaysOn(false)
-        const resp2 = yield Permissions.check('location', {type: 'whenInUse'})
-        self.setState({enabled: resp2 !== 'denied'})
+        const resp2 = yield checkLocationWhenInUse()
+        self.setState({enabled: resp2})
       }
 
       reactions = [

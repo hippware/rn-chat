@@ -1,5 +1,4 @@
 import React, {ReactElement, useRef} from 'react'
-import Permissions from 'react-native-permissions'
 import Swiper from 'react-native-swiper'
 import {View, Alert, Platform} from 'react-native'
 import {colors} from 'src/constants'
@@ -18,6 +17,7 @@ import ContactStore from 'src/store/ContactStore'
 import {log, warn} from '../../utils/logger'
 import {IPermissionStore} from 'src/store/PermissionStore'
 import {observer} from 'mobx-react-lite'
+import {getPermission} from '../../utils/permissions'
 
 type Props = {
   wocky?: IWocky
@@ -30,8 +30,8 @@ const OnboardingSwiper = inject('wocky', 'contactStore', 'permissionStore')(
     const swiper = useRef<any>(null)
 
     const checkLocationPermissions = async () => {
-      const check = await getPermission('location', {type: 'always'})
-      if (check === 'authorized') {
+      const check = await getPermission('location')
+      if (check) {
         swiper.current!.scrollBy(1)
       } else {
         // TODO: show overlay with instructions for changing location settings. https://zpl.io/bPdleyl
@@ -66,16 +66,6 @@ const OnboardingSwiper = inject('wocky', 'contactStore', 'permissionStore')(
         log(alert, badge, sound)
         swiper.current!.scrollBy(1)
       }
-    }
-
-    const getPermission = async (perm: string, extra?: any): Promise<any> => {
-      let check = await Permissions.check(perm, extra)
-      if (check === 'undetermined') {
-        // first-time user: show permissions request dialog
-        await Permissions.request(perm, extra)
-        check = await Permissions.check(perm, extra)
-      }
-      return check
     }
 
     const findFriends = async () => {

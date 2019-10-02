@@ -1,8 +1,8 @@
 import {Keyboard, Platform} from 'react-native'
 import ImagePicker, {Image} from 'react-native-image-crop-picker'
 import ActionSheet from 'react-native-action-sheet'
-import Permissions from 'react-native-permissions'
 import {warn} from 'src/utils/logger'
+import {request} from 'src/utils/permissions'
 
 export type PickerImage = {
   height: number
@@ -24,14 +24,10 @@ function getImageUri(rawUri: string) {
 }
 
 async function photoPermissionsGranted(includeCamera: boolean = false): Promise<boolean> {
-  const perms = [
-    includeCamera ? await Permissions.request('camera') : 'authorized',
-    await Permissions.request('photo'),
-    Platform.OS === 'android' ? await Permissions.request('storage') : 'authorized',
-  ]
+  const perms = [includeCamera ? await request('camera') : 'authorized', await request('photo')]
 
   perms.forEach(p => {
-    if (p !== 'authorized') {
+    if (!p) {
       return false
     }
   })
