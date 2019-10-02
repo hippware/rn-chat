@@ -8,6 +8,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * [dev] Upgrade RN to 0.61 (#4184)
 * java.lang.SecurityException: android.permission.READ_PROFILE (#4194)
+* "Something went wrong" when user posts on a location (#4200)
+* [ios] Note & Photo buttons are missing on ios (#4164)
+* Update: react-native-swiper (PR #4206), netinfo (PR 4205)
+  * react-dom (PR #4204), husky (PR #4203)
 
 # 4.26.1 - 2019 Sep 26
 
