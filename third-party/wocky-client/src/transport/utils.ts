@@ -342,6 +342,7 @@ export function convertBotPost({node: {id, media, owner, content}}) {
     content: content || '',
     image: convertImage(media),
     // todo: need date/time?
+    // todo: Consider whether convertProfile() needs explicit _accessedAt
     profile: convertProfile(owner),
   }
 }
@@ -451,7 +452,7 @@ export function convertNotification(edge: any): IEventData | null {
     case 'LocationShareEndNotification':
       const locationShareEndNotification: IEventLocationShareEndData = {
         time,
-        sharedEndWith: convertProfile(data.user),
+        sharedEndWith: convertProfile({...data.user, _accessedAt: time}),
         id,
       }
       return locationShareEndNotification
