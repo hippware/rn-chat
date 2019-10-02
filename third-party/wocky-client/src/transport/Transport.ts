@@ -1284,7 +1284,7 @@ export class Transport {
       next: action((result: any) => {
         const {user, relationship, createdAt} = result.data.contacts
         this.rosterItem = {
-          user: convertProfile(user),
+          user: convertProfile({...user, _accessedAt: createdAt}),
           relationship,
           createdAt: iso8601toDate(createdAt).getTime(),
         }
@@ -1313,6 +1313,7 @@ export class Transport {
               visitor {
                 id
               }
+              updatedAt
             }
           }
         `,
@@ -1324,7 +1325,7 @@ export class Transport {
         const update = result.data.botGuestVisitors
         this.botVisitor = {
           visitor: {id: update.visitor.id},
-          bot: convertBot(update.bot),
+          bot: convertBot({...update.bot, _accessedAt: new Date(update.updatedAt).getTime()}),
           action: update.action,
         }
       }),

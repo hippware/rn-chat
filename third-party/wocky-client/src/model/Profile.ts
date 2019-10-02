@@ -80,13 +80,14 @@ export const Profile = types
     },
   }))
   .extend(self => {
+    const superLoad = self.load
     return {
       actions: {
         load({avatar, ...data}: any) {
-          Object.assign(self, data)
           if (avatar) {
             self.avatar = self.service.files.get(avatar.id, avatar)
           }
+          superLoad(data)
         },
         invite: flow(function*() {
           yield waitFor(() => self.connected)

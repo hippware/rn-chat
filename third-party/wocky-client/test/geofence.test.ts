@@ -114,6 +114,7 @@ describe('Geofence', () => {
 
   it('user1 checks subscriber count after reload', async () => {
     const loadedBot2 = await user1.loadBot(bot.id)
+    dumpBot(loadedBot2, 'loadedBot2')
     await waitFor(() => !loadedBot2.loading, 'bot2 to load')
     expect(loadedBot2.followersSize).toEqual(0)
   })
@@ -177,6 +178,7 @@ describe('Geofence', () => {
       title: 'Test bot',
       addressData: {city: 'West Hollywood', country: 'United States'},
     })
+    dumpBot(bot, 'bot3')
     await bot.invite([user2!.username!])
     await waitFor(() => user2.notifications.length === 1, 'bot invitation notification')
     loadedBot = await user2.loadBot(bot.id)

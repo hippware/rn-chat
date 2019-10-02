@@ -19,9 +19,9 @@ export const PROFILE_PROPS = `id firstName lastName handle
   }
 `
 
-export const BOT_PROPS = `id icon title address addressData description radius shortname 
+export const BOT_PROPS = `id icon title address addressData description radius
   ${MEDIA_PROPS}
-  type lat lon owner { ${PROFILE_PROPS} } 
+  lat lon owner { ${PROFILE_PROPS} }
   items(first:0) { totalCount }
   visitorCount: subscribers(first:0 type:VISITOR){ totalCount }
   subscriberCount: subscribers(first:0 type:SUBSCRIBER){ totalCount }
