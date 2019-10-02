@@ -40,7 +40,9 @@ export const Wocky = types
       const isOwn = id === self.username
       const data = yield self.transport.loadProfile(id)
       if (isOwn) {
-        if (!self.profile) {
+        // Somehow, self.profile can be old and have a different (old?) id.
+        //   If so, recreate it
+        if (!self.profile || self.profile.id !== id) {
           self.profile = OwnProfile.create({id}, getEnv(self))
         }
         if (data) {
