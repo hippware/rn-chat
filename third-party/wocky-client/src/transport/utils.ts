@@ -342,7 +342,6 @@ export function convertBotPost({node: {id, media, owner, content}}) {
     content: content || '',
     image: convertImage(media),
     // todo: need date/time?
-    // todo: Consider whether convertProfile() needs explicit _accessedAt
     profile: convertProfile(owner),
   }
 }
@@ -370,7 +369,9 @@ export function convertBot({
     addressData: addressData ? JSON.parse(addressData) : {},
     totalItems: items ? items.totalCount : 0,
     followersSize: subscriberCount.totalCount - 1,
-    visitors: visitors ? visitors.edges.map(rec => convertProfile(rec.node)) : undefined,
+    visitors: visitors
+      ? visitors.edges.map(rec => convertProfile({...rec.node, _accessedAt: data._accessedAt}))
+      : undefined,
     posts: posts ? posts.edges.map(convertBotPost) : undefined,
     visitorsSize: visitorCount.totalCount,
     location: {latitude: lat, longitude: lon},

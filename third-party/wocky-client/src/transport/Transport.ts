@@ -1284,7 +1284,7 @@ export class Transport {
       next: action((result: any) => {
         const {user, relationship, createdAt} = result.data.contacts
         this.rosterItem = {
-          user: convertProfile(user),
+          user: convertProfile({...user, _accessedAt: createdAt}),
           relationship,
           createdAt: iso8601toDate(createdAt).getTime(),
         }
