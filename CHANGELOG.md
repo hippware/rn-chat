@@ -12,6 +12,15 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [ios] Note & Photo buttons are missing on ios (#4164)
 * Update: react-native-swiper (PR #4206), netinfo (PR 4205)
   * react-dom (PR #4204), husky (PR #4203)
+  * react-native-permissions (#4163, PR #4208)
+* Remove unnecessary test dependencies (PR #4210)
+  * Remove: form-data, node-fetch, promise
+* Speculative fixes:
+  * reconnect_fail: null is not an object (#3946)
+  * TypeError in .../wocky-client/src/model/OwnProfile.ts:194 (#4215)
+  * reconnect_fail in .../wocky-client/src/model/OwnProfile.ts:204 (#4216)
+* Fix: Sometimes using stale data (#4183)
+* Fix: [dev] bluetooth permissions? (#4163)
 
 # 4.26.1 - 2019 Sep 26
 
