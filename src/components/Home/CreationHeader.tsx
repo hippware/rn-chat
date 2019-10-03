@@ -9,7 +9,7 @@ import {k} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 import {IHomeStore} from 'src/store/HomeStore'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 
 type Props = {
   wocky?: IWocky

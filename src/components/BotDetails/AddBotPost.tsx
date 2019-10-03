@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react'
 import {View, Keyboard, TextInput, TouchableOpacity, Image, StyleSheet} from 'react-native'
 import {inject} from 'mobx-react'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 import {Spinner, RText} from '../common'
 import {colors} from '../../constants'
 import {showImagePicker, PickerImage} from '../ImagePicker'

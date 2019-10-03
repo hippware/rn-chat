@@ -11,7 +11,7 @@ import {IWocky, IBot} from 'wocky-client'
 import {RText, BottomButton} from '../common'
 import {ISearchStore} from '../../store/SearchStore'
 import NotificationStore from '../../store/NotificationStore'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 import {useAnalytics} from 'src/utils/injectors'
 
 type Props = {

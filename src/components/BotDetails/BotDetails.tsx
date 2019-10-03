@@ -14,7 +14,7 @@ import DraggablePopupList from '../common/DraggablePopupList'
 import {Actions} from 'react-native-router-flux'
 import {navBarStyle} from '../styles'
 import NotificationStore from '../../store/NotificationStore'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 
 type Props = {
   botId: string

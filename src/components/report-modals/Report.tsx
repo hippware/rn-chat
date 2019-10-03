@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react'
 import {Alert, StyleSheet, View, TextInput, Keyboard} from 'react-native'
 import {inject} from 'mobx-react'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 import {k} from '../Global'
 import {colors} from '../../constants'
 import {RText} from '../common'

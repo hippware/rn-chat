@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {View, Text, StyleSheet, ActivityIndicator} from 'react-native'
 import moment from 'moment'
-import {useLocalStore, observer} from 'mobx-react-lite'
+import {useLocalStore, observer} from 'mobx-react'
 import {isAlive} from 'mobx-state-tree'
 import Screen from '../Screen'
 import ChatMessage from './ChatMessage'

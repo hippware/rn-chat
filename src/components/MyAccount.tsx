@@ -8,7 +8,7 @@ import {
   TouchableOpacityProps,
 } from 'react-native'
 import {inject} from 'mobx-react'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 import {minHeight} from './Global'
 import SignUpAvatar from './SignUpAvatar'
 import {Actions} from 'react-native-router-flux'

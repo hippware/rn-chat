@@ -8,7 +8,7 @@ import DraggablePopupList from '../common/DraggablePopupList'
 import withKeyboardHOC from '../common/withKeyboardHOC'
 import {ISearchStore} from '../../store/SearchStore'
 import {Actions} from 'react-native-router-flux'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 
 type Props = {
   searchStore?: ISearchStore

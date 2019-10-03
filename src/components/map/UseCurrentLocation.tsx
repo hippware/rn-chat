@@ -5,7 +5,7 @@ import {colors} from '../../constants'
 import {RText} from '../common'
 import {inject} from 'mobx-react'
 import {ILocationStore} from '../../store/LocationStore'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 
 type Props = {
   enabled: boolean

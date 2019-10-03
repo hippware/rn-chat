@@ -10,7 +10,7 @@ import CountryPicker, {getAllCountries} from 'react-native-country-picker-modal'
 import {Actions} from 'react-native-router-flux'
 import {parse, AsYouType as asYouType, CountryCode} from 'libphonenumber-js'
 import {PINK} from 'src/constants/colors'
-import {observer, useLocalStore} from 'mobx-react-lite'
+import {observer, useLocalStore} from 'mobx-react'
 import {useFirebaseStore} from 'src/utils/injectors'
 const CarrierInfo = NativeModules.RNCarrierInfo
 

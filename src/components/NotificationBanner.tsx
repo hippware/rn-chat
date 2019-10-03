@@ -6,7 +6,7 @@ import {k} from './Global'
 import {RText} from './common'
 import {colors} from '../constants'
 import NotificationStore from 'src/store/NotificationStore'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 
 const height = 100
 const duration = 500

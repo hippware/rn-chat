@@ -1,6 +1,6 @@
 import React, {useRef} from 'react'
 import {TouchableOpacity, Alert, Image} from 'react-native'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 import ActionSheet from 'react-native-actionsheet'
 import {Actions} from 'react-native-router-flux'
 

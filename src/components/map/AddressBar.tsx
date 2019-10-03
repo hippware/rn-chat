@@ -11,7 +11,7 @@ import {getSnapshot} from 'mobx-state-tree'
 import {IHomeStore} from '../../store/HomeStore'
 import {formatText} from '../../utils/maps'
 import {IBot} from 'wocky-client'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 import _ from 'lodash'
 
 type Props = {

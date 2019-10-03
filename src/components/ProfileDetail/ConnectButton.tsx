@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {StyleSheet, TouchableOpacity, Image, View} from 'react-native'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 import alert from '../../utils/alert'
 import {IProfile} from 'wocky-client'
 import {colors} from 'src/constants'

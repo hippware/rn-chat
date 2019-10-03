@@ -4,7 +4,7 @@ import assert from 'assert'
 import CardList from '../CardList'
 import {k} from '../Global'
 import ProfileItem from './ProfileItem'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 import {RText, Separator} from '../common'
 
 type Props = {
