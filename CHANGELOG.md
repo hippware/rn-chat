@@ -23,6 +23,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Fix: Sometimes using stale data (#4183)
 * Fix: [dev] bluetooth permissions? (#4163)
 * Added more injector hooks and refactored more components (PR #4211)
+* Update pods (PR #4219) / [iOS] Convert UIWebView -> WKWebView (#4074)
 
 # 4.26.1 - 2019 Sep 26
 
