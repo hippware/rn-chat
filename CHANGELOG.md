@@ -10,9 +10,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * java.lang.SecurityException: android.permission.READ_PROFILE (#4194)
 * "Something went wrong" when user posts on a location (#4200)
 * [ios] Note & Photo buttons are missing on ios (#4164)
-* Update: react-native-swiper (PR #4206), netinfo (PR 4205)
-  * react-dom (PR #4204), husky (PR #4203)
+* Update: react-native-swiper (PR #4206), netinfo (PR #4205)
+  * react-dom (PR #4204), husky (PR #4203),
   * react-native-permissions (#4163, PR #4208)
+  * react-native-swiper (PR #4221)
 * Remove unnecessary test dependencies (PR #4210)
   * Remove: form-data, node-fetch, promise
 * Speculative fixes:
@@ -21,6 +22,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * reconnect_fail in .../wocky-client/src/model/OwnProfile.ts:204 (#4216)
 * Fix: Sometimes using stale data (#4183)
 * Fix: [dev] bluetooth permissions? (#4163)
+* Added more injector hooks and refactored more components (PR #4211)
 
 # 4.26.1 - 2019 Sep 26
 
