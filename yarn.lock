@@ -7563,10 +7563,9 @@ react-native-contacts@^5.0.1:
   resolved "https://registry.yarnpkg.com/react-native-contacts/-/react-native-contacts-5.0.3.tgz#8f240e7dd09e654c1ca37f151534909a7cf8e272"
   integrity sha512-fxHcUj5VzwoWrC5UihiH3qCesSUcc6RAov5QecdJ/x2i8bG39Eg5WoCdNFzvlKRALLSABj70pVcj5DdiW/qlgw==
 
-react-native-country-picker-modal@^0.8.0:
+"react-native-country-picker-modal@github:xcarpentier/react-native-country-picker-modal#559bfb1b47520de6e97ec969fa97565e889e3ecb":
   version "0.8.0"
-  resolved "https://registry.yarnpkg.com/react-native-country-picker-modal/-/react-native-country-picker-modal-0.8.0.tgz#dacfdc79629a47637ca29eb908f85560a6b3110d"
-  integrity sha512-4hR3h6RjQ9QNkyuV66EcOT0p/o/G4sLObWjh3HozR2wEpQJX3y4dhGajBjENAC4CA1LQO15vZdczX/hCQ3YFJQ==
+  resolved "https://codeload.github.com/xcarpentier/react-native-country-picker-modal/tar.gz/559bfb1b47520de6e97ec969fa97565e889e3ecb"
   dependencies:
     fuse.js "2.6.2"
     lodash "4.17.14"
