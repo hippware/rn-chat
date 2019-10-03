@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import {inject} from 'mobx-react'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
 import Screen from '../Screen'
 import {RText, BottomButton} from '../common'

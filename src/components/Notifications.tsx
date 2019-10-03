@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import {isAlive} from 'mobx-state-tree'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 import {IEvent} from 'wocky-client'
 import {RText} from './common'
 import DraggablePopupList from './common/DraggablePopupList'

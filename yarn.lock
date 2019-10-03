@@ -6294,11 +6294,6 @@ mobx-react-lite@1.4.0:
   resolved "https://registry.yarnpkg.com/mobx-react-lite/-/mobx-react-lite-1.4.0.tgz#193beb5fdddf17ae61542f65ff951d84db402351"
   integrity sha512-5xCuus+QITQpzKOjAOIQ/YxNhOl/En+PlNJF+5QU4Qxn9gnNMJBbweAdEW3HnuVQbfqDYEUnkGs5hmkIIStehg==
 
-mobx-react-lite@1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/mobx-react-lite/-/mobx-react-lite-1.4.1.tgz#7307a45901f97f9a07ebed32b654235507644e1a"
-  integrity sha512-XmM+gzNv+GyXZYDLZMIGox3DufIiKULYgJsLhQj0U6Wlf+J5jv/h7limrL0aS1bEUtNilG62g9nwTeQ0KHzLFg==
-
 mobx-react@^6.1.3:
   version "6.1.3"
   resolved "https://registry.yarnpkg.com/mobx-react/-/mobx-react-6.1.3.tgz#ad07880ea60cdcdb2a7e2a0d54e01379710cf00a"
@@ -6306,15 +6301,15 @@ mobx-react@^6.1.3:
   dependencies:
     mobx-react-lite "1.4.0"
 
-mobx-state-tree@3.10.2:
-  version "3.10.2"
-  resolved "https://registry.yarnpkg.com/mobx-state-tree/-/mobx-state-tree-3.10.2.tgz#1cbb99a65e7e0a8f91e2c2be44d23de9b1c71afc"
-  integrity sha512-DCt05qayAaLEMldsNYicJiLUg5rFyEzivlD4oiy8HjTQ+M3aqRbgvz9kn0g1uR/5IT27jPMkAZO8MSICDGitDw==
+mobx-state-tree@^3.14.1:
+  version "3.14.1"
+  resolved "https://registry.yarnpkg.com/mobx-state-tree/-/mobx-state-tree-3.14.1.tgz#0a523876b87817f5c8553a162e71b38044f0c9da"
+  integrity sha512-cmwO1jvYPgaJTGJtqId0Qod4cDqcJEWWCwSu/Uns7jFT+kWKzLFhzb9jxPub8YM3HSXg7HPGpKiLe970he9FOw==
 
-mobx@5.9.0:
-  version "5.9.0"
-  resolved "https://registry.yarnpkg.com/mobx/-/mobx-5.9.0.tgz#a08edd7132787f771409c9c33788a5df66ff7ce7"
-  integrity sha512-D3mY1uM3H9BP5duk5tTanrOq92yqetYKsprPJWvkKDrbs+fro59xrpWX+vtr10YoLgJIFz+a4A8lI+4YtqmCUQ==
+mobx@^5.14.0:
+  version "5.14.0"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-5.14.0.tgz#357c1023aca2851df357fa0cb9a6eaaab3a57793"
+  integrity sha512-GhDSZV9rGlCeVBpFPVYaYSn7UjgkD3158Njailp4IJhKqbT5iiEtiRyr76b7gPj3wpUSl+NHREQqBXzc1I8jpQ==
 
 moment@^2.21.0, moment@^2.24.0:
   version "2.24.0"

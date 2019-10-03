@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {TouchableOpacity, Image} from 'react-native'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 import {showImagePicker} from '../ImagePicker'
 import {IChat} from 'wocky-client'
 import {Spinner} from '../common'

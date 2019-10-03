@@ -5,7 +5,7 @@ import {k, minHeight} from '../Global'
 import {colors} from '../../constants'
 import {RText} from '../common'
 import {inject} from 'mobx-react'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 import {IWocky} from 'wocky-client'
 
 type Props = {

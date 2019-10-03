@@ -26,7 +26,7 @@ import {IHomeStore} from '../../store/HomeStore'
 import {BlurView} from 'react-native-blur'
 import alert from '../../utils/alert'
 import {log, warn} from '../../utils/logger'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 
 const noteIcon = require('../../../images/iconAddnote.png')
 const noteIconDone = require('../../../images/noteAdded.png')

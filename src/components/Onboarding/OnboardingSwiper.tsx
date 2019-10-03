@@ -16,7 +16,7 @@ import OnboardingFindFriendsList from './OnboardingFindFriendsList'
 import ContactStore from 'src/store/ContactStore'
 import {log, warn} from '../../utils/logger'
 import {IPermissionStore} from 'src/store/PermissionStore'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 import {getPermission} from '../../utils/permissions'
 
 type Props = {

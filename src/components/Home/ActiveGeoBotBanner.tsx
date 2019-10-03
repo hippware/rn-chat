@@ -25,7 +25,7 @@ import {IHomeStore} from '../../store/HomeStore'
 import {ILocationShare} from 'third-party/wocky-client/src/model/LocationShare'
 import {getType} from 'mobx-state-tree'
 import ActiveLocationSharer from './ActiveLocationSharer'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 
 type Props = {
   wocky?: IWocky

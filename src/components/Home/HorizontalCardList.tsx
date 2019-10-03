@@ -10,7 +10,7 @@ import {Actions} from 'react-native-router-flux'
 import {colors} from '../../constants'
 import LocationSharerCard from '../home-cards/LocationSharerCard'
 import {Card, IHomeStore} from '../../store/HomeStore'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 import {useHomeStore} from 'src/utils/injectors'
 
 type Props = {

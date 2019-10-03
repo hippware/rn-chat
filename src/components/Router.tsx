@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import {when, autorun, reaction} from 'mobx'
-import {inject} from 'mobx-react'
-import {observer} from 'mobx-react-lite'
+import {inject, observer} from 'mobx-react'
 import {settings} from '../globals'
 import {Keyboard, Platform} from 'react-native'
 import {Actions, Router, Scene, Stack, Modal, Lightbox, Tabs} from 'react-native-router-flux'

@@ -1,7 +1,7 @@
 import React from 'react'
 import {TouchableOpacity, ImageRequireSource, Image} from 'react-native'
 import Bubble from './Bubble'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 import {isAlive} from 'mobx-state-tree'
 
 import {IBot} from 'wocky-client'

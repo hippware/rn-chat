@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import DeviceInfo from 'react-native-device-info'
 import {inject} from 'mobx-react'
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react'
 import {when} from 'mobx'
 import {k} from './Global'
 import {colors} from '../constants'
