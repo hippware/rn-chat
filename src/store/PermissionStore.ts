@@ -31,19 +31,18 @@ export const PermissionStore = types
   .actions(self => ({
     checkAllPermissions: flow(function*() {
       // check all permissions in parallel
-      const checkPromises = [checkLocation().then(res => self.setAllowsLocation(res))]
+      const checkPromises = [
+        checkLocation().then(res => self.setAllowsLocation(res)),
+        checkMotion().then(res =>
+          // NOTE: accelerometer checks always come back as "restricted" on a simulator
+          self.setAllowsAccelerometer(res)
+        ),
+      ]
       if (Platform.OS === 'ios') {
-        checkPromises.push(
-          checkMotion().then(res =>
-            // NOTE: accelerometer checks always come back as "restricted" on a simulator
-            self.setAllowsAccelerometer(res)
-          ),
-          checkNotifications().then(res => self.setAllowsNotification(res))
-        )
+        checkPromises.push(checkNotifications().then(res => self.setAllowsNotification(res)))
       } else {
         // on Android...
         self.setAllowsNotification(true)
-        self.setAllowsAccelerometer(true)
       }
       yield Promise.all(checkPromises)
     }),

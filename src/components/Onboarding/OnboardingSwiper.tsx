@@ -52,7 +52,6 @@ const OnboardingSwiper = inject('wocky', 'contactStore', 'permissionStore')(
     }
 
     const checkAccelerometerPermissions = async () => {
-      // NOTE: this will return 'restricted' on a simulator
       const check = await getPermission('motion')
       log(`Accelerometer check result is ${check}`)
       swiper.current!.scrollBy(1)
@@ -94,10 +93,10 @@ const OnboardingSwiper = inject('wocky', 'contactStore', 'permissionStore')(
     if (!allowsLocation) {
       pages.push(<OnboardingLocation key="0" onPress={checkLocationPermissions} />)
     }
+    if (!allowsAccelerometer) {
+      pages.push(<OnboardingAccelerometer key="1" onPress={checkAccelerometerPermissions} />)
+    }
     if (Platform.OS === 'ios') {
-      if (!allowsAccelerometer) {
-        pages.push(<OnboardingAccelerometer key="1" onPress={checkAccelerometerPermissions} />)
-      }
       if (!allowsNotification) {
         pages.push(<OnboardingNotifications key="2" onPress={checkNotificationPermissions} />)
       }
