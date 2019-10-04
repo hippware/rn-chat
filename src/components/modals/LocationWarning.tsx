@@ -17,15 +17,15 @@ type Props = {
 }
 
 const LocationWarning = observer(({afterLocationAlwaysOn}: Props) => {
-  const {getCurrentPosition, alwaysOn} = useLocationStore()
+  const locationStore = useLocationStore()
   useEffect(() => {
     if (Platform.OS === 'android') {
-      getCurrentPosition().catch(e => {
+      locationStore.getCurrentPosition().catch(e => {
         // ignore error
       })
     }
 
-    const disposer = when(() => alwaysOn, afterLocationAlwaysOn)
+    const disposer = when(() => locationStore.alwaysOn, afterLocationAlwaysOn)
     return disposer
   }, [])
 
