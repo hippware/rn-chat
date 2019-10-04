@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.27.0 - 2019 Oct 3
+
 **React Native upgrade to 0.61.1**
 
 * [dev] Upgrade RN to 0.61 (#4184)
@@ -14,6 +16,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * react-dom (PR #4204), husky (PR #4203),
   * react-native-permissions (#4163, PR #4208)
   * react-native-swiper (PR #4221)
+  * mobx, mobx-state-tree, mobx-react-lite (PR #4223)
 * Remove unnecessary test dependencies (PR #4210)
   * Remove: form-data, node-fetch, promise
 * Speculative fixes:
@@ -24,6 +27,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Fix: [dev] bluetooth permissions? (#4163)
 * Added more injector hooks and refactored more components (PR #4211)
 * Update pods (PR #4219) / [iOS] Convert UIWebView -> WKWebView (#4074)
+* scrollToIndex should be used with onScrollToIndexFailed (#4195)
 
 # 4.26.1 - 2019 Sep 26
 
