@@ -7,52 +7,58 @@ import {
 } from 'react-native-permissions'
 import {Platform} from 'react-native'
 
-const vars = {
-  camera: Platform.OS === 'ios' ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA,
-  motion: PERMISSIONS.IOS.MOTION,
-  photo:
-    Platform.OS === 'ios' ? PERMISSIONS.IOS.PHOTO_LIBRARY : PERMISSIONS.ANDROID.EXTERNAL_STORAGE,
+const {IOS, ANDROID} = PERMISSIONS
+
+const permissionNames = {
+  camera: Platform.OS === 'ios' ? IOS.CAMERA : ANDROID.CAMERA,
+  motion: Platform.OS === 'ios' ? IOS.MOTION : ANDROID.ACTIVITY_RECOGNITION,
+  // todo: not sure if we need read- or write- for Android photos
+  photo: Platform.OS === 'ios' ? IOS.PHOTO_LIBRARY : ANDROID.WRITE_EXTERNAL_STORAGE,
   locationWhenInUse:
-    Platform.OS === 'ios'
-      ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
-      : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+    Platform.OS === 'ios' ? IOS.LOCATION_WHEN_IN_USE : ANDROID.ACCESS_FINE_LOCATION,
   location:
     Platform.OS === 'ios'
-      ? PERMISSIONS.IOS.LOCATION_ALWAYS
-      : PERMISSIONS.ANDROID.ACCESS_BACKGROUND_LOCATION,
+      ? IOS.LOCATION_ALWAYS
+      : // todo: there seems to be a bug in rn-permissions that prevents it from reading ACCESS_BACKGROUND_LOCATION...it errors out.
+        ANDROID.ACCESS_FINE_LOCATION,
 }
 
+// statuses: https://github.com/react-native-community/react-native-permissions#permissions-statuses
+const {GRANTED, DENIED, UNAVAILABLE} = RESULTS
+
 export async function checkLocation() {
-  const res = await ch(vars.location)
-  return res === RESULTS.GRANTED
+  const res: any = await ch(permissionNames.location)
+  return [GRANTED, UNAVAILABLE].includes(res)
 }
 
 export async function checkLocationWhenInUse() {
-  const res = await ch(vars.locationWhenInUse)
-  return res !== RESULTS.DENIED && res !== RESULTS.BLOCKED
+  const res: any = await ch(
+    Platform.select({ios: IOS.LOCATION_WHEN_IN_USE, android: ANDROID.ACCESS_FINE_LOCATION})
+  )
+  return [GRANTED, UNAVAILABLE].includes(res)
 }
 
 export async function checkMotion() {
-  return (await ch(vars.motion)) === RESULTS.GRANTED
+  const res: any = await ch(permissionNames.motion)
+  return [GRANTED, UNAVAILABLE].includes(res)
 }
 
 export async function checkNotifications() {
   const {status} = await _checkNotifications()
-  return status === RESULTS.GRANTED
+  return [GRANTED, UNAVAILABLE].includes(status as any)
 }
 
 export const getPermission = async (permStr: string): Promise<any> => {
-  const perm = vars[permStr]
+  const perm = permissionNames[permStr]
   let res = await ch(perm)
-  if (res !== RESULTS.GRANTED) {
+  if (res === DENIED) {
     // first-time user: show permissions request dialog
-    await req(perm)
-    res = await ch(perm)
+    res = await req(perm)
   }
-  return res === RESULTS.GRANTED
+  return [GRANTED, UNAVAILABLE].includes(res as any)
 }
 
 export async function request(type: string) {
-  const res = await req(vars[type])
+  const res = await req(permissionNames[type])
   return res === RESULTS.GRANTED
 }
