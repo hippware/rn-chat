@@ -4,6 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.27.1 - 2019 Oct 4
+
+* Fix broken permissions (PR #4225)
+* "Open Settings" doesn't go away once user changes settings (#4224)
+
 # 4.27.0 - 2019 Oct 3
 
 **React Native upgrade to 0.61.1**
