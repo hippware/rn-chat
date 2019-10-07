@@ -15,15 +15,15 @@ describe('Live Locations', () => {
   let alicesPhone: string
 
   const theLocation = {
-    latitude: 1.1,
+    latitude: 1.5,
     longitude: 2.1,
-    accuracy: 1,
+    accuracy: 3,
     activity: 'on_foot' as UserActivityType,
     activityConfidence: 75,
   }
   const differentLocation = {
-    longitude: 1.1,
     latitude: 1.1,
+    longitude: 1.1,
     accuracy: 1,
     activity: 'still' as UserActivityType,
     activityConfidence: 75,
@@ -67,7 +67,7 @@ describe('Live Locations', () => {
 
   it('expect live location share notification', async () => {
     timestamp()
-    await sleep(3000)
+    await sleep(2000)
     expect(alice.notifications.length).toBe(1)
     const notification: any = alice.notifications.list[0]
     expect(notification.sharedWith).toBeTruthy()
@@ -81,7 +81,7 @@ describe('Live Locations', () => {
     // update location
     await bob.setLocation(differentLocation)
     // wait location to be updated
-    await sleep(5000)
+    await sleep(2000)
     expect(alicesBobProfile.location!.latitude).toBe(differentLocation.latitude)
     expect(alicesBobProfile.location!.longitude).toBe(differentLocation.longitude)
     expect(alicesBobProfile.location!.accuracy).toBe(differentLocation.accuracy)
@@ -92,6 +92,8 @@ describe('Live Locations', () => {
     const bobAlicesProfile = await bob.loadProfile(alice.username!)
     await bobAlicesProfile.cancelShareLocation()
     const alicesBobProfile = await alice.loadProfile(bob.username!)
+    // wait for the cancel share to take effect
+    await sleep(2000)
     // update location
     await bob.setLocation(theLocation)
     // wait location to be updated
