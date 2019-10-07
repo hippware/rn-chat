@@ -6380,10 +6380,10 @@ ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-mst-middlewares@3.10.2:
-  version "3.10.2"
-  resolved "https://registry.yarnpkg.com/mst-middlewares/-/mst-middlewares-3.10.2.tgz#704fb3cdc91e231c4ea8672d5be0fdaffa519dc9"
-  integrity sha512-P9J3g0a5idBVW2mcBSWY/TZ6nY5Ml42+Y4Rmx0Hc3LxXoqk4zOHXHXyerffX07jd+5/EoYS/ZQU9uanxHQ/nVQ==
+mst-middlewares@3.14.1:
+  version "3.14.1"
+  resolved "https://registry.yarnpkg.com/mst-middlewares/-/mst-middlewares-3.14.1.tgz#f3b25f81042f68ed5c9e592c313d956afeed8e7d"
+  integrity sha512-bK/ni4n7RWR7nJaM7wbn3GCZsCFLRkWEEM7DJEg3MzX8pXoAJ4GBXxJcM/anDnzHElCged4t3rNBMoFTJRoddg==
 
 multimatch@^3.0.0:
   version "3.0.0"
