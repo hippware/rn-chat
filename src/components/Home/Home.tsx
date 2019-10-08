@@ -3,7 +3,7 @@ import {View} from 'react-native'
 import {observer} from 'mobx-react'
 import MapHome from './MapHome'
 import HorizontalCardList from './HorizontalCardList'
-import ActiveGeoBotBanner from './ActiveGeoBotBanner'
+import HomeBanner from './HomeBanner'
 import {width, height} from '../Global'
 import {useNavStore, useHomeStore} from 'src/utils/injectors'
 
@@ -26,7 +26,7 @@ const Home = observer(({name}: Props) => {
       testID="screenHome"
     >
       <MapHome />
-      <ActiveGeoBotBanner enabled={!fullScreenMode && isCurrent} />
+      <HomeBanner enabled={!fullScreenMode && isCurrent} />
       {isCurrent && (
         <HorizontalCardList
           setIndex={setIndex}
