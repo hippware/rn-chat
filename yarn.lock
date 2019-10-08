@@ -1454,10 +1454,10 @@
   resolved "https://registry.yarnpkg.com/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
   integrity sha512-f5j5b/Gf71L+dbqxIpQ4Z2WlmI/mPJ0fOkGGmFgtb6sAu97EPczzbS3/tJKxmcYDj55OX6ssqwDAWOHIYDRDGA==
 
-"@types/phoenix@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@types/phoenix/-/phoenix-0.0.4.tgz#6ada6be91dfdc1fa77ed57691f92821920f71d12"
-  integrity sha1-atpr6R39wfp37VdpH5KCGSD3HRI=
+"@types/phoenix@^1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@types/phoenix/-/phoenix-1.4.3.tgz#6f102a48f793f2fc9c531a25d48a02c0b2ba89e8"
+  integrity sha512-Bo6ZjaVldVb44hebPLZYJOmCpL9FSoD06pbmG6Lh0HQMjKAqDYbO2WSa4LY5pkHiUSQvkiTmQoTHO6S/R/spJQ==
 
 "@types/prop-types@*":
   version "15.7.2"
