@@ -30,10 +30,13 @@ import {MessagesRouterStory, ChatUserSearchScreen, ChatViewStory} from './Messag
 import UpdateBrick from 'src/components/UpdateBrick'
 import {Spinner} from 'src/components/common'
 import {View} from 'react-native'
+import HomeBannerStory from './HomeBannerStory'
 
 function emptyFn() {
   /* noop */
 }
+
+storiesOf('HomeBanner', module).add('Default', () => <HomeBannerStory />)
 
 storiesOf('BotDetails', module).add('Invitation not accepted', () => <BotDetailsStory />)
 
