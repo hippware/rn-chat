@@ -1,7 +1,7 @@
 import {AppRegistry} from 'react-native'
 import {getStorybookUI, configure} from '@storybook/react-native'
 
-import './rn-addons'
+// import './rn-addons'
 
 // TODO: figure out how to do this with babel config: https://github.com/storybooks/storybook/pull/4077
 // currently importing this causes packager error "bundling failed: Error: Couldn't find preset "./.babelrc.js" relative to directory "/Users/kirkham/dev/rn-chat/node_modules/react-split-pane""

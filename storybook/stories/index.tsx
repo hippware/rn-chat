@@ -38,7 +38,6 @@ function emptyFn() {
 
 YellowBox.ignoreWarnings([
   // I belive these are coming from either react-native-reanimaged or react-native-gesture-handler
-  'Warning: componentWillMount',
   'Warning: AsyncStorage',
 ])
 
