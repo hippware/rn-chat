@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react'
+import React, {useState} from 'react'
 import {View, Image, StyleSheet, NativeModules, TouchableOpacity} from 'react-native'
 
 import {RText} from './common'
@@ -6,80 +6,58 @@ import {colors} from '../constants'
 import {k} from './Global'
 import FormTextInput from './FormTextInput'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
-import CountryPicker, {getAllCountries} from 'react-native-country-picker-modal'
+import CountryPicker from 'react-native-country-picker-modal'
+import {CountryCode, Country} from 'react-native-country-picker-modal/lib/types'
+
 import {Actions} from 'react-native-router-flux'
-import {parse, AsYouType as asYouType, CountryCode} from 'libphonenumber-js'
+import {parse, AsYouType as asYouType} from 'libphonenumber-js'
 import {PINK} from 'src/constants/colors'
 import {observer, useLocalStore} from 'mobx-react'
 import {useFirebaseStore} from 'src/utils/injectors'
+import {boolean} from 'mobx-state-tree/dist/internal'
 const CarrierInfo = NativeModules.RNCarrierInfo
 
-const countryMap = {}
-getAllCountries().forEach(country => (countryMap[country.cca2] = country))
+let defaultCountryCode = 'US'
 
-type State = {
-  cca2: CountryCode
-  callingCode: string
-  countryName: string
-  phoneValue: string
-  submitting: boolean
-  sendText: string
-  phoneValid: boolean
+if (CarrierInfo) {
+  CarrierInfo.isoCountryCode(result => {
+    if (result && result !== 'nil') {
+      defaultCountryCode = result.toUpperCase()
+    }
+  })
 }
 
-type Setter = (state: Partial<State>) => void
-
 const SignIn = observer(() => {
-  const picker: any = useRef(null)
   const firebaseStore = useFirebaseStore()
+  const [countryCode, setCountryCode] = useState<CountryCode>(defaultCountryCode)
+  const [phoneValid, setPhoneValid] = useState<boolean>(false)
+  const [submitting, setSubmitting] = useState<boolean>(false)
+  // TODO: replace with real country
+  const [country, setCountry] = useState<Country>({callingCode: '1'})
+  const [phoneValue, setPhoneValue] = useState<string>()
 
-  const store = useLocalStore<State & {set: Setter}>(() => ({
-    cca2: 'US',
-    callingCode: '1',
-    countryName: 'United States',
-    phoneValue: '',
-    submitting: false,
-    sendText: 'Send Confirmation',
-    phoneValid: false,
-    set(state) {
-      Object.assign(store, {...store, ...state})
-    },
-  }))
-
-  useEffect(() => {
-    if (CarrierInfo)
-      CarrierInfo.isoCountryCode(result => {
-        if (result && result !== 'nil') {
-          const cca2 = result.toUpperCase()
-          const data = countryMap[cca2]
-          store.set({
-            cca2,
-            callingCode: data.callingCode,
-            countryName: data.name.common,
-          })
-        }
-      })
-  }, [])
+  const onSelect = (c: Country) => {
+    setCountryCode(c.cca2)
+    setCountry(c)
+  }
 
   function processText(text: string) {
-    const parsed = parse(text, store.cca2)
-    store.set({
-      phoneValid: !!(parsed.country && parsed.phone),
-      phoneValue: /\d{4,}/.test(text) ? new asYouType(store.cca2).input(text) : text,
-    })
+    const parsed = parse(text, countryCode)
+    setPhoneValid(!!(parsed.country && parsed.phone))
+    setPhoneValue(/\d{4,}/.test(text) ? new asYouType(countryCode).input(text) : text)
   }
 
   async function submit(): Promise<void> {
-    if (store.phoneValid) {
-      store.set({submitting: true})
+    if (phoneValid) {
+      setSubmitting(true)
       const verified = await firebaseStore!.verifyPhone(
-        `+${store.callingCode}${store.phoneValue!.replace(/\D/g, '')}`
+        `+${countryCode}${phoneValue!.replace(/\D/g, '')}`
       )
       if (verified) {
         Actions.verifyCode()
       }
 
-      store.set({submitting: false})
+      setSubmitting(false)
     }
   }
 
@@ -105,31 +83,22 @@ const SignIn = observer(() => {
       </View>
       <View style={{marginTop: 20 * k}}>
         <CountryPicker
-          onChange={value => {
-            store.set({
-              cca2: value.cca2 as any,
-              callingCode: value.callingCode,
-              countryName: value.name as any,
-            })
-          }}
-          cca2={store.cca2 as any}
-          translation="common"
-          filterable
-          closeable
-          ref={picker}
-        >
-          <TouchableOpacity onPress={() => (picker.current as any).openModal()}>
-            <FormTextInput
-              icon={require('../../images/globe.png')}
-              label="Country Code"
-              autoCapitalize="none"
-              // validate={() => {}}
-              value={`${store.countryName} +${store.callingCode}`}
-              editable={false}
-              pointerEvents="none"
-            />
-          </TouchableOpacity>
-        </CountryPicker>
+          countryCode={countryCode}
+          onSelect={onSelect}
+          withCallingCode
+          withCountryName
+        />
+        <TouchableOpacity>
+          <FormTextInput
+            icon={require('../../images/globe.png')}
+            label="Country Code"
+            autoCapitalize="none"
+            // validate={() => {}}
+            value={`+${country.callingCode}`}
+            editable={false}
+            pointerEvents="none"
+          />
+        </TouchableOpacity>
 
         <FormTextInput
           icon={require('../../images/phone.png')}
@@ -138,7 +107,7 @@ const SignIn = observer(() => {
           autoCorrect={false}
           keyboardType="phone-pad"
           onChangeText={processText}
-          value={store.phoneValue}
+          value={phoneValue}
         />
 
         <View style={{marginHorizontal: 36 * k, marginVertical: 20 * k}}>
@@ -149,12 +118,10 @@ const SignIn = observer(() => {
           )}
           <TouchableOpacity
             style={styles.button}
-            disabled={store.submitting || !store.phoneValid}
+            disabled={submitting || !phoneValid}
             onPress={submit}
           >
-            <RText style={styles.text}>
-              {store.submitting ? 'Sending...' : 'Send Confirmation'}
-            </RText>
+            <RText style={styles.text}>{submitting ? 'Sending...' : 'Send Confirmation'}</RText>
           </TouchableOpacity>
           <RText
             size={12.5}

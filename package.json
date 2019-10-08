@@ -71,7 +71,7 @@
     "react-native-code-push": "^5.7.0",
     "react-native-config": "^0.11.7",
     "react-native-contacts": "^5.0.1",
-    "react-native-country-picker-modal": "github:xcarpentier/react-native-country-picker-modal#559bfb1b47520de6e97ec969fa97565e889e3ecb",
+    "react-native-country-picker-modal": "^1.1.0",
     "react-native-device-info": "3.0.0-rc.5",
     "react-native-emoji-selector": "^0.1.7",
     "react-native-extra-dimensions-android": "^1.2.5",
