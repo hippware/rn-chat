@@ -40,7 +40,7 @@ export interface IActiveBannerItem {
   innerStyle: ViewStyle
 }
 
-const ActiveGeoBotBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
+const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
   observer(({enabled, wocky, navStore, homeStore, analytics}: Props) => {
     const [yOffset] = useState(new Animated.Value(0))
 
@@ -110,7 +110,7 @@ const ActiveGeoBotBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')
   })
 )
 
-export default ActiveGeoBotBanner
+export default HomeBanner
 
 const Buttons = ({mapType}) => (
   <View
