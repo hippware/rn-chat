@@ -6,18 +6,21 @@ import {colors} from '../constants'
 import {k} from './Global'
 import FormTextInput from './FormTextInput'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
-import CountryPicker from 'react-native-country-picker-modal'
-import {CountryCode, Country} from 'react-native-country-picker-modal/lib/types'
+import CountryPicker, {getAllCountries} from 'react-native-country-picker-modal'
+import {CountryCode, Country, FlagType} from 'react-native-country-picker-modal/lib/types'
 
 import {Actions} from 'react-native-router-flux'
 import {parse, AsYouType as asYouType} from 'libphonenumber-js'
 import {PINK} from 'src/constants/colors'
-import {observer, useLocalStore} from 'mobx-react'
+import {observer} from 'mobx-react'
 import {useFirebaseStore} from 'src/utils/injectors'
-import {boolean} from 'mobx-state-tree/dist/internal'
+
+const countryMap = {}
+getAllCountries(FlagType.FLAT).forEach(country => (countryMap[country.cca2] = country))
+
 const CarrierInfo = NativeModules.RNCarrierInfo
 
-let defaultCountryCode = 'US'
+let defaultCountryCode: CountryCode = 'US'
 
 if (CarrierInfo) {
   CarrierInfo.isoCountryCode(result => {
@@ -32,19 +35,16 @@ const SignIn = observer(() => {
   const [countryCode, setCountryCode] = useState<CountryCode>(defaultCountryCode)
   const [phoneValid, setPhoneValid] = useState<boolean>(false)
   const [submitting, setSubmitting] = useState<boolean>(false)
-  // TODO: replace with real country
-  const [country, setCountry] = useState<Country>({callingCode: '1'})
-  const [phoneValue, setPhoneValue] = useState<string>()
+  const [phoneValue, setPhoneValue] = useState<string>('')
 
   const onSelect = (c: Country) => {
     setCountryCode(c.cca2)
-    setCountry(c)
   }
 
   function processText(text: string) {
-    const parsed = parse(text, countryCode)
+    const parsed = parse(text, countryCode as any)
     setPhoneValid(!!(parsed.country && parsed.phone))
-    setPhoneValue(/\d{4,}/.test(text) ? new asYouType(countryCode).input(text) : text)
+    setPhoneValue(/\d{4,}/.test(text) ? new asYouType(countryCode as any).input(text) : text)
   }
 
   async function submit(): Promise<void> {
@@ -86,19 +86,21 @@ const SignIn = observer(() => {
           countryCode={countryCode}
           onSelect={onSelect}
           withCallingCode
-          withCountryName
+          withAlphaFilter
+          renderFlagButton={({onOpen}) => (
+            <TouchableOpacity onPress={onOpen}>
+              <FormTextInput
+                icon={require('../../images/globe.png')}
+                label="Country Code"
+                autoCapitalize="none"
+                // validate={() => {}}
+                value={`+${countryMap[countryCode].callingCode}`}
+                editable={false}
+                pointerEvents="none"
+              />
+            </TouchableOpacity>
+          )}
         />
-        <TouchableOpacity>
-          <FormTextInput
-            icon={require('../../images/globe.png')}
-            label="Country Code"
-            autoCapitalize="none"
-            // validate={() => {}}
-            value={`+${country.callingCode}`}
-            editable={false}
-            pointerEvents="none"
-          />
-        </TouchableOpacity>
 
         <FormTextInput
           icon={require('../../images/phone.png')}
