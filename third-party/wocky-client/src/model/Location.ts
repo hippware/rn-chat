@@ -32,7 +32,7 @@ export const Location = types
     latitude: types.number,
     longitude: types.number,
     accuracy: types.maybeNull(types.number),
-    createdAt: types.maybe(types.Date),
+    createdAt: types.optional(types.Date, new Date()),
     activity: types.maybe(
       types.enumeration(['still', 'on_foot', 'walking', 'in_vehicle', 'on_bicycle', 'running'])
     ),
@@ -60,11 +60,6 @@ export const Location = types
       Object.assign(self, data)
     },
   }))
-  .postProcessSnapshot((snapshot: any) => {
-    const res: any = {...snapshot}
-    delete res.createdAt
-    return res
-  })
 
 export interface ILocation extends Instance<typeof Location> {}
 export interface ILocationSnapshot extends SnapshotIn<typeof Location> {}
