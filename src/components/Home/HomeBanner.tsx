@@ -23,7 +23,6 @@ import {settings} from '../../globals'
 import {INavStore} from '../../store/NavStore'
 import {IHomeStore} from '../../store/HomeStore'
 import {ILocationShare} from 'third-party/wocky-client/src/model/LocationShare'
-import {getType} from 'mobx-state-tree'
 import ActiveLocationSharer from './ActiveLocationSharer'
 import {observer} from 'mobx-react'
 
@@ -57,7 +56,7 @@ const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
     }, [enabled])
 
     const renderActiveBot = ({item}: {item: IBot | ILocationShare}) =>
-      getType(item).name === 'Bot' ? (
+      (item as IBot).description ? (
         <ActiveGeofenceBot bot={item as IBot} outerStyle={styles.outer} innerStyle={styles.inner} />
       ) : (
         <ActiveLocationSharer
