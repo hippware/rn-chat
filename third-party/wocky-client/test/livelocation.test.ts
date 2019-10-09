@@ -7,7 +7,6 @@ import {
   waitFor,
 } from './support/testuser'
 import {IWocky} from '../src'
-import {getSnapshot} from 'mobx-state-tree'
 import {UserActivityType} from '../src/transport/types'
 
 describe('Live Locations', () => {
@@ -62,7 +61,10 @@ describe('Live Locations', () => {
     // update location
     await bob.setLocation(theLocation)
     await waitFor(() => !!alicesBobProfile.location, 'user location did not arrive')
-    expect(getSnapshot(alicesBobProfile.location!)).toEqual(theLocation)
+
+    expect(alicesBobProfile.location!.latitude).toBe(theLocation.latitude)
+    expect(alicesBobProfile.location!.longitude).toBe(theLocation.longitude)
+    expect(alicesBobProfile.location!.accuracy).toBe(theLocation.accuracy)
   })
 
   it('expect live location share notification', async () => {
