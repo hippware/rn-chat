@@ -51,7 +51,7 @@ const SignIn = observer(() => {
     if (phoneValid) {
       setSubmitting(true)
       const verified = await firebaseStore!.verifyPhone(
-        `+${countryCode}${phoneValue!.replace(/\D/g, '')}`
+        `+${countryMap[countryCode].callingCode}${phoneValue!.replace(/\D/g, '')}`
       )
       if (verified) {
         Actions.verifyCode()
@@ -87,6 +87,7 @@ const SignIn = observer(() => {
           onSelect={onSelect}
           withCallingCode
           withAlphaFilter
+          withFilter
           renderFlagButton={({onOpen}) => (
             <TouchableOpacity onPress={onOpen}>
               <FormTextInput
@@ -94,7 +95,7 @@ const SignIn = observer(() => {
                 label="Country Code"
                 autoCapitalize="none"
                 // validate={() => {}}
-                value={`+${countryMap[countryCode].callingCode}`}
+                value={`${countryMap[countryCode].name} +${countryMap[countryCode].callingCode}`}
                 editable={false}
                 pointerEvents="none"
               />
