@@ -4,11 +4,19 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.28.0 - 2019 Oct 10
+
+**React Native upgrade to 0.61.2**
+
 * Update: react-native-router-flux, react-native-swiper (PR #4235)
   * @storybook/react-native (PR #4238), @types/lodash (PR #4239)
   * @types/react (PR #4240), rn-reanimated (PR #4244)
+  * react-native-country-picker-modal (PR #4243)
 * [dev] remove ViewPagerAndroid usage (#4226, PR #4235)
 * Cards with no information (#3961)
+* Fix AppCenter builds on XCode 11.1 (PR #4247)
+* Upgrade to React Native 0.61.2 (#4248)
+* [android] Flags missing on country picker (#4227)
 
 # 4.27.1 - 2019 Oct 4
 
