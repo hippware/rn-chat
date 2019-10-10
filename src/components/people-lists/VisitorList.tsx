@@ -9,13 +9,14 @@ import {colors} from '../../constants'
 import {k} from '../Global'
 import {useWocky} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
+import {View} from 'react-native'
 
 type Props = {
   botId: string
   isActive: boolean
 }
 
-const KeyboardAwareDraggablePopupList: any = withKeyboardHOC(DraggablePopupList)
+const KeyboardAwareDraggablePopupList = withKeyboardHOC(DraggablePopupList)
 
 const VisitorList = observer(({botId, isActive}: Props) => {
   const [bot, setBot] = useState<IBot | null>(null)
@@ -42,17 +43,23 @@ const VisitorList = observer(({botId, isActive}: Props) => {
     </RText>
   )
 
+  const data = bot && isAlive(bot) ? bot!.visitors.list.slice(0, 1) : []
+
   // TODO display spinner during loading
   return (
     <KeyboardAwareDraggablePopupList
       headerInner={renderHeader()}
       renderItem={renderItem}
       keyExtractor={item => item.id}
-      data={bot && isAlive(bot) ? bot!.visitors.list.slice() : []}
+      data={data}
       keyboardShouldPersistTaps="handled"
       onEndReachedThreshold={0.5}
       onEndReached={() => bot!.visitors.load()}
       isActive={isActive}
+      // prevent gap underneath list: https://github.com/hippware/rn-chat/issues/4129
+      ListFooterComponent={
+        data.length < 4 ? <View style={{backgroundColor: 'white', height: 200}} /> : null
+      }
     />
   )
 })
