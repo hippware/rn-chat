@@ -6,8 +6,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Update: react-native-router-flux, react-native-swiper (PR #4235)
   * @storybook/react-native (PR #4238), @types/lodash (PR #4239)
-  * @types/react (PR #4240)
+  * @types/react (PR #4240), rn-reanimated (PR #4244)
 * [dev] remove ViewPagerAndroid usage (#4226, PR #4235)
+* Cards with no information (#3961)
 
 # 4.27.1 - 2019 Oct 4
 
