@@ -121,3 +121,38 @@ index 5624105..6f1ba17 100644
  
  import com.facebook.react.ReactPackage;
  import com.facebook.react.bridge.NativeModule;
+diff --git a/node_modules/react-native-firebase/ios/RNFirebase/converters/RCTConvert+UIBackgroundFetchResult.m b/node_modules/react-native-firebase/ios/RNFirebase/converters/RCTConvert+UIBackgroundFetchResult.m
+index 2aae8f6..4210d50 100644
+--- a/node_modules/react-native-firebase/ios/RNFirebase/converters/RCTConvert+UIBackgroundFetchResult.m
++++ b/node_modules/react-native-firebase/ios/RNFirebase/converters/RCTConvert+UIBackgroundFetchResult.m
+@@ -5,9 +5,9 @@ @implementation RCTConvert (UIBackgroundFetchResult)
+ RCT_ENUM_CONVERTER(
+     UIBackgroundFetchResult,
+     (@{
+-        @"backgroundFetchResultNoData" : @(UIBackgroundFetchResultNoData),
+-        @"backgroundFetchResultNewData" : @(UIBackgroundFetchResultNewData),
+-        @"backgroundFetchResultFailed" : @(UIBackgroundFetchResultFailed)}
++        @"UIBackgroundFetchResultNoData" : @(UIBackgroundFetchResultNoData),
++        @"UIBackgroundFetchResultNewData" : @(UIBackgroundFetchResultNewData),
++        @"UIBackgroundFetchResultFailed" : @(UIBackgroundFetchResultFailed)}
+     ),
+     UIBackgroundFetchResultNoData,
+     integerValue
+diff --git a/node_modules/react-native-firebase/ios/RNFirebase/notifications/RNFirebaseNotifications.m b/node_modules/react-native-firebase/ios/RNFirebase/notifications/RNFirebaseNotifications.m
+index d3aa1e3..3f33539 100644
+--- a/node_modules/react-native-firebase/ios/RNFirebase/notifications/RNFirebaseNotifications.m
++++ b/node_modules/react-native-firebase/ios/RNFirebase/notifications/RNFirebaseNotifications.m
+@@ -780,9 +780,10 @@ - (NSDictionary*)parseUserInfo:(NSDictionary *)userInfo {
+ }
+ 
+ - (NSDictionary *) constantsToExport {
+-    return @{ @"backgroundFetchResultNoData" : @(UIBackgroundFetchResultNoData),
+-              @"backgroundFetchResultNewData" : @(UIBackgroundFetchResultNewData),
+-              @"backgroundFetchResultFailed" : @(UIBackgroundFetchResultFailed)};
++    return @{ @"UIBackgroundFetchResultNoData" : @(UIBackgroundFetchResultNoData),
++              @"UIBackgroundFetchResultNewData" : @(UIBackgroundFetchResultNewData),
++              @"UIBackgroundFetchResultFailed" : @(UIBackgroundFetchResultFailed)
++    };
+ }
+ 
+ + (BOOL)requiresMainQueueSetup
