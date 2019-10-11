@@ -142,7 +142,6 @@ const LocationStore = types
   .actions(self => {
     const {transport} = getEnv(self)
     const wocky: IWocky = (getParent(self) as any).wocky
-    const {profile} = wocky
     let watcherID
 
     function onLocation(position) {
