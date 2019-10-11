@@ -16,6 +16,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Cards with no information (#3961)
 * Fix AppCenter builds on XCode 11.1 (PR #4247)
 * Upgrade to React Native 0.61.2 (#4248)
+  * [android] Online status needs to be in front of avatar (#4228)
+  * [android] Cards are transparent (#4229)
+  * [android] Notification screen: Selected tab does not display (#4230)
+  * [android] Add boxes around the invisible mode options (#4231)
+  * [android] Missing toggle on share live location screen (#4232)
 * [android] Flags missing on country picker (#4227)
 * Invalid UIBackgroundFetchResult 'UIBackgroundFetchResultNoData' (#4169)
 
