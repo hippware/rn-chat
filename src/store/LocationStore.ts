@@ -1,4 +1,4 @@
-import {types, getEnv, flow, getParent, getRoot} from 'mobx-state-tree'
+import {types, getEnv, flow, getParent, isAlive, getRoot} from 'mobx-state-tree'
 import {autorun, IReactionDisposer} from 'mobx'
 import BackgroundGeolocation from 'react-native-background-geolocation'
 import DeviceInfo from 'react-native-device-info'
@@ -35,6 +35,7 @@ const LocationStore = types
   })
   .volatile(() => ({
     enabled: true,
+    started: false,
     alwaysOn: true,
     debugSounds: false,
   }))
@@ -157,7 +158,7 @@ const LocationStore = types
       }
       self.setPosition(position.coords)
 
-      if (profile) {
+      if (profile && isAlive(profile)) {
         const data = createLocation({
           lat: position.coords.latitude,
           lon: position.coords.longitude,
@@ -294,6 +295,10 @@ const LocationStore = types
       }
     }
 
+    function setStarted(value: boolean) {
+      self.started = value
+    }
+
     function onStandaloneLocation(position) {
       position.isStandalone = true
       onLocation(position)
@@ -322,6 +327,7 @@ const LocationStore = types
       startStandaloneGeolocation,
       stopStandaloneGeolocation,
       emailLog,
+      setStarted,
     }
   })
   .actions(self => {
@@ -343,22 +349,27 @@ const LocationStore = types
         autorun(
           async () => {
             if (wocky.connected && wocky.profile && wocky.profile.onboarded && self.alwaysOn) {
-              try {
-                await self.refreshCredentials()
-                if (!wocky.profile.hidden.enabled) {
-                  await BackgroundGeolocation.start()
-                  await self.getCurrentPosition()
-                  log(prefix, 'Start')
-                } else {
-                  log(prefix, 'Not started because user has invisible mode')
-                  self.startStandaloneGeolocation()
+              if (!self.started) {
+                try {
+                  await self.refreshCredentials()
+                  if (!wocky.profile.hidden.enabled) {
+                    await BackgroundGeolocation.start()
+                    await self.getCurrentPosition()
+                    log(prefix, 'Start')
+                  } else {
+                    log(prefix, 'Not started because user has invisible mode')
+                    self.startStandaloneGeolocation()
+                  }
+                } catch (err) {
+                  // prevent unhandled promise rejection
+                  log(prefix, 'Start onConnected reaction error', err)
+                  BackgroundGeolocation.logger.error(
+                    `${prefix} Start onConnected reaction error ${err}`
+                  )
                 }
-              } catch (err) {
-                // prevent unhandled promise rejection
-                log(prefix, 'Start onConnected reaction error', err)
-                BackgroundGeolocation.logger.error(
-                  `${prefix} Start onConnected reaction error ${err}`
-                )
+                self.setStarted(true)
+              } else {
+                log(prefix, 'RNBGL is already started')
               }
             }
           },
@@ -405,6 +416,7 @@ const LocationStore = types
       yield self.invalidateCredentials()
       yield BackgroundGeolocation.stopSchedule()
       yield BackgroundGeolocation.stop()
+      self.setStarted(false)
       log(prefix, 'Stop')
     })
 

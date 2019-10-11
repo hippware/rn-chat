@@ -40,7 +40,7 @@ const AuthStore = types
 
       logout: flow(function*() {
         homeStore.logout()
-        locationStore.logout()
+        yield locationStore.logout()
         if (strategy) {
           yield strategy.logout(store)
         }
