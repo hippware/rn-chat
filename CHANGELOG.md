@@ -17,6 +17,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Fix AppCenter builds on XCode 11.1 (PR #4247)
 * Upgrade to React Native 0.61.2 (#4248)
 * [android] Flags missing on country picker (#4227)
+* Invalid UIBackgroundFetchResult 'UIBackgroundFetchResultNoData' (#4169)
 
 # 4.27.1 - 2019 Oct 4
 
