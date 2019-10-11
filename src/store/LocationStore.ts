@@ -1,9 +1,9 @@
-import {types, getEnv, flow, getParent, isAlive, getRoot} from 'mobx-state-tree'
+import {types, getEnv, flow, getParent, getRoot} from 'mobx-state-tree'
 import {autorun, IReactionDisposer} from 'mobx'
 import BackgroundGeolocation from 'react-native-background-geolocation'
 import DeviceInfo from 'react-native-device-info'
 import {settings} from '../globals'
-import {Location, createLocation, IWocky} from 'wocky-client'
+import {Location, IWocky} from 'wocky-client'
 import _ from 'lodash'
 import * as RNLocalize from 'react-native-localize'
 import moment from 'moment'
@@ -157,19 +157,6 @@ const LocationStore = types
         }
       }
       self.setPosition(position.coords)
-
-      if (profile && isAlive(profile)) {
-        const data = createLocation({
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
-          accuracy: position.coords.accuracy,
-          createdAt: new Date(position.timestamp),
-          // .activity does not exist if called from Geolocation
-          activity: position.activity ? position.activity.type : null,
-          activityConfidence: position.activity ? position.activity.confidence : null,
-        })
-        profile.setLocation(data)
-      }
     }
 
     function onLocationError(err) {
