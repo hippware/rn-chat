@@ -14,7 +14,7 @@ import {colors} from '../../constants'
 import ActiveGeofenceBot from './ActiveGeofenceBot'
 import HeaderLocationOverlay from './HeaderLocationOverlay'
 import ActiveBannerPlaceholder from './ActiveBannerPlaceholder'
-import {IBot, IWocky} from 'wocky-client'
+import {IBot, IWocky, IOwnProfile} from 'wocky-client'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
 import {k, isIphoneX, isIphone, minHeight} from '../Global'
 import {Actions} from 'react-native-router-flux'
@@ -45,7 +45,7 @@ const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
 
     const {profile, activeBots} = wocky!
     const bannerItems = profile
-      ? [...profile.locationSharers.list.slice(), ...activeBots.slice()]
+      ? [profile, ...profile.locationSharers.list.slice(), ...activeBots.slice()]
       : []
 
     useEffect(() => {
@@ -55,12 +55,14 @@ const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
       }).start()
     }, [enabled])
 
-    const renderActiveBot = ({item}: {item: IBot | ILocationShare}) =>
+    const renderBannerItem = ({item}: {item: IBot | ILocationShare | IOwnProfile}) =>
       (item as IBot).description ? (
         <ActiveGeofenceBot bot={item as IBot} outerStyle={styles.outer} innerStyle={styles.inner} />
       ) : (
         <ActiveLocationSharer
-          sharer={item as ILocationShare}
+          profile={
+            (item as any).email ? (item as IOwnProfile) : (item as ILocationShare).sharedWith
+          }
           outerStyle={styles.outer}
           innerStyle={styles.inner}
         />
@@ -92,7 +94,7 @@ const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
             data={bannerItems}
             horizontal
             keyExtractor={item => item.id}
-            renderItem={renderActiveBot}
+            renderItem={renderBannerItem}
             showsHorizontalScrollIndicator={false}
             ListEmptyComponent={<ActiveBannerPlaceholder />}
             style={{paddingLeft: 8 * k}}
