@@ -31,6 +31,7 @@ import UpdateBrick from 'src/components/UpdateBrick'
 import {Spinner} from 'src/components/common'
 import {View, YellowBox} from 'react-native'
 import HomeBannerStory from './HomeBannerStory'
+import MapOptions from 'src/components/MapOptions'
 
 function emptyFn() {
   /* noop */
@@ -46,9 +47,11 @@ storiesOf('HomeBanner', module).add('Default', () => <HomeBannerStory />)
 storiesOf('BotDetails', module).add('Invitation not accepted', () => <BotDetailsStory />)
 
 storiesOf('Touch Through View + Flatlist', module)
-  .add('Draggable List On Map', () => <DraggableOnMap />)
-  .add('Keyboard Aware Draggable List On Map', () => <KeyboardAwareDraggableOnMap />)
-  .add('Friend Search', () => <MockFriendSearch />)
+//  .add('Draggable List On Map', () => <DraggableOnMap />)
+//  .add('Keyboard Aware Draggable List On Map', () => <KeyboardAwareDraggableOnMap />)
+//  .add('Friend Search', () => <MockFriendSearch />)
+
+storiesOf('MapOptions', module).add('MapOptions', () => <MapOptions />)
 
 storiesOf('Onboarding', module)
   .add('1 - Location', () => <OnboardingLocation onPress={emptyFn} />)
@@ -60,7 +63,7 @@ storiesOf('Onboarding', module)
   .add('5 - FindFriendsList', () => <MockFindFriends />)
   .add('6 - SignUp', () => <SignUpStory />)
 
-storiesOf('ImagePicker', module).add('1 - Default', () => <ImagePickerStory />)
+//storiesOf('ImagePicker', module).add('1 - Default', () => <ImagePickerStory />)
 
 storiesOf('UserActivity', module).add('1 - Default', () => <UserActivityStory />)
 
