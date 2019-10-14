@@ -16,20 +16,21 @@ import {
   LocationWarningAndroid,
 } from '../../src/components/modals/LocationWarning'
 import MockFindFriends from './FindFriendsList/MockFindFriends'
-import {
-  DraggableOnMap,
-  KeyboardAwareDraggableOnMap,
-  MockFriendSearch,
-} from './rn-touch-through-view/ListOnMap'
+// import {
+//   DraggableOnMap,
+//   KeyboardAwareDraggableOnMap,
+//   MockFriendSearch,
+// } from './rn-touch-through-view/ListOnMap'
 import BotDetailsStory from './BotDetailsStory'
 import SignUpStory from './SignUpStory'
-import ImagePickerStory from './ImagePickerStory'
+// import ImagePickerStory from './ImagePickerStory'
 import UserActivityStory from './UserActivityStory'
 import CustomTransitionerStory from './CustomTransitionerStory'
 import {MessagesRouterStory, ChatUserSearchScreen, ChatViewStory} from './MessagesStory'
 import UpdateBrick from 'src/components/UpdateBrick'
 import {Spinner} from 'src/components/common'
 import {View} from 'react-native'
+import MapOptions from 'src/components/MapOptions'
 
 function emptyFn() {
   /* noop */
@@ -38,9 +39,11 @@ function emptyFn() {
 storiesOf('BotDetails', module).add('Invitation not accepted', () => <BotDetailsStory />)
 
 storiesOf('Touch Through View + Flatlist', module)
-  .add('Draggable List On Map', () => <DraggableOnMap />)
-  .add('Keyboard Aware Draggable List On Map', () => <KeyboardAwareDraggableOnMap />)
-  .add('Friend Search', () => <MockFriendSearch />)
+//  .add('Draggable List On Map', () => <DraggableOnMap />)
+//  .add('Keyboard Aware Draggable List On Map', () => <KeyboardAwareDraggableOnMap />)
+//  .add('Friend Search', () => <MockFriendSearch />)
+
+storiesOf('MapOptions', module).add('MapOptions', () => <MapOptions />)
 
 storiesOf('Onboarding', module)
   .add('1 - Location', () => <OnboardingLocation onPress={emptyFn} />)
@@ -52,7 +55,7 @@ storiesOf('Onboarding', module)
   .add('5 - FindFriendsList', () => <MockFindFriends />)
   .add('6 - SignUp', () => <SignUpStory />)
 
-storiesOf('ImagePicker', module).add('1 - Default', () => <ImagePickerStory />)
+//storiesOf('ImagePicker', module).add('1 - Default', () => <ImagePickerStory />)
 
 storiesOf('UserActivity', module).add('1 - Default', () => <UserActivityStory />)
 
