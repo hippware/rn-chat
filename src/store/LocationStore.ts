@@ -1,4 +1,4 @@
-import {types, getEnv, flow, getParent, getRoot} from 'mobx-state-tree'
+import {types, getEnv, flow, getParent, isAlive, getRoot} from 'mobx-state-tree'
 import {autorun, IReactionDisposer} from 'mobx'
 import BackgroundGeolocation from 'react-native-background-geolocation'
 import DeviceInfo from 'react-native-device-info'
@@ -157,7 +157,7 @@ const LocationStore = types
       }
       self.setPosition(position.coords)
 
-      if (profile) {
+      if (profile && isAlive(profile)) {
         const data = createLocation({
           lat: position.coords.latitude,
           lon: position.coords.longitude,
