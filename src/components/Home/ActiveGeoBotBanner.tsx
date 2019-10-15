@@ -14,7 +14,7 @@ import {colors} from '../../constants'
 import ActiveGeofenceBot from './ActiveGeofenceBot'
 import HeaderLocationOverlay from './HeaderLocationOverlay'
 import ActiveBannerPlaceholder from './ActiveBannerPlaceholder'
-import {IBot, IWocky, IOwnProfile} from 'wocky-client'
+import {IBot, IWocky, IOwnProfile, OwnProfile, Bot} from 'wocky-client'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
 import {k, isIphoneX, isIphone, minHeight} from '../Global'
 import {Actions} from 'react-native-router-flux'
@@ -57,12 +57,14 @@ const ActiveGeoBotBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')
     }, [enabled])
 
     const renderBannerItem = ({item}: {item: IBot | ILocationShare | IOwnProfile}) =>
-      getType(item).name === 'Bot' ? (
+      getType(item).is(Bot) ? (
         <ActiveGeofenceBot bot={item as IBot} outerStyle={styles.outer} innerStyle={styles.inner} />
       ) : (
         <ActiveLocationSharer
           profile={
-            (item as any).email ? (item as IOwnProfile) : (item as ILocationShare).sharedWith
+            getType(item).is(OwnProfile)
+              ? (item as IOwnProfile)
+              : (item as ILocationShare).sharedWith
           }
           outerStyle={styles.outer}
           innerStyle={styles.inner}
