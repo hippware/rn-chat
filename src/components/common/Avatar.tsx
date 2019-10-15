@@ -77,7 +77,7 @@ const Avatar = observer(
         onPress={() => (profile ? Actions.profileDetails({item: profile.id}) : null)}
       >
         <View style={[style, {height: scaledSize, width: scaledSize}]}>
-          {(!!profile && profile.avatar) || image ? (
+          {(!!profile && !!profile.avatar) || image ? (
             <AvatarImage
               avatar={profile ? toJS(profile.avatar) : {thumbnail: image}}
               style={sharedStyle}
@@ -95,7 +95,7 @@ const Avatar = observer(
               isYou={isYou}
             />
           )}
-          {!hideDot && profile && <PresenceDot profile={profile} size={size} />}
+          {!hideDot && !!profile && <PresenceDot profile={profile} size={size} />}
         </View>
       </Clazz>
     )
@@ -111,7 +111,7 @@ const AvatarImage = observer(({avatar, style, size, showMask}) => (
       }}
       placeholder={<View style={[style, styles.avatarContainer]} />}
     />
-    {showMask && <Mask size={size * 0.65} />}
+    {!!showMask && <Mask size={size * 0.65} />}
   </View>
 ))
 

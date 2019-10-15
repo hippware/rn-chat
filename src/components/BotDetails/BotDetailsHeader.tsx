@@ -76,7 +76,7 @@ const BotDetailsHeader = inject('notificationStore', 'analytics', 'locationStore
 
             <View style={styles.userInfoRow}>
               <ProfileAvatar profile={bot.owner!} size={40} />
-              {bot.owner && (
+              {!!bot.owner && (
                 <ProfileHandle
                   style={botProfileStyle.userInfoRow}
                   onPress={() => Actions.profileDetails({item: bot.owner!.id})}
@@ -94,7 +94,7 @@ const BotDetailsHeader = inject('notificationStore', 'analytics', 'locationStore
                 </RText>
               </View>
             )}
-            {bot.image && (
+            {!!bot.image && (
               <LazyImage
                 file={bot.image}
                 imageProps={{
@@ -158,7 +158,7 @@ const VisitorsArea = observer(({bot}: {bot: IBot}) => {
   return (
     <VisitorsWrapper>
       {inner}
-      {bot.owner && bot.owner.isOwn && (
+      {!!bot.owner && bot.owner.isOwn && (
         <TouchableOpacity
           style={[styles.invite, {marginTop: list ? 5 * k : 20 * k, marginBottom: 30}]}
           onPress={() => Actions.geofenceShare({botId: bot.id})}

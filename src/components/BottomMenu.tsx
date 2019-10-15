@@ -44,7 +44,7 @@ const MenuItemWrapper = ({children, ...rest}: IMenuItemWrapperProps) => {
 const MenuItem = ({style, image, innerStyle, children, imageStyle, ...rest}: IMenuItemProps) => (
   <MenuItemWrapper {...rest}>
     <View style={[styles.menuItem, style]}>
-      {image && (
+      {!!image && (
         <Image source={image} resizeMode="contain" style={[styles.menuImage, imageStyle]} />
       )}
       <View style={[{flex: 1, alignItems: 'center'}, innerStyle]}>{children}</View>
