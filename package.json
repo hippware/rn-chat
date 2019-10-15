@@ -75,6 +75,7 @@
     "react-native-device-info": "3.0.0-rc.5",
     "react-native-emoji-selector": "^0.1.7",
     "react-native-extra-dimensions-android": "^1.2.5",
+    "react-native-fbsdk": "^1.0.4",
     "react-native-firebase": "^5.5.6",
     "react-native-fs": "^2.14.1",
     "react-native-geolocation": "^1.0.0",
