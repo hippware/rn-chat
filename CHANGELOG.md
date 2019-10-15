@@ -6,6 +6,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * [android] Live Location: Select Friends button doesn't function (#4209)
 * [android] Gap on an empty Who's Here list (#4129)
+* Temporarily opt out of iOS dark mode (#4258)
+* Fix: App crash with each successful login (#4251)
 
 # 4.28.0 - 2019 Oct 10
 
