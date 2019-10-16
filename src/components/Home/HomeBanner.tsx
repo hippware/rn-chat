@@ -14,7 +14,7 @@ import {colors} from '../../constants'
 import ActiveGeofenceBot from './ActiveGeofenceBot'
 import HeaderLocationOverlay from './HeaderLocationOverlay'
 import ActiveBannerPlaceholder from './ActiveBannerPlaceholder'
-import {IBot, IWocky} from 'wocky-client'
+import {IBot, IWocky, Bot} from 'wocky-client'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
 import {k, isIphoneX, isIphone, minHeight} from '../Global'
 import {Actions} from 'react-native-router-flux'
@@ -25,6 +25,7 @@ import {IHomeStore} from '../../store/HomeStore'
 import {ILocationShare} from 'third-party/wocky-client/src/model/LocationShare'
 import ActiveLocationSharer from './ActiveLocationSharer'
 import {observer} from 'mobx-react'
+import {getType} from 'mobx-state-tree'
 
 type Props = {
   wocky?: IWocky
@@ -55,8 +56,8 @@ const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
       }).start()
     }, [enabled])
 
-    const renderActiveBot = ({item}: {item: IBot | ILocationShare}) =>
-      (item as IBot).description ? (
+    const renderBannerItem = ({item}: {item: IBot | ILocationShare}) =>
+      getType(item).is(Bot) ? (
         <ActiveGeofenceBot bot={item as IBot} outerStyle={styles.outer} innerStyle={styles.inner} />
       ) : (
         <ActiveLocationSharer
@@ -92,7 +93,7 @@ const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
             data={bannerItems}
             horizontal
             keyExtractor={item => item.id}
-            renderItem={renderActiveBot}
+            renderItem={renderBannerItem}
             showsHorizontalScrollIndicator={false}
             ListEmptyComponent={<ActiveBannerPlaceholder />}
             style={{paddingLeft: 8 * k}}

@@ -37,7 +37,7 @@ function emptyFn() {
 }
 
 YellowBox.ignoreWarnings([
-  // I belive these are coming from either react-native-reanimaged or react-native-gesture-handler
+  // I belive these are coming from either react-native-reanimated or react-native-gesture-handler
   'Warning: AsyncStorage',
 ])
 
