@@ -23,7 +23,7 @@ const MapOptions = () => (
     }}
   >
     <View style={{marginVertical: 22 * s}}>
-      <RText style={{fontSize: 17, fontFamily: 'roboto-medium', textAlign: 'center'}}>
+      <RText weight="Medium" size={17} style={{textAlign: 'center'}}>
         Map Type
       </RText>
     </View>
