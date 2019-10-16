@@ -51,13 +51,13 @@ const EventCardTemplate = observer(
               <RText size={14} color={colors.PURPLISH_GREY}>
                 {action}
               </RText>
-              {line2 == null && (
+              {!line2 && (
                 <RText size={12} weight="Light" color={colors.DARK_GREY}>
                   {' '}
                   {timestamp}
                 </RText>
               )}
-              {line2 && (
+              {!!line2 && (
                 <RText size={15} weight="Medium" color={colors.DARK_PURPLE}>
                   {'\n'}
                   {line2}

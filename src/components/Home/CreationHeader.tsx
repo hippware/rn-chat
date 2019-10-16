@@ -50,7 +50,7 @@ const CreationHeader = inject('wocky', 'analytics', 'iconStore', 'homeStore')(
             Pin Location
           </RText>
           <View style={{width: 100}}>
-            {bot && (
+            {!!bot && (
               <TouchableOpacity onPress={next} style={{alignSelf: 'flex-end'}}>
                 <RText size={17} color={colors.PINK}>
                   Next

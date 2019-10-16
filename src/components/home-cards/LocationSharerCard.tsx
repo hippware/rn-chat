@@ -12,7 +12,7 @@ const LocationSharerCard = observer(({profile}: Props) => {
   return (
     <ProfileCard profile={profile!} showAvatarDot>
       <View style={{flexDirection: 'row'}}>
-        {profile.location && !!profile.location!.fromNow && (
+        {!!profile.location && !!profile.location!.fromNow && (
           <Pill>{profile.location!.fromNow}</Pill>
         )}
       </View>

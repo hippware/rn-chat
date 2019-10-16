@@ -31,7 +31,7 @@ const Cell = observer(
           style,
         ]}
       >
-        {image && (
+        {!!image && (
           <View style={{alignItems: 'center'}}>
             <Image source={image} style={imageStyle} />
           </View>
@@ -52,7 +52,7 @@ const Cell = observer(
             children
           )}
         </View>
-        {onRemove && (
+        {!!onRemove && (
           <TouchableOpacity
             style={{justifyContent: 'center', alignItems: 'center'}}
             onPress={onRemove}

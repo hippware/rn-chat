@@ -74,7 +74,7 @@ const Bubble = observer(
             />
           ) : null}
 
-          {text && (
+          {!!text && (
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
               <RText
                 color={colors.WHITE}
