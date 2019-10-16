@@ -43,7 +43,7 @@ const VisitorList = observer(({botId, isActive}: Props) => {
     </RText>
   )
 
-  const data = bot && isAlive(bot) ? bot!.visitors.list.slice(0, 1) : []
+  const data = bot && isAlive(bot) ? bot!.visitors.list.slice() : []
 
   // TODO display spinner during loading
   return (
