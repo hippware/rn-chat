@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Speculative fix: IllegalViewOperationException in Layout.java (#4262)
+
 # 4.29.1 - 2019 Oct 17
 
 * Who's Here: List only displays 1 visitor (PR #4276)
