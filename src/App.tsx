@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {AppState, View} from 'react-native'
+import {AppState, View, Platform, StatusBar} from 'react-native'
 import {Provider} from 'mobx-react'
 import TinyRobotRouter from './components/Router'
 import analytics from './utils/analytics'
@@ -32,6 +32,7 @@ const App = () => {
   return (
     <Provider store={mstStore} {...mstStore} {...rest} analytics={analytics}>
       <View style={{flex: 1}} testID="wrapper">
+        {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
         <ErrorHandler>
           <TinyRobotRouter />
           <NotificationBanner />
