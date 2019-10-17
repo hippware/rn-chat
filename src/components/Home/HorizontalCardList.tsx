@@ -29,7 +29,6 @@ const cardMap = {
 }
 
 const create = require('../../../images/create.png')
-const currentLocation = require('../../../images/currentLocationButton.png')
 const notificationsButton = require('../../../images/notificationsButton.png')
 const height = 115 * ((minHeight - 1) * 0.4 + 1)
 const marginBottom = 14 * s
@@ -99,16 +98,6 @@ const ButtonColumn = inject('homeStore', 'navStore', 'locationStore', 'wocky')(
           paddingRight: buttonPadding,
         }}
       >
-        <TouchableOpacity
-          onPress={() => {
-            homeStore.stopFollowingUserOnMap()
-            if (locationStore.location) homeStore.setFocusedLocation(locationStore.location)
-          }}
-          style={[styles.button, styles.shadow]}
-        >
-          <Image source={currentLocation} />
-        </TouchableOpacity>
-
         {!homeStore.fullScreenMode && (
           <View>
             <TouchableOpacity
