@@ -73,6 +73,9 @@ const HomeStore = types
     mapType: types.optional(types.enumeration(['hybrid', 'standard']), 'standard'),
     followingUser: false,
   })
+  .volatile(() => ({
+    mapTypeLocked: false,
+  }))
   .views(self => {
     const {navStore, wocky} = getRoot<IStore>(self)
     return {
@@ -132,6 +135,9 @@ const HomeStore = types
     },
     setMapType(type: 'standard' | 'hybrid') {
       self.mapType = type
+    },
+    setMapLocked(val: boolean) {
+      self.mapTypeLocked = val
     },
   }))
   .actions(self => ({

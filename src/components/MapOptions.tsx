@@ -4,52 +4,68 @@ import {s} from './Global'
 import {minHeight} from './Global'
 import {RText} from './common'
 import {colors} from 'src/constants'
+import {observer} from 'mobx-react'
+import {useHomeStore} from 'src/utils/injectors'
 
-const MapOptions = () => (
-  <View
-    style={{
-      position: 'absolute',
-      bottom: 0,
-      width: '100%',
-      backgroundColor: 'white',
-      shadowColor: '#0000001d',
-      shadowOffset: {
-        width: 0,
-        height: 1,
-      },
-      shadowRadius: 5,
-      shadowOpacity: 1,
-      height: 230 * minHeight,
-    }}
-  >
-    <View style={{marginVertical: 22 * s}}>
-      <RText weight="Medium" size={17} style={{textAlign: 'center'}}>
-        Map Type
-      </RText>
-    </View>
+const MapOptions = observer(() => {
+  const {setMapType, setMapLocked} = useHomeStore()
 
-    <View style={{marginTop: 10, display: 'flex', flexDirection: 'row', alignSelf: 'center'}}>
-      <TouchableOpacity>
-        <View style={[styles.mapOptionView, styles.selected]}>
-          <Image source={require('../../images/mapOptionsAuto.png')} />
-        </View>
-        <RText style={[styles.subText, styles.selected]}>Auto</RText>
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <View style={styles.mapOptionView}>
-          <Image source={require('../../images/mapOptionsStreet.png')} style={{}} />
-        </View>
-        <RText style={styles.subText}>Street</RText>
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <View style={styles.mapOptionView}>
-          <Image source={require('../../images/mapOptionsSatellite.png')} />
-        </View>
-        <RText style={styles.subText}>Satellite</RText>
-      </TouchableOpacity>
+  return (
+    <View
+      style={{
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+        backgroundColor: 'white',
+        shadowColor: '#0000001d',
+        shadowOffset: {
+          width: 0,
+          height: 1,
+        },
+        shadowRadius: 5,
+        shadowOpacity: 1,
+        height: 230 * minHeight,
+      }}
+    >
+      <View style={{marginVertical: 22 * s}}>
+        <RText weight="Medium" size={17} style={{textAlign: 'center'}}>
+          Map Type
+        </RText>
+      </View>
+
+      <View style={{marginTop: 10, display: 'flex', flexDirection: 'row', alignSelf: 'center'}}>
+        <TouchableOpacity onPress={() => setMapLocked(false)}>
+          <View style={[styles.mapOptionView, styles.selected]}>
+            <Image source={require('../../images/mapOptionsAuto.png')} />
+          </View>
+          <RText style={[styles.subText, styles.selected]}>Auto</RText>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            setMapLocked(true)
+            setMapType('standard')
+          }}
+        >
+          <View style={styles.mapOptionView}>
+            <Image source={require('../../images/mapOptionsStreet.png')} style={{}} />
+          </View>
+          <RText style={styles.subText}>Street</RText>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            setMapLocked(true)
+            setMapType('hybrid')
+          }}
+        >
+          <View style={styles.mapOptionView}>
+            <Image source={require('../../images/mapOptionsSatellite.png')} />
+          </View>
+          <RText style={styles.subText}>Satellite</RText>
+        </TouchableOpacity>
+      </View>
     </View>
-  </View>
-)
+  )
+})
 
 export default MapOptions
 

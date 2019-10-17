@@ -73,7 +73,7 @@ const MapHome = inject('locationStore', 'wocky', 'homeStore', 'navStore')(
 
     // NOTE: this runs _very_ often while panning/scrolling the map...thus the throttling
     const onRegionChange = _.throttle(({latitudeDelta}) => {
-      if (latitudeDelta) {
+      if (latitudeDelta && !homeStore!.mapTypeLocked) {
         homeStore!.setMapType(latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard')
       }
     }, 1000)
