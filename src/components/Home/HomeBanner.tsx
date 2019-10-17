@@ -23,9 +23,9 @@ import {settings} from '../../globals'
 import {INavStore} from '../../store/NavStore'
 import {IHomeStore} from '../../store/HomeStore'
 import {ILocationShare} from 'third-party/wocky-client/src/model/LocationShare'
-import {getType} from 'mobx-state-tree'
 import ActiveLocationSharer from './ActiveLocationSharer'
 import {observer} from 'mobx-react'
+import {getType} from 'mobx-state-tree'
 
 type Props = {
   wocky?: IWocky
@@ -40,7 +40,7 @@ export interface IActiveBannerItem {
   innerStyle: ViewStyle
 }
 
-const ActiveGeoBotBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
+const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
   observer(({enabled, wocky, navStore, homeStore, analytics}: Props) => {
     const [yOffset] = useState(new Animated.Value(0))
 
@@ -114,7 +114,7 @@ const ActiveGeoBotBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')
   })
 )
 
-export default ActiveGeoBotBanner
+export default HomeBanner
 
 const Buttons = ({mapType}) => (
   <View

@@ -29,11 +29,19 @@ import CustomTransitionerStory from './CustomTransitionerStory'
 import {MessagesRouterStory, ChatUserSearchScreen, ChatViewStory} from './MessagesStory'
 import UpdateBrick from 'src/components/UpdateBrick'
 import {Spinner} from 'src/components/common'
-import {View} from 'react-native'
+import {View, YellowBox} from 'react-native'
+import HomeBannerStory from './HomeBannerStory'
 
 function emptyFn() {
   /* noop */
 }
+
+YellowBox.ignoreWarnings([
+  // I belive these are coming from either react-native-reanimated or react-native-gesture-handler
+  'Warning: AsyncStorage',
+])
+
+storiesOf('HomeBanner', module).add('Default', () => <HomeBannerStory />)
 
 storiesOf('BotDetails', module).add('Invitation not accepted', () => <BotDetailsStory />)
 
