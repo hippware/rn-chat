@@ -67,7 +67,7 @@ const LocationAvatar = ({
         tappable={tappable}
         isYou={isYou}
       />
-      {theActivity && (
+      {!!theActivity && (
         <View
           style={{
             position: 'absolute',

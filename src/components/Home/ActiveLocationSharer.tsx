@@ -1,34 +1,34 @@
 import React from 'react'
 import {View, TouchableOpacity} from 'react-native'
-import {ILocationShare} from 'third-party/wocky-client/src/model/LocationShare'
 import {RText} from '../common'
 import {minHeight} from '../Global'
 import {colors} from '../../constants'
-import {IActiveBannerItem} from './ActiveGeoBotBanner'
+import {IActiveBannerItem} from './HomeBanner'
 import LocationAvatar from './LocationAvatar'
 import {useHomeStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
+import {IProfile} from 'wocky-client'
 
 interface IProps extends IActiveBannerItem {
-  sharer: ILocationShare
+  profile: IProfile
 }
 
-const ActiveLocationSharer = observer(({sharer, outerStyle, innerStyle}: IProps) => {
+const ActiveLocationSharer = observer(({profile, outerStyle, innerStyle}: IProps) => {
   const {followUserOnMap, select} = useHomeStore()
   return (
     <View style={outerStyle}>
       <TouchableOpacity
         style={innerStyle}
         onPress={() => {
-          followUserOnMap(sharer.sharedWith)
-          select(sharer.sharedWith.id)
+          followUserOnMap(profile)
+          select(profile.id)
         }}
       >
         <LocationAvatar
-          profile={sharer.sharedWith}
+          profile={profile}
           sharesLocation
           tappable={false}
-          currentActivity={sharer.sharedWith.currentActivity}
+          currentActivity={profile.currentActivity}
         />
         <RText
           size={13}
@@ -38,7 +38,7 @@ const ActiveLocationSharer = observer(({sharer, outerStyle, innerStyle}: IProps)
           color={colors.DARK_GREY}
           weight={'Medium'}
         >
-          {`@${sharer.sharedWith.handle}`}
+          {`@${profile.handle}`}
         </RText>
       </TouchableOpacity>
     </View>

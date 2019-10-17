@@ -43,7 +43,7 @@ const SignUpAvatar = observer(() => {
       style={{alignItems: 'center', justifyContent: 'center'}}
       onPress={selectImage}
     >
-      {avatar && (avatar.loading || profile!.uploading) ? (
+      {!!avatar && (avatar.loading || profile!.uploading) ? (
         <Spinner />
       ) : (
         <Avatar size={AVATAR_DIMENSION} image={theAvatar} {...avatarProps} tappable={false} />

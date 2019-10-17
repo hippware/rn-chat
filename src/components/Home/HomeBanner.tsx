@@ -14,7 +14,7 @@ import {colors} from '../../constants'
 import ActiveGeofenceBot from './ActiveGeofenceBot'
 import HeaderLocationOverlay from './HeaderLocationOverlay'
 import ActiveBannerPlaceholder from './ActiveBannerPlaceholder'
-import {IBot, IWocky} from 'wocky-client'
+import {IBot, IWocky, IOwnProfile, OwnProfile, Bot} from 'wocky-client'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
 import {k, isIphoneX, isIphone, minHeight} from '../Global'
 import {Actions} from 'react-native-router-flux'
@@ -23,9 +23,9 @@ import {settings} from '../../globals'
 import {INavStore} from '../../store/NavStore'
 import {IHomeStore} from '../../store/HomeStore'
 import {ILocationShare} from 'third-party/wocky-client/src/model/LocationShare'
-import {getType} from 'mobx-state-tree'
 import ActiveLocationSharer from './ActiveLocationSharer'
 import {observer} from 'mobx-react'
+import {getType} from 'mobx-state-tree'
 
 type Props = {
   wocky?: IWocky
@@ -40,13 +40,13 @@ export interface IActiveBannerItem {
   innerStyle: ViewStyle
 }
 
-const ActiveGeoBotBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
+const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
   observer(({enabled, wocky, navStore, homeStore, analytics}: Props) => {
     const [yOffset] = useState(new Animated.Value(0))
 
     const {profile, activeBots} = wocky!
     const bannerItems = profile
-      ? [...profile.locationSharers.list.slice(), ...activeBots.slice()]
+      ? [profile, ...profile.locationSharers.list.slice(), ...activeBots.slice()]
       : []
 
     useEffect(() => {
@@ -56,12 +56,16 @@ const ActiveGeoBotBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')
       }).start()
     }, [enabled])
 
-    const renderActiveBot = ({item}: {item: IBot | ILocationShare}) =>
-      getType(item).name === 'Bot' ? (
+    const renderBannerItem = ({item}: {item: IBot | ILocationShare | IOwnProfile}) =>
+      getType(item).is(Bot) ? (
         <ActiveGeofenceBot bot={item as IBot} outerStyle={styles.outer} innerStyle={styles.inner} />
       ) : (
         <ActiveLocationSharer
-          sharer={item as ILocationShare}
+          profile={
+            getType(item).is(OwnProfile)
+              ? (item as IOwnProfile)
+              : (item as ILocationShare).sharedWith
+          }
           outerStyle={styles.outer}
           innerStyle={styles.inner}
         />
@@ -93,7 +97,7 @@ const ActiveGeoBotBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')
             data={bannerItems}
             horizontal
             keyExtractor={item => item.id}
-            renderItem={renderActiveBot}
+            renderItem={renderBannerItem}
             showsHorizontalScrollIndicator={false}
             ListEmptyComponent={<ActiveBannerPlaceholder />}
             style={{paddingLeft: 8 * k}}
@@ -110,7 +114,7 @@ const ActiveGeoBotBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')
   })
 )
 
-export default ActiveGeoBotBanner
+export default HomeBanner
 
 const Buttons = ({mapType}) => (
   <View
