@@ -160,8 +160,8 @@ const MapHome = inject('locationStore', 'wocky', 'homeStore', 'navStore')(
             return Card && <Card {...props} key={`card${i}`} card={card} />
           })}
         </MapView>
-        {!!creationMode && <UberMarker />}
-        {!!areaTooLarge && (
+        {creationMode && <UberMarker />}
+        {areaTooLarge && (
           <View style={[styles.areaTooLargeView, {bottom: fullScreenMode ? 40 : 160 * k}]}>
             <Image source={require('../../../images/areaTooLarge.png')} />
             <Text style={styles.areaTooLargeText}>Zoom In To See Locations</Text>
