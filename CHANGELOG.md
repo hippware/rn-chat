@@ -8,8 +8,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 # 4.29.1 - 2019 Oct 17
 
-* Who's Here: List only displays 1 visitor (PR #4276)
-* iOS status bar has white text (PR #4281)
+* Who's Here: List only displays 1 visitor (#4276)
+* iOS status bar has white text (#4281)
 
 # 4.29.0 - 2019 Oct 15
 
