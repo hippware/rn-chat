@@ -113,7 +113,7 @@
     "@types/detox": "^12.8.2",
     "@types/jest": "^24.0.9",
     "@types/lodash": "^4.14.141",
-    "@types/phoenix": "^0.0.4",
+    "@types/phoenix": "^0.0.5",
     "@types/react": "^16.9.5",
     "@types/react-native": "^0.57.38",
     "@types/react-test-renderer": "^16.8.1",
