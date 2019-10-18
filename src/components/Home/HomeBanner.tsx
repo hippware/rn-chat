@@ -11,10 +11,9 @@ import {
 import {inject} from 'mobx-react'
 
 import {colors} from '../../constants'
-import ActiveGeofenceBot from './ActiveGeofenceBot'
 import HeaderLocationOverlay from './HeaderLocationOverlay'
 import ActiveBannerPlaceholder from './ActiveBannerPlaceholder'
-import {IBot, IWocky, IOwnProfile, OwnProfile, Bot} from 'wocky-client'
+import {IWocky, IOwnProfile, IProfile} from 'wocky-client'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
 import {k, isIphoneX, isIphone, minHeight} from '../Global'
 import {Actions} from 'react-native-router-flux'
@@ -44,10 +43,8 @@ const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
   observer(({enabled, wocky, navStore, homeStore, analytics}: Props) => {
     const [yOffset] = useState(new Animated.Value(0))
 
-    const {profile, activeBots} = wocky!
-    const bannerItems = profile
-      ? [profile, ...profile.locationSharers.list.slice(), ...activeBots.slice()]
-      : []
+    const {profile} = wocky!
+    const bannerItems = profile ? [profile, ...profile.locationSharers.list.slice()] : []
 
     useEffect(() => {
       Animated.spring(yOffset, {
@@ -56,20 +53,19 @@ const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
       }).start()
     }, [enabled])
 
-    const renderBannerItem = ({item}: {item: IBot | ILocationShare | IOwnProfile}) =>
-      getType(item).is(Bot) ? (
-        <ActiveGeofenceBot bot={item as IBot} outerStyle={styles.outer} innerStyle={styles.inner} />
-      ) : (
+    const renderBannerItem = ({item}: {item: ILocationShare | IProfile}) => {
+      return (
         <ActiveLocationSharer
           profile={
-            getType(item).is(OwnProfile)
-              ? (item as IOwnProfile)
+            getType(item).name === 'OwnProfile' || getType(item).name === 'Profile'
+              ? (item as IProfile)
               : (item as ILocationShare).sharedWith
           }
           outerStyle={styles.outer}
           innerStyle={styles.inner}
         />
       )
+    }
 
     return (
       <Animated.View
@@ -107,7 +103,7 @@ const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
           <InvisibleModeOverlay />
         </View>
         {navStore!.scene !== 'botCompose' && !homeStore!.fullScreenMode && (
-          <Buttons mapType={homeStore!.mapType} />
+          <Buttons hasUnread={wocky!.notifications.hasUnread} mapType={homeStore!.mapType} />
         )}
       </Animated.View>
     )
@@ -116,7 +112,7 @@ const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
 
 export default HomeBanner
 
-const Buttons = ({mapType}) => (
+const Buttons = ({mapType, hasUnread}) => (
   <View
     style={{
       marginRight: 10,
@@ -132,6 +128,7 @@ const Buttons = ({mapType}) => (
       testID="bottomMenuButton"
     >
       <Image source={settingsImg} />
+      {!!hasUnread && <View style={styles.newDot} />}
     </TouchableOpacity>
     <TouchableOpacity style={{marginTop: 15}} onPress={() => Actions.attribution()}>
       <Image source={mapType === 'hybrid' ? infoImgWhite : infoImg} />
@@ -172,8 +169,8 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderWidth: 2,
     borderRadius: dotWidth / 2,
-    width: 10,
-    height: 10,
+    width: 13,
+    height: 13,
     backgroundColor: colors.GOLD,
   },
 })

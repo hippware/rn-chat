@@ -29,7 +29,7 @@ const cardMap = {
 }
 
 const create = require('../../../images/create.png')
-const notificationsButton = require('../../../images/notificationsButton.png')
+const mapOptionsButton = require('../../../images/mapOptions.png')
 const height = 115 * ((minHeight - 1) * 0.4 + 1)
 const marginBottom = 14 * s
 const totalHeight = height + marginBottom
@@ -100,15 +100,9 @@ const ButtonColumn = inject('homeStore', 'navStore', 'locationStore', 'wocky')(
       >
         {!homeStore.fullScreenMode && (
           <View>
-            <TouchableOpacity
-              onPress={() => {
-                Actions.notifications()
-              }}
-              style={styles.button}
-            >
+            <TouchableOpacity onPress={Actions.mapOptions} style={styles.button}>
               <View>
-                <Image source={notificationsButton} />
-                {wocky.notifications.hasUnread && <View style={styles.newDot} />}
+                <Image source={mapOptionsButton} />
               </View>
             </TouchableOpacity>
 

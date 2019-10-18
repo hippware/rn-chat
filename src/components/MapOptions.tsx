@@ -1,15 +1,19 @@
 import React from 'react'
 import {View, Image, StyleSheet, TouchableOpacity} from 'react-native'
-import {s} from './Global'
-import {minHeight} from './Global'
+import {s, minHeight} from './Global'
 import {RText} from './common'
 import {colors} from 'src/constants'
-import {observer} from 'mobx-react'
 import {useHomeStore} from 'src/utils/injectors'
+import {observer} from 'mobx-react'
+import {Actions} from 'react-native-router-flux'
 
+const optionsMenu = [
+  {value: 'auto', text: 'Auto', image: require('../../images/mapOptionsAuto.png')},
+  {value: 'street', text: 'Street', image: require('../../images/mapOptionsStreet.png')},
+  {value: 'satellite', text: 'Satellite', image: require('../../images/mapOptionsSatellite.png')},
+]
 const MapOptions = observer(() => {
-  const {setMapType, setMapLocked} = useHomeStore()
-
+  const {mapOptions, setMapOptions} = useHomeStore()
   return (
     <View
       style={{
@@ -34,34 +38,20 @@ const MapOptions = observer(() => {
       </View>
 
       <View style={{marginTop: 10, display: 'flex', flexDirection: 'row', alignSelf: 'center'}}>
-        <TouchableOpacity onPress={() => setMapLocked(false)}>
-          <View style={[styles.mapOptionView, styles.selected]}>
-            <Image source={require('../../images/mapOptionsAuto.png')} />
-          </View>
-          <RText style={[styles.subText, styles.selected]}>Auto</RText>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            setMapLocked(true)
-            setMapType('standard')
-          }}
-        >
-          <View style={styles.mapOptionView}>
-            <Image source={require('../../images/mapOptionsStreet.png')} style={{}} />
-          </View>
-          <RText style={styles.subText}>Street</RText>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            setMapLocked(true)
-            setMapType('hybrid')
-          }}
-        >
-          <View style={styles.mapOptionView}>
-            <Image source={require('../../images/mapOptionsSatellite.png')} />
-          </View>
-          <RText style={styles.subText}>Satellite</RText>
-        </TouchableOpacity>
+        {optionsMenu.map(({value, text, image}) => (
+          <TouchableOpacity
+            key={value}
+            onPress={() => {
+              setMapOptions(value)
+              Actions.pop()
+            }}
+          >
+            <View style={[styles.mapOptionView, mapOptions === value && styles.selected]}>
+              <Image source={image} />
+            </View>
+            <RText style={[styles.subText, mapOptions === value && styles.selected]}>{text}</RText>
+          </TouchableOpacity>
+        ))}
       </View>
     </View>
   )

@@ -6,7 +6,7 @@ import {observer} from 'mobx-react'
 import {autorun} from 'mobx'
 import {IWocky, ILocation} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
-import {IHomeStore} from '../../store/HomeStore'
+import {IHomeStore, INIT_DELTA} from '../../store/HomeStore'
 import {Spinner} from '../common'
 import mapStyle from '../map/mapStyle'
 import UberMarker from './UberMarker'
@@ -17,10 +17,6 @@ import ProfileMarker from './map-markers/ProfileMarker'
 import {INavStore} from '../../store/NavStore'
 import {k} from '../Global'
 import _ from 'lodash'
-
-const INIT_DELTA = 0.04
-const DEFAULT_DELTA = 0.00522
-const TRANS_DELTA = DEFAULT_DELTA + 0.005
 
 type Props = {
   locationStore?: ILocationStore
@@ -73,9 +69,7 @@ const MapHome = inject('locationStore', 'wocky', 'homeStore', 'navStore')(
 
     // NOTE: this runs _very_ often while panning/scrolling the map...thus the throttling
     const onRegionChange = _.throttle(({latitudeDelta}) => {
-      if (latitudeDelta && !homeStore!.mapTypeLocked) {
-        homeStore!.setMapType(latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard')
-      }
+      homeStore!.setLatitudeDelta(latitudeDelta)
     }, 1000)
 
     const onRegionChangeComplete = async region => {
