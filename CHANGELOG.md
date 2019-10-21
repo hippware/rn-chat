@@ -4,6 +4,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Remove "Current Location" CTA (#4213)
+* Map Options CTA (#4185)
+
 # 4.29.0 - 2019 Oct 15
 
 * [android] Live Location: Select Friends button doesn't function (#4209)
