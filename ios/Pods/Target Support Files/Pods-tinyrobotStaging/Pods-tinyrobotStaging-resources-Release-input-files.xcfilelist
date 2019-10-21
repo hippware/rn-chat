@@ -1,4 +1,5 @@
 ${PODS_ROOT}/Target Support Files/Pods-tinyrobotStaging/Pods-tinyrobotStaging-resources.sh
+${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle
 ${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle
 ${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowLeft.png
 ${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowLeft@2x.png
