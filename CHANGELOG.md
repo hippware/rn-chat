@@ -7,6 +7,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Speculative fix: IllegalViewOperationException in Layout.java (#4262)
 * Update: react-test-renderer (PR #4270), react-native-swiper (PR #4272)
   * react-native-localize (PR #4269), @types/phoenix (PR #4273)
+* Remove "Current Location" CTA (#4213)
+* Map Options CTA (#4185)
 
 # 4.29.1 - 2019 Oct 17
 
