@@ -124,10 +124,10 @@ PODS:
   - GoogleDataTransportCCTSupport (1.1.0):
     - GoogleDataTransport (~> 2.0)
     - nanopb
-  - GoogleMaps (3.1.0):
-    - GoogleMaps/Maps (= 3.1.0)
-  - GoogleMaps/Base (3.1.0)
-  - GoogleMaps/Maps (3.1.0):
+  - GoogleMaps (3.2.0):
+    - GoogleMaps/Maps (= 3.2.0)
+  - GoogleMaps/Base (3.2.0)
+  - GoogleMaps/Maps (3.2.0):
     - GoogleMaps/Base
   - GoogleUtilities/AppDelegateSwizzler (6.3.1):
     - GoogleUtilities/Environment
@@ -356,11 +356,11 @@ PODS:
     - React
   - react-native-geolocation (1.4.2):
     - React
-  - react-native-google-maps (0.25.0):
+  - react-native-google-maps (0.26.1):
     - Google-Maps-iOS-Utils (= 2.1.0)
-    - GoogleMaps (= 3.1.0)
+    - GoogleMaps (= 3.2.0)
     - React
-  - react-native-maps (0.25.0):
+  - react-native-maps (0.26.1):
     - React
   - react-native-mixpanel (0.0.6):
     - Mixpanel (~> 3.4.5)
@@ -433,7 +433,7 @@ PODS:
     - React-Core
     - React-RCTImage
     - RSKImageCropper
-  - RNLocalize (1.2.0):
+  - RNLocalize (1.3.0):
     - React
   - RNPermissions (2.0.0):
     - React
@@ -529,7 +529,6 @@ SPEC REPOS:
     - Crashlytics
     - Fabric
     - Google-Maps-iOS-Utils
-    - GoogleMaps
     - JWT
     - Mixpanel
     - QBImagePickerController
@@ -552,6 +551,7 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
+    - GoogleMaps
     - GoogleUtilities
     - GTMSessionFetcher
     - nanopb
@@ -709,7 +709,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 0ae90be1cc4dad40f4a27fc767ef59fa032ec87b
   GoogleDataTransport: c8617c00e4f3eb9418e42ac0e8ac5241a9d555dd
   GoogleDataTransportCCTSupport: 9f352523e8785a71f6754f51eeff09f49ec19268
-  GoogleMaps: 5c13302e6fe6bb6e686b267196586b91cd594225
+  GoogleMaps: 5046d7edfe381c1a0b20fdaf293915a375c3122b
   GoogleUtilities: f895fde57977df4e0233edda0dbeac490e3703b6
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
   JWT: 05028b9624591bba9681bb57df2c5f95fa258bad
@@ -737,8 +737,8 @@ SPEC CHECKSUMS:
   react-native-contacts: b2cfcfbdd91809cb3a01a5bdc69bee2d90b19f6d
   react-native-fbsdk: 45e28bbab3e905cbc635c0bdd3444b372e933ae9
   react-native-geolocation: a7b94614afbd5fd8350e0233a2025c8228fc8041
-  react-native-google-maps: 88d750ad441b19c24885f20d43a55ecac25939b5
-  react-native-maps: 190c02ca533fddac5bb49cf17bdece3644612107
+  react-native-google-maps: 2e2e697dab576abd5809d78cd74e775865b62bf7
+  react-native-maps: 6e499eee4eabf422ba8b6f94e993cc768bf35153
   react-native-mixpanel: f7ca1a4a436f1d3c19d9ca5d57aa47b848e97292
   react-native-netinfo: 09681d744eb8a3ca04cb0404fb8c2537f71d3e58
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
@@ -761,7 +761,7 @@ SPEC CHECKSUMS:
   RNFS: a8fbe7060fa49157d819466404794ad9c58e58cf
   RNGestureHandler: 4cb47a93019c1a201df2644413a0a1569a51c8aa
   RNImageCropPicker: f675353bbe18f66113a39b319c0aeb36655a6e4c
-  RNLocalize: 18737f1e6c0762579c8c5730c8f7eca881e2d205
+  RNLocalize: cebb57c3c1e5479806204ce135b26bdd79d17e8a
   RNPermissions: 0954178834810a675efad2a26041ffa5380e663f
   RNPureJwt: b9e795e38e2b6808d3b8934ce413a508e2f76863
   RNReanimated: 6abbbae2e5e72609d85aabd92a982a94566885f1
