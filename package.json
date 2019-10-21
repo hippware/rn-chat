@@ -45,7 +45,7 @@
     "assert": "^1.3.0",
     "base-64": "^0.1.0",
     "bugsnag-react-native": "^2.21.1",
-    "graphql": "^14.5.7",
+    "graphql": "^14.5.8",
     "graphql-tag": "^2.10.0",
     "libphonenumber-js": "^1.7.24",
     "lodash": "^4.17.13",
