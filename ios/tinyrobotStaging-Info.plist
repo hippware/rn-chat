@@ -44,9 +44,9 @@
 
 		<!-- Facebook SDK integration -->
 		<key>FacebookAppID</key>
-		<string>{your-app-id}</string>
+		<string>558902914864970</string>
 		<key>FacebookDisplayName</key>
-		<string>{your-app-name}</string>
+		<string>tinyrobot</string>
 		<key>LSApplicationQueriesSchemes</key>
 		<array>
 			<string>fbapi</string>
