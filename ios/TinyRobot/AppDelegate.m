@@ -15,6 +15,7 @@
 #import <React/RCTLinkingManager.h>
 #import "RNFirebaseLinks.h"
 #import "RNSplashScreen.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 @import GoogleMaps;
 
@@ -116,6 +117,9 @@
             openURL:(NSURL *)url
             options:(NSDictionary<NSString *, id> *)options {
   BOOL handled = [[RNFirebaseLinks instance] application:application openURL:url options:options];
+  if (!handled) {
+    handled = [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url options:options];
+  }
   if (!handled) {
     handled = [RCTLinkingManager application:application openURL:url options:options];
   }

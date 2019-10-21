@@ -8,7 +8,7 @@ import {isAlive} from 'mobx-state-tree'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
 import {colors} from '../../constants'
 import {minHeight} from '../Global'
-import {IActiveBannerItem} from './ActiveGeoBotBanner'
+import {IActiveBannerItem} from './HomeBanner'
 import {useHomeStore, useAnalytics} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
 

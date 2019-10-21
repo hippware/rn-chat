@@ -11,10 +11,9 @@ import {
 import {inject} from 'mobx-react'
 
 import {colors} from '../../constants'
-import ActiveGeofenceBot from './ActiveGeofenceBot'
 import HeaderLocationOverlay from './HeaderLocationOverlay'
 import ActiveBannerPlaceholder from './ActiveBannerPlaceholder'
-import {IBot, IWocky} from 'wocky-client'
+import {IWocky, IProfile} from 'wocky-client'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
 import {k, isIphoneX, isIphone, minHeight} from '../Global'
 import {Actions} from 'react-native-router-flux'
@@ -23,9 +22,9 @@ import {settings} from '../../globals'
 import {INavStore} from '../../store/NavStore'
 import {IHomeStore} from '../../store/HomeStore'
 import {ILocationShare} from 'third-party/wocky-client/src/model/LocationShare'
-import {getType} from 'mobx-state-tree'
 import ActiveLocationSharer from './ActiveLocationSharer'
 import {observer} from 'mobx-react'
+import {getType} from 'mobx-state-tree'
 
 type Props = {
   wocky?: IWocky
@@ -40,14 +39,12 @@ export interface IActiveBannerItem {
   innerStyle: ViewStyle
 }
 
-const ActiveGeoBotBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
+const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
   observer(({enabled, wocky, navStore, homeStore, analytics}: Props) => {
     const [yOffset] = useState(new Animated.Value(0))
 
-    const {profile, activeBots} = wocky!
-    const bannerItems = profile
-      ? [...profile.locationSharers.list.slice(), ...activeBots.slice()]
-      : []
+    const {profile} = wocky!
+    const bannerItems = profile ? [profile, ...profile.locationSharers.list.slice()] : []
 
     useEffect(() => {
       Animated.spring(yOffset, {
@@ -56,16 +53,19 @@ const ActiveGeoBotBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')
       }).start()
     }, [enabled])
 
-    const renderActiveBot = ({item}: {item: IBot | ILocationShare}) =>
-      getType(item).name === 'Bot' ? (
-        <ActiveGeofenceBot bot={item as IBot} outerStyle={styles.outer} innerStyle={styles.inner} />
-      ) : (
+    const renderBannerItem = ({item}: {item: ILocationShare | IProfile}) => {
+      return (
         <ActiveLocationSharer
-          sharer={item as ILocationShare}
+          profile={
+            getType(item).name === 'OwnProfile' || getType(item).name === 'Profile'
+              ? (item as IProfile)
+              : (item as ILocationShare).sharedWith
+          }
           outerStyle={styles.outer}
           innerStyle={styles.inner}
         />
       )
+    }
 
     return (
       <Animated.View
@@ -93,7 +93,7 @@ const ActiveGeoBotBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')
             data={bannerItems}
             horizontal
             keyExtractor={item => item.id}
-            renderItem={renderActiveBot}
+            renderItem={renderBannerItem}
             showsHorizontalScrollIndicator={false}
             ListEmptyComponent={<ActiveBannerPlaceholder />}
             style={{paddingLeft: 8 * k}}
@@ -103,16 +103,16 @@ const ActiveGeoBotBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')
           <InvisibleModeOverlay />
         </View>
         {navStore!.scene !== 'botCompose' && !homeStore!.fullScreenMode && (
-          <Buttons mapType={homeStore!.mapType} />
+          <Buttons hasUnread={wocky!.notifications.hasUnread} mapType={homeStore!.mapType} />
         )}
       </Animated.View>
     )
   })
 )
 
-export default ActiveGeoBotBanner
+export default HomeBanner
 
-const Buttons = ({mapType}) => (
+const Buttons = ({mapType, hasUnread}) => (
   <View
     style={{
       marginRight: 10,
@@ -128,6 +128,7 @@ const Buttons = ({mapType}) => (
       testID="bottomMenuButton"
     >
       <Image source={settingsImg} />
+      {!!hasUnread && <View style={styles.newDot} />}
     </TouchableOpacity>
     <TouchableOpacity style={{marginTop: 15}} onPress={() => Actions.attribution()}>
       <Image source={mapType === 'hybrid' ? infoImgWhite : infoImg} />
@@ -168,8 +169,8 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderWidth: 2,
     borderRadius: dotWidth / 2,
-    width: 10,
-    height: 10,
+    width: 13,
+    height: 13,
     backgroundColor: colors.GOLD,
   },
 })
