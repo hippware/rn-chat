@@ -1,3 +1,12 @@
+Version 3.2.0 - May 2019
+==========================
+Resolved Issues:
+  - Fixed an issue when rendering polygons that would result in incorrect shapes being drawn.
+  - Fixed a crashing bug that occurred occasionally when removing overlays from a map.
+
+Improvements:
+  - Reduced the amount of work done when the map is hidden by other views to improve CPU usage.
+
 Version 3.1.0 - April 2019
 ==========================
 Resolved Issues:
