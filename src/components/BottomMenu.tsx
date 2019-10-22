@@ -18,6 +18,8 @@ interface IMenuItemProps extends TouchableOpacityProps {
   innerStyle?: any
   children?: any
   imageStyle?: any
+  newDot?: boolean
+  newDotStyle?: any
 }
 
 interface IMenuItemWrapperProps extends TouchableOpacityProps {
@@ -41,12 +43,22 @@ const MenuItemWrapper = ({children, ...rest}: IMenuItemWrapperProps) => {
   return <Wrapper {...rest}>{children}</Wrapper>
 }
 
-const MenuItem = ({style, image, innerStyle, children, imageStyle, ...rest}: IMenuItemProps) => (
+const MenuItem = ({
+  style,
+  image,
+  innerStyle,
+  children,
+  imageStyle,
+  newDot,
+  newDotStyle,
+  ...rest
+}: IMenuItemProps) => (
   <MenuItemWrapper {...rest}>
     <View style={[styles.menuItem, style]}>
       {!!image && (
         <Image source={image} resizeMode="contain" style={[styles.menuImage, imageStyle]} />
       )}
+      {newDot && <View style={[styles.newDot, newDotStyle]} />}
       <View style={[{flex: 1, alignItems: 'center'}, innerStyle]}>{children}</View>
     </View>
   </MenuItemWrapper>
@@ -107,7 +119,7 @@ const LiveLocationButton = ({invisible, active}) => (
 )
 
 const BottomMenu = observer(() => {
-  const {profile} = useWocky()
+  const {profile, chats} = useWocky()
   if (!profile || !isAlive(profile)) {
     return null
   }
@@ -165,6 +177,8 @@ const BottomMenu = observer(() => {
           }}
           image={require('../../images/menuMessages.png')}
           imageStyle={{width: 30 * avatarScale, height: 27 * avatarScale, marginVertical: 15}}
+          newDot={chats.unreadCount > 0}
+          newDotStyle={{top: 13, right: 21}}
         >
           <RText style={styles.text}>Messages</RText>
         </MenuItem>
@@ -219,5 +233,16 @@ const styles = StyleSheet.create({
     marginBottom: 50 * minHeight,
     justifyContent: 'space-between',
     marginHorizontal: 40 * k,
+  },
+  newDot: {
+    position: 'absolute',
+    top: -5,
+    right: -5,
+    borderColor: 'white',
+    borderWidth: 2,
+    borderRadius: 13 / 2,
+    width: 13,
+    height: 13,
+    backgroundColor: colors.GOLD,
   },
 })
