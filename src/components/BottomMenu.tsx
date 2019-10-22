@@ -119,7 +119,7 @@ const LiveLocationButton = ({invisible, active}) => (
 )
 
 const BottomMenu = observer(() => {
-  const {profile, chats} = useWocky()
+  const {profile, chats, notifications} = useWocky()
   if (!profile || !isAlive(profile)) {
     return null
   }
@@ -183,6 +183,17 @@ const BottomMenu = observer(() => {
           <RText style={styles.text}>Messages</RText>
         </MenuItem>
         <MenuItem
+          onPress={() => {
+            Actions.notifications()
+          }}
+          image={require('../../images/menuMessages.png')}
+          imageStyle={{width: 30 * avatarScale, height: 27 * avatarScale, marginVertical: 15}}
+          newDot={notifications.hasUnread}
+          newDotStyle={{top: 13, right: 21}}
+        >
+          <RText style={styles.text}>Updates</RText>
+        </MenuItem>
+        <MenuItem
           image={profile.hidden.enabled ? invisibleOn : invisibleOff}
           onPress={toggleInvisible}
           imageStyle={{
@@ -232,7 +243,7 @@ const styles = StyleSheet.create({
     marginTop: 15 * minHeight,
     marginBottom: 50 * minHeight,
     justifyContent: 'space-between',
-    marginHorizontal: 40 * k,
+    marginHorizontal: 30 * k,
   },
   newDot: {
     position: 'absolute',
