@@ -297,7 +297,7 @@ export const Wocky = types
         }
       },
       // _onNotification: flow(function*(data: any) {
-      _onNotification(data: any) {
+      _onNotification(data: any, pastEvent: boolean = false) {
         // console.log('& ONNOTIFICATION', self.username, JSON.stringify(data))
         // if (!version) {
         //   throw new Error('No version for notification:' + JSON.stringify(data))
@@ -332,7 +332,9 @@ export const Wocky = types
           data = _.cloneDeep(data)
           const item = createEvent(data, self)
           self.notifications.addToTop(item)
-          item.process()
+          if (!pastEvent) {
+            item.process()
+          }
         } catch (e) {
           log('ONNOTIFICATION ERROR: ' + e.message)
         }
@@ -391,7 +393,7 @@ export const Wocky = types
         // there are potentially more new notifications so purge the old ones (to ensure paging works as expected)
         self.notifications.refresh()
       }
-      list.reverse().forEach(self._onNotification)
+      list.reverse().forEach(e => self._onNotification(e, true))
       self.notifications.cursor = self.notifications.last && self.notifications.last.id
       // console.log(
       //   '& notifications list after initial load',
