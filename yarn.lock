@@ -7639,10 +7639,10 @@ react-native-country-picker-modal@^1.4.1:
     prop-types "15.7.2"
     typedoc "0.15.0"
 
-react-native-device-info@3.0.0-rc.5:
-  version "3.0.0-rc.5"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-3.0.0-rc.5.tgz#0e11303abc28580f7e478a529026d6347e396d88"
-  integrity sha512-UHv5McBzx3dlb6Y8Fe5bHCE5brTsPezNOIu6HLAn3+c5m4cClrAFR/Ub/pHbJ1pGr5+VgRkvcQmsq2EvDxbgGw==
+react-native-device-info@4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-4.0.1.tgz#bade972e7a995ac187a82745a458cba98b72dea0"
+  integrity sha512-a0Q/gwy1oQhu17CeMq9xMZ3Sl9foaj8hFwVuy9jieqkkoQwkHnPDI+R7bEW0MNMgUCPPrzzXvka+FLGOWVqacg==
 
 react-native-emoji-selector@^0.1.7:
   version "0.1.7"
