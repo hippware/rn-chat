@@ -9,6 +9,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * react-native-localize (PR #4269), @types/phoenix (PR #4273)
 * Remove "Current Location" CTA (#4213)
 * Map Options CTA (#4185)
+* Add facebook SDK (PR #4279, PR #4290)
 
 # 4.29.1 - 2019 Oct 17
 
