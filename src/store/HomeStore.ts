@@ -108,6 +108,17 @@ const HomeStore = types
         const localBots = wocky.localBots.list.map(bot => new BotCard(bot))
         return [new TutorialCard(), new YouCard(), ...sharers, ...localBots]
       },
+      get headerItems(): IProfile[] {
+        console.log('GET HEADER ITEMS', wocky.profile && wocky.profile.locationSharers.list.length)
+        const items =
+          wocky && wocky.profile
+            ? [
+                wocky.profile,
+                ...wocky.profile!.locationSharers.list.map(({sharedWith}) => sharedWith),
+              ]
+            : []
+        return items
+      },
     }
   })
   .views(self => ({
