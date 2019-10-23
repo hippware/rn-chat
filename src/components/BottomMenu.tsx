@@ -186,10 +186,10 @@ const BottomMenu = observer(() => {
           onPress={() => {
             Actions.notifications()
           }}
-          image={require('../../images/menuMessages.png')}
+          image={require('../../images/menuBell.png')}
           imageStyle={{width: 30 * avatarScale, height: 27 * avatarScale, marginVertical: 15}}
           newDot={notifications.hasUnread}
-          newDotStyle={{top: 13, right: 21}}
+          newDotStyle={{top: 13, right: 28}}
         >
           <RText style={styles.text}>Updates</RText>
         </MenuItem>
