@@ -481,7 +481,12 @@ export const Wocky = types
           () => self.transport.message,
           message => self.chats.addMessage({...message} as any, true)
         ),
-        reaction(() => self.transport.notification, self._onNotification),
+        reaction(
+          () => self.transport.notification,
+          data => {
+            self._onNotification(data)
+          }
+        ),
         reaction(() => self.transport.rosterItem, self._onRosterItem),
         reaction(() => self.transport.botVisitor, self._onBotVisitor),
         autorun(
