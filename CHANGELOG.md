@@ -5,11 +5,19 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Speculative fix: IllegalViewOperationException in Layout.java (#4262)
-* Update: react-test-renderer (PR #4270), react-native-swiper (PR #4272)
-  * react-native-localize (PR #4269), @types/phoenix (PR #4273)
+* Update: @babel/core (PR #4303), @babel/node (PR #4297)
+  * @babel/plugin-proposal-object-rest-spread (PR #4311)
+  * @babel/plugin-transform-flow-strip-types (PR #4299)
+  * @types/lodash (PR #4292), @types/phoenix (PR #4273)
+  * graphql (PR #4295), husky (PR #4291), libphonenumber-js (PR #4306)
+  * mobx (PR #4298), react-dom (PR #4310)
+  * react-native-localize (PR #4269, PR #4307)
+  * react-native-maps (PR #4293), react-native-swiper (PR #4272)
+  * react-test-renderer (PR #4270), tslint-react (PR #4294)
 * Remove "Current Location" CTA (#4213)
 * Map Options CTA (#4185)
 * Add facebook SDK (PR #4279, PR #4290)
+* Error: src/components/SignIn.tsx:45 Unknown country: AQ (#4287)
 
 # 4.29.1 - 2019 Oct 17
 
