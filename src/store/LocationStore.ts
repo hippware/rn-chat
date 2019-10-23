@@ -125,7 +125,7 @@ const LocationStore = types
         config.distanceFilter = 10
       }
 
-      if (__DEV__ || settings.isStaging) {
+      if (__DEV__ || settings.configurableLocationSettings) {
         config.logLevel = BackgroundGeolocation.LOG_LEVEL_VERBOSE
       }
 
