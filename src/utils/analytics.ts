@@ -5,6 +5,7 @@ import {log} from './logger'
 import {IWocky} from 'wocky-client'
 import Mixpanel from 'react-native-mixpanel'
 import bsClient from './bugsnagConfig'
+import {AppEventsLogger} from 'react-native-fbsdk'
 
 export const analyticsGeoWidgetTap = 'geofence_widget_tap'
 
@@ -29,6 +30,7 @@ export class Analytics {
         wocky && wocky.connected && !!wocky.profile && !!wocky.profile.handle && this.initialized,
       () => {
         const {id, email, firstName, lastName, phoneNumber, handle} = wocky!.profile!
+        AppEventsLogger.setUserID(id)
         Mixpanel.identify(id)
         Mixpanel.set({
           $email: email,
@@ -46,6 +48,11 @@ export class Analytics {
     if (__DEV__ || !this.initialized) {
       log('TRACK', name, properties)
       return
+    }
+    // track only create profile events to Facebook
+    if (name === 'createprofile_complete') {
+      AppEventsLogger.logEvent(name)
+      // AppEventsLogger.logEvent(name, properties)
     }
     try {
       if (!properties) {
