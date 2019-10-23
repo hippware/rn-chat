@@ -404,16 +404,16 @@ PODS:
     - React-cxxreact (= 0.61.2)
     - React-jsi (= 0.61.2)
     - ReactCommon/jscallinvoker (= 0.61.2)
-  - RNBackgroundFetch (2.7.0):
+  - RNBackgroundFetch (2.7.1):
     - React
-  - RNBackgroundGeolocation (3.2.2):
+  - RNBackgroundGeolocation (3.3.0):
     - CocoaLumberjack (~> 3.5.1)
     - React
   - RNCAsyncStorage (1.6.1):
     - React
   - RNCPushNotificationIOS (1.0.2):
     - React
-  - RNDeviceInfo (3.0.0-rc.5):
+  - RNDeviceInfo (4.0.1):
     - React
   - RNFirebase (5.5.6):
     - Firebase/Core
@@ -433,7 +433,7 @@ PODS:
     - React-Core
     - React-RCTImage
     - RSKImageCropper
-  - RNLocalize (1.3.0):
+  - RNLocalize (1.3.1):
     - React
   - RNPermissions (2.0.0):
     - React
@@ -752,16 +752,16 @@ SPEC CHECKSUMS:
   React-RCTText: e3ef6191cdb627855ff7fe8fa0c1e14094967fb8
   React-RCTVibration: fb54c732fd20405a76598e431aa2f8c2bf527de9
   ReactCommon: 5848032ed2f274fcb40f6b9ec24067787c42d479
-  RNBackgroundFetch: c6dd741d7f86ad981f1f03279415c5151397559a
-  RNBackgroundGeolocation: 82e73b31e00041b271f1fc076696b09d24ce5941
+  RNBackgroundFetch: 8d8d66b47eafcb9e772b2eb95057939038b3ef95
+  RNBackgroundGeolocation: 55ee0257c198805082e72404d704b6c78d33d8d2
   RNCAsyncStorage: 2e2e3feb9bdadc752a026703d8c4065ca912e75a
   RNCPushNotificationIOS: 0b8d06ff190d84627dd17501bfb96652375970e4
-  RNDeviceInfo: b6475e2b40631645f6fd121c2ac195718ea2100c
+  RNDeviceInfo: 687c1b2ab6d86ff1ca1208783320cd144138c7f2
   RNFirebase: ac0de8b24c6f91ae9459575491ed6a77327619c6
   RNFS: a8fbe7060fa49157d819466404794ad9c58e58cf
   RNGestureHandler: 4cb47a93019c1a201df2644413a0a1569a51c8aa
   RNImageCropPicker: f675353bbe18f66113a39b319c0aeb36655a6e4c
-  RNLocalize: cebb57c3c1e5479806204ce135b26bdd79d17e8a
+  RNLocalize: 07eb7a91d10021cdf59d80061ebf3adb8a5b5688
   RNPermissions: 0954178834810a675efad2a26041ffa5380e663f
   RNPureJwt: b9e795e38e2b6808d3b8934ce413a508e2f76863
   RNReanimated: 6abbbae2e5e72609d85aabd92a982a94566885f1
@@ -773,4 +773,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 42e7388f1da828cf0d8874ba99f23372574927dc
 
-COCOAPODS: 1.8.3
+COCOAPODS: 1.8.4
