@@ -109,15 +109,21 @@ const HomeStore = types
         return [new TutorialCard(), new YouCard(), ...sharers, ...localBots]
       },
       get headerItems(): IProfile[] {
-        console.log('GET HEADER ITEMS', wocky.profile && wocky.profile.locationSharers.list.length)
-        const items =
-          wocky && wocky.profile
-            ? [
-                wocky.profile,
-                ...wocky.profile!.locationSharers.list.map(({sharedWith}) => sharedWith),
-              ]
-            : []
-        return items
+        function compare(a: boolean, b: boolean) {
+          return b === a ? 0 : b ? 1 : -1
+        }
+        if (!wocky || !wocky.profile) {
+          return []
+        }
+        const friends = wocky
+          .profile!.friends.list.map(({user}) => user)
+          .sort((a: IProfile, b: IProfile) => {
+            return (
+              compare(!!b.unreadCount, !!a.unreadCount) ||
+              compare(b.sharesLocation, a.sharesLocation)
+            )
+          })
+        return [wocky.profile, ...friends]
       },
     }
   })

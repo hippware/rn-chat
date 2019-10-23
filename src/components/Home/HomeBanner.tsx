@@ -108,8 +108,7 @@ const Buttons = ({mapType, hasUnread}) => (
     pointerEvents="box-none"
   >
     <TouchableOpacity
-      onPress={() => Actions.logout()} // TODO: return it back!
-      // onPress={() => Actions.bottomMenu()}
+      onPress={() => Actions.bottomMenu()}
       onLongPress={() => settings.allowDebugScreen && Actions.debugScreen()}
       testID="bottomMenuButton"
     >

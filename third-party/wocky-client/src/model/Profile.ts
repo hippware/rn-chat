@@ -165,6 +165,10 @@ export const Profile = types
             return ' (Not completed) '
           }
         },
+        get unreadCount(): number {
+          const chat = (getRoot(self) as any).wocky.chats.get(self.id)
+          return chat ? chat.unreadCount : 0
+        },
         get currentActivity(): UserActivityType | null {
           if (!self.location) return null
 
