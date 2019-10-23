@@ -190,6 +190,7 @@ const LocationStore = types
       } else {
         if (response.status === 401 || response.status === 403) {
           BackgroundGeolocation.stop()
+          BackgroundGeolocation.stopSchedule()
           BackgroundGeolocation.logger.error(`${prefix} BackgroundGeolocation.stop() due to error`)
         }
 
