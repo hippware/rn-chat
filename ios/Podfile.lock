@@ -413,7 +413,7 @@ PODS:
     - React
   - RNCPushNotificationIOS (1.0.2):
     - React
-  - RNDeviceInfo (3.0.0-rc.5):
+  - RNDeviceInfo (4.0.1):
     - React
   - RNFirebase (5.5.6):
     - Firebase/Core
@@ -756,7 +756,7 @@ SPEC CHECKSUMS:
   RNBackgroundGeolocation: 55ee0257c198805082e72404d704b6c78d33d8d2
   RNCAsyncStorage: 2e2e3feb9bdadc752a026703d8c4065ca912e75a
   RNCPushNotificationIOS: 0b8d06ff190d84627dd17501bfb96652375970e4
-  RNDeviceInfo: b6475e2b40631645f6fd121c2ac195718ea2100c
+  RNDeviceInfo: 687c1b2ab6d86ff1ca1208783320cd144138c7f2
   RNFirebase: ac0de8b24c6f91ae9459575491ed6a77327619c6
   RNFS: a8fbe7060fa49157d819466404794ad9c58e58cf
   RNGestureHandler: 4cb47a93019c1a201df2644413a0a1569a51c8aa
