@@ -1,21 +1,22 @@
 diff --git a/node_modules/react-native-country-picker-modal/lib/index.d.ts b/node_modules/react-native-country-picker-modal/lib/index.d.ts
-index 9b6fcea..f2e9003 100644
+index faae199..bc83abb 100644
 --- a/node_modules/react-native-country-picker-modal/lib/index.d.ts
 +++ b/node_modules/react-native-country-picker-modal/lib/index.d.ts
-@@ -29,11 +29,6 @@ interface Props {
+@@ -32,12 +32,6 @@ interface Props {
      onClose?(): void;
  }
  export default function main({ theme, translation, ...props }: Props): JSX.Element;
 -export default namespace main {
 -    var defaultProps: {
 -        onSelect: () => void;
+-        withEmoji: boolean;
 -    };
 -}
- export { getCountries as getAllCountries } from './CountryService';
+ export { getCountries as getAllCountries, getCountryCallingCode as getCallingCode } from './CountryService';
  export { CountryModal } from './CountryModal';
- export { CountryFilter } from './CountryFilter';
+ export { DARK_THEME, DEFAULT_THEME } from './CountryTheme';
 diff --git a/node_modules/react-native-country-picker-modal/lib/types.d.ts b/node_modules/react-native-country-picker-modal/lib/types.d.ts
-index e0565a0..4609e2f 100644
+index d6d7eb1..d97cba4 100644
 --- a/node_modules/react-native-country-picker-modal/lib/types.d.ts
 +++ b/node_modules/react-native-country-picker-modal/lib/types.d.ts
 @@ -1,4 +1,4 @@
@@ -24,10 +25,16 @@ index e0565a0..4609e2f 100644
  export declare type CountryCode = typeof CountryCodeList[number];
  export declare type CallingCode = string;
  export declare type CurrencyCode = string;
-@@ -12,7 +12,7 @@ export interface Country {
+@@ -14,11 +14,11 @@ export interface Country {
      name: TranslationLanguageCodeMap | string;
      cca2: CountryCode;
  }
+-export declare const RegionList: readonly ["Africa", "Americas", "Antarctic", "Asia", "Europe", "Oceania"];
++export declare const RegionList: ["Africa", "Americas", "Antarctic", "Asia", "Europe", "Oceania"];
+ export declare type Region = typeof RegionList[number];
+-export declare const SubregionList: readonly ["Southern Asia", "Southern Europe", "Northern Africa", "Polynesia", "Middle Africa", "Caribbean", "South America", "Western Asia", "Australia and New Zealand", "Western Europe", "Eastern Europe", "Central America", "Western Africa", "North America", "Southern Africa", "Eastern Africa", "South-Eastern Asia", "Eastern Asia", "Northern Europe", "Melanesia", "Micronesia", "Central Asia", "Central Europe"];
++export declare const SubregionList: ["Southern Asia", "Southern Europe", "Northern Africa", "Polynesia", "Middle Africa", "Caribbean", "South America", "Western Asia", "Australia and New Zealand", "Western Europe", "Eastern Europe", "Central America", "Western Africa", "North America", "Southern Africa", "Eastern Africa", "South-Eastern Asia", "Eastern Asia", "Northern Europe", "Melanesia", "Micronesia", "Central Asia", "Central Europe"];
+ export declare type Subregion = typeof SubregionList[number];
 -export declare const TranslationLanguageCodeList: readonly ["common", "cym", "deu", "fra", "hrv", "ita", "jpn", "nld", "por", "rus", "spa", "svk", "fin", "zho", "isr"];
 +export declare const TranslationLanguageCodeList: ["common", "cym", "deu", "fra", "hrv", "ita", "jpn", "nld", "por", "rus", "spa", "svk", "fin", "zho", "isr"];
  export declare type TranslationLanguageCode = typeof TranslationLanguageCodeList[number];
