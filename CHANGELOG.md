@@ -4,6 +4,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.29.2 - 2019 Oct 24
+
+Special debug version for Prod.
+
+* Enable debugging features for PROD.
+
 # 4.29.1 - 2019 Oct 17
 
 * Who's Here: List only displays 1 visitor (PR #4276)
