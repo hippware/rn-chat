@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Revert: Enable debugging features for PROD.
+
 # 4.29.2 - 2019 Oct 24
 
 Special debug version for Prod.
