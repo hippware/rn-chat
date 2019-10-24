@@ -29,7 +29,7 @@ else
   fi
 fi
 
-if [ "$APPCENTER_BRANCH" == "deploy-stage" ]
-then
+# if [ "$APPCENTER_BRANCH" == "deploy-stage" ]
+# then
   yarn bugsnag
-fi
+# fi
