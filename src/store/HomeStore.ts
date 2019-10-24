@@ -191,7 +191,7 @@ const HomeStore = types
       followUserOnMap(user: IProfile) {
         if (disposer) disposer()
         self.followingUser = true
-        disposer = autorun(() => self.setFocusedLocation(user.location), {
+        disposer = autorun(() => self.setFocusedLocation(user.currentLocation), {
           name: 'FollowUserOnMap',
         })
       },
