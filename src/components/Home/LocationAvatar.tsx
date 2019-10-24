@@ -11,7 +11,6 @@ type Props = {
   sharesLocation: boolean
   currentActivity?: UserActivityType | null
   noFade?: boolean
-  isYou?: boolean
 }
 
 const avatarBG = require('../../../images/LocationAvatar.png')
@@ -33,13 +32,12 @@ const LocationAvatar = ({
   tappable,
   currentActivity,
   noFade,
-  isYou,
 }: Props) => {
   const isStill = currentActivity === 'still'
   const currentBG =
-    hidden || isStill
+    hidden || isStill || (!profile.isOwn && !sharesLocation)
       ? avatarBGGray
-      : isYou || (sharesLocation && !isStill)
+      : sharesLocation && !isStill
       ? avatarBG
       : avatarBGNoRing
   const theActivity = activityEmojis[currentActivity || '']
@@ -58,15 +56,7 @@ const LocationAvatar = ({
         opacity: isStill && !noFade ? 0.4 : 1,
       }}
     >
-      <Avatar
-        noScale
-        size={54}
-        profile={profile}
-        hideDot
-        borderWidth={0}
-        tappable={tappable}
-        isYou={isYou}
-      />
+      <Avatar noScale size={54} profile={profile} hideDot borderWidth={0} tappable={tappable} />
       {!!theActivity && (
         <View
           style={{

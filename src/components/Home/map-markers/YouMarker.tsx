@@ -49,7 +49,6 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
             hidden={profile.hidden.enabled}
             sharesLocation={profile.isLocationShared} // computed isLocationShared must be used for OwnProfile instances
             currentActivity={profile.currentActivity}
-            isYou
           />
         </View>
       </HackMarker>

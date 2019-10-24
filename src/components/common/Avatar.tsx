@@ -49,7 +49,6 @@ const Avatar = observer(
     fontSize,
     fontFamily,
     noScale = false,
-    isYou = false,
   }: Props) => {
     if ((!profile || (isStateTreeNode(profile) && !isAlive(profile))) && (!image && !displayName)) {
       return null
@@ -92,7 +91,7 @@ const Avatar = observer(
               fontFamily={fontFamily}
               letter={title.length > 1 ? title[0] : title}
               showMask={showMask}
-              isYou={isYou}
+              isYou={profile!.isOwn}
             />
           )}
           {!hideDot && !!profile && <PresenceDot profile={profile} size={size} />}

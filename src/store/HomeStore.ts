@@ -119,8 +119,11 @@ const HomeStore = types
           .profile!.friends.list.map(({user}) => user)
           .sort((a: IProfile, b: IProfile) => {
             return (
-              compare(!!b.unreadCount, !!a.unreadCount) ||
-              compare(b.sharesLocation, a.sharesLocation)
+              compare(!!a.unreadCount, !!b.unreadCount) ||
+              a.unreadTime - b.unreadTime ||
+              compare(a.sharesLocation, b.sharesLocation) ||
+              a.distance - b.distance ||
+              a.handle!.localeCompare(b.handle!)
             )
           })
         return [wocky.profile, ...friends]
@@ -206,11 +209,13 @@ const HomeStore = types
         }
       },
       followUserOnMap(user: IProfile) {
-        if (disposer) disposer()
-        self.followingUser = true
-        disposer = autorun(() => self.setFocusedLocation(user.location), {
-          name: 'FollowUserOnMap',
-        })
+        if (user.location) {
+          if (disposer) disposer()
+          self.followingUser = true
+          disposer = autorun(() => self.setFocusedLocation(user.location), {
+            name: 'FollowUserOnMap',
+          })
+        }
       },
       stopFollowingUserOnMap() {
         if (disposer) {

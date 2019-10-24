@@ -169,6 +169,28 @@ export const Profile = types
           const chat = (getRoot(self) as any).wocky.chats.get(self.id)
           return chat ? chat.unreadCount : 0
         },
+        get unreadTime(): number {
+          const chat = (getRoot(self) as any).wocky.chats.get(self.id)
+          return chat ? chat.time() : 0
+        },
+        get distance(): number {
+          const {locationStore} = getRoot(self)
+          if (!self.location || !locationStore) {
+            return Number.MAX_SAFE_INTEGER
+          }
+          const ownProfile = self.service && self.service.profile
+          const loc1 = self.location
+          const loc2 = ownProfile.location // TODO: replace to currentLocation
+          return locationStore.distance(
+            loc1.latitude,
+            loc1.longitude,
+            loc2.latitude,
+            loc2.longitude
+          )
+        },
+        get isLocationShared() {
+          return self.sharesLocation
+        },
         get currentActivity(): UserActivityType | null {
           if (!self.location) return null
 
