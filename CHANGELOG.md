@@ -4,6 +4,7 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Revert: Enable debugging features for PROD.
 * Speculative fix: IllegalViewOperationException in Layout.java (#4262)
 * Update: @babel/core (PR #4303), @babel/node (PR #4297)
   * @babel/plugin-proposal-object-rest-spread (PR #4311)
@@ -26,6 +27,12 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Add 'Updates' to BottomMenu (#4289)
 * Implementing Facebook SDK For Facebook Ad Tracking (#4278, PR #4318)
   * Add facebook SDK (PR #4279, PR #4290)
+
+# 4.29.2 - 2019 Oct 24
+
+Special debug version for Prod.
+
+* Enable debugging features for PROD.
 
 # 4.29.1 - 2019 Oct 17
 
