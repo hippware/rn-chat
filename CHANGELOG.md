@@ -11,13 +11,21 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * @types/lodash (PR #4292), @types/phoenix (PR #4273)
   * graphql (PR #4295), husky (PR #4291), libphonenumber-js (PR #4306)
   * mobx (PR #4298), react-dom (PR #4310)
-  * react-native-localize (PR #4269, PR #4307)
+  * react-navigation-stack (PR #4305)
+  * react-native-background-geolocation (PR #4296)
+  * react-native-country-picker-modal (PR #4300)
+  * react-native-device-info (PR #4308)
+  * react-native-localize (PR #4269, PR #4307, PR #4317)
   * react-native-maps (PR #4293), react-native-swiper (PR #4272)
   * react-test-renderer (PR #4270), tslint-react (PR #4294)
 * Remove "Current Location" CTA (#4213)
 * Map Options CTA (#4185)
-* Add facebook SDK (PR #4279, PR #4290)
 * Error: src/components/SignIn.tsx:45 Unknown country: AQ (#4287)
+* First app launch removes location sharers for some users (#4313)
+* Misc locationstore tweaks (PR #4316)
+* Add 'Updates' to BottomMenu (#4289)
+* Implementing Facebook SDK For Facebook Ad Tracking (#4278, PR #4318)
+  * Add facebook SDK (PR #4279, PR #4290)
 
 # 4.29.1 - 2019 Oct 17
 
