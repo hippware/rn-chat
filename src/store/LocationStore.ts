@@ -109,6 +109,10 @@ const LocationStore = types
         batchSync: true,
         desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
         foregroundService: true, // android only
+        logLevel:
+          __DEV__ || settings.configurableLocationSettings
+            ? BackgroundGeolocation.LOG_LEVEL_VERBOSE
+            : BackgroundGeolocation.LOG_LEVEL_OFF,
         maxRecordsToPersist: 20,
         notification: {
           // android only
@@ -123,10 +127,6 @@ const LocationStore = types
 
       if (!settings.configurableLocationSettings) {
         config.distanceFilter = 10
-      }
-
-      if (__DEV__ || settings.configurableLocationSettings) {
-        config.logLevel = BackgroundGeolocation.LOG_LEVEL_VERBOSE
       }
 
       if (reset) {
