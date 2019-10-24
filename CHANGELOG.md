@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.30.0 - 2019 Oct 24
+
 * Revert: Enable debugging features for PROD.
 * Speculative fix: IllegalViewOperationException in Layout.java (#4262)
 * Update: @babel/core (PR #4303), @babel/node (PR #4297)
