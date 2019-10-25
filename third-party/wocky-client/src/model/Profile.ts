@@ -176,7 +176,7 @@ export const Profile = types
         },
         get unreadTime(): number {
           const chat = (getRoot(self) as any).wocky.chats.get(self.id)
-          return chat ? chat.time() : 0
+          return chat ? chat.time : 0
         },
         get distance(): number {
           const {locationStore} = getRoot(self)
@@ -185,7 +185,7 @@ export const Profile = types
           }
           const ownProfile = self.service && self.service.profile
           const loc1 = self.location
-          const loc2 = ownProfile.location // TODO: replace to currentLocation
+          const loc2 = ownProfile.currentLocation
           return locationStore.distance(
             loc1.latitude,
             loc1.longitude,

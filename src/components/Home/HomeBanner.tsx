@@ -80,7 +80,9 @@ const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
             keyExtractor={item => item.id}
             renderItem={renderBannerItem}
             showsHorizontalScrollIndicator={false}
-            ListEmptyComponent={<ActiveBannerPlaceholder />}
+            ListFooterComponent={
+              homeStore!.headerItems.length === 1 ? <ActiveBannerPlaceholder /> : null
+            }
             style={{paddingLeft: 8 * k}}
           />
           {!wocky!.connected && <View style={styles.overlay} />}

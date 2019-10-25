@@ -24,12 +24,7 @@ const ActiveLocationSharer = observer(({profile, outerStyle, innerStyle}: IProps
           select(profile.id)
         }}
       >
-        <LocationAvatar
-          profile={profile}
-          sharesLocation={profile.isLocationShared}
-          tappable={false}
-          currentActivity={profile.currentActivity}
-        />
+        <LocationAvatar profile={profile} tappable={false} />
         <RText
           size={13}
           style={{textAlign: 'center', marginTop: 2 * minHeight}}
