@@ -1,4 +1,4 @@
-import {types, getEnv, flow, getParent, isAlive, getRoot} from 'mobx-state-tree'
+import {types, getEnv, flow, getParent, getRoot} from 'mobx-state-tree'
 import {autorun, IReactionDisposer} from 'mobx'
 import BackgroundGeolocation from 'react-native-background-geolocation'
 import DeviceInfo from 'react-native-device-info'
@@ -79,13 +79,17 @@ const LocationStore = types
     },
   }))
   .actions(self => ({
-    setPosition({latitude, longitude, accuracy}) {
+    setPosition(position) {
       self.enabled = true
-      if (!self.location) {
-        self.location = Location.create({latitude, longitude, accuracy})
-      } else {
-        self.location.load({latitude, longitude, accuracy})
-      }
+      self.location = createLocation({
+        lat: position.coords.latitude,
+        lon: position.coords.longitude,
+        accuracy: position.coords.accuracy,
+        createdAt: new Date(position.timestamp),
+        // .activity does not exist if called from Geolocation
+        activity: position.activity ? position.activity.type : null,
+        activityConfidence: position.activity ? position.activity.confidence : null,
+      })
     },
     setAlwaysOn(value: boolean) {
       BackgroundGeolocation.logger.info(`${prefix} setAlwaysOn(${value})`)
@@ -109,6 +113,10 @@ const LocationStore = types
         batchSync: true,
         desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
         foregroundService: true, // android only
+        logLevel:
+          __DEV__ || settings.configurableLocationSettings
+            ? BackgroundGeolocation.LOG_LEVEL_VERBOSE
+            : BackgroundGeolocation.LOG_LEVEL_OFF,
         maxRecordsToPersist: 20,
         notification: {
           // android only
@@ -125,10 +133,6 @@ const LocationStore = types
         config.distanceFilter = 10
       }
 
-      if (__DEV__ || settings.configurableLocationSettings) {
-        config.logLevel = BackgroundGeolocation.LOG_LEVEL_VERBOSE
-      }
-
       if (reset) {
         yield BackgroundGeolocation.reset(config)
         log(prefix, 'Reset and configure')
@@ -141,7 +145,6 @@ const LocationStore = types
   .actions(self => {
     const {transport} = getEnv(self)
     const wocky: IWocky = (getParent(self) as any).wocky
-    const {profile} = wocky
     let watcherID
 
     function onLocation(position) {
@@ -155,20 +158,7 @@ const LocationStore = types
           BackgroundGeolocation.logger.info(`${prefix} ${text}`)
         }
       }
-      self.setPosition(position.coords)
-
-      if (profile && isAlive(profile)) {
-        const data = createLocation({
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
-          accuracy: position.coords.accuracy,
-          createdAt: new Date(position.timestamp),
-          // .activity does not exist if called from Geolocation
-          activity: position.activity ? position.activity.type : null,
-          activityConfidence: position.activity ? position.activity.confidence : null,
-        })
-        profile.setLocation(data)
-      }
+      self.setPosition(position)
     }
 
     function onLocationError(err) {
@@ -438,6 +428,9 @@ const LocationStore = types
       }
     }),
   }))
+// .postProcessSnapshot((snapshot: any) => {
+//   return {} // huge performance optimization: don't persist frequently changed location and display only real location to an user
+// })
 
 export default LocationStore
 export type ILocationStore = typeof LocationStore.Type
