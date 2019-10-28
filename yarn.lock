@@ -9303,15 +9303,17 @@ ts-node@^8.3.0:
     source-map-support "^0.5.6"
     yn "^3.0.0"
 
-ts-unused-exports@^2.0.11:
-  version "2.0.11"
-  resolved "https://registry.yarnpkg.com/ts-unused-exports/-/ts-unused-exports-2.0.11.tgz#4c19c2a7d59662b51796a4eba1ce75681783fea1"
-  integrity sha512-c5NV9CpyEpY72Op5PTgNi2Wf9/esylBq6hTP0UiTMY+smADnQs8GgxLZwZWSAjlbXTXsg3mwv4HzU0b4jpc/lA==
+ts-unused-exports@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/ts-unused-exports/-/ts-unused-exports-3.0.0.tgz#e196fe92cf7bba692b1e25cfe8b37a5bca19c012"
+  integrity sha512-VYMTNMV4SE3KefASRNi9gC7WFUzomnEhxgsJk08G3h+T6LYhqcYPP4Fi+y4FC3yilPvL3q0LEFxPddIOooiQJQ==
   dependencies:
+    chalk "^2.4.1"
     strip-json-comments "^2.0.1"
-    typescript "^2.9.2"
+    tsconfig-paths "^3.5.0"
+    typescript "^3.6.4"
 
-tsconfig-paths@^3.6.0:
+tsconfig-paths@^3.5.0, tsconfig-paths@^3.6.0:
   version "3.9.0"
   resolved "https://registry.yarnpkg.com/tsconfig-paths/-/tsconfig-paths-3.9.0.tgz#098547a6c4448807e8fcb8eae081064ee9a3c90b"
   integrity sha512-dRcuzokWhajtZWkQsDVKbWyY+jgcLC5sqJhg2PSgf4ZkH2aHPvaOY8YWGhmjb68b5qqTfasSsDO9k7RUiEmZAw==
@@ -9459,10 +9461,10 @@ typescript@3.5.x:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.3.tgz#c830f657f93f1ea846819e929092f5fe5983e977"
   integrity sha512-ACzBtm/PhXBDId6a6sDJfroT2pOWt/oOnk4/dElG5G33ZL776N3Y6/6bKZJBFpd+b05F3Ct9qDjMeJmRWtE2/g==
 
-typescript@^2.9.2:
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
-  integrity sha512-Gr4p6nFNaoufRIY4NMdpQRNmgxVIGMs4Fcu/ujdYk3nAZqk7supzBE9idmvfZIlH/Cuj//dvi+019qEue9lV0w==
+typescript@^3.6.4:
+  version "3.6.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.6.4.tgz#b18752bb3792bc1a0281335f7f6ebf1bbfc5b91d"
+  integrity sha512-unoCll1+l+YK4i4F8f22TaNVPRHcD9PA3yCuZ8g5e0qGqlVlJ/8FSateOLLSagn+Yg5+ZwuPkL8LFUc0Jcvksg==
 
 ua-parser-js@^0.7.18:
   version "0.7.20"
