@@ -126,7 +126,7 @@
     "jsrsasign": "^8.0.12",
     "metro-react-native-babel-preset": "^0.56.0",
     "prettier": "^1.16.4",
-    "pretty-quick": "^1.11.1",
+    "pretty-quick": "^2.0.0",
     "react-dom": "^16.10.2",
     "react-test-renderer": "16.10.2",
     "ts-jest": "^24.1.0",
