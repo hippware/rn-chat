@@ -8,6 +8,7 @@ type Props = {
   hidden?: boolean
   tappable?: boolean
   noFade?: boolean
+  asHeaderItem?: boolean
 }
 
 const avatarBG = require('../../../images/LocationAvatar.png')
@@ -43,11 +44,11 @@ const Badge = ({style, background, text}) => {
   )
 }
 
-const LocationAvatar = ({profile, hidden, tappable, noFade}: Props) => {
+const LocationAvatar = ({profile, hidden, tappable, noFade, asHeaderItem}: Props) => {
   const sharesLocation = profile.isLocationShared
   const currentActivity = profile.currentActivity
   const isStill = currentActivity === 'still'
-  const inactive = hidden || isStill || (!profile.isOwn && !sharesLocation)
+  const inactive = hidden || (!profile.isOwn && !sharesLocation)
   const currentBG = inactive ? avatarBGGray : sharesLocation && !isStill ? avatarBG : avatarBGNoRing
   const theActivity = activityEmojis[currentActivity || '']
   return (
@@ -62,7 +63,7 @@ const LocationAvatar = ({profile, hidden, tappable, noFade}: Props) => {
         alignItems: 'center',
 
         paddingLeft: 1.2,
-        opacity: isStill && !noFade ? 0.4 : 1,
+        opacity: 1,
       }}
     >
       <Avatar
@@ -74,10 +75,10 @@ const LocationAvatar = ({profile, hidden, tappable, noFade}: Props) => {
         borderWidth={0}
         tappable={tappable}
       />
-      {!!profile.unreadCount && (
+      {!!asHeaderItem && !!profile.unreadCount && (
         <Badge style={{top: 1}} text={profile.unreadCount} background={unreadCounter} />
       )}
-      {!profile.unreadCount && !!theActivity && (
+      {(!asHeaderItem || !profile.unreadCount) && !!theActivity && (
         <Badge style={{left: 1}} text={theActivity} background={activity} />
       )}
     </ImageBackground>

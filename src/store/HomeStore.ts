@@ -120,9 +120,9 @@ const HomeStore = types
           .sort((a: IProfile, b: IProfile) => {
             return (
               compare(!!a.unreadCount, !!b.unreadCount) ||
-              a.unreadTime - b.unreadTime ||
+              (!!a.unreadCount && b.unreadTime - a.unreadTime) ||
               compare(a.sharesLocation, b.sharesLocation) ||
-              a.distance - b.distance ||
+              (a.sharesLocation && a.distance - b.distance) ||
               a.handle!.localeCompare(b.handle!)
             )
           })

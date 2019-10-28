@@ -24,7 +24,7 @@ const ActiveLocationSharer = observer(({profile, outerStyle, innerStyle}: IProps
           select(profile.id)
         }}
       >
-        <LocationAvatar profile={profile} tappable={false} />
+        <LocationAvatar profile={profile} asHeaderItem tappable={false} />
         <RText
           size={13}
           style={{textAlign: 'center', marginTop: 2 * minHeight}}

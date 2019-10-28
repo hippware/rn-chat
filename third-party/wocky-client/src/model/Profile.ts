@@ -194,7 +194,7 @@ export const Profile = types
           )
         },
         get isLocationShared() {
-          return self.sharesLocation
+          return !!self.location && self.sharesLocation
         },
         get currentActivity(): UserActivityType | null {
           const location = self.currentLocation // this way it will work for OwnProfile too
