@@ -6,6 +6,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * [dev] Make ownProfile.location as computed from locationStore (#4264)
 * Messages: Unable to scroll to bottom of message list (#4321)
+* Fixes for: Map Options CTA (#4185)
+* Log special "complete registration" event (PR #4339)
+  * Implementing Facebook SDK For Facebook Ad Tracking (#4278)
 
 # 4.30.0 - 2019 Oct 24
 
