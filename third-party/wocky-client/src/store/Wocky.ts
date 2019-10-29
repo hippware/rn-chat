@@ -298,7 +298,6 @@ export const Wocky = types
       },
       // _onNotification: flow(function*(data: any) {
       _onNotification(data: any, pastEvent: boolean = false) {
-        // console.log('& ONNOTIFICATION', self.username, JSON.stringify(data))
         // if (!version) {
         //   throw new Error('No version for notification:' + JSON.stringify(data))
         // }
@@ -446,6 +445,7 @@ export const Wocky = types
           () => !!self.profile && self.connected,
           (connected: boolean) => {
             if (connected) {
+              self.chats.loadChats()
               self.geofenceBots.load({force: true})
               self._loadNewNotifications()
             } else {

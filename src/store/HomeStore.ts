@@ -58,7 +58,7 @@ export class LocationSharerCard extends Card {
     this.profile = profile
   }
   get location() {
-    return this.profile.location
+    return this.profile.currentLocation
   }
   get name() {
     return 'LocationSharerCard'
@@ -106,6 +106,26 @@ const HomeStore = types
             : []
         const localBots = wocky.localBots.list.map(bot => new BotCard(bot))
         return [new TutorialCard(), new YouCard(), ...sharers, ...localBots]
+      },
+      get headerItems(): IProfile[] {
+        function compare(a: boolean, b: boolean) {
+          return b === a ? 0 : b ? 1 : -1
+        }
+        if (!wocky || !wocky.profile) {
+          return []
+        }
+        const friends = wocky
+          .profile!.friends.list.map(({user}) => user)
+          .sort((a: IProfile, b: IProfile) => {
+            return (
+              compare(!!a.unreadCount, !!b.unreadCount) ||
+              (!!a.unreadCount && b.unreadTime - a.unreadTime) ||
+              compare(a.sharesLocation, b.sharesLocation) ||
+              (a.sharesLocation && a.distance - b.distance) ||
+              a.handle!.localeCompare(b.handle!)
+            )
+          })
+        return [wocky.profile, ...friends]
       },
       get mapType() {
         switch (self.mapOptions) {
@@ -186,11 +206,13 @@ const HomeStore = types
         self.mapOptions = value
       },
       followUserOnMap(user: IProfile) {
-        if (disposer) disposer()
-        self.followingUser = true
-        disposer = autorun(() => self.setFocusedLocation(user.currentLocation), {
-          name: 'FollowUserOnMap',
-        })
+        if (user.currentLocation) {
+          if (disposer) disposer()
+          self.followingUser = true
+          disposer = autorun(() => self.setFocusedLocation(user.currentLocation), {
+            name: 'FollowUserOnMap',
+          })
+        }
       },
       stopFollowingUserOnMap() {
         if (disposer) {

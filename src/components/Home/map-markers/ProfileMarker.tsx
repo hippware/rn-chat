@@ -21,7 +21,7 @@ const ProfileMarker = observer(({homeStore, card}: Props) => {
     profile && (
       <HackMarker
         zIndex={card.id === homeStore!.selectedId ? 1001 : 1}
-        key={`profilemarker${profile.avatar && profile.avatar.loaded}`}
+        key={`profilemarker${profile.avatar && profile.avatar.loaded}${profile.isLocationShared}`}
         coordinate={{latitude, longitude}}
         onPress={() => {
           homeStore!.select(card.id)
@@ -31,12 +31,7 @@ const ProfileMarker = observer(({homeStore, card}: Props) => {
       >
         {/* extra padding here for the activity icon */}
         <View style={{paddingHorizontal: 9, paddingTop: 15}}>
-          <LocationAvatar
-            profile={profile}
-            sharesLocation={profile.sharesLocation}
-            currentActivity={profile.currentActivity}
-            noFade={homeStore!.mapType === 'hybrid'}
-          />
+          <LocationAvatar profile={profile} noFade={homeStore!.mapType === 'hybrid'} />
         </View>
       </HackMarker>
     )

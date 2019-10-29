@@ -13,7 +13,7 @@ import {inject} from 'mobx-react'
 import {colors} from '../../constants'
 import HeaderLocationOverlay from './HeaderLocationOverlay'
 import ActiveBannerPlaceholder from './ActiveBannerPlaceholder'
-import {IWocky, IProfile} from 'wocky-client'
+import {IWocky} from 'wocky-client'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
 import {k, isIphoneX, isIphone, minHeight} from '../Global'
 import {Actions} from 'react-native-router-flux'
@@ -21,10 +21,8 @@ import InvisibleModeOverlay from './InvisibleModeOverlay'
 import {settings} from '../../globals'
 import {INavStore} from '../../store/NavStore'
 import {IHomeStore} from '../../store/HomeStore'
-import {ILocationShare} from 'third-party/wocky-client/src/model/LocationShare'
 import ActiveLocationSharer from './ActiveLocationSharer'
 import {observer} from 'mobx-react'
-import {getType} from 'mobx-state-tree'
 
 type Props = {
   wocky?: IWocky
@@ -43,9 +41,6 @@ const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
   observer(({enabled, wocky, navStore, homeStore, analytics}: Props) => {
     const [yOffset] = useState(new Animated.Value(0))
 
-    const {profile} = wocky!
-    const bannerItems = profile ? [profile, ...profile.locationSharers.list.slice()] : []
-
     useEffect(() => {
       Animated.spring(yOffset, {
         toValue: enabled ? 0 : -180,
@@ -53,19 +48,9 @@ const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
       }).start()
     }, [enabled])
 
-    const renderBannerItem = ({item}: {item: ILocationShare | IProfile}) => {
-      return (
-        <ActiveLocationSharer
-          profile={
-            getType(item).name === 'OwnProfile' || getType(item).name === 'Profile'
-              ? (item as IProfile)
-              : (item as ILocationShare).sharedWith
-          }
-          outerStyle={styles.outer}
-          innerStyle={styles.inner}
-        />
-      )
-    }
+    const renderBannerItem = ({item}) => (
+      <ActiveLocationSharer profile={item} outerStyle={styles.outer} innerStyle={styles.inner} />
+    )
 
     return (
       <Animated.View
@@ -90,12 +75,14 @@ const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
           }}
         >
           <FlatList
-            data={bannerItems}
+            data={homeStore!.headerItems}
             horizontal
             keyExtractor={item => item.id}
             renderItem={renderBannerItem}
             showsHorizontalScrollIndicator={false}
-            ListEmptyComponent={<ActiveBannerPlaceholder />}
+            ListFooterComponent={
+              homeStore!.headerItems.length === 1 ? <ActiveBannerPlaceholder /> : null
+            }
             style={{paddingLeft: 8 * k}}
           />
           {!wocky!.connected && <View style={styles.overlay} />}

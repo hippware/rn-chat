@@ -24,21 +24,16 @@ const ActiveLocationSharer = observer(({profile, outerStyle, innerStyle}: IProps
           select(profile.id)
         }}
       >
-        <LocationAvatar
-          profile={profile}
-          sharesLocation
-          tappable={false}
-          currentActivity={profile.currentActivity}
-        />
+        <LocationAvatar profile={profile} asHeaderItem tappable={false} />
         <RText
           size={13}
           style={{textAlign: 'center', marginTop: 2 * minHeight}}
           numberOfLines={1}
           ellipsizeMode="tail"
-          color={colors.DARK_GREY}
+          color={profile.isLocationShared ? colors.PINK : colors.DARK_GREY}
           weight={'Medium'}
         >
-          {`@${profile.handle}`}
+          {profile.handle}
         </RText>
       </TouchableOpacity>
     </View>

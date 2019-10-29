@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {View, Image, TouchableOpacity} from 'react-native'
 import {Actions} from 'react-native-router-flux'
 import ChatCard from './ChatCard'
@@ -16,9 +16,6 @@ type Props = {
 
 const ChatListScreen = observer(({isActive}: Props) => {
   const {chats} = useWocky()
-  useEffect(() => {
-    chats.loadChats()
-  }, [])
 
   return (
     <DraggablePopupList
