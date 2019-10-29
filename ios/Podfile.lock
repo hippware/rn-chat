@@ -409,7 +409,7 @@ PODS:
   - RNBackgroundGeolocation (3.3.0):
     - CocoaLumberjack (~> 3.5.1)
     - React
-  - RNCAsyncStorage (1.6.1):
+  - RNCAsyncStorage (1.6.2):
     - React
   - RNCPushNotificationIOS (1.0.2):
     - React
@@ -754,7 +754,7 @@ SPEC CHECKSUMS:
   ReactCommon: 5848032ed2f274fcb40f6b9ec24067787c42d479
   RNBackgroundFetch: 8d8d66b47eafcb9e772b2eb95057939038b3ef95
   RNBackgroundGeolocation: 55ee0257c198805082e72404d704b6c78d33d8d2
-  RNCAsyncStorage: 2e2e3feb9bdadc752a026703d8c4065ca912e75a
+  RNCAsyncStorage: 60a80e72d95bf02a01cace55d3697d9724f0d77f
   RNCPushNotificationIOS: 0b8d06ff190d84627dd17501bfb96652375970e4
   RNDeviceInfo: 687c1b2ab6d86ff1ca1208783320cd144138c7f2
   RNFirebase: ac0de8b24c6f91ae9459575491ed6a77327619c6
