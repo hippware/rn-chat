@@ -338,7 +338,7 @@ PODS:
     - React
   - react-native-config (0.11.7):
     - React
-  - react-native-contacts (5.0.3):
+  - react-native-contacts (5.0.4):
     - React
   - react-native-fbsdk (1.0.4):
     - React
@@ -734,7 +734,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 111d7d342b07a904c400592e02a2b958f1098b60
   react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
   react-native-config: 55548054279d92e0e4566ea15a8b9b81028ec342
-  react-native-contacts: b2cfcfbdd91809cb3a01a5bdc69bee2d90b19f6d
+  react-native-contacts: 7d0b7ccd5f00df82ceca035935fc9d6e63af5aec
   react-native-fbsdk: 45e28bbab3e905cbc635c0bdd3444b372e933ae9
   react-native-geolocation: a7b94614afbd5fd8350e0233a2025c8228fc8041
   react-native-google-maps: 2e2e697dab576abd5809d78cd74e775865b62bf7
