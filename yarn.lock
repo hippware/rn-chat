@@ -7704,10 +7704,10 @@ react-native-config@^0.11.7:
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-0.11.7.tgz#a2b323f2ecd76a4df88cbb6bc86eaa2ef9febee7"
   integrity sha512-dn5s+zhwLyE25vRT/vaEtLk/j8ZL1UZKvejORNDWakSwpOnLmFurFeaZV83IqkPlfWHXHFdsYe2IRYG1WN4WkQ==
 
-react-native-contacts@^5.0.1:
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/react-native-contacts/-/react-native-contacts-5.0.3.tgz#8f240e7dd09e654c1ca37f151534909a7cf8e272"
-  integrity sha512-fxHcUj5VzwoWrC5UihiH3qCesSUcc6RAov5QecdJ/x2i8bG39Eg5WoCdNFzvlKRALLSABj70pVcj5DdiW/qlgw==
+react-native-contacts@^5.0.4:
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-contacts/-/react-native-contacts-5.0.4.tgz#fc3049b0bcc1f3e22a2f7b15a5ae678bd229249e"
+  integrity sha512-72z/kB3vNVTwanbqVkJk+0WslFl1ZxxOUEqmvHtQqLHjEZZSjN5AibPQSUxun+LsNrHHR28sErff8U2R34YX2Q==
 
 react-native-country-picker-modal@^1.7.2:
   version "1.7.2"
