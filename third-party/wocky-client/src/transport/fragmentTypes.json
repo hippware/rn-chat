@@ -2,25 +2,61 @@
   "__schema": {
     "types": [
       {
-        "possibleTypes": [{"name": "Notification"}, {"name": "NotificationDeleted"}],
-        "name": "NotificationUpdate",
-        "kind": "UNION"
-      },
-      {
-        "possibleTypes": [
-          {"name": "BotInvitationNotification"},
-          {"name": "BotInvitationResponseNotification"},
-          {"name": "BotItemNotification"},
-          {"name": "GeofenceEventNotification"},
-          {"name": "UserInvitationNotification"}
-        ],
+        "kind": "UNION",
         "name": "NotificationData",
-        "kind": "UNION"
+        "possibleTypes": [
+          {
+            "name": "BotInvitationNotification"
+          },
+          {
+            "name": "BotInvitationResponseNotification"
+          },
+          {
+            "name": "BotItemNotification"
+          },
+          {
+            "name": "GeofenceEventNotification"
+          },
+          {
+            "name": "LocationShareEndNotification"
+          },
+          {
+            "name": "LocationShareEndSelfNotification"
+          },
+          {
+            "name": "LocationShareNotification"
+          },
+          {
+            "name": "UserInvitationNotification"
+          },
+          {
+            "name": "UserProximityNotification"
+          }
+        ]
       },
       {
-        "possibleTypes": [{"name": "CurrentUser"}, {"name": "OtherUser"}],
+        "kind": "UNION",
+        "name": "NotificationUpdate",
+        "possibleTypes": [
+          {
+            "name": "Notification"
+          },
+          {
+            "name": "NotificationDeleted"
+          }
+        ]
+      },
+      {
+        "kind": "INTERFACE",
         "name": "User",
-        "kind": "INTERFACE"
+        "possibleTypes": [
+          {
+            "name": "CurrentUser"
+          },
+          {
+            "name": "OtherUser"
+          }
+        ]
       }
     ]
   }

@@ -27,10 +27,11 @@ fetch(`${'https://testing.dev.tinyrobot.com'}/graphql`, {
     // here we're filtering out any type information unrelated to unions or interfaces
     const filteredData = result.data.__schema.types.filter(type => type.possibleTypes !== null)
     result.data.__schema.types = filteredData
-    console.log(JSON.stringify(result.data))
+    const stringified = JSON.stringify(result.data, null, 2)
+    console.log(stringified)
     fs.writeFile(
       './third-party/wocky-client/src/transport/fragmentTypes.json',
-      JSON.stringify(result.data),
+      stringified,
       err => {
         if (err) {
           console.error('Error writing fragmentTypes file', err)
