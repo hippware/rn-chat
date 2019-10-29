@@ -19,7 +19,6 @@ const ChatListScreen = observer(({isActive}: Props) => {
 
   return (
     <DraggablePopupList
-      contentContainerStyle={{marginTop: chats.unreadCount > 0 ? 47 : 10}}
       data={chats.list.slice()}
       initialNumToRender={6}
       headerInner={

@@ -77,7 +77,6 @@ const HomeStore = types
     focusedLocation: types.maybeNull(Location),
     mapCenterLocation: types.maybeNull(Location),
     selectedId: types.maybe(types.string),
-    mapType: types.optional(types.enumeration(['hybrid', 'standard']), 'standard'),
     followingUser: false,
     mapOptions: types.optional(MapOptions, 'auto'),
   })
@@ -128,6 +127,17 @@ const HomeStore = types
           })
         return [wocky.profile, ...friends]
       },
+      get mapType() {
+        switch (self.mapOptions) {
+          case 'satellite':
+            return 'hybrid'
+          case 'street':
+            return 'standard'
+          case 'auto':
+          default:
+            return self.latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard'
+        }
+      },
     }
   })
   .views(self => ({
@@ -161,16 +171,10 @@ const HomeStore = types
     select(id: string) {
       self.selectedId = id
     },
-    setMapType(type: 'standard' | 'hybrid') {
-      self.mapType = type
-    },
   }))
   .actions(self => ({
     setLatitudeDelta(delta) {
       self.latitudeDelta = delta
-      if (self.mapOptions === 'auto') {
-        self.setMapType(self.latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard')
-      }
     },
     setIndex(index: number) {
       self.fullScreenMode = false
@@ -200,13 +204,6 @@ const HomeStore = types
     return {
       setMapOptions(value) {
         self.mapOptions = value
-        if (self.mapOptions === 'satellite') {
-          self.setMapType('hybrid')
-        } else if (self.mapOptions === 'street') {
-          self.setMapType('standard')
-        } else {
-          self.setLatitudeDelta(self.latitudeDelta)
-        }
       },
       followUserOnMap(user: IProfile) {
         if (user.currentLocation) {
