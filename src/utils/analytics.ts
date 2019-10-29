@@ -51,8 +51,9 @@ export class Analytics {
     }
     // track only create profile events to Facebook
     if (name === 'createprofile_complete') {
-      AppEventsLogger.logEvent(name)
-      // AppEventsLogger.logEvent(name, properties)
+      // Since the JS module doesn't provide constants this is pulled straight from...
+      // https://github.com/facebook/facebook-android-sdk/blob/master/facebook-core/src/main/java/com/facebook/appevents/AppEventsConstants.java#L42
+      AppEventsLogger.logEvent('fb_mobile_complete_registration')
     }
     try {
       if (!properties) {
