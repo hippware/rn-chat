@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.30.1 - 2019 Oct 29
+
 * [dev] Make ownProfile.location as computed from locationStore (#4264)
 * Messages: Unable to scroll to bottom of message list (#4321)
 * Fixes for: Map Options CTA (#4185)
