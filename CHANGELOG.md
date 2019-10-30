@@ -4,6 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Update: react-navigation-stack (PR #4332), assert (PR #4335)
+  * @babel/runtime (PR #4336), pretty-quick (PR #4337)
+  * react-native-contacts (PR #4328)
+* List all friends in Header Widget (#3960)
+
 # 4.30.1 - 2019 Oct 29
 
 * [dev] Make ownProfile.location as computed from locationStore (#4264)
