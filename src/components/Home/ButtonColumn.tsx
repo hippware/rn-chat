@@ -1,18 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import {Animated, StyleSheet, View, TouchableOpacity, Image} from 'react-native'
 import {k, minHeight, s} from '../Global'
-import {inject} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
 import {colors} from '../../constants'
-import {Card, IHomeStore} from '../../store/HomeStore'
 import {observer} from 'mobx-react'
+import {useHomeStore, useNavStore} from 'src/utils/injectors'
 
 type Props = {
   enabled: boolean
-  setIndex: any
-  list: Card[]
-  index: number
-  homeStore?: IHomeStore
 }
 
 const create = require('../../../images/create.png')
@@ -22,8 +17,10 @@ const marginBottom = 14 * s
 const totalHeight = height + marginBottom
 const buttonPadding = 10
 
-const HorizontalCardList = observer(({enabled}: Props) => {
+const ButtonColumn = observer(({enabled}: Props) => {
   const [translateY] = useState(new Animated.Value(0))
+  const homeStore = useHomeStore()
+  const navStore = useNavStore()
 
   useEffect(() => {
     Animated.spring(translateY, {
@@ -32,48 +29,40 @@ const HorizontalCardList = observer(({enabled}: Props) => {
   }, [enabled])
 
   return (
-    <Animated.View
-      style={{alignSelf: 'flex-end', transform: [{translateY}]}}
-      pointerEvents="box-none"
-    >
-      <ButtonColumn />
+    <Animated.View style={{marginBottom: 50, transform: [{translateY}]}} pointerEvents="box-none">
+      {navStore.scene !== 'botCompose' && (
+        <View
+          style={{
+            alignSelf: 'flex-end',
+            paddingRight: buttonPadding,
+          }}
+          pointerEvents="none"
+        >
+          {!homeStore.fullScreenMode && (
+            <>
+              <TouchableOpacity onPress={Actions.mapOptions} style={styles.button}>
+                <View>
+                  <Image source={mapOptionsButton} />
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => {
+                  Actions.createBot()
+                }}
+                style={styles.button}
+              >
+                <Image source={create} />
+              </TouchableOpacity>
+            </>
+          )}
+        </View>
+      )}
     </Animated.View>
   )
 })
 
-export default HorizontalCardList
-
-const ButtonColumn = inject('homeStore', 'navStore')(
-  observer(({homeStore, navStore}: any) =>
-    navStore.scene !== 'botCompose' ? (
-      <View
-        style={{
-          alignSelf: 'flex-end',
-          paddingRight: buttonPadding,
-        }}
-      >
-        {!homeStore.fullScreenMode && (
-          <View>
-            <TouchableOpacity onPress={Actions.mapOptions} style={styles.button}>
-              <View>
-                <Image source={mapOptionsButton} />
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => {
-                Actions.createBot()
-              }}
-              style={styles.button}
-            >
-              <Image source={create} />
-            </TouchableOpacity>
-          </View>
-        )}
-      </View>
-    ) : null
-  )
-)
+export default ButtonColumn
 
 const dotWidth = 13
 

@@ -2,7 +2,7 @@ import React from 'react'
 import {View} from 'react-native'
 import {observer} from 'mobx-react'
 import MapHome from './MapHome'
-import HorizontalCardList from './HorizontalCardList'
+import ButtonColumn from './ButtonColumn'
 import HomeBanner from './HomeBanner'
 import {width, height} from '../Global'
 import {useNavStore, useHomeStore} from 'src/utils/injectors'
@@ -14,7 +14,7 @@ type Props = {
 const Home = observer(({name}: Props) => {
   const homeStore = useHomeStore()
   const navStore = useNavStore()
-  const {fullScreenMode, setIndex, list, index} = homeStore!
+  const {fullScreenMode} = homeStore
   const isCurrent = navStore!.scene === name
   return (
     <View
@@ -27,14 +27,7 @@ const Home = observer(({name}: Props) => {
     >
       <MapHome />
       <HomeBanner enabled={!fullScreenMode && isCurrent} />
-      {isCurrent && (
-        <HorizontalCardList
-          setIndex={setIndex}
-          list={list.slice()}
-          index={index}
-          enabled={!fullScreenMode && isCurrent}
-        />
-      )}
+      {isCurrent && <ButtonColumn enabled={!fullScreenMode && isCurrent} />}
     </View>
   )
 })
