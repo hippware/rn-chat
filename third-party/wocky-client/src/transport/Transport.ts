@@ -762,7 +762,7 @@ export class Transport {
   ): Promise<void> {
     return this.voidMutation({
       mutation: gql`
-        mutation messageSend($input: SendMessageInput!) {
+        mutation messageSend($input: MessageSendInput!) {
           messageSend(input: $input) {
             ${VOID_PROPS}
           }
