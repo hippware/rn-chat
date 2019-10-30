@@ -25,7 +25,7 @@ import ActiveLocationSharer from './ActiveLocationSharer'
 import {observer} from 'mobx-react'
 import {RText} from '../common'
 
-const MAX_FRIENDS_COUNT = 2
+const MAX_FRIENDS_COUNT = 20
 
 type Props = {
   wocky?: IWocky
