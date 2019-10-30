@@ -22,6 +22,7 @@ import OnboardingSlideshow from './OnboardingSlideshowScene'
 import * as peopleLists from './people-lists'
 import FriendSearch from './people-lists/FriendSearch'
 import VisitorList from './people-lists/VisitorList'
+import AllFriendList from './people-lists/AllFriendList'
 import ReportUser, {ReportUserRightButton} from './report-modals/ReportUser'
 import ReportBot, {ReportBotRightButton} from './report-modals/ReportBot'
 import SignIn from './SignIn'
@@ -156,6 +157,7 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
                     <Scene key="mapOptions" component={MapOptions} />
                   </Stack>
                   <Scene key="chat" path="conversation/:item" component={ChatScreen} />
+                  <Scene key="allFriends" component={AllFriendList} title="Friends" />
                   <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
                   <Scene key="liveLocationSelectFriends" component={LiveLocationShare} title="Select Friends" />
                   <Scene key="myAccount" component={MyAccount} editMode back />

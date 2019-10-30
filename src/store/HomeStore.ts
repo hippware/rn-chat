@@ -82,6 +82,7 @@ const HomeStore = types
   })
   .volatile(() => ({
     latitudeDelta: INIT_DELTA,
+    friendFilter: '',
   }))
   .views(self => {
     const {navStore, wocky} = getRoot<IStore>(self)
@@ -108,24 +109,10 @@ const HomeStore = types
         return [new TutorialCard(), new YouCard(), ...sharers, ...localBots]
       },
       get headerItems(): IProfile[] {
-        function compare(a: boolean, b: boolean) {
-          return b === a ? 0 : b ? 1 : -1
-        }
         if (!wocky || !wocky.profile) {
           return []
         }
-        const friends = wocky
-          .profile!.friends.list.map(({user}) => user)
-          .sort((a: IProfile, b: IProfile) => {
-            return (
-              compare(!!a.unreadCount, !!b.unreadCount) ||
-              (!!a.unreadCount && b.unreadTime - a.unreadTime) ||
-              compare(a.sharesLocation, b.sharesLocation) ||
-              (a.sharesLocation && a.distance - b.distance) ||
-              a.handle!.localeCompare(b.handle!)
-            )
-          })
-        return [wocky.profile, ...friends]
+        return [wocky.profile, ...wocky.profile!.allFriends]
       },
       get mapType() {
         switch (self.mapOptions) {
@@ -150,6 +137,9 @@ const HomeStore = types
     },
   }))
   .actions(self => ({
+    setFriendFilter(filter: string) {
+      self.friendFilter = filter
+    },
     setFocusedLocation(location) {
       if (!location) {
         self.focusedLocation = null
@@ -227,6 +217,17 @@ const HomeStore = types
     // store mapOptions
     return {mapOptions: snapshot.mapOptions}
   })
+  .views(self => ({
+    get filteredFriends() {
+      const {wocky} = getRoot<IStore>(self)
+      if (!wocky || !wocky.profile) {
+        return []
+      }
+      return wocky.profile!.allFriends.filter((value: IProfile) =>
+        value.handle!.toLocaleLowerCase().startsWith(self.friendFilter.toLocaleLowerCase())
+      )
+    },
+  }))
 
 export default HomeStore
 type HomeStoreType = typeof HomeStore.Type
