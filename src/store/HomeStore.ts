@@ -106,7 +106,7 @@ const HomeStore = types
               )
             : []
         const localBots = wocky.localBots.list.map(bot => new BotCard(bot))
-        return [new TutorialCard(), new YouCard(), ...sharers, ...localBots]
+        return [new YouCard(), ...sharers, ...localBots]
       },
       get headerItems(): IProfile[] {
         if (!wocky || !wocky.profile) {
@@ -130,10 +130,6 @@ const HomeStore = types
   .views(self => ({
     get list(): Card[] {
       return self.creationMode ? [] : self.cards
-    },
-    get index(): number {
-      const index = self.cards.findIndex(card => card.id === self.selectedId)
-      return index !== -1 ? index : 0
     },
   }))
   .actions(self => ({
@@ -165,13 +161,6 @@ const HomeStore = types
   .actions(self => ({
     setLatitudeDelta(delta) {
       self.latitudeDelta = delta
-    },
-    setIndex(index: number) {
-      self.fullScreenMode = false
-      self.select(self.cards[index].id)
-      if (self.cards[self.index].location) {
-        self.setFocusedLocation(self.cards[self.index].location)
-      }
     },
     logout() {
       applySnapshot(self, {})
