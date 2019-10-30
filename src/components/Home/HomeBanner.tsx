@@ -23,6 +23,9 @@ import {INavStore} from '../../store/NavStore'
 import {IHomeStore} from '../../store/HomeStore'
 import ActiveLocationSharer from './ActiveLocationSharer'
 import {observer} from 'mobx-react'
+import {RText} from '../common'
+
+const MAX_FRIENDS_COUNT = 20
 
 type Props = {
   wocky?: IWocky
@@ -35,6 +38,29 @@ type Props = {
 export interface IActiveBannerItem {
   outerStyle: ViewStyle
   innerStyle: ViewStyle
+}
+
+const SeeAllFriends = () => {
+  return (
+    <View style={{flex: 1}}>
+      <TouchableOpacity
+        style={{flex: 1, marginTop: 28, marginLeft: 14, marginRight: 20}}
+        onPress={Actions.allFriends}
+      >
+        <Image source={require('../../../images/seeAllFriends.png')} />
+        <RText
+          size={13}
+          style={{textAlign: 'center', marginTop: 7}}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+          color={colors.PINK}
+          weight="Medium"
+        >
+          See All
+        </RText>
+      </TouchableOpacity>
+    </View>
+  )
 }
 
 const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
@@ -75,13 +101,17 @@ const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
           }}
         >
           <FlatList
-            data={homeStore!.headerItems}
+            data={homeStore!.headerItems.slice(0, MAX_FRIENDS_COUNT + 1)}
             horizontal
             keyExtractor={item => item.id}
             renderItem={renderBannerItem}
             showsHorizontalScrollIndicator={false}
             ListFooterComponent={
-              homeStore!.headerItems.length === 1 ? <ActiveBannerPlaceholder /> : null
+              homeStore!.headerItems.length === 1 ? (
+                <ActiveBannerPlaceholder />
+              ) : homeStore!.headerItems.length > MAX_FRIENDS_COUNT ? (
+                <SeeAllFriends />
+              ) : null
             }
             style={{paddingLeft: 8 * k}}
           />

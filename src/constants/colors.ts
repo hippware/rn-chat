@@ -54,6 +54,9 @@ export const GOLD = 'rgb(255,197,54)'
 // #FFFFFF
 export const WHITE = 'rgb(255,255,255)'
 
+// #FFFFFF
+export const WHITE2 = 'rgb(247,247,247)'
+
 export const hexToRgba = (hex: string, alpha: number): string => {
   let c: any
   if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
