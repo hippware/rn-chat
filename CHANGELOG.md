@@ -6,8 +6,12 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Update: react-navigation-stack (PR #4332), assert (PR #4335)
   * @babel/runtime (PR #4336), pretty-quick (PR #4337)
-  * react-native-contacts (PR #4328)
+  * react-native-contacts (PR #4328), ts-unused-exports (removed, PR #4330)
+  * async-storage (PR #4344), react-native-image-crop-picker (PR #4345)
+  * react-native-config (PR #4343)
 * List all friends in Header Widget (#3960)
+* Replace deprecated `SendMessageInput` (PR #4347)
+* New UI screen to list all friends (#4325)
 
 # 4.30.1 - 2019 Oct 29
 
