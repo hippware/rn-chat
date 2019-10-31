@@ -1,6 +1,7 @@
 import React from 'react'
 import {View, Image, Text, ImageBackground} from 'react-native'
 import {Avatar} from '../common'
+import {observer} from 'mobx-react'
 import {IProfile} from 'wocky-client'
 
 type Props = {
@@ -39,12 +40,12 @@ const Badge = ({style, background, text}) => {
       }}
     >
       <Image source={background} style={{position: 'absolute'}} resizeMode="contain" />
-      <Text style={[{bottom: 3, color: 'white'}, style]}>{text}</Text>
+      <Text style={[{textAlign: 'center', bottom: 3, color: 'white'}, style]}>{text}</Text>
     </View>
   )
 }
 
-const LocationAvatar = ({profile, hidden, tappable, noFade, asHeaderItem}: Props) => {
+const LocationAvatar = observer(({profile, hidden, tappable, noFade, asHeaderItem}: Props) => {
   const sharesLocation = profile.isLocationShared
   const currentActivity = profile.currentActivity
   const isStill = currentActivity === 'still'
@@ -76,13 +77,19 @@ const LocationAvatar = ({profile, hidden, tappable, noFade, asHeaderItem}: Props
         tappable={tappable}
       />
       {!!asHeaderItem && !!profile.unreadCount && (
-        <Badge style={{top: 1}} text={profile.unreadCount} background={unreadCounter} />
+        // For many messages, '9+' isn't quite centered. Show ' 9+' instead.
+        //   It's a hack.
+        <Badge
+          style={{top: 1}}
+          text={profile.unreadCount > 9 ? ` 9+` : `${profile.unreadCount}`}
+          background={unreadCounter}
+        />
       )}
       {(!asHeaderItem || !profile.unreadCount) && !!theActivity && (
         <Badge style={{left: 1}} text={theActivity} background={activity} />
       )}
     </ImageBackground>
   )
-}
+})
 
 export default LocationAvatar
