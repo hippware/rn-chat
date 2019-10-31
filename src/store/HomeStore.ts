@@ -1,5 +1,5 @@
 /* tslint:disable:max-classes-per-file */
-import {types, applySnapshot, getRoot} from 'mobx-state-tree'
+import {types, applySnapshot, getRoot, Instance} from 'mobx-state-tree'
 import {IBot, IProfile, Location, ILocation} from 'wocky-client'
 import {autorun} from 'mobx'
 
@@ -218,5 +218,5 @@ const HomeStore = types
   }))
 
 export default HomeStore
-type HomeStoreType = typeof HomeStore.Type
-export interface IHomeStore extends HomeStoreType {}
+
+export interface IHomeStore extends Instance<typeof HomeStore> {}
