@@ -12,6 +12,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * List all friends in Header Widget (#3960)
 * Replace deprecated `SendMessageInput` (PR #4347)
 * New UI screen to list all friends (#4325)
+* TypeError in Profile.ts:192: null is not an object (#4351)
+* Including unread message count in header widget. (#3959)
 
 # 4.30.1 - 2019 Oct 29
 
