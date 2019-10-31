@@ -180,10 +180,10 @@ export const Profile = types
         },
         get distance(): number {
           const {locationStore} = getRoot(self)
-          if (!self.location || !locationStore) {
+          const ownProfile = self.service && self.service.profile
+          if (!self.location || !locationStore || !ownProfile || !ownProfile.currentLocation) {
             return Number.MAX_SAFE_INTEGER
           }
-          const ownProfile = self.service && self.service.profile
           const loc1 = self.location
           const loc2 = ownProfile.currentLocation
           return locationStore.distance(
