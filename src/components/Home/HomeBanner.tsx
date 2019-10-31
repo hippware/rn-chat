@@ -42,24 +42,22 @@ export interface IActiveBannerItem {
 
 const SeeAllFriends = () => {
   return (
-    <View style={{flex: 1}}>
-      <TouchableOpacity
-        style={{flex: 1, marginTop: 28, marginLeft: 14, marginRight: 20}}
-        onPress={Actions.allFriends}
+    <TouchableOpacity
+      style={{flex: 1, marginTop: 28, marginLeft: 14, marginRight: 20}}
+      onPress={Actions.allFriends}
+    >
+      <Image source={require('../../../images/seeAllFriends.png')} />
+      <RText
+        size={13}
+        style={{textAlign: 'center', marginTop: 7}}
+        numberOfLines={1}
+        ellipsizeMode="tail"
+        color={colors.PINK}
+        weight="Medium"
       >
-        <Image source={require('../../../images/seeAllFriends.png')} />
-        <RText
-          size={13}
-          style={{textAlign: 'center', marginTop: 7}}
-          numberOfLines={1}
-          ellipsizeMode="tail"
-          color={colors.PINK}
-          weight="Medium"
-        >
-          See All
-        </RText>
-      </TouchableOpacity>
-    </View>
+        See All
+      </RText>
+    </TouchableOpacity>
   )
 }
 
