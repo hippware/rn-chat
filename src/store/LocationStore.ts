@@ -15,14 +15,13 @@ import Geolocation from 'react-native-geolocation-service'
 const MAX_DATE1 = '2030-01-01-17:00'
 const MAX_DATE2 = '2030-01-01-18:00'
 
-export const BG_STATE_PROPS = ['distanceFilter', 'autoSyncThreshold', 'debug']
+export const BG_STATE_PROPS = ['distanceFilter', 'autoSyncThreshold']
 
 const prefix = 'BGGL'
 
 const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOptions', {
   autoSyncThreshold: types.maybeNull(types.number),
   distanceFilter: types.maybeNull(types.number),
-  debug: types.maybeNull(types.boolean),
 })
 
 // todo: https://github.com/hippware/rn-chat/issues/3434
@@ -36,7 +35,6 @@ const LocationStore = types
   .volatile(() => ({
     enabled: true,
     alwaysOn: true,
-    debugSounds: false,
   }))
   .views(self => ({
     distance: (lat1: number, lon1: number, lat2: number, lon2: number): number => {
@@ -169,13 +167,11 @@ const LocationStore = types
 
       warn(prefix, 'location error', err)
       BackgroundGeolocation.logger.error(`${prefix} onLocationError ${err}`)
-      if (self.debugSounds) BackgroundGeolocation.playSound(1024) // descent
     }
 
     function onHttp(response) {
       log(prefix, 'on http', response)
       if (response.status >= 200 && response.status < 300) {
-        if (self.debugSounds) BackgroundGeolocation.playSound(1016) // tweet sent
         // analytics.track('location_bg_success', {location: self.location})
       } else {
         if (response.status === 401 || response.status === 403) {
@@ -184,7 +180,6 @@ const LocationStore = types
           BackgroundGeolocation.logger.error(`${prefix} BackgroundGeolocation.stop() due to error`)
         }
 
-        if (self.debugSounds) BackgroundGeolocation.playSound(1024) // descent
         analytics.track('location_bg_error', {error: response})
       }
     }
@@ -244,11 +239,6 @@ const LocationStore = types
     })
 
     function setBackgroundConfig(config) {
-      if (config.debugSounds && !self.debugSounds) BackgroundGeolocation.playSound(1028) // newsflash
-      self.setState({
-        debugSounds: config.debugSounds,
-      })
-
       // For some reason, these parameters must be ints, not strings
       config.autoSyncThreshold = parseInt(config.autoSyncThreshold)
       BackgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)
