@@ -139,6 +139,11 @@ const LocationStore = types
         log(prefix, 'Configure')
       }
     }),
+    setUploadRate(fast: boolean = false) {
+      BackgroundGeolocation.setConfig({
+        autoSyncThreshold: fast ? 0 : 10,
+      })
+    },
   }))
   .actions(self => {
     const {transport} = getEnv(self)
@@ -173,6 +178,17 @@ const LocationStore = types
       log(prefix, 'on http', response)
       if (response.status >= 200 && response.status < 300) {
         // analytics.track('location_bg_success', {location: self.location})
+
+        let data: any = false
+        try {
+          data = response.responseText && JSON.parse(response.responseText)
+        } catch (e) {
+          // no-op
+        }
+
+        if (data) {
+          self.setUploadRate(!!data.watched)
+        }
       } else {
         if (response.status === 401 || response.status === 403) {
           BackgroundGeolocation.stop()
