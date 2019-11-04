@@ -108,6 +108,7 @@ const LocationStore = types
     // Set reset to true to reset to defaults
     configure: flow(function*(reset = false) {
       const config = {
+        autoSyncThreshold: 0,
         batchSync: true,
         desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
         foregroundService: true, // android only
@@ -140,9 +141,15 @@ const LocationStore = types
       }
     }),
     setUploadRate(fast: boolean = false) {
-      BackgroundGeolocation.setConfig({
-        autoSyncThreshold: fast ? 0 : 10,
-      })
+      const autoSyncThreshold = fast ? 0 : 10
+      if (autoSyncThreshold !== self.backgroundOptions.autoSyncThreshold) {
+        BackgroundGeolocation.logger.info(`${prefix} setUploadRate(${fast})`)
+        log(prefix, `setUploadRate(${fast})`)
+        BackgroundGeolocation.setConfig({
+          autoSyncThreshold,
+        })
+        self.backgroundOptions.autoSyncThreshold = autoSyncThreshold
+      }
     },
   }))
   .actions(self => {
