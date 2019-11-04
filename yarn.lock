@@ -7709,10 +7709,10 @@ react-native-contacts@^5.0.4:
   resolved "https://registry.yarnpkg.com/react-native-contacts/-/react-native-contacts-5.0.4.tgz#fc3049b0bcc1f3e22a2f7b15a5ae678bd229249e"
   integrity sha512-72z/kB3vNVTwanbqVkJk+0WslFl1ZxxOUEqmvHtQqLHjEZZSjN5AibPQSUxun+LsNrHHR28sErff8U2R34YX2Q==
 
-react-native-country-picker-modal@^1.7.2:
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/react-native-country-picker-modal/-/react-native-country-picker-modal-1.7.2.tgz#353edfd6b852c6fbbecd167c9aeb08736525a078"
-  integrity sha512-Sn2xx8w+D1LUZWVDT/RIufl5anWs4OKlfzuMExTEIODbkYlzZ4K/bVLcqJhmqEPEcIUdFzl48iMHEpF/3w8zXA==
+react-native-country-picker-modal@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/react-native-country-picker-modal/-/react-native-country-picker-modal-1.8.1.tgz#fb99ac089b424b788e5fa0eacb05c8bbefc4cceb"
+  integrity sha512-TzyHfVbrWnCdplXn6Nbb8K2D31IBEKfUtjK62jBEAq+CWhRI5bSaOpH35y40lSdpa6Lz9pdmGSO+MIBGjox93g==
   dependencies:
     "@callstack/react-theme-provider" "3.0.3"
     fuse.js "3.4.5"
