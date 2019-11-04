@@ -32,7 +32,6 @@ type Props = {
   hideDot?: boolean
   borderColor?: string
   noScale?: boolean
-  isYou?: boolean
   inactive?: boolean
 }
 
@@ -94,7 +93,7 @@ const Avatar = observer(
               letter={title.length > 1 ? title[0] : title}
               showMask={showMask}
               inactive={inactive}
-              isYou={profile!.isOwn}
+              isYou={profile && profile!.isOwn}
             />
           )}
           {!hideDot && !!profile && <PresenceDot profile={profile} size={size} />}
