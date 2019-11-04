@@ -22,8 +22,8 @@ const FriendList = observer(({isActive}: Props) => {
       style={{
         borderColor: colors.LIGHT_GREY,
         borderBottomWidth: 1,
-        height: 40,
         justifyContent: 'center',
+        padding: 5,
       }}
     >
       <View
@@ -42,6 +42,7 @@ const FriendList = observer(({isActive}: Props) => {
           style={{
             flex: 1,
             fontSize: 14,
+            padding: 5,
             fontFamily: 'Roboto-Light',
             color: colors.PURPLE,
           }}
