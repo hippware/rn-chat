@@ -42,6 +42,11 @@ export const Profile = types
     delete res.subscribedBots
     return res
   })
+  .views(self => ({
+    get currentLocation() {
+      return self.location
+    },
+  }))
   .actions(self => ({
     setSharesLocation(value: boolean) {
       self.sharesLocation = value
@@ -166,17 +171,18 @@ export const Profile = types
           }
         },
         get currentActivity(): UserActivityType | null {
-          if (!self.location) return null
+          const location = self.currentLocation // this way it will work for OwnProfile too
+          if (!location) return null
 
           const now: Date = (getRoot(self) as any).wocky.timer.minute
           const activity =
-            self.location &&
-            self.location.activity &&
-            self.location.activityConfidence &&
-            self.location.activityConfidence >= 50
-              ? self.location.activity
+            location &&
+            location.activity &&
+            location.activityConfidence &&
+            location.activityConfidence >= 50
+              ? location.activity
               : null
-          const minsSinceLastUpdate = moment(now).diff(self.location!.createdAt, 'minutes')
+          const minsSinceLastUpdate = moment(now).diff(location!.createdAt, 'minutes')
           if (activity === 'still') {
             // delay 5 minutes before showing a user as 'still'
             return minsSinceLastUpdate > 5 ? 'still' : null

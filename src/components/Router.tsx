@@ -48,6 +48,7 @@ import LiveLocationCompose from './LiveLocation/LiveLocationCompose'
 import LiveLocationSettings from './LiveLocation/LiveLocationSettings'
 import LiveLocationShare from './LiveLocation/LiveLocationShare'
 import  {IHomeStore} from 'src/store/HomeStore';
+import MapOptions from './MapOptions'
 
 export const iconClose = require('../../images/iconClose.png')
 
@@ -152,6 +153,7 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
                     <Scene key="liveLocationCompose" component={LiveLocationCompose} />
                     <Scene key="liveLocationSettings" component={LiveLocationSettings} />
                     <Scene key="chats" component={ChatListScreen} title="Messages" />
+                    <Scene key="mapOptions" component={MapOptions} />
                   </Stack>
                   <Scene key="chat" path="conversation/:item" component={ChatScreen} />
                   <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />

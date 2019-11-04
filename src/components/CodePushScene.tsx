@@ -40,7 +40,7 @@ const CodePushScene = observer(() => {
       </View>
 
       <Channels />
-      {metadata && <ClearUpdates />}
+      {!!metadata && <ClearUpdates />}
       {downloadProgress > 0 && Platform.OS === 'ios' && (
         <ProgressViewIOS progress={downloadProgress} style={{marginVertical: 10}} />
       )}

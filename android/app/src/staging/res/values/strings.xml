@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">tinyrobot Staging</string>
     <string name="app_deeplink_scheme">tinyrobotstaging</string>
+    <string name="facebook_app_id">558902914864970</string>
 </resources>

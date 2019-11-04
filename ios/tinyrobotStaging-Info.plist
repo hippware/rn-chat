@@ -19,7 +19,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>4.29.1</string>
+	<string>4.30.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -40,6 +40,17 @@
 				<string>com.googleusercontent.apps.548019610697-uhugcd91bvgpbbui93s57m14j97amt78</string>
 			</array>
 		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>558902914864970</string>
+	<key>FacebookDisplayName</key>
+	<string>tinyrobot</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>120</string>
@@ -93,13 +104,13 @@
 	<key>NSContactsUsageDescription</key>
 	<string>We upload your contacts so you can choose who to add as friends. Check out our Privacy Policy for more information.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Your current location is used to provide presence alerts via in-app &amp; push notifications when you or your friends/family visit locations where you've explicitly agreed to share presence.</string>
+	<string>Your current location is used to provide presence alerts via in-app &amp; push notifications when you or your friends/family visit locations where you&apos;ve explicitly agreed to share presence.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Your current location is used to provide presence alerts via in-app &amp; push notifications when you or your friends/family visit locations where you've explicitly agreed to share presence.</string>
+	<string>Your current location is used to provide presence alerts via in-app &amp; push notifications when you or your friends/family visit locations where you&apos;ve explicitly agreed to share presence.</string>
 	<key>NSLocationUsageDescription</key>
-	<string>Your current location is used to provide presence alerts via in-app &amp; push notifications when you or your friends/family visit locations where you've explicitly agreed to share presence.</string>
+	<string>Your current location is used to provide presence alerts via in-app &amp; push notifications when you or your friends/family visit locations where you&apos;ve explicitly agreed to share presence.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Your current location is used to provide presence alerts via in-app &amp; push notifications when you or your friends/family visit locations where you've explicitly agreed to share presence.</string>
+	<string>Your current location is used to provide presence alerts via in-app &amp; push notifications when you or your friends/family visit locations where you&apos;ve explicitly agreed to share presence.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This application requires access to microfone to work</string>
 	<key>NSMotionUsageDescription</key>

@@ -10,7 +10,7 @@ import CountryPicker, {getAllCountries} from 'react-native-country-picker-modal'
 import {CountryCode, Country, FlagType} from 'react-native-country-picker-modal/lib/types'
 
 import {Actions} from 'react-native-router-flux'
-import {parse, AsYouType as asYouType} from 'libphonenumber-js'
+import {parse, AsYouType as asYouType, isSupportedCountry} from 'libphonenumber-js'
 import {PINK} from 'src/constants/colors'
 import {observer} from 'mobx-react'
 import {useFirebaseStore} from 'src/utils/injectors'
@@ -42,9 +42,11 @@ const SignIn = observer(() => {
   }
 
   function processText(text: string) {
-    const parsed = parse(text, countryCode as any)
+    // Only pass in country codes that libphonenumber-js knows about
+    const maybeSupportedCountryCode: any = isSupportedCountry(countryCode) ? countryCode : undefined
+    const parsed = parse(text, maybeSupportedCountryCode)
     setPhoneValid(!!(parsed.country && parsed.phone))
-    setPhoneValue(/\d{4,}/.test(text) ? new asYouType(countryCode as any).input(text) : text)
+    setPhoneValue(/\d{4,}/.test(text) ? new asYouType(maybeSupportedCountryCode).input(text) : text)
   }
 
   async function submit(): Promise<void> {

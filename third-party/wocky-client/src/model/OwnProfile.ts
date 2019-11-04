@@ -61,6 +61,10 @@ export const OwnProfile = types
     return res
   })
   .views(self => ({
+    get currentLocation() {
+      const {locationStore} = getRoot(self)
+      return locationStore.location
+    },
     get isLocationShared() {
       return self.locationShares.length > 0
     },

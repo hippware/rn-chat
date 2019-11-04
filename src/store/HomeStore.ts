@@ -4,6 +4,10 @@ import {IBot, IProfile, Location, ILocation} from 'wocky-client'
 import {IStore} from './store'
 import {autorun} from 'mobx'
 
+export const DEFAULT_DELTA = 0.00522
+export const TRANS_DELTA = DEFAULT_DELTA + 0.005
+export const INIT_DELTA = 0.04
+
 export class Card {
   get id(): string {
     return this.name
@@ -64,15 +68,21 @@ export class LocationSharerCard extends Card {
   }
 }
 
+const MapOptions = types.enumeration(['auto', 'satellite', 'street'])
+export type MapOptionsType = typeof MapOptions.Type
+
 const HomeStore = types
   .model('HomeStore', {
     fullScreenMode: false,
     focusedLocation: types.maybeNull(Location),
     mapCenterLocation: types.maybeNull(Location),
     selectedId: types.maybe(types.string),
-    mapType: types.optional(types.enumeration(['hybrid', 'standard']), 'standard'),
     followingUser: false,
+    mapOptions: types.optional(MapOptions, 'auto'),
   })
+  .volatile(() => ({
+    latitudeDelta: INIT_DELTA,
+  }))
   .views(self => {
     const {navStore, wocky} = getRoot<IStore>(self)
     return {
@@ -96,6 +106,17 @@ const HomeStore = types
             : []
         const localBots = wocky.localBots.list.map(bot => new BotCard(bot))
         return [new TutorialCard(), new YouCard(), ...sharers, ...localBots]
+      },
+      get mapType() {
+        switch (self.mapOptions) {
+          case 'satellite':
+            return 'hybrid'
+          case 'street':
+            return 'standard'
+          case 'auto':
+          default:
+            return self.latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard'
+        }
       },
     }
   })
@@ -130,11 +151,11 @@ const HomeStore = types
     select(id: string) {
       self.selectedId = id
     },
-    setMapType(type: 'standard' | 'hybrid') {
-      self.mapType = type
-    },
   }))
   .actions(self => ({
+    setLatitudeDelta(delta) {
+      self.latitudeDelta = delta
+    },
     setIndex(index: number) {
       self.fullScreenMode = false
       self.select(self.cards[index].id)
@@ -161,10 +182,13 @@ const HomeStore = types
   .actions(self => {
     let disposer: any = null
     return {
+      setMapOptions(value) {
+        self.mapOptions = value
+      },
       followUserOnMap(user: IProfile) {
         if (disposer) disposer()
         self.followingUser = true
-        disposer = autorun(() => self.setFocusedLocation(user.location), {
+        disposer = autorun(() => self.setFocusedLocation(user.currentLocation), {
           name: 'FollowUserOnMap',
         })
       },
@@ -178,8 +202,8 @@ const HomeStore = types
     }
   })
   .postProcessSnapshot((snapshot: any) => {
-    // No need to persist this store
-    return {}
+    // store mapOptions
+    return {mapOptions: snapshot.mapOptions}
   })
 
 export default HomeStore

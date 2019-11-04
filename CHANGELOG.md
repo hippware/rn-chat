@@ -4,10 +4,50 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.30.1 - 2019 Oct 29
+
+* [dev] Make ownProfile.location as computed from locationStore (#4264)
+* Messages: Unable to scroll to bottom of message list (#4321)
+* Fixes for: Map Options CTA (#4185)
+* Log special "complete registration" event (PR #4339)
+  * Implementing Facebook SDK For Facebook Ad Tracking (#4278)
+
+# 4.30.0 - 2019 Oct 24
+
+* Revert: Enable debugging features for PROD.
+* Speculative fix: IllegalViewOperationException in Layout.java (#4262)
+* Update: @babel/core (PR #4303), @babel/node (PR #4297)
+  * @babel/plugin-proposal-object-rest-spread (PR #4311)
+  * @babel/plugin-transform-flow-strip-types (PR #4299)
+  * @types/lodash (PR #4292), @types/phoenix (PR #4273)
+  * graphql (PR #4295), husky (PR #4291), libphonenumber-js (PR #4306)
+  * mobx (PR #4298), react-dom (PR #4310)
+  * react-navigation-stack (PR #4305)
+  * react-native-background-geolocation (PR #4296)
+  * react-native-country-picker-modal (PR #4300)
+  * react-native-device-info (PR #4308)
+  * react-native-localize (PR #4269, PR #4307, PR #4317)
+  * react-native-maps (PR #4293), react-native-swiper (PR #4272)
+  * react-test-renderer (PR #4270), tslint-react (PR #4294)
+* Remove "Current Location" CTA (#4213)
+* Map Options CTA (#4185)
+* Error: src/components/SignIn.tsx:45 Unknown country: AQ (#4287)
+* First app launch removes location sharers for some users (#4313)
+* Misc locationstore tweaks (PR #4316)
+* Add 'Updates' to BottomMenu (#4289)
+* Implementing Facebook SDK For Facebook Ad Tracking (#4278, PR #4318)
+  * Add facebook SDK (PR #4279, PR #4290)
+
+# 4.29.2 - 2019 Oct 24
+
+Special debug version for Prod.
+
+* Enable debugging features for PROD.
+
 # 4.29.1 - 2019 Oct 17
 
-* Who's Here: List only displays 1 visitor (PR #4276)
-* iOS status bar has white text (PR #4281)
+* Who's Here: List only displays 1 visitor (#4276)
+* iOS status bar has white text (#4281)
 
 # 4.29.0 - 2019 Oct 15
 
