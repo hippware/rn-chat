@@ -13,17 +13,12 @@ import {observer} from 'mobx-react'
 const Form = t.form.Form
 
 const debuggerSettings = t.struct({
-  debug: t.Boolean,
-  debugSounds: t.Boolean,
   distanceFilter: t.Number,
   autoSyncThreshold: t.Number,
 })
 
 const options = {
   fields: {
-    debug: {
-      label: 'Background location debug mode',
-    },
     distanceFilter: {
       label: 'distanceFilter (in meters)',
     },
@@ -34,10 +29,9 @@ const options = {
 }
 
 const LocationDebug = observer(() => {
-  const {backgroundOptions, debugSounds, setBackgroundConfig, emailLog} = useLocationStore()
+  const {backgroundOptions, setBackgroundConfig, emailLog} = useLocationStore()
   if (!backgroundOptions) return null
-  let value = _.pick(backgroundOptions, BG_STATE_PROPS)
-  value = _.assign(value, {debugSounds})
+  const value = _.pick(backgroundOptions, BG_STATE_PROPS)
 
   return (
     <Screen style={{flex: 1, paddingVertical: 20}}>
