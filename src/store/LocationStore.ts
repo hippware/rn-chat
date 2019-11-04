@@ -111,6 +111,7 @@ const LocationStore = types
       singleton = self
 
       const config = {
+        autoSyncThreshold: 0,
         batchSync: true,
         desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
         enableHeadless: true,
@@ -144,9 +145,15 @@ const LocationStore = types
       }
     }),
     setUploadRate(fast: boolean = false) {
-      BackgroundGeolocation.setConfig({
-        autoSyncThreshold: fast ? 0 : 10,
-      })
+      const autoSyncThreshold = fast ? 0 : 10
+      if (autoSyncThreshold !== self.backgroundOptions.autoSyncThreshold) {
+        BackgroundGeolocation.logger.info(`${prefix} setUploadRate(${fast})`)
+        log(prefix, `setUploadRate(${fast})`)
+        BackgroundGeolocation.setConfig({
+          autoSyncThreshold,
+        })
+        self.backgroundOptions.autoSyncThreshold = autoSyncThreshold
+      }
     },
   }))
   .actions(self => {
