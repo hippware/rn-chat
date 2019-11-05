@@ -201,13 +201,7 @@ export const Profile = types
           if (!location) return null
 
           const now: Date = (getRoot(self) as any).wocky.timer.minute
-          const activity =
-            location &&
-            location.activity &&
-            location.activityConfidence &&
-            location.activityConfidence >= 50
-              ? location.activity
-              : null
+          const activity = location && location.activity ? location.activity : null
           const minsSinceLastUpdate = moment(now).diff(location!.createdAt, 'minutes')
           if (activity === 'still') {
             // delay 5 minutes before showing a user as 'still'
