@@ -81,6 +81,12 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
         },
         {delay: 1000}
       )
+
+      // one-time nav to own profile details preview when app starts
+      when(() => navStore!.scene === 'home', () => {
+        Actions.profileDetails({item: wocky!.profile!.id, preview: true})
+      })
+      
     }, [])
 
     const onDeepLink = async ({action, params}) => {
@@ -115,7 +121,10 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
     const uriPrefix = Platform.select({ios: settings.uriPrefix, android: settings.uriPrefix.toLowerCase()})
 
     return (
-      <Router onStateChange={() => navStore!.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={onDeepLink}>
+      <Router onStateChange={() => {
+        navStore!.setScene(Actions.currentScene)
+        navStore!.setIsPreviewScene(!!(Actions.currentParams as any).preview)
+      }} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={onDeepLink}>
         <Tabs hideNavBar hideTabBar>
           <Lightbox hideNavBar type="replace">
             <Scene key="checkCredentials" component={Launch} on={() => authStore!.canLogin} success="checkProfile" failure="preConnection" />
