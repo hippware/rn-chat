@@ -15,13 +15,13 @@ const AnimatedMainScene = ({scene, transitionProps}: Props) => {
     index,
     scene: {
       route: {
-        params: {fromTop},
+        params: {fromTop, preview},
       },
     },
   } = transitionProps
-  if (index > 0 && !fromTop && !isOffset) {
+  if (index > 0 && !fromTop && !isOffset && !preview) {
     slideSceneTo(-150)
-  } else if ((fromTop || index === 0) && isOffset) {
+  } else if ((fromTop || preview || index === 0) && isOffset) {
     slideSceneTo(0)
   }
 

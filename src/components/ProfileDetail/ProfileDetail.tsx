@@ -9,66 +9,138 @@ import ConnectButton from './ConnectButton'
 import ProfileAvatar from '../ProfileAvatar'
 import {minHeight} from '../Global'
 import BlockReport from './BlockReport'
-import {useWocky} from 'src/utils/injectors'
+import {useWocky, useGeocodingStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
+import {when} from 'mobx'
+import moment from 'moment'
+import {Actions} from 'react-native-router-flux'
 
 type Props = {
   item: string
+  preview?: boolean
 }
 
-const ProfileDetail = observer(({item}: Props) => {
-  const [theProfile, setProfile] = useState<IProfile | null>(null)
+const ProfileDetail = observer(({item, preview}: Props) => {
+  const [profile, setProfile] = useState<IProfile | null>(null)
 
-  const {profile, profiles, loadProfile} = useWocky()
+  const {profiles, loadProfile} = useWocky()
 
   useEffect(() => {
     setProfile(profiles.get(item))
     loadProfile(item)
   }, [])
 
-  if (!theProfile || !isAlive(theProfile)) {
+  if (!profile || !isAlive(profile)) {
     return null
   }
+
   return (
-    <BottomPopup>
-      <View
-        style={{
-          flex: 1,
-          alignContent: 'center',
-          alignItems: 'center',
-          paddingBottom: 46 * minHeight,
-          paddingTop: 20,
-        }}
-        testID="profileDetail"
-      >
-        <BlockReport profile={theProfile} />
-        <ProfileAvatar
-          size={74}
-          style={{borderWidth: 0}}
-          borderColor={colors.PINK}
-          profile={theProfile}
-          tappable={false}
-          fontFamily="regular"
-          fontSize="large"
-          messageBtn={true}
-        />
+    <BottomPopup showPreviewButton onPreviewButtonTap={() => Actions.refresh({preview: !preview})}>
+      {preview ? <Preview profile={profile!} /> : <Default profile={profile!} />}
+    </BottomPopup>
+  )
+})
+
+const Default = observer(({profile}: {profile: IProfile}) => (
+  <View
+    style={{
+      flex: 1,
+      alignContent: 'center',
+      alignItems: 'center',
+      paddingBottom: 46 * minHeight,
+      paddingTop: 20,
+    }}
+    testID="profileDetail"
+  >
+    <BlockReport profile={profile} />
+    <ProfileAvatar
+      size={74}
+      style={{borderWidth: 0}}
+      borderColor={colors.PINK}
+      profile={profile}
+      tappable={false}
+      fontFamily="regular"
+      fontSize="large"
+      messageBtn={true}
+    />
+
+    <RText color={colors.PINK} weight="Bold" size={20} style={styles.displayName} numberOfLines={1}>
+      @{profile.handle}
+    </RText>
+    <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+      <Pill>
+        {profile.botsSize} Location{profile.botsSize !== 1 && 's'}
+      </Pill>
+    </View>
+    <ConnectButton profile={profile!} myProfile={profile!} />
+  </View>
+))
+
+const Preview = observer(({profile}: {profile: IProfile}) => {
+  const geocodingStore = useGeocodingStore()
+
+  // todo: compute this in Profile.ts
+  const [roughLocation, setRoughLocation] = useState('                ')
+  const [whenLastLocationSent, setWhenLastLocationSent] = useState('a while ago')
+
+  useEffect(() => {
+    when(
+      () => !!profile.currentLocation,
+      () => {
+        const whenLocCreated = moment(profile.currentLocation!.createdAt).fromNow()
+        setWhenLastLocationSent(whenLocCreated)
+
+        geocodingStore.reverse(profile.currentLocation).then(data => {
+          if (data) {
+            const {
+              meta: {city, state},
+            } = data
+            // todo: how will this work for non-US locations?
+            setRoughLocation((city ? city + ', ' : '') + (state ? state : ''))
+          }
+        })
+      }
+    )
+  }, [])
+
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        // justifyContent: 'center',
+        alignItems: 'center',
+        // alignContent: 'center',
+        marginBottom: 10,
+        marginHorizontal: 30,
+      }}
+    >
+      <ProfileAvatar
+        size={55}
+        style={{marginRight: 20}}
+        borderColor={colors.PINK}
+        profile={profile}
+        tappable={false}
+        fontFamily="regular"
+        fontSize="large"
+      />
+
+      {/* HACK: this padding is the only way I could find to horizontally align avatar and text */}
+      <View style={{paddingBottom: 20}}>
         <RText
-          color={colors.PINK}
           weight="Bold"
           size={20}
-          style={styles.displayName}
+          color={colors.DARK_PURPLE}
           numberOfLines={1}
+          style={{marginBottom: 10}}
         >
-          @{theProfile.handle}
+          {profile.handle}
         </RText>
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-          <Pill>
-            {theProfile.botsSize} Location{theProfile.botsSize !== 1 && 's'}
-          </Pill>
+        <View style={{flexDirection: 'row'}}>
+          <Pill>{roughLocation}</Pill>
+          {!profile.isOwn && <Pill>{whenLastLocationSent}</Pill>}
         </View>
-        <ConnectButton profile={theProfile!} myProfile={profile!} />
       </View>
-    </BottomPopup>
+    </View>
   )
 })
 

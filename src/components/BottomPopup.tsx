@@ -18,6 +18,8 @@ const BottomPopup = observer(({children, style, showPreviewButton, onPreviewButt
   const [btnUp, setBtnUp] = useState(true)
 
   // TODO: style this with border radius and shadow rather than an image. Allows setting background color to white
+
+  // todo: adjust bottom margins for iPhones with bottom notches
   return (
     <View style={[{paddingTop: 50}, style]}>
       <Image
