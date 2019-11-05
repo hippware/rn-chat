@@ -4,6 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* TypeError in src/components/common/Avatar.tsx:97 (#4354)
+* Remove LocationStore debug, debugSounds options. (PR #4356)
+* New UI screen to list all friends (#4325)
+
 # 4.31.0 - 2019 Oct 31
 
 * Update: react-navigation-stack (PR #4332), assert (PR #4335)
@@ -56,6 +60,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 Special debug version for Prod.
 
 * Enable debugging features for PROD.
+* Work-around for Origin Connection Time-out (jitpack/jitpack.io#3973)
 
 # 4.29.1 - 2019 Oct 17
 
