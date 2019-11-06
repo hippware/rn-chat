@@ -77,30 +77,8 @@ const Default = observer(({profile}: {profile: IProfile}) => (
 ))
 
 const Preview = observer(({profile}: {profile: IProfile}) => {
-  const geocodingStore = useGeocodingStore()
-
-  // todo: compute this in Profile.ts
-  const [roughLocation, setRoughLocation] = useState('                ')
-  const [whenLastLocationSent, setWhenLastLocationSent] = useState('a while ago')
-
   useEffect(() => {
-    when(
-      () => !!profile.currentLocation,
-      () => {
-        const whenLocCreated = moment(profile.currentLocation!.createdAt).fromNow()
-        setWhenLastLocationSent(whenLocCreated)
-
-        geocodingStore.reverse(profile.currentLocation).then(data => {
-          if (data) {
-            const {
-              meta: {city, state},
-            } = data
-            // todo: how will this work for non-US locations?
-            setRoughLocation((city ? city + ', ' : '') + (state ? state : ''))
-          }
-        })
-      }
-    )
+    profile.asyncFetchRoughLocation()
   }, [])
 
   return (
@@ -136,8 +114,8 @@ const Preview = observer(({profile}: {profile: IProfile}) => {
           {profile.handle}
         </RText>
         <View style={{flexDirection: 'row'}}>
-          <Pill>{roughLocation}</Pill>
-          {!profile.isOwn && <Pill>{whenLastLocationSent}</Pill>}
+          <Pill>{profile.addressData.locationShort}</Pill>
+          {!profile.isOwn && <Pill>{profile.whenLastLocationSent}</Pill>}
         </View>
       </View>
     </View>
