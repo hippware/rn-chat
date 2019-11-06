@@ -1,11 +1,11 @@
 import React, {useState, useEffect, useRef} from 'react'
-import {View, Clipboard, TouchableOpacity} from 'react-native'
+import {View, Clipboard, TouchableOpacity, StyleSheet} from 'react-native'
 import {inject} from 'mobx-react'
 import {k} from '../Global'
 import {colors} from '../../constants'
-import {IBot, IWocky} from 'wocky-client'
+import {IBot, IWocky, IOwnProfile} from 'wocky-client'
 import BotPostCard from './BotPostCard'
-import {RText, Spinner} from '../common'
+import {RText, Spinner, Pill, LazyImage, BotIcon} from '../common'
 import AddBotPost from './AddBotPost'
 import Header from './BotDetailsHeader'
 import {isAlive} from 'mobx-state-tree'
@@ -15,6 +15,8 @@ import {Actions} from 'react-native-router-flux'
 import {navBarStyle} from '../styles'
 import NotificationStore from '../../store/NotificationStore'
 import {observer} from 'mobx-react'
+import {GREY} from 'src/constants/colors'
+import {useWocky, useLocationStore} from 'src/utils/injectors'
 
 type Props = {
   botId: string
@@ -26,17 +28,28 @@ type Props = {
   homeStore?: any
   navigation: any
   isActive: boolean
+  preview?: boolean
 }
 
 const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore')(
   observer((props: Props) => {
-    const list = useRef(null)
     let viewTimeout
 
     const [bot, setBot] = useState<IBot | undefined>(undefined)
+    const list = useRef(null)
+    const {
+      wocky,
+      analytics,
+      botId,
+      homeStore,
+      navigation,
+      isNew,
+      notificationStore,
+      preview,
+      isActive,
+    } = props
 
     useEffect(() => {
-      const {wocky, analytics, botId, homeStore, navigation, isNew, notificationStore} = props
       const tempBot = wocky!.getBot({id: botId})
       setBot(tempBot)
       if (!tempBot) {
@@ -69,7 +82,7 @@ const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore'
     }, [])
 
     const _footerComponent = observer(() => {
-      if (!bot) return null
+      if (!bot || preview) return null
 
       if (props.wocky!.connected && bot && isAlive(bot) && bot.posts.loading) return <Loader />
 
@@ -83,18 +96,25 @@ const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore'
       })
     }
 
-    return bot && isAlive(bot) ? (
+    if (!bot || !isAlive(bot)) {
+      return null
+    }
+
+    return (
       <View pointerEvents="box-none" style={{flex: 1}}>
         <DraggablePopupList
-          isActive={props.isActive}
-          data={!bot.error && bot.isSubscribed ? bot.posts.list.slice() : []}
+          isActive={isActive}
+          showPreviewButton
+          onPreviewButtonTap={() => Actions.refresh({preview: !preview})}
+          preview={preview}
+          data={!bot.error && bot.isSubscribed && !preview ? bot.posts.list.slice() : []}
           ref={list}
           contentContainerStyle={{
             flexGrow: 1,
           }}
           ListFooterComponent={_footerComponent}
           initialNumToRender={8}
-          headerInner={<Header bot={bot!} {...props} />}
+          headerInner={preview ? <PreviewHeader bot={bot} /> : <Header bot={bot!} {...props} />}
           ItemSeparatorComponent={() => (
             <View style={{backgroundColor: 'white'}}>
               <Separator />
@@ -105,11 +125,11 @@ const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore'
           bounces={false}
           keyboardDismissMode="on-drag"
         />
-        {!bot.error && bot.isSubscribed && (
+        {!preview && !bot.error && bot.isSubscribed && (
           <AddBotPost bot={bot} afterPostSent={scrollToNewestPost} />
         )}
       </View>
-    ) : null
+    )
   })
 )
 ;(BotDetails as any).navigationOptions = ({navigation}) => {
@@ -132,6 +152,49 @@ const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore'
     },
   }
 }
+
+const PreviewHeader = observer(({bot}: {bot: IBot}) => {
+  const locationStore = useLocationStore()
+
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+        marginHorizontal: 30,
+      }}
+    >
+      {!!bot.image ? (
+        <LazyImage
+          file={bot.image}
+          imageProps={{
+            style: styles.botImage,
+            resizeMode: 'contain',
+          }}
+          placeholder={<View style={[styles.botImage, {backgroundColor: GREY}]} />}
+        />
+      ) : (
+        <BotIcon size={47} icon={bot.icon} textStyle={{fontSize: 45, textAlign: 'center'}} />
+      )}
+      <View style={{marginLeft: 20}}>
+        <RText
+          weight="Bold"
+          size={20}
+          color={colors.DARK_PURPLE}
+          numberOfLines={1}
+          style={{marginBottom: 10}}
+        >
+          {bot.title}
+        </RText>
+        <View style={{flexDirection: 'row'}}>
+          <Pill>{bot.addressData ? bot.addressData.locationShort : '          '}</Pill>
+          <Pill>{locationStore!.distanceFromBot(bot.location) || '    '}</Pill>
+        </View>
+      </View>
+    </View>
+  )
+})
 
 export default BotDetails
 
@@ -180,3 +243,7 @@ const Loader = () => (
     <Spinner />
   </View>
 )
+
+const styles = StyleSheet.create({
+  botImage: {width: 47, height: 47},
+})

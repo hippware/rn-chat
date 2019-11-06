@@ -99,7 +99,10 @@ const MapHome = inject('locationStore', 'wocky', 'homeStore', 'navStore')(
     }
 
     function onMapPress() {
-      if (['botCompose', 'botEdit', 'createBot'].includes(navStore!.scene)) {
+      if (
+        ['botCompose', 'botEdit', 'createBot'].includes(navStore!.scene) ||
+        navStore!.isPreviewScene
+      ) {
         return
       } else if (navStore!.scene !== 'home') {
         Actions.popTo('home')

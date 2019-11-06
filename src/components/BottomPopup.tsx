@@ -15,7 +15,6 @@ const previewBtnDownImg = require('../../images/previewButtonDown.png')
 
 const BottomPopup = observer(({children, style, showPreviewButton, onPreviewButtonTap}: Props) => {
   const {mapType} = useHomeStore()
-  const [btnUp, setBtnUp] = useState(true)
 
   // TODO: style this with border radius and shadow rather than an image. Allows setting background color to white
 
@@ -31,25 +30,30 @@ const BottomPopup = observer(({children, style, showPreviewButton, onPreviewButt
         }
         resizeMode="stretch"
       />
-      {showPreviewButton && (
-        <TouchableOpacity
-          style={{top: -28, alignSelf: 'center'}}
-          onPress={() => {
-            if (onPreviewButtonTap) {
-              onPreviewButtonTap(!btnUp)
-            }
-            setBtnUp(!btnUp)
-          }}
-        >
-          <Image source={btnUp ? previewBtnUpImg : previewBtnDownImg} />
-        </TouchableOpacity>
-      )}
+      {showPreviewButton && <PreviewButton onPress={onPreviewButtonTap} />}
       {children}
     </View>
   )
 })
 
 export default BottomPopup
+
+const PreviewButton = ({onPress}) => {
+  const [btnUp, setBtnUp] = useState(true)
+  return (
+    <TouchableOpacity
+      style={{top: -28, alignSelf: 'center'}}
+      onPress={() => {
+        if (onPress) {
+          onPress(!btnUp)
+        }
+        setBtnUp(!btnUp)
+      }}
+    >
+      <Image source={btnUp ? previewBtnUpImg : previewBtnDownImg} />
+    </TouchableOpacity>
+  )
+}
 
 const styles = StyleSheet.create({
   absolute: {
