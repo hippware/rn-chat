@@ -23,6 +23,7 @@ const ActiveLocationSharer = observer(({profile, outerStyle, innerStyle}: IProps
         onPress={() => {
           followUserOnMap(profile)
           select(profile.id)
+          Actions.popTo('home')
           Actions.profileDetails({item: profile.id, preview: true})
         }}
       >

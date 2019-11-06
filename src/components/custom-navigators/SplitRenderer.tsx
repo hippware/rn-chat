@@ -35,7 +35,7 @@ const SplitRenderer = (props: Props) => {
           key={scene.route.key}
           pointerEvents="box-none"
         >
-          {index > 1 && <BackButton scene={scene} />}
+          {!route.params.preview && <BackButton scene={scene} />}
           <AnimatedPushScene transitionProps={transitionProps} scene={scene} />
         </View>
       )

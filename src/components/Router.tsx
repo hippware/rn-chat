@@ -159,7 +159,7 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
                     <Scene key="friends" component={peopleLists.FriendList} />
                     <Scene key="friendSearch" component={FriendSearch} />
                     <Scene key="visitors" component={VisitorList} />
-                    <Scene key="profileDetails" path="user/:item" component={ProfileDetail} />
+                    <Scene key="profileDetails" path="user/:item" component={ProfileDetail} hasPreview />
                     <Scene key="liveLocationCompose" component={LiveLocationCompose} />
                     <Scene key="liveLocationSettings" component={LiveLocationSettings} />
                     <Scene key="chats" component={ChatListScreen} title="Messages" />
