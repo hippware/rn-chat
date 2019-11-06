@@ -9,10 +9,8 @@ import ConnectButton from './ConnectButton'
 import ProfileAvatar from '../ProfileAvatar'
 import {minHeight} from '../Global'
 import BlockReport from './BlockReport'
-import {useWocky, useGeocodingStore} from 'src/utils/injectors'
+import {useWocky} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
-import {when} from 'mobx'
-import moment from 'moment'
 import {Actions} from 'react-native-router-flux'
 
 type Props = {

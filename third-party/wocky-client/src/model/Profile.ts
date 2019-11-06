@@ -1,4 +1,4 @@
-import {types, flow, IAnyModelType, Instance, SnapshotIn, getRoot, getType} from 'mobx-state-tree'
+import {types, flow, IAnyModelType, Instance, SnapshotIn, getRoot} from 'mobx-state-tree'
 import {FileRef} from './File'
 import {Base} from './Base'
 import {Loadable} from './Loadable'

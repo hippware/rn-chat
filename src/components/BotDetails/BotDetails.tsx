@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react'
-import {View, Clipboard, TouchableOpacity, StyleSheet} from 'react-native'
+import {View, Clipboard, TouchableOpacity} from 'react-native'
 import {inject} from 'mobx-react'
 import {k} from '../Global'
 import {colors} from '../../constants'
@@ -198,7 +198,3 @@ const Loader = () => (
     <Spinner />
   </View>
 )
-
-const styles = StyleSheet.create({
-  botImage: {width: 47, height: 47},
-})
