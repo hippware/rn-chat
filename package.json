@@ -119,7 +119,7 @@
     "@types/react-test-renderer": "^16.9.1",
     "appcenter-cli": "^2.1.2",
     "babel-jest": "^24.9.0",
-    "bugsnag-sourcemaps": "^1.1.0",
+    "bugsnag-sourcemaps": "^1.2.2",
     "husky": "^3.0.9",
     "jest": "^24.9.0",
     "jetifier": "^1.0.1",
