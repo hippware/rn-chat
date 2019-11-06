@@ -310,9 +310,6 @@ const LocationStore = types
     let reactions: IReactionDisposer[] = []
 
     const start = flow(function*() {
-      if (reactions.length) {
-        yield finish()
-      }
       const resp1 = yield checkLocation()
       if (resp1) {
         self.setAlwaysOn(true)
@@ -321,13 +318,6 @@ const LocationStore = types
         self.setAlwaysOn(false)
         const resp2 = yield checkLocationWhenInUse()
         self.setState({enabled: resp2})
-      }
-
-      if (self.alwaysOn) {
-        yield self.configure()
-        const config = yield BackgroundGeolocation.ready({reset: false})
-        log(prefix, 'Ready: ', config)
-        self.updateBackgroundConfigSuccess(config)
       }
 
       reactions = [
@@ -372,6 +362,14 @@ const LocationStore = types
       BackgroundGeolocation.onMotionChange(self.onMotionChange)
       BackgroundGeolocation.onActivityChange(self.onActivityChange)
       BackgroundGeolocation.onProviderChange(self.onProviderChange)
+      // need to run start to properly set self.alwaysOn
+      yield start()
+      if (self.alwaysOn) {
+        yield self.configure()
+        const config = yield BackgroundGeolocation.ready({reset: false})
+        log(prefix, 'Ready: ', config)
+        self.updateBackgroundConfigSuccess(config)
+      }
     })
 
     function willUnmount() {
