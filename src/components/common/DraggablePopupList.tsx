@@ -5,13 +5,12 @@ import {TouchThroughView} from 'react-native-touch-through-view'
 import BottomPopup from '../BottomPopup'
 import {TouchThroughWrapper} from 'react-native-touch-through-view'
 import {inject} from 'mobx-react'
+import {Actions} from 'react-native-router-flux'
 
 interface IProps<T> extends FlatListProps<T> {
   headerInner?: ReactElement<any>
   isActive: boolean
   scrollY?: Animated.Value
-  showPreviewButton?: boolean
-  onPreviewButtonTap?: (isPreview: boolean) => void
   preview?: boolean
 }
 
@@ -24,7 +23,7 @@ class DraggablePopupList<T> extends React.Component<IProps<T>> {
   list: any
 
   render() {
-    const {headerInner, style, isActive, showPreviewButton, ...listProps} = this.props
+    const {headerInner, style, isActive, ...listProps} = this.props
     const Wrapper = isActive ? TouchThroughWrapper : View
     return (
       <Wrapper style={{width, height}}>
@@ -51,20 +50,14 @@ class DraggablePopupList<T> extends React.Component<IProps<T>> {
 /**
  * This list header wrapper ensures that the user can "touch through" to the map behind the list
  */
-const DraggablePopupListHeader = ({
-  headerInner,
-  isActive,
-  showPreviewButton,
-  onPreviewButtonTap,
-  preview,
-}: IProps<any>) => {
+const DraggablePopupListHeader = ({headerInner, isActive, preview}: IProps<any>) => {
   const Filler = isActive ? TouchThroughView : View
 
   // todo: calculate the height of Filler more dynamically (?)
   return (
     <>
       <Filler style={{width, height: preview ? height - 170 : height / 2}} />
-      <BottomPopup showPreviewButton={showPreviewButton} onPreviewButtonTap={onPreviewButtonTap}>
+      <BottomPopup preview={preview}>
         <View
           style={{
             flex: preview ? 0 : 1,

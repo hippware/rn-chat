@@ -11,7 +11,6 @@ import {minHeight} from '../Global'
 import BlockReport from './BlockReport'
 import {useWocky} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
-import {Actions} from 'react-native-router-flux'
 
 type Props = {
   item: string
@@ -36,7 +35,7 @@ const ProfileDetail = observer(({item, preview}: Props) => {
   }
 
   return (
-    <BottomPopup showPreviewButton onPreviewButtonTap={() => Actions.refresh({preview: !preview})}>
+    <BottomPopup preview={preview}>
       {preview ? <Preview profile={profile!} /> : <Default profile={profile!} />}
     </BottomPopup>
   )

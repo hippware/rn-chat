@@ -1,19 +1,19 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {View, Image, StyleSheet, ViewStyle, TouchableOpacity} from 'react-native'
 import {useHomeStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
+import {Actions} from 'react-native-router-flux'
 
 type Props = {
   children: any
   style?: ViewStyle
-  showPreviewButton?: boolean
-  onPreviewButtonTap?: (isPreview: boolean) => void
+  preview?: boolean
 }
 
 const previewBtnUpImg = require('../../images/previewButtonUp.png')
 const previewBtnDownImg = require('../../images/previewButtonDown.png')
 
-const BottomPopup = observer(({children, style, showPreviewButton, onPreviewButtonTap}: Props) => {
+const BottomPopup = observer(({children, style, preview}: Props) => {
   const {mapType} = useHomeStore()
 
   // TODO: style this with border radius and shadow rather than an image. Allows setting background color to white
@@ -30,7 +30,9 @@ const BottomPopup = observer(({children, style, showPreviewButton, onPreviewButt
         }
         resizeMode="stretch"
       />
-      {showPreviewButton && <PreviewButton onPress={onPreviewButtonTap} />}
+      {preview !== undefined && (
+        <PreviewButton onPress={() => Actions.refresh({preview: !preview})} preview={preview} />
+      )}
       {children}
     </View>
   )
@@ -38,19 +40,17 @@ const BottomPopup = observer(({children, style, showPreviewButton, onPreviewButt
 
 export default BottomPopup
 
-const PreviewButton = ({onPress}) => {
-  const [btnUp, setBtnUp] = useState(true)
+const PreviewButton = ({onPress, preview}) => {
   return (
     <TouchableOpacity
       style={{top: -28, alignSelf: 'center'}}
       onPress={() => {
         if (onPress) {
-          onPress(!btnUp)
+          onPress(!preview)
         }
-        setBtnUp(!btnUp)
       }}
     >
-      <Image source={btnUp ? previewBtnUpImg : previewBtnDownImg} />
+      <Image source={preview ? previewBtnUpImg : previewBtnDownImg} />
     </TouchableOpacity>
   )
 }
