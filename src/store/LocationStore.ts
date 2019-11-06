@@ -283,9 +283,9 @@ const LocationStore = types
     async function emailLog(email) {
       // emailLog doesn't work in iOS simulator so fetch and dump instead
       if (await DeviceInfo.isEmulator()) {
-        await BackgroundGeolocation.getLog(log)
+        log(prefix, await BackgroundGeolocation.logger.getLog())
       } else {
-        await BackgroundGeolocation.emailLog(email)
+        await BackgroundGeolocation.logger.emailLog(email)
       }
     }
 
