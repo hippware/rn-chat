@@ -21,11 +21,14 @@ type Props = {
 const ProfileDetail = observer(({item, preview}: Props) => {
   const [profile, setProfile] = useState<IProfile | null>(null)
 
-  const {profiles, loadProfile} = useWocky()
+  const {loadProfile} = useWocky()
 
   useEffect(() => {
-    setProfile(profiles.get(item))
-    loadProfile(item)
+    async function fetchProfile() {
+      const p = await loadProfile(item)
+      setProfile(p)
+    }
+    fetchProfile()
   }, [])
 
   if (!profile || !isAlive(profile)) {
@@ -111,10 +114,12 @@ const Preview = observer(({profile}: {profile: IProfile}) => {
         >
           {profile.handle}
         </RText>
-        <View style={{flexDirection: 'row'}}>
-          <Pill>{profile.addressData.locationShort}</Pill>
-          {!profile.isOwn && <Pill>{profile.whenLastLocationSent}</Pill>}
-        </View>
+        {profile.currentLocation && (
+          <View style={{flexDirection: 'row'}}>
+            <Pill>{profile.addressData.locationShort}</Pill>
+            {!profile.isOwn && <Pill>{profile.whenLastLocationSent}</Pill>}
+          </View>
+        )}
       </View>
     </View>
   )

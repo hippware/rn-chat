@@ -151,20 +151,13 @@ export const Profile = types
           self.status = status
         },
         asyncFetchRoughLocation: (): void => {
-          // todo: this doesn't work for OwnProfile
           const {geocodingStore} = getRoot(self)
-          // console.log(
-          //   '& get rough location',
-          //   getType(self).name,
-          //   self.currentLocation,
-          //   geocodingStore
-          // )
           if (geocodingStore) {
             when(
               () => !!self.currentLocation,
               () => {
                 // console.log('& have location', self.currentLocation)
-                geocodingStore.reverse(self.location).then(data => {
+                geocodingStore.reverse(self.currentLocation).then(data => {
                   // console.log('& got rough location data', data)
                   self.load({addressData: data.meta})
                 })
