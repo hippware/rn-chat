@@ -309,10 +309,7 @@ const LocationStore = types
     const {wocky} = getRoot<any>(self)
     let reactions: IReactionDisposer[] = []
 
-    const start = flow(function*() {
-      if (reactions.length) {
-        yield finish()
-      }
+    const init = flow(function*() {
       const resp1 = yield checkLocation()
       if (resp1) {
         self.setAlwaysOn(true)
@@ -322,13 +319,13 @@ const LocationStore = types
         const resp2 = yield checkLocationWhenInUse()
         self.setState({enabled: resp2})
       }
+    })
 
-      if (self.alwaysOn) {
-        yield self.configure()
-        const config = yield BackgroundGeolocation.ready({reset: false})
-        log(prefix, 'Ready: ', config)
-        self.updateBackgroundConfigSuccess(config)
+    const start = flow(function*() {
+      if (reactions.length) {
+        yield finish()
       }
+      yield init()
 
       reactions = [
         autorun(
@@ -372,6 +369,14 @@ const LocationStore = types
       BackgroundGeolocation.onMotionChange(self.onMotionChange)
       BackgroundGeolocation.onActivityChange(self.onActivityChange)
       BackgroundGeolocation.onProviderChange(self.onProviderChange)
+      // need to init() to initialise self.alwaysOn
+      yield init()
+      if (self.alwaysOn) {
+        yield self.configure()
+        const config = yield BackgroundGeolocation.ready({reset: false})
+        log(prefix, 'Ready: ', config)
+        self.updateBackgroundConfigSuccess(config)
+      }
     })
 
     function willUnmount() {
