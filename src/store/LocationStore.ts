@@ -322,6 +322,9 @@ const LocationStore = types
     })
 
     const start = flow(function*() {
+      if (reactions.length) {
+        yield finish()
+      }
       yield init()
 
       reactions = [
