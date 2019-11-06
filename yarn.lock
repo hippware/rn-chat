@@ -2444,10 +2444,10 @@ bugsnag-react-native@^2.21.1:
     promise "^7"
     prop-types "^15.6.0"
 
-bugsnag-sourcemaps@^1.1.0:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/bugsnag-sourcemaps/-/bugsnag-sourcemaps-1.2.1.tgz#3f2b82664a7a0378a631a07836a5e436145993aa"
-  integrity sha512-t5kvbNV/jfIa+YRvRoVB0hvOL+4vE6QsOe+I9rbc2oPEzWZwgIVhUjSOrRRepLQIYo8p8lqqMzDger0SJG3fSQ==
+bugsnag-sourcemaps@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/bugsnag-sourcemaps/-/bugsnag-sourcemaps-1.2.2.tgz#4077074e5ebeb5fd205b0042aba793c99ffec673"
+  integrity sha512-e2iNGx03pH3nx3c8afICDShO1L2A5hmnteEKVnRfindwlggl9LAviYpUlwKX+k2UyG1WGhsnDrR51aVHHwk+fg==
   dependencies:
     concat-stream "^2.0.0"
     form-data "^2.3.3"
