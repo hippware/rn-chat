@@ -365,7 +365,7 @@ PODS:
   - react-native-mixpanel (0.0.6):
     - Mixpanel (~> 3.4.5)
     - React
-  - react-native-netinfo (4.3.0):
+  - react-native-netinfo (4.6.0):
     - React
   - react-native-splash-screen (3.2.0):
     - React
@@ -740,7 +740,7 @@ SPEC CHECKSUMS:
   react-native-google-maps: 2e2e697dab576abd5809d78cd74e775865b62bf7
   react-native-maps: 6e499eee4eabf422ba8b6f94e993cc768bf35153
   react-native-mixpanel: f7ca1a4a436f1d3c19d9ca5d57aa47b848e97292
-  react-native-netinfo: 09681d744eb8a3ca04cb0404fb8c2537f71d3e58
+  react-native-netinfo: fa32a5bb986924e9be82a261c262039042dde81e
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   React-RCTActionSheet: 89b037c0fb7d2671607cb645760164e7e0c013f6
   React-RCTAnimation: e3cefa93c38c004c318f7ec04b883eb14b8b8235
