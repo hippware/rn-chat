@@ -11,10 +11,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * New UI screen to list all friends (#4325)
 * Update: react-native (#4371)
   * react-native-background-geolocation (PR #4360)
-  * metro-react-native-babel-preset (PR #4362), @types/jest (PR #4363), 
-  * @types/react-test-renderer (PR #4364), 
+  * metro-react-native-babel-preset (PR #4362), @types/jest (PR #4363)
+  * @types/react-test-renderer (PR #4364)
   * @react-native-community/netinfo (PR #4366)
-  * bugsnag-sourcemaps (PR #4368)
+  * react-native-gesture-handler (PR #4367)
+  * bugsnag-sourcemaps (PR #4368), react-native-device-info (PR #4369)
 * Action avatar flashing off and on (#4353)
 * [dev] Avoid double RNBGL service and other code execution (#4263)
 
