@@ -7,6 +7,7 @@ import {ILocationStore} from '../../../store/LocationStore'
 import {IHomeStore, YouCard} from '../../../store/HomeStore'
 import LocationAvatar from '../LocationAvatar'
 import _ from 'lodash'
+import {Actions} from 'react-native-router-flux'
 
 interface IProps {
   locationStore?: ILocationStore
@@ -39,6 +40,8 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
         onPress={() => {
           homeStore!.select(card.id)
           homeStore!.followUserOnMap(profile)
+          Actions.popTo('home')
+          Actions.profileDetails({item: card.id, preview: true})
         }}
         stopPropagation
       >

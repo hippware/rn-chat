@@ -2,16 +2,19 @@ import React, {useEffect, useState} from 'react'
 import {Animated} from 'react-native'
 import {when} from 'mobx'
 import {height} from '../Global'
+import {observer} from 'mobx-react'
+import {useHomeStore} from 'src/utils/injectors'
 
 type Props = {
   scene: any
   transitionProps: any
 }
 
-const AnimatedPushScene = ({scene, transitionProps}: Props) => {
+const AnimatedPushScene = observer(({scene, transitionProps}: Props) => {
   const [viewHeight, setViewHeight] = useState(0)
   // initialize to full screen height
   const [slideHeight] = useState(new Animated.Value(height))
+  const {fullScreenMode} = useHomeStore()
 
   useEffect(() => {
     when(
@@ -35,7 +38,7 @@ const AnimatedPushScene = ({scene, transitionProps}: Props) => {
   }
 
   if (scene.index > 0) {
-    if (transitionProps.index === scene.index) {
+    if (transitionProps.index === scene.index && !fullScreenMode) {
       showScene()
     } else {
       hideScene()
@@ -75,6 +78,6 @@ const AnimatedPushScene = ({scene, transitionProps}: Props) => {
       <Scene navigation={navigation} isActive={isActive} />
     </Animated.View>
   )
-}
+})
 
 export default AnimatedPushScene

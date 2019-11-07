@@ -6,10 +6,14 @@ import {IStore} from './store'
 const NavStore = types
   .model('NavStore', {
     scene: '',
+    isPreviewScene: false,
   })
   .actions(self => ({
     setScene(value: string) {
       self.scene = value
+    },
+    setIsPreviewScene(value: boolean) {
+      self.isPreviewScene = value
     },
     afterAttach() {
       reaction(

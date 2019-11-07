@@ -81,6 +81,14 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
         },
         {delay: 1000}
       )
+
+      // ensure we always nav to the default card if we pop back to home (add small delay in case of a popTo -> nav)
+      autorun(() => {
+        if (navStore!.scene === 'home') {
+          Actions.profileDetails({item: wocky!.profile!.id, preview: true})
+        }
+      }, {delay: 200})
+      
     }, [])
 
     const onDeepLink = async ({action, params}) => {
@@ -115,7 +123,10 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
     const uriPrefix = Platform.select({ios: settings.uriPrefix, android: settings.uriPrefix.toLowerCase()})
 
     return (
-      <Router onStateChange={() => navStore!.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={onDeepLink}>
+      <Router onStateChange={() => {
+        navStore!.setScene(Actions.currentScene)
+        navStore!.setIsPreviewScene(!!(Actions.currentParams as any).preview)
+      }} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={onDeepLink}>
         <Tabs hideNavBar hideTabBar>
           <Lightbox hideNavBar type="replace">
             <Scene key="checkCredentials" component={Launch} on={() => authStore!.canLogin} success="checkProfile" failure="preConnection" />
@@ -150,7 +161,7 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
                     <Scene key="friends" component={peopleLists.FriendList} />
                     <Scene key="friendSearch" component={FriendSearch} />
                     <Scene key="visitors" component={VisitorList} />
-                    <Scene key="profileDetails" path="user/:item" component={ProfileDetail} />
+                    <Scene key="profileDetails" path="user/:item" component={ProfileDetail} hasPreview />
                     <Scene key="liveLocationCompose" component={LiveLocationCompose} />
                     <Scene key="liveLocationSettings" component={LiveLocationSettings} />
                     <Scene key="chats" component={ChatListScreen} title="Messages" />

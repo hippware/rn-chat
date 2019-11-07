@@ -45,7 +45,12 @@ const BackButton = observer(({scene}: Props) => {
       />
       <TouchableOpacity
         style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
-        onPress={scene.descriptor.options.backAction || Actions.pop}
+        onPress={
+          scene.descriptor.options.backAction ||
+          (scene.route.params.hasPreview && !scene.route.params.preview
+            ? () => Actions.refresh({preview: true})
+            : Actions.pop)
+        }
       >
         <Image source={navBarStyle.backButtonImage} />
       </TouchableOpacity>

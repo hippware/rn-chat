@@ -108,7 +108,7 @@ const Connectivity = inject(
   //   the background on a switch from wifi to cellular (and vice versa)
   const _handleConnectionInfoChange = ci => {
     const oldInfo = connectionInfo || {}
-    log('& CONNECTIVITY:', ci)
+    log('CONNECTIVITY:', ci)
     connectionInfo = ci
     if (connectionInfo.type === 'unknown') {
       return

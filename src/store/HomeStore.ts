@@ -1,7 +1,6 @@
 /* tslint:disable:max-classes-per-file */
-import {types, applySnapshot, getRoot} from 'mobx-state-tree'
+import {types, applySnapshot, getRoot, Instance} from 'mobx-state-tree'
 import {IBot, IProfile, Location, ILocation} from 'wocky-client'
-import {IStore} from './store'
 import {autorun} from 'mobx'
 
 export const DEFAULT_DELTA = 0.00522
@@ -85,7 +84,7 @@ const HomeStore = types
     friendFilter: '',
   }))
   .views(self => {
-    const {navStore, wocky} = getRoot<IStore>(self)
+    const {navStore, wocky} = getRoot(self)
     return {
       get creationMode() {
         return (
@@ -93,7 +92,7 @@ const HomeStore = types
         )
       },
       get detailsMode() {
-        return navStore && navStore.scene === 'botDetails'
+        return navStore && navStore.scene === 'botDetails' && !navStore.isPreviewScene
       },
       get isIconEditable() {
         return ['botCompose', 'botEdit'].includes(navStore.scene)
@@ -106,7 +105,7 @@ const HomeStore = types
               )
             : []
         const localBots = wocky.localBots.list.map(bot => new BotCard(bot))
-        return [new TutorialCard(), new YouCard(), ...sharers, ...localBots]
+        return [new YouCard(), ...sharers, ...localBots]
       },
       get headerItems(): IProfile[] {
         if (!wocky || !wocky.profile) {
@@ -130,10 +129,6 @@ const HomeStore = types
   .views(self => ({
     get list(): Card[] {
       return self.creationMode ? [] : self.cards
-    },
-    get index(): number {
-      const index = self.cards.findIndex(card => card.id === self.selectedId)
-      return index !== -1 ? index : 0
     },
   }))
   .actions(self => ({
@@ -165,13 +160,6 @@ const HomeStore = types
   .actions(self => ({
     setLatitudeDelta(delta) {
       self.latitudeDelta = delta
-    },
-    setIndex(index: number) {
-      self.fullScreenMode = false
-      self.select(self.cards[index].id)
-      if (self.cards[self.index].location) {
-        self.setFocusedLocation(self.cards[self.index].location)
-      }
     },
     logout() {
       applySnapshot(self, {})
@@ -219,7 +207,7 @@ const HomeStore = types
   })
   .views(self => ({
     get filteredFriends() {
-      const {wocky} = getRoot<IStore>(self)
+      const {wocky} = getRoot(self)
       if (!wocky || !wocky.profile) {
         return []
       }
@@ -230,5 +218,5 @@ const HomeStore = types
   }))
 
 export default HomeStore
-type HomeStoreType = typeof HomeStore.Type
-export interface IHomeStore extends HomeStoreType {}
+
+export interface IHomeStore extends Instance<typeof HomeStore> {}

@@ -8,6 +8,7 @@ import LocationAvatar from './LocationAvatar'
 import {useHomeStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
 import {IProfile} from 'wocky-client'
+import {Actions} from 'react-native-router-flux'
 
 interface IProps extends IActiveBannerItem {
   profile: IProfile
@@ -22,6 +23,8 @@ const ActiveLocationSharer = observer(({profile, outerStyle, innerStyle}: IProps
         onPress={() => {
           followUserOnMap(profile)
           select(profile.id)
+          Actions.popTo('home')
+          Actions.profileDetails({item: profile.id, preview: true})
         }}
       >
         <LocationAvatar profile={profile} asHeaderItem tappable={false} />

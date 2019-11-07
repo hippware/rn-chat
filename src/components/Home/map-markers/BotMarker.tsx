@@ -8,6 +8,7 @@ import {BotCard} from '../../../store/HomeStore'
 import {colors} from 'src/constants'
 import {useHomeStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
+import {Actions} from 'react-native-router-flux'
 
 type Props = {
   card: BotCard
@@ -35,7 +36,11 @@ const BotMarker = observer(({card}: Props) => {
     <HackMarker
       coordinate={{latitude, longitude}}
       zIndex={isSelected ? 2000 : 1} // selected marker should be on top #2696
-      onPress={() => select(card.id)}
+      onPress={() => {
+        select(card.id)
+        Actions.popTo('home')
+        Actions.botDetails({botId: card.id, preview: true})
+      }}
       key={card.bot.id}
       stopPropagation
     >

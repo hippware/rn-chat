@@ -172,7 +172,6 @@ const BottomMenu = observer(() => {
         </MenuItem>
         <MenuItem
           onPress={() => {
-            Actions.pop()
             Actions.chats()
           }}
           image={require('../../images/menuMessages.png')}

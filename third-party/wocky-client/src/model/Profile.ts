@@ -8,6 +8,8 @@ import {waitFor} from '../transport/utils'
 import {Location, ILocationSnapshot} from './Location'
 import {UserActivityType} from '../transport/types'
 import moment from 'moment'
+import {Address} from './Address'
+import {when} from 'mobx'
 
 export const Profile = types
   .compose(
@@ -30,6 +32,7 @@ export const Profile = types
       receivesLocationShare: false, // pseudo-calculated property for correct FlatList rendering
       roles: types.optional(types.array(types.string), []),
       subscribedBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
+      addressData: types.optional(Address, {}),
     })
   )
   .named('Profile')
@@ -147,6 +150,21 @@ export const Profile = types
         setStatus: (status: 'ONLINE' | 'OFFLINE') => {
           self.status = status
         },
+        asyncFetchRoughLocation: (): void => {
+          const {geocodingStore} = getRoot(self)
+          if (geocodingStore) {
+            when(
+              () => !!self.currentLocation,
+              () => {
+                // console.log('& have location', self.currentLocation)
+                geocodingStore.reverse(self.currentLocation).then(data => {
+                  // console.log('& got rough location data', data)
+                  self.load({addressData: data.meta})
+                })
+              }
+            )
+          }
+        },
       },
       views: {
         get isOwn(): boolean {
@@ -210,6 +228,12 @@ export const Profile = types
 
           // return null activity if no updates in last 5 mins
           return minsSinceLastUpdate > 5 ? null : activity
+        },
+        get whenLastLocationSent(): string {
+          // console.log('& when', self.currentLocation)
+          return self.currentLocation
+            ? moment(self.currentLocation!.createdAt).fromNow()
+            : 'a while ago'
         },
       },
     }
