@@ -5,7 +5,6 @@ import {TouchThroughView} from 'react-native-touch-through-view'
 import BottomPopup from '../BottomPopup'
 import {TouchThroughWrapper} from 'react-native-touch-through-view'
 import {inject} from 'mobx-react'
-import {Actions} from 'react-native-router-flux'
 
 interface IProps<T> extends FlatListProps<T> {
   headerInner?: ReactElement<any>

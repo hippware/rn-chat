@@ -102,7 +102,6 @@ const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore'
       <View pointerEvents="box-none" style={{flex: 1}}>
         <DraggablePopupList
           isActive={isActive}
-          showPreviewButton
           preview={preview}
           data={!bot.error && bot.isSubscribed && !preview ? bot.posts.list.slice() : []}
           ref={list}
