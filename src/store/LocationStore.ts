@@ -9,7 +9,7 @@ import * as RNLocalize from 'react-native-localize'
 import moment from 'moment'
 import {log, warn} from '../utils/logger'
 import analytics from '../utils/analytics'
-import {checkLocation, checkLocationWhenInUse} from '../utils/permissions'
+import {checkLocation} from '../utils/permissions'
 import Geolocation from 'react-native-geolocation-service'
 
 const MAX_DATE1 = '2030-01-01-17:00'
@@ -33,7 +33,6 @@ const LocationStore = types
     backgroundOptions: types.optional(BackgroundLocationConfigOptions, {}),
   })
   .volatile(() => ({
-    enabled: true,
     alwaysOn: true,
   }))
   .views(self => ({
@@ -78,7 +77,6 @@ const LocationStore = types
   }))
   .actions(self => ({
     setPosition(position) {
-      self.enabled = true
       self.location = createLocation({
         lat: position.coords.latitude,
         lon: position.coords.longitude,
@@ -160,11 +158,6 @@ const LocationStore = types
     }
 
     function onLocationError(err) {
-      if (err === 1) {
-        // user denied location permissions
-        self.enabled = false
-      }
-
       warn(prefix, 'location error', err)
       BackgroundGeolocation.logger.error(`${prefix} onLocationError ${err}`)
     }
@@ -313,11 +306,8 @@ const LocationStore = types
       const resp1 = yield checkLocation()
       if (resp1) {
         self.setAlwaysOn(true)
-        self.setState({enabled: true})
       } else {
         self.setAlwaysOn(false)
-        const resp2 = yield checkLocationWhenInUse()
-        self.setState({enabled: resp2})
       }
     })
 
@@ -365,7 +355,6 @@ const LocationStore = types
       BackgroundGeolocation.logger.info(`${prefix} didMount`)
       BackgroundGeolocation.onLocation(self.onLocation, self.onLocationError)
       BackgroundGeolocation.onHttp(self.onHttp)
-      // BackgroundGeolocation.onSchedule(state => console.log('ON SCHEDULE!!!!!!!!!' + state.enabled))
       BackgroundGeolocation.onMotionChange(self.onMotionChange)
       BackgroundGeolocation.onActivityChange(self.onActivityChange)
       BackgroundGeolocation.onProviderChange(self.onProviderChange)
