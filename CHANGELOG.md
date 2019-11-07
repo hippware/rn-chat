@@ -4,6 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.30.2 - 2019 Nov 7
+
+* Update: react-native-background-geolocation 3.3.2
+  * Fix an android NullPointerException.
+
 # 4.30.1 - 2019 Oct 29
 
 * [dev] Make ownProfile.location as computed from locationStore (#4264)
