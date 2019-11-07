@@ -82,10 +82,12 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
         {delay: 1000}
       )
 
-      // one-time nav to own profile details preview when app starts
-      when(() => navStore!.scene === 'home', () => {
-        Actions.profileDetails({item: wocky!.profile!.id, preview: true})
-      })
+      // ensure we always nav to the default card if we pop back to home (add small delay in case of a popTo -> nav)
+      autorun(() => {
+        if (navStore!.scene === 'home') {
+          Actions.profileDetails({item: wocky!.profile!.id, preview: true})
+        }
+      }, {delay: 200})
       
     }, [])
 
