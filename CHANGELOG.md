@@ -18,6 +18,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * bugsnag-sourcemaps (PR #4368), react-native-device-info (PR #4369)
 * Action avatar flashing off and on (#4353)
 * [dev] Avoid double RNBGL service and other code execution (#4263)
+* Fix tests: Define `__DEV__` (as true) (PR #4380)
+* Work-in-progress: Finally fixing the bottom card swipe logic (#4212)
 
 # 4.31.0 - 2019 Oct 31
 
