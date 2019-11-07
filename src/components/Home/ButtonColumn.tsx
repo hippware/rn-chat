@@ -29,21 +29,19 @@ const ButtonColumn = observer(({enabled}: Props) => {
   }, [enabled])
 
   return (
-    <Animated.View style={{marginBottom: 50, transform: [{translateY}]}} pointerEvents="box-none">
+    <Animated.View style={{marginBottom: 170, transform: [{translateY}]}} pointerEvents="box-none">
       {navStore.scene !== 'botCompose' && (
         <View
           style={{
             alignSelf: 'flex-end',
             paddingRight: buttonPadding,
           }}
-          pointerEvents="none"
+          pointerEvents="box-none"
         >
           {!homeStore.fullScreenMode && (
             <>
               <TouchableOpacity onPress={Actions.mapOptions} style={styles.button}>
-                <View>
-                  <Image source={mapOptionsButton} />
-                </View>
+                <Image source={mapOptionsButton} />
               </TouchableOpacity>
 
               <TouchableOpacity
