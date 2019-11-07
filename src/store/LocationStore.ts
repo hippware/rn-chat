@@ -363,7 +363,7 @@ const LocationStore = types
 
     const didMount = flow(function*() {
       BackgroundGeolocation.logger.info(`${prefix} didMount`)
-      BackgroundGeolocation.on('location', self.onLocation, self.onLocationError)
+      BackgroundGeolocation.onLocation(self.onLocation, self.onLocationError)
       BackgroundGeolocation.onHttp(self.onHttp)
       // BackgroundGeolocation.onSchedule(state => console.log('ON SCHEDULE!!!!!!!!!' + state.enabled))
       BackgroundGeolocation.onMotionChange(self.onMotionChange)
@@ -381,12 +381,7 @@ const LocationStore = types
 
     function willUnmount() {
       BackgroundGeolocation.logger.info(`${prefix} willUnmount`)
-      BackgroundGeolocation.un('location', self.onLocation)
-      BackgroundGeolocation.un('http', self.onHttp)
-      // backgroundGeolocation.un('error', ??)
-      BackgroundGeolocation.un('motionchange', self.onMotionChange)
-      BackgroundGeolocation.un('activitychange', self.onActivityChange)
-      BackgroundGeolocation.un('providerchange', self.onProviderChange)
+      BackgroundGeolocation.removeAllListeners()
     }
 
     const logout = flow(function*() {
