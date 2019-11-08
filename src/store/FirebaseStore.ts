@@ -240,8 +240,12 @@ const FirebaseStore = types
         register()
         analytics.track('verify_confirmation_success')
       } catch (err) {
-        bugsnagNotify(err, 'verify_confirmation_fail', {code})
-        analytics.track('verify_confirmation_fail', {error: err, code})
+        const name =
+          err.code === 'auth/code-expired'
+            ? 'verify_confirmation_fail_code_expired'
+            : 'verify_confirmation_fail'
+        bugsnagNotify(err, name, {code})
+        analytics.track(name, {error: err, code})
         warn('confirmation fail', err)
         self.errorMessage = 'Error confirming code, please try again or resend code'
         self.buttonText = 'Verify'
