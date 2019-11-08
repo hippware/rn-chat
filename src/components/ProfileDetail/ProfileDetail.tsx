@@ -4,13 +4,14 @@ import {isAlive} from 'mobx-state-tree'
 import BottomPopup from '../BottomPopup'
 import {RText, Pill} from '../common'
 import {colors} from 'src/constants'
-import {View, StyleSheet} from 'react-native'
+import {View, StyleSheet, TouchableOpacity, Image} from 'react-native'
 import ConnectButton from './ConnectButton'
 import ProfileAvatar from '../ProfileAvatar'
 import {minHeight} from '../Global'
 import BlockReport from './BlockReport'
 import {useWocky} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
+import {Actions} from 'react-native-router-flux'
 
 type Props = {
   item: string
@@ -84,11 +85,10 @@ const Preview = observer(({profile}: {profile: IProfile}) => {
   return (
     <View
       style={{
+        flex: 1,
         flexDirection: 'row',
-        // justifyContent: 'center',
         alignItems: 'center',
-        // alignContent: 'center',
-        marginBottom: 10,
+        marginBottom: 20,
         marginHorizontal: 30,
       }}
     >
@@ -120,6 +120,19 @@ const Preview = observer(({profile}: {profile: IProfile}) => {
           </View>
         )}
       </View>
+      {!profile.isOwn && (
+        <TouchableOpacity
+          style={{marginLeft: 'auto'}}
+          onPress={() => {
+            Actions.chat({item: profile.id})
+          }}
+        >
+          <Image
+            style={{width: 52, height: 52}}
+            source={require('../../../images/MessageBtn.png')}
+          />
+        </TouchableOpacity>
+      )}
     </View>
   )
 })
