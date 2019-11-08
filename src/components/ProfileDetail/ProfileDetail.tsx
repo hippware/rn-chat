@@ -7,7 +7,7 @@ import {colors} from 'src/constants'
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native'
 import ConnectButton from './ConnectButton'
 import ProfileAvatar from '../ProfileAvatar'
-import {minHeight} from '../Global'
+import {minHeight, avatarScale} from '../Global'
 import BlockReport from './BlockReport'
 import {useWocky} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
@@ -93,7 +93,7 @@ const Preview = observer(({profile}: {profile: IProfile}) => {
       }}
     >
       <ProfileAvatar
-        size={55}
+        size={50}
         style={{marginRight: 20}}
         borderColor={colors.PINK}
         profile={profile}
@@ -102,8 +102,7 @@ const Preview = observer(({profile}: {profile: IProfile}) => {
         fontSize="large"
       />
 
-      {/* HACK: this padding is the only way I could find to horizontally align avatar and text */}
-      <View style={{paddingBottom: 20}}>
+      <View>
         <RText
           weight="Bold"
           size={20}
@@ -128,7 +127,7 @@ const Preview = observer(({profile}: {profile: IProfile}) => {
           }}
         >
           <Image
-            style={{width: 52, height: 52}}
+            style={{width: 50 * avatarScale, height: 50 * avatarScale}}
             source={require('../../../images/MessageBtn.png')}
           />
         </TouchableOpacity>

@@ -29,7 +29,7 @@ const ProfileAvatar = observer((props: Props) => {
     messageBtn = false,
   } = props
   return (
-    <View style={[{alignItems: 'center', height: size}, wrapperStyle]}>
+    <View style={[{alignItems: 'center'}, wrapperStyle]}>
       <Avatar
         {...props}
         tappable={tappable}

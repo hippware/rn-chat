@@ -163,7 +163,7 @@ const AvatarLetterPlaceholder = ({
 }
 
 const Mask = ({size}) => (
-  <View style={[styles.mask, styles.absolute]}>
+  <View style={[styles.mask, StyleSheet.absoluteFill]}>
     <Image
       source={require('../../../images/invisibleIconWhite.png')}
       style={[
@@ -193,13 +193,6 @@ const styles = StyleSheet.create({
   },
   frameOuter: {
     justifyContent: 'center',
-  },
-  absolute: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
   },
   mask: {
     backgroundColor: 'rgba(93,93,93,0.5)',
