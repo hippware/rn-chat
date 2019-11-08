@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.32.0 - 2019 Nov 7
+
 **React Native upgrade to 0.61.4**
 
 * TypeError in src/components/common/Avatar.tsx:97 (#4354)
@@ -20,6 +22,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [dev] Avoid double RNBGL service and other code execution (#4263)
 * Fix tests: Define `__DEV__` (as true) (PR #4380)
 * Work-in-progress: Finally fixing the bottom card swipe logic (#4212)
+* Tidy LocationStore (PR #4381, PR #4382)
 
 # 4.31.0 - 2019 Oct 31
 
