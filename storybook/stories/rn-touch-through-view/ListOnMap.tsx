@@ -37,7 +37,7 @@ const renderItem = ({item}) => (
   <View
     style={{
       height: 100,
-      with: '100%',
+      width: '100%',
       borderColor: 'red',
       borderWidth: 1,
       backgroundColor: 'white',
