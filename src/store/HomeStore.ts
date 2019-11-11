@@ -92,7 +92,7 @@ const HomeStore = types
         )
       },
       get detailsMode() {
-        return navStore && navStore.scene === 'botDetails' && !navStore.isPreviewScene
+        return navStore && navStore.scene === 'botDetails' && !navStore.params.preview
       },
       get isIconEditable() {
         return ['botCompose', 'botEdit'].includes(navStore.scene)

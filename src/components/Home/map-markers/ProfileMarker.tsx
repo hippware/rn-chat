@@ -4,6 +4,7 @@ import HackMarker from '../../map/HackMarker'
 import {IHomeStore, LocationSharerCard} from '../../../store/HomeStore'
 import LocationAvatar from '../LocationAvatar'
 import {View} from 'react-native'
+import {Actions} from 'react-native-router-flux'
 
 type Props = {
   card: LocationSharerCard
@@ -26,6 +27,8 @@ const ProfileMarker = observer(({homeStore, card}: Props) => {
         onPress={() => {
           homeStore!.select(card.id)
           homeStore!.followUserOnMap(profile)
+          Actions.popTo('home')
+          Actions.profileDetails({item: card.id, preview: true})
         }}
         stopPropagation
       >

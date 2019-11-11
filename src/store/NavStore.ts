@@ -4,16 +4,21 @@ import {IStore} from './store'
 
 // navigation store for the app, all navigation-conditional logic should be placed here
 const NavStore = types
-  .model('NavStore', {
+  .model('NavStore', {})
+  .volatile(() => ({
+    _props: {},
     scene: '',
-    isPreviewScene: false,
-  })
-  .actions(self => ({
-    setScene(value: string) {
-      self.scene = value
+  }))
+  .views(self => ({
+    // to solve typescript typing errors
+    get params(): {[id: string]: any} {
+      return self._props
     },
-    setIsPreviewScene(value: boolean) {
-      self.isPreviewScene = value
+  }))
+  .actions(self => ({
+    setScene(value: string, props: any) {
+      self.scene = value
+      self._props = props
     },
     afterAttach() {
       reaction(

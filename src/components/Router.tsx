@@ -123,10 +123,7 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
     const uriPrefix = Platform.select({ios: settings.uriPrefix, android: settings.uriPrefix.toLowerCase()})
 
     return (
-      <Router onStateChange={() => {
-        navStore!.setScene(Actions.currentScene)
-        navStore!.setIsPreviewScene(!!(Actions.currentParams as any).preview)
-      }} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={onDeepLink}>
+      <Router onStateChange={() => navStore!.setScene(Actions.currentScene, Actions.currentParams)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={onDeepLink}>
         <Tabs hideNavBar hideTabBar>
           <Lightbox hideNavBar type="replace">
             <Scene key="checkCredentials" component={Launch} on={() => authStore!.canLogin} success="checkProfile" failure="preConnection" />
@@ -153,7 +150,7 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
                     <Scene key="home" path="livelocation/:userId" component={Home} hideNavBar />
                     <Scene key="bottomMenu" component={BottomMenu} />
                     <Scene key="createBot" component={CreationHeader} fromTop />
-                    <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetails} />
+                    <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetails} hasPreview />
                     <Scene key="botCompose" component={BotCompose} backAction={() => backAction(iconStore!)} />
                     <Scene key="botEdit" component={BotCompose} edit backAction={() => backAction(iconStore!)} />
                     <Scene key="editNote" component={EditNote} />

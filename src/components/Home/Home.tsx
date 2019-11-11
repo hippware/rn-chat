@@ -15,8 +15,8 @@ const Home = observer(({name}: Props) => {
   const homeStore = useHomeStore()
   const navStore = useNavStore()
   const {fullScreenMode} = homeStore
-  const {scene, isPreviewScene} = navStore!
-  const isCurrent = scene === name || isPreviewScene
+  const {scene, params} = navStore!
+  const isCurrent = scene === name || params.preview
 
   return (
     <View
