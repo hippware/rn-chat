@@ -14,6 +14,7 @@ YellowBox.ignoreWarnings([
   'Warning: componentWillUpdate',
 
   'RCTRootView cancelTouches', // https://github.com/kmagiera/react-native-gesture-handler/issues/746
+  'Require cycle:',
 ])
 
 // Uncomment for storybook
