@@ -156,11 +156,14 @@ export const Profile = types
             when(
               () => !!self.currentLocation,
               () => {
-                // console.log('& have location', self.currentLocation)
-                geocodingStore.reverse(self.currentLocation).then(data => {
-                  // console.log('& got rough location data', data)
-                  self.load({addressData: data.meta})
-                })
+                geocodingStore
+                  .reverse(self.currentLocation)
+                  .then(data => {
+                    self.load({addressData: data.meta})
+                  })
+                  .catch(e => {
+                    /* prevent app crash */
+                  })
               }
             )
           }
