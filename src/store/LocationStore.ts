@@ -11,6 +11,7 @@ import {log, warn} from '../utils/logger'
 import analytics from '../utils/analytics'
 import {checkLocation} from '../utils/permissions'
 import Geolocation from 'react-native-geolocation-service'
+import {bugsnagNotify} from 'src/utils/bugsnagConfig'
 
 const MAX_DATE1 = '2030-01-01-17:00'
 const MAX_DATE2 = '2030-01-01-18:00'
@@ -23,6 +24,8 @@ const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOpt
   autoSyncThreshold: types.maybeNull(types.number),
   distanceFilter: types.maybeNull(types.number),
 })
+
+let singleton: any
 
 // todo: https://github.com/hippware/rn-chat/issues/3434
 const isMetric = RNLocalize.usesMetricSystem()
@@ -105,9 +108,12 @@ const LocationStore = types
 
     // Set reset to true to reset to defaults
     configure: flow(function*(reset = false) {
+      singleton = self
+
       const config = {
         batchSync: true,
         desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
+        enableHeadless: true,
         foregroundService: true, // android only
         logLevel:
           __DEV__ || settings.configurableLocationSettings
@@ -412,6 +418,44 @@ const LocationStore = types
 // .postProcessSnapshot((snapshot: any) => {
 //   return {} // huge performance optimization: don't persist frequently changed location and display only real location to an user
 // })
+
+async function HeadlessTask(event) {
+  const self: ILocationStore = singleton
+
+  // Sometimes this is called before singleton is initialised
+  if (self) {
+    switch (event.name) {
+      case 'location':
+        // It's not known how to distinguish between a location and a
+        //   location error event.
+        // To be on the safe side, call onLocation if the params are clearly
+        //   a location event, otherwise just log it for future debugging.
+        if (event.params && event.params.coords) {
+          return self.onLocation(event.params)
+        } else {
+          const text = `Unknown headless task event: ${JSON.stringify(event)}`
+          log(prefix, text)
+          BackgroundGeolocation.logger.info(`${prefix} ${text}`)
+          bugsnagNotify(new Error(text), 'headless_task_fail', {event})
+        }
+        break
+      case 'http':
+        return self.onHttp(event.params)
+      case 'motionchange':
+        return self.onMotionChange(event.params)
+      case 'activitychange':
+        return self.onActivityChange(event.params)
+      case 'providerchange':
+        return self.onProviderChange(event.params)
+    }
+  } else {
+    const text = `Singleton not initialised`
+    log(prefix, text)
+    BackgroundGeolocation.logger.info(`${prefix} ${text}`)
+    bugsnagNotify(new Error(text), 'headless_task_fail', {event})
+  }
+}
+BackgroundGeolocation.registerHeadlessTask(HeadlessTask)
 
 export default LocationStore
 export type ILocationStore = typeof LocationStore.Type
