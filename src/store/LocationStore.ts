@@ -11,6 +11,7 @@ import {log, warn} from '../utils/logger'
 import analytics from '../utils/analytics'
 import {checkLocation, checkLocationWhenInUse} from '../utils/permissions'
 import Geolocation from 'react-native-geolocation-service'
+import {bugsnagNotify} from 'src/utils/bugsnagConfig'
 
 const MAX_DATE1 = '2030-01-01-17:00'
 const MAX_DATE2 = '2030-01-01-18:00'
@@ -451,6 +452,7 @@ async function HeadlessTask(event) {
           const text = `Unknown headless task event: ${JSON.stringify(event)}`
           log(prefix, text)
           BackgroundGeolocation.logger.info(`${prefix} ${text}`)
+          bugsnagNotify(new Error(text), 'headless_task_fail', {event})
         }
         break
       case 'http':
@@ -462,6 +464,11 @@ async function HeadlessTask(event) {
       case 'providerchange':
         return self.onProviderChange(event.params)
     }
+  } else {
+    const text = `Singleton not initialised`
+    log(prefix, text)
+    BackgroundGeolocation.logger.info(`${prefix} ${text}`)
+    bugsnagNotify(new Error(text), 'headless_task_fail', {event})
   }
 }
 BackgroundGeolocation.registerHeadlessTask(HeadlessTask)
