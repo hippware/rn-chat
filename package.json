@@ -127,7 +127,7 @@
     "prettier": "^1.16.4",
     "pretty-quick": "^2.0.0",
     "react-dom": "^16.10.2",
-    "react-test-renderer": "16.10.2",
+    "react-test-renderer": "16.11.0",
     "ts-jest": "^24.1.0",
     "ts-node": "^8.5.0",
     "tsconfig-paths": "^3.6.0",
