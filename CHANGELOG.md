@@ -4,6 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Clear search store on logout. (PR #4387)
+  * Fix: Failed to resolve reference '...' to type 'Profile' (#4322)
+* Disambiguate auth/code-expired in bugsnags. (PR #4386)
+
 # 4.32.0 - 2019 Nov 7
 
 **React Native upgrade to 0.61.4**
