@@ -8,8 +8,6 @@ import {
   flow,
 } from 'mobx-state-tree'
 import {simpleActionLogger} from 'mst-middlewares'
-// todo: use react-native-community version instead
-import {Geolocation} from 'react-native'
 import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
 import {Transport, Wocky} from 'wocky-client'
@@ -39,7 +37,6 @@ import AsyncStorage from '@react-native-community/async-storage'
 import deviceInfoFetch, {TRDeviceInfo} from 'src/utils/deviceInfoFetch'
 
 const jsVersion = require('../../package.json').version
-const {geolocation} = navigator
 const auth = firebase.auth()
 
 const STORE_NAME = 'MainStore'
@@ -49,7 +46,6 @@ export type IEnv = {
   auth: RNFirebase.auth.Auth
   firebase: Firebase
   fileService: any
-  geolocation: Geolocation
   deviceInfo: TRDeviceInfo
 }
 
@@ -174,7 +170,6 @@ export async function createStore() {
     auth,
     firebase,
     fileService,
-    geolocation,
     deviceInfo,
   }
 

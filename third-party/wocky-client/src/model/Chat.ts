@@ -4,7 +4,6 @@ import {Profile} from './Profile'
 const moment = require('moment')
 import uuid from 'uuid/v1'
 import {Base} from './Base'
-import {IChat} from '../model/Chat'
 import {createMessage, IMessageIn} from '../model/Message'
 import {PaginableLoadPromise} from '../transport/Transport'
 
