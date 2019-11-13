@@ -23,6 +23,7 @@ import NotificationStore from './NotificationStore'
 import {PermissionStore} from './PermissionStore'
 import CodepushStore from './CodePushStore'
 import HomeStore from './HomeStore'
+import UserPreferences from './UserPreferences'
 import NavStore from './NavStore'
 import initializePushNotifications from '../utils/pushNotifications'
 import IconStore from './IconStore'
@@ -56,6 +57,7 @@ const cleanState = {
   searchStore: {},
   profileValidationStore: {},
   homeStore: {},
+  userPreferences: {},
   navStore: {},
   codePushStore: {},
   geocodingStore: {},
@@ -67,6 +69,7 @@ const Store = types
   .model(STORE_NAME, {
     wocky: Wocky,
     homeStore: HomeStore,
+    userPreferences: UserPreferences,
     firebaseStore: FirebaseStore,
     authStore: AuthStore,
     locationStore: LocationStore,
@@ -112,10 +115,11 @@ export interface IStore extends Instance<typeof Store> {}
  * Return only the mstStore data needed to prevent logout
  * @param data - serialized mstStore object
  */
-function getMinimalStoreData(data?: {authStore: object}): object {
+function getMinimalStoreData(data?: {authStore: object; userPreferences: object}): object {
   log('loadMinimal', data)
   return {
     authStore: data && data.authStore ? data.authStore : {},
+    userPreferences: data && data.userPreferences ? data.userPreferences : {},
   }
 }
 
