@@ -1,5 +1,13 @@
 import React from 'react'
-import {View, Image, Text, ImageBackground} from 'react-native'
+import {
+  View,
+  Image,
+  Text,
+  ImageBackground,
+  ImageSourcePropType,
+  TextStyle,
+  ViewStyle,
+} from 'react-native'
 import {Avatar} from '../common'
 import {observer} from 'mobx-react'
 import {IProfile} from 'wocky-client'
@@ -8,7 +16,6 @@ type Props = {
   profile: IProfile
   hidden?: boolean
   tappable?: boolean
-  noFade?: boolean
   asHeaderItem?: boolean
 }
 
@@ -26,18 +33,31 @@ const activityEmojis = {
   in_vehicle: '🚗',
 }
 
-const Badge = ({style, background, text}) => {
+export const ProfileBadge = ({
+  style,
+  background,
+  text,
+  outerStyle,
+}: {
+  style: TextStyle
+  background: ImageSourcePropType
+  text: string
+  outerStyle?: ViewStyle
+}) => {
   return (
     <View
-      style={{
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        height: 35,
-        width: 35,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
+      style={[
+        {
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          height: 35,
+          width: 35,
+          alignItems: 'center',
+          justifyContent: 'center',
+        },
+        outerStyle,
+      ]}
     >
       <Image source={background} style={{position: 'absolute'}} resizeMode="contain" />
       <Text style={[{textAlign: 'center', bottom: 3, color: 'white'}, style]}>{text}</Text>
@@ -45,7 +65,7 @@ const Badge = ({style, background, text}) => {
   )
 }
 
-const LocationAvatar = observer(({profile, hidden, tappable, noFade, asHeaderItem}: Props) => {
+const LocationAvatar = observer(({profile, hidden, tappable, asHeaderItem}: Props) => {
   const sharesLocation = profile.isLocationShared
   const currentActivity = profile.currentActivity
   const isStill = currentActivity === 'still'
@@ -79,14 +99,14 @@ const LocationAvatar = observer(({profile, hidden, tappable, noFade, asHeaderIte
       {!!asHeaderItem && !!profile.unreadCount && (
         // For many messages, '9+' isn't quite centered. Show ' 9+' instead.
         //   It's a hack.
-        <Badge
+        <ProfileBadge
           style={{top: 1}}
           text={profile.unreadCount > 9 ? ` 9+` : `${profile.unreadCount}`}
           background={unreadCounter}
         />
       )}
       {(!asHeaderItem || !profile.unreadCount) && !!theActivity && (
-        <Badge style={{left: 1}} text={theActivity} background={activity} />
+        <ProfileBadge style={{left: 1}} text={theActivity} background={activity} />
       )}
     </ImageBackground>
   )

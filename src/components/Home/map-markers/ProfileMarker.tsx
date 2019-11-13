@@ -34,7 +34,7 @@ const ProfileMarker = observer(({homeStore, card}: Props) => {
       >
         {/* extra padding here for the activity icon */}
         <View style={{paddingHorizontal: 9, paddingTop: 15}}>
-          <LocationAvatar profile={profile} noFade={homeStore!.mapType === 'hybrid'} />
+          <LocationAvatar profile={profile} />
         </View>
       </HackMarker>
     )

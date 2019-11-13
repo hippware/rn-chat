@@ -12,6 +12,7 @@ import BlockReport from './BlockReport'
 import {useWocky} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
+import {ProfileBadge} from '../Home/LocationAvatar'
 
 type Props = {
   item: string
@@ -130,11 +131,21 @@ const Preview = observer(({profile}: {profile: IProfile}) => {
             style={{width: 50 * avatarScale, height: 50 * avatarScale}}
             source={require('../../../images/MessageBtn.png')}
           />
+          {profile.unreadCount > 0 && (
+            <ProfileBadge
+              style={{top: 1}}
+              outerStyle={{top: -8, right: -8}}
+              text={profile.unreadCount > 9 ? ` 9+` : profile.unreadCount.toString()}
+              background={unreadCounter}
+            />
+          )}
         </TouchableOpacity>
       )}
     </View>
   )
 })
+
+const unreadCounter = require('../../../images/unreadBG.png')
 
 export default ProfileDetail
 
