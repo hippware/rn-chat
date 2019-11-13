@@ -25,8 +25,6 @@ const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOpt
   distanceFilter: types.maybeNull(types.number),
 })
 
-let singleton: any
-
 // todo: https://github.com/hippware/rn-chat/issues/3434
 const isMetric = RNLocalize.usesMetricSystem()
 const LocationStore = types
@@ -108,7 +106,7 @@ const LocationStore = types
 
     // Set reset to true to reset to defaults
     configure: flow(function*(reset = false) {
-      singleton = self
+      singleton = self as any
 
       const config = {
         batchSync: true,
@@ -148,55 +146,6 @@ const LocationStore = types
     const {transport} = getEnv(self)
     const wocky: IWocky = (getParent(self) as any).wocky
     let watcherID
-
-    function onLocation(position) {
-      if (__DEV__ || settings.isStaging) {
-        const text = `${position.isStandalone ? 'Standalone ' : ''}location: ${JSON.stringify(
-          position
-        )}`
-        log(prefix, text)
-
-        if (position.isStandalone) {
-          BackgroundGeolocation.logger.info(`${prefix} ${text}`)
-        }
-      }
-      self.setPosition(position)
-    }
-
-    function onLocationError(err) {
-      warn(prefix, 'location error', err)
-      BackgroundGeolocation.logger.error(`${prefix} onLocationError ${err}`)
-    }
-
-    function onHttp(response) {
-      log(prefix, 'on http', response)
-      if (response.status >= 200 && response.status < 300) {
-        // analytics.track('location_bg_success', {location: self.location})
-      } else {
-        if (response.status === 401 || response.status === 403) {
-          BackgroundGeolocation.stop()
-          BackgroundGeolocation.stopSchedule()
-          BackgroundGeolocation.logger.error(`${prefix} BackgroundGeolocation.stop() due to error`)
-        }
-
-        analytics.track('location_bg_error', {error: response})
-      }
-    }
-
-    function onMotionChange(location) {
-      log(prefix, 'motionchanged:', location)
-    }
-
-    function onActivityChange(activityName) {
-      log(prefix, 'Current motion activity:', activityName)
-    }
-
-    function onProviderChange(provider) {
-      log(prefix, 'Location provider changed:', provider)
-      const info = JSON.stringify(provider)
-      BackgroundGeolocation.logger.info(`${prefix} onProviderChange(${info})`)
-      self.setAlwaysOn(provider.status === BackgroundGeolocation.AUTHORIZATION_STATUS_ALWAYS)
-    }
 
     const refreshCredentials = flow(function*() {
       try {
@@ -289,12 +238,6 @@ const LocationStore = types
     }
 
     return {
-      onLocation,
-      onLocationError,
-      onHttp,
-      onMotionChange,
-      onActivityChange,
-      onProviderChange,
       refreshCredentials,
       invalidateCredentials,
       getCurrentPosition,
@@ -359,11 +302,11 @@ const LocationStore = types
 
     const didMount = flow(function*() {
       BackgroundGeolocation.logger.info(`${prefix} didMount`)
-      BackgroundGeolocation.onLocation(self.onLocation, self.onLocationError)
-      BackgroundGeolocation.onHttp(self.onHttp)
-      BackgroundGeolocation.onMotionChange(self.onMotionChange)
-      BackgroundGeolocation.onActivityChange(self.onActivityChange)
-      BackgroundGeolocation.onProviderChange(self.onProviderChange)
+      BackgroundGeolocation.onLocation(onLocation, onLocationError)
+      BackgroundGeolocation.onHttp(onHttp)
+      BackgroundGeolocation.onMotionChange(onMotionChange)
+      BackgroundGeolocation.onActivityChange(onActivityChange)
+      BackgroundGeolocation.onProviderChange(onProviderChange)
       // need to init() to initialise self.alwaysOn
       yield init()
       if (self.alwaysOn) {
@@ -419,40 +362,87 @@ const LocationStore = types
 //   return {} // huge performance optimization: don't persist frequently changed location and display only real location to an user
 // })
 
-async function HeadlessTask(event) {
-  const self: ILocationStore = singleton
+let singleton: typeof LocationStore.Type
 
-  // Sometimes this is called before singleton is initialised
-  if (self) {
-    switch (event.name) {
-      case 'location':
-        // It's not known how to distinguish between a location and a
-        //   location error event.
-        // To be on the safe side, call onLocation if the params are clearly
-        //   a location event, otherwise just log it for future debugging.
-        if (event.params && event.params.coords) {
-          return self.onLocation(event.params)
-        } else {
-          const text = `Unknown headless task event: ${JSON.stringify(event)}`
-          log(prefix, text)
-          BackgroundGeolocation.logger.info(`${prefix} ${text}`)
-          bugsnagNotify(new Error(text), 'headless_task_fail', {event})
-        }
-        break
-      case 'http':
-        return self.onHttp(event.params)
-      case 'motionchange':
-        return self.onMotionChange(event.params)
-      case 'activitychange':
-        return self.onActivityChange(event.params)
-      case 'providerchange':
-        return self.onProviderChange(event.params)
-    }
-  } else {
-    const text = `Singleton not initialised`
+function onLocation(position) {
+  if (__DEV__ || settings.isStaging) {
+    const text = `${position.isStandalone ? 'Standalone ' : ''}location: ${JSON.stringify(
+      position
+    )}`
     log(prefix, text)
-    BackgroundGeolocation.logger.info(`${prefix} ${text}`)
-    bugsnagNotify(new Error(text), 'headless_task_fail', {event})
+
+    if (position.isStandalone) {
+      BackgroundGeolocation.logger.info(`${prefix} ${text}`)
+    }
+  }
+
+  if (singleton) {
+    singleton.setPosition(position)
+  }
+}
+
+function onLocationError(err) {
+  warn(prefix, 'location error', err)
+  BackgroundGeolocation.logger.error(`${prefix} onLocationError ${err}`)
+}
+
+function onHttp(response) {
+  log(prefix, 'on http', response)
+  if (response.status >= 200 && response.status < 300) {
+    // analytics.track('location_bg_success', {location: self.location})
+  } else {
+    if (response.status === 401 || response.status === 403) {
+      BackgroundGeolocation.stop()
+      BackgroundGeolocation.stopSchedule()
+      BackgroundGeolocation.logger.error(`${prefix} BackgroundGeolocation.stop() due to error`)
+    }
+
+    analytics.track('location_bg_error', {error: response})
+  }
+}
+
+function onMotionChange(location) {
+  log(prefix, 'motionchanged:', location)
+}
+
+function onActivityChange(activityName) {
+  log(prefix, 'Current motion activity:', activityName)
+}
+
+function onProviderChange(provider) {
+  log(prefix, 'Location provider changed:', provider)
+  const info = JSON.stringify(provider)
+  BackgroundGeolocation.logger.info(`${prefix} onProviderChange(${info})`)
+
+  if (singleton) {
+    singleton.setAlwaysOn(provider.status === BackgroundGeolocation.AUTHORIZATION_STATUS_ALWAYS)
+  }
+}
+
+async function HeadlessTask(event) {
+  switch (event.name) {
+    case 'location':
+      // It's not known how to distinguish between a location and a
+      //   location error event.
+      // To be on the safe side, call onLocation if the params are clearly
+      //   a location event, otherwise just log it for future debugging.
+      if (event.params && event.params.coords) {
+        return onLocation(event.params)
+      } else {
+        const text = `Unknown headless task event: ${JSON.stringify(event)}`
+        log(prefix, text)
+        BackgroundGeolocation.logger.info(`${prefix} ${text}`)
+        bugsnagNotify(new Error(text), 'headless_task_fail', {event})
+      }
+      break
+    case 'http':
+      return onHttp(event.params)
+    case 'motionchange':
+      return onMotionChange(event.params)
+    case 'activitychange':
+      return onActivityChange(event.params)
+    case 'providerchange':
+      return onProviderChange(event.params)
   }
 }
 BackgroundGeolocation.registerHeadlessTask(HeadlessTask)
