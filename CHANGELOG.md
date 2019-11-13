@@ -16,7 +16,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * react-dom (PR #4406)
 * RNBGL android headless js mode (experimental) (PR #4377)
 * Error in Connectivity.tsx:140: Only promises can be yielded to `async` (#4385)
-* Finally fixing the bottom card swipe logic (#4212)
+* Finally fixing the bottom card swipe logic (#4212, PR #4407, PR #4409)
 
 # 4.32.0 - 2019 Nov 7
 
