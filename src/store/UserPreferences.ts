@@ -7,18 +7,25 @@ const UserPreferences = types
     hidden: false,
     hiddenExpires: types.maybeNull(types.Date),
   })
+  .actions(self => ({
+    setHidden(value: boolean) {
+      self.hidden = value
+    },
+    setHiddenExpires(date: Date | null) {
+      self.hiddenExpires = date
+    },
+  }))
   .actions(self => {
-    const wocky: IWocky = (getRoot(self) as any).wocky as IWocky
     let reactions: IReactionDisposer[] = []
     return {
       afterAttach: () => {
+        const wocky: IWocky = (getRoot(self) as any).wocky as IWocky
         reactions = [
           reaction(
             () => wocky && wocky.profile && wocky.profile!.hidden,
             () => {
-              console.log('SET HIDDEN', wocky!.profile!.hidden)
-              self.hidden = wocky!.profile!.hidden.enabled
-              self.hiddenExpires = wocky!.profile!.hidden.expires
+              self.setHidden(wocky!.profile!.hidden.enabled)
+              self.setHiddenExpires(wocky!.profile!.hidden.expires)
             }
           ),
         ]
