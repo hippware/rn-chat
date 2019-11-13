@@ -1,31 +1,31 @@
 import React from 'react'
-import {View, Image, Text, ImageSourcePropType, TextStyle, ViewStyle} from 'react-native'
+import {Text, ImageSourcePropType, TextStyle, ViewStyle, ImageBackground} from 'react-native'
 
 type Props = {
-  style: TextStyle
+  style?: TextStyle
   background: ImageSourcePropType
   text: string
   outerStyle?: ViewStyle
 }
 
 const ProfileBadge = ({style, background, text, outerStyle}: Props) => (
-  <View
+  <ImageBackground
     style={[
       {
         position: 'absolute',
         top: 0,
         right: 0,
-        height: 35,
-        width: 35,
+        height: 30,
+        width: 30,
         alignItems: 'center',
         justifyContent: 'center',
       },
       outerStyle,
     ]}
+    source={background}
   >
-    <Image source={background} style={{position: 'absolute'}} resizeMode="contain" />
-    <Text style={[{textAlign: 'center', bottom: 3, color: 'white'}, style]}>{text}</Text>
-  </View>
+    <Text style={[{color: 'white', paddingLeft: 2}, style]}>{text}</Text>
+  </ImageBackground>
 )
 
 export default ProfileBadge
