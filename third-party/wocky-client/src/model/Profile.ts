@@ -241,6 +241,11 @@ export const Profile = types
       },
     }
   })
+  .views(self => ({
+    get unreadCountString(): string {
+      return self.unreadCount > 9 ? '9+' : self.unreadCount.toString()
+    },
+  }))
 
 export const ProfilePaginableList = createPaginable<IProfile>(
   types.reference(types.late(() => Profile)),

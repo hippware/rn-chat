@@ -57,13 +57,7 @@ const LocationAvatar = observer(({profile, hidden, tappable, asHeaderItem}: Prop
         tappable={tappable}
       />
       {!!asHeaderItem && !!profile.unreadCount && (
-        // For many messages, '9+' isn't quite centered. Show ' 9+' instead.
-        //   It's a hack.
-        <BubbleBadge
-          style={{top: 1}}
-          text={profile.unreadCount > 9 ? ` 9+` : `${profile.unreadCount}`}
-          background={unreadCounter}
-        />
+        <BubbleBadge text={profile.unreadCountString} background={unreadCounter} />
       )}
       {(!asHeaderItem || !profile.unreadCount) && !!theActivity && (
         <BubbleBadge style={{left: 1}} text={theActivity} background={activity} />

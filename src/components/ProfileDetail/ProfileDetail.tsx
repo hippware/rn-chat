@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {IProfile} from 'wocky-client'
 import {isAlive} from 'mobx-state-tree'
 import BottomPopup from '../BottomPopup'
-import {RText, Pill} from '../common'
+import {RText, Pill, BubbleBadge} from '../common'
 import {colors} from 'src/constants'
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native'
 import ConnectButton from './ConnectButton'
@@ -12,7 +12,6 @@ import BlockReport from './BlockReport'
 import {useWocky} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
-import {ProfileBadge} from '../Home/LocationAvatar'
 
 type Props = {
   item: string
@@ -132,10 +131,9 @@ const Preview = observer(({profile}: {profile: IProfile}) => {
             source={require('../../../images/MessageBtn.png')}
           />
           {profile.unreadCount > 0 && (
-            <ProfileBadge
-              style={{top: 1}}
-              outerStyle={{top: -8, right: -8}}
-              text={profile.unreadCount > 9 ? ` 9+` : profile.unreadCount.toString()}
+            <BubbleBadge
+              outerStyle={{top: -10, right: -10}}
+              text={profile.unreadCountString}
               background={unreadCounter}
             />
           )}
