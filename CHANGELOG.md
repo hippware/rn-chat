@@ -7,7 +7,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Clear search store on logout. (PR #4387)
   * Fix: Failed to resolve reference '...' to type 'Profile' (#4322)
 * Disambiguate auth/code-expired in bugsnags. (PR #4386)
-* Messaging CTA should exist on the user card. (#3962)
+* Messaging CTA should exist on the user card. (#3962, multiple PRs)
 * Update: @babel/node (PR #4390), @babel/core (PR #4391)
   * @types/react (PR #4392), @storybook/react-native (PR #4394)
   * mobx-state-tree and typescript (PR #4395), @types/lodash (PR #4397)
@@ -15,10 +15,15 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * react-test-renderer (PR #4403), @types/jest (PR #4405),
   * react-dom (PR #4406)
 * Error in Connectivity.tsx:140: Only promises can be yielded to `async` (#4385)
-* Finally fixing the bottom card swipe logic (#4212, PR #4407, PR #4409)
+* Finally fixing the bottom card swipe logic (#4212, multiple PRs)
+  * New UI preview -> full view drag animation (#4420)
 * Dynamic location upload rate (#4274)
   * RNBGL android headless js mode (PR #4377, PR #4416)
   * headless_task_fail in LocationStore - Singleton not initialised (#4415)
+* TypeError in third-party/wocky-client/src/model/Profile.ts:162 (#4422)
+* Don't continually persist location if backgrounded-ed. (PR #4424)
+  * [dev] Don't rebuild and persist MST tree every 3 seconds (#4324)
+* Don't create store if already exists. (PR #4425)
 
 # 4.32.0 - 2019 Nov 7
 
