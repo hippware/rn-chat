@@ -118,7 +118,7 @@ const GeocodingStore = types.model('GeocodingStore', {}).actions(self => {
         //        return Promise.reject(new Error(`Server returned status code ${json.status}`));
       }
     } catch (e) {
-      console.error(e) //tslint:disable-line
+      console.log(e) //tslint:disable-line
     }
   })
 

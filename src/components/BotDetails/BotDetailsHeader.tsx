@@ -6,7 +6,7 @@ import {colors} from '../../constants'
 import {isAlive} from 'mobx-state-tree'
 import {when} from 'mobx'
 import ActionButton from './ActionButton'
-import {RText, Spinner, ProfileHandle, ProfileStack, LazyImage} from '../common'
+import {RText, Spinner, ProfileHandle, ProfileStack, LazyImage, BotIcon} from '../common'
 import {IBot, IProfile} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 import Separator from './Separator'
@@ -15,18 +15,23 @@ import ProfileAvatar from '../ProfileAvatar'
 import {GREY} from 'src/constants/colors'
 import {botProfileStyle} from '../styles'
 import Pill from '../common/Pill'
+import {useLocationStore} from 'src/utils/injectors'
 
 type Props = {
   bot: IBot
   locationStore?: ILocationStore
   notificationStore?: any // TODO proper type
   analytics?: any // TODO proper type
+  preview?: boolean
 }
 
 const shareIcon = require('../../../images/shareIcon.png')
 const followIcon = require('../../../images/shoesPink.png')
 
-const BotDetailsHeader = inject('notificationStore', 'analytics', 'locationStore')(
+const BotDetailsHeader = (props: Props) =>
+  props.preview ? <PreviewHeader bot={props.bot} /> : <DefaultHeader {...props} />
+
+const DefaultHeader = inject('notificationStore', 'analytics', 'locationStore')(
   observer(({bot, locationStore, notificationStore}: Props) => {
     function copyAddress() {
       Clipboard.setString(bot.address)
@@ -111,6 +116,48 @@ const BotDetailsHeader = inject('notificationStore', 'analytics', 'locationStore
     )
   })
 )
+
+const PreviewHeader = observer(({bot}: {bot: IBot}) => {
+  const locationStore = useLocationStore()
+
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+        marginHorizontal: 20,
+      }}
+    >
+      {!!bot.image ? (
+        <LazyImage
+          file={bot.image}
+          imageProps={{
+            style: styles.previewImage,
+          }}
+          placeholder={<View style={[styles.previewImage, {backgroundColor: GREY}]} />}
+        />
+      ) : (
+        <BotIcon size={47} icon={bot.icon} textStyle={{fontSize: 45, textAlign: 'center'}} />
+      )}
+      <View style={{marginLeft: 20}}>
+        <RText
+          weight="Bold"
+          size={20}
+          color={colors.DARK_PURPLE}
+          numberOfLines={1}
+          style={{marginBottom: 10}}
+        >
+          {bot.title}
+        </RText>
+        <View style={{flexDirection: 'row', paddingBottom: 5}}>
+          <Pill>{bot.addressData ? bot.addressData.locationShort : '          '}</Pill>
+          <Pill>{locationStore!.distanceFromBot(bot.location) || '    '}</Pill>
+        </View>
+      </View>
+    </View>
+  )
+})
 
 const VisitorsArea = observer(({bot}: {bot: IBot}) => {
   let list: IProfile[] | undefined, text: string, count: number, onPress
@@ -266,4 +313,5 @@ const styles = StyleSheet.create({
     marginTop: 15 * k,
   },
   botImage: {width, height: width, marginHorizontal: -20 * k, marginTop: 15 * minHeight},
+  previewImage: {width: 52, height: 52},
 })

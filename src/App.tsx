@@ -20,9 +20,11 @@ const App = () => {
       analytics.track('memory_warning', extras)
     })
 
-    createStore().then(s => {
-      setStore(s)
-    })
+    if (!store) {
+      createStore().then(s => {
+        setStore(s)
+      })
+    }
   }, [])
 
   // todo: how long does store creation take? Should we show something while it's being created?

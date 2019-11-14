@@ -15,7 +15,7 @@ const AuthStore = types
   }))
   .actions(self => {
     const store = getParent<any>(self)
-    const {wocky, homeStore, locationStore} = store
+    const {wocky, homeStore, locationStore, searchStore} = store
     let strategy: AuthStrategy | null = null
 
     return {
@@ -39,6 +39,7 @@ const AuthStore = types
       },
 
       logout: flow(function*() {
+        searchStore.clear()
         homeStore.logout()
         locationStore.logout()
         if (strategy) {

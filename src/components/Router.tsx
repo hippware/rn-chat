@@ -22,6 +22,7 @@ import OnboardingSlideshow from './OnboardingSlideshowScene'
 import * as peopleLists from './people-lists'
 import FriendSearch from './people-lists/FriendSearch'
 import VisitorList from './people-lists/VisitorList'
+import AllFriendList from './people-lists/AllFriendList'
 import ReportUser, {ReportUserRightButton} from './report-modals/ReportUser'
 import ReportBot, {ReportBotRightButton} from './report-modals/ReportBot'
 import SignIn from './SignIn'
@@ -80,6 +81,14 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
         },
         {delay: 1000}
       )
+
+      // ensure we always nav to the default card if we pop back to home (add small delay in case of a popTo -> nav)
+      autorun(() => {
+        if (navStore!.scene === 'home') {
+          Actions.profileDetails({item: wocky!.profile!.id, preview: true})
+        }
+      }, {delay: 200})
+      
     }, [])
 
     const onDeepLink = async ({action, params}) => {
@@ -114,7 +123,7 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
     const uriPrefix = Platform.select({ios: settings.uriPrefix, android: settings.uriPrefix.toLowerCase()})
 
     return (
-      <Router onStateChange={() => navStore!.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={onDeepLink}>
+      <Router onStateChange={() => navStore!.setScene(Actions.currentScene, Actions.currentParams)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={onDeepLink}>
         <Tabs hideNavBar hideTabBar>
           <Lightbox hideNavBar type="replace">
             <Scene key="checkCredentials" component={Launch} on={() => authStore!.canLogin} success="checkProfile" failure="preConnection" />
@@ -141,7 +150,7 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
                     <Scene key="home" path="livelocation/:userId" component={Home} hideNavBar />
                     <Scene key="bottomMenu" component={BottomMenu} />
                     <Scene key="createBot" component={CreationHeader} fromTop />
-                    <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetails} />
+                    <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetails} hasPreview />
                     <Scene key="botCompose" component={BotCompose} backAction={() => backAction(iconStore!)} />
                     <Scene key="botEdit" component={BotCompose} edit backAction={() => backAction(iconStore!)} />
                     <Scene key="editNote" component={EditNote} />
@@ -149,13 +158,14 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
                     <Scene key="friends" component={peopleLists.FriendList} />
                     <Scene key="friendSearch" component={FriendSearch} />
                     <Scene key="visitors" component={VisitorList} />
-                    <Scene key="profileDetails" path="user/:item" component={ProfileDetail} />
+                    <Scene key="profileDetails" path="user/:item" component={ProfileDetail} hasPreview />
                     <Scene key="liveLocationCompose" component={LiveLocationCompose} />
                     <Scene key="liveLocationSettings" component={LiveLocationSettings} />
                     <Scene key="chats" component={ChatListScreen} title="Messages" />
                     <Scene key="mapOptions" component={MapOptions} />
                   </Stack>
                   <Scene key="chat" path="conversation/:item" component={ChatScreen} />
+                  <Scene key="allFriends" component={AllFriendList} title="Friends" />
                   <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
                   <Scene key="liveLocationSelectFriends" component={LiveLocationShare} title="Select Friends" />
                   <Scene key="myAccount" component={MyAccount} editMode back />

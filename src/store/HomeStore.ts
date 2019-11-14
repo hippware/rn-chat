@@ -1,7 +1,6 @@
 /* tslint:disable:max-classes-per-file */
-import {types, applySnapshot, getRoot} from 'mobx-state-tree'
+import {types, applySnapshot, getRoot, Instance} from 'mobx-state-tree'
 import {IBot, IProfile, Location, ILocation} from 'wocky-client'
-import {IStore} from './store'
 import {autorun} from 'mobx'
 
 export const DEFAULT_DELTA = 0.00522
@@ -58,7 +57,7 @@ export class LocationSharerCard extends Card {
     this.profile = profile
   }
   get location() {
-    return this.profile.location
+    return this.profile.currentLocation
   }
   get name() {
     return 'LocationSharerCard'
@@ -82,9 +81,10 @@ const HomeStore = types
   })
   .volatile(() => ({
     latitudeDelta: INIT_DELTA,
+    friendFilter: '',
   }))
   .views(self => {
-    const {navStore, wocky} = getRoot<IStore>(self)
+    const {navStore, wocky} = getRoot(self)
     return {
       get creationMode() {
         return (
@@ -92,7 +92,7 @@ const HomeStore = types
         )
       },
       get detailsMode() {
-        return navStore && navStore.scene === 'botDetails'
+        return navStore && navStore.scene === 'botDetails' && !navStore.params.preview
       },
       get isIconEditable() {
         return ['botCompose', 'botEdit'].includes(navStore.scene)
@@ -105,7 +105,13 @@ const HomeStore = types
               )
             : []
         const localBots = wocky.localBots.list.map(bot => new BotCard(bot))
-        return [new TutorialCard(), new YouCard(), ...sharers, ...localBots]
+        return [new YouCard(), ...sharers, ...localBots]
+      },
+      get headerItems(): IProfile[] {
+        if (!wocky || !wocky.profile) {
+          return []
+        }
+        return [wocky.profile, ...wocky.profile!.allFriends]
       },
       get mapType() {
         switch (self.mapOptions) {
@@ -124,12 +130,11 @@ const HomeStore = types
     get list(): Card[] {
       return self.creationMode ? [] : self.cards
     },
-    get index(): number {
-      const index = self.cards.findIndex(card => card.id === self.selectedId)
-      return index !== -1 ? index : 0
-    },
   }))
   .actions(self => ({
+    setFriendFilter(filter: string) {
+      self.friendFilter = filter
+    },
     setFocusedLocation(location) {
       if (!location) {
         self.focusedLocation = null
@@ -156,13 +161,6 @@ const HomeStore = types
     setLatitudeDelta(delta) {
       self.latitudeDelta = delta
     },
-    setIndex(index: number) {
-      self.fullScreenMode = false
-      self.select(self.cards[index].id)
-      if (self.cards[self.index].location) {
-        self.setFocusedLocation(self.cards[self.index].location)
-      }
-    },
     logout() {
       applySnapshot(self, {})
     },
@@ -186,11 +184,13 @@ const HomeStore = types
         self.mapOptions = value
       },
       followUserOnMap(user: IProfile) {
-        if (disposer) disposer()
-        self.followingUser = true
-        disposer = autorun(() => self.setFocusedLocation(user.currentLocation), {
-          name: 'FollowUserOnMap',
-        })
+        if (user.currentLocation) {
+          if (disposer) disposer()
+          self.followingUser = true
+          disposer = autorun(() => self.setFocusedLocation(user.currentLocation), {
+            name: 'FollowUserOnMap',
+          })
+        }
       },
       stopFollowingUserOnMap() {
         if (disposer) {
@@ -205,7 +205,18 @@ const HomeStore = types
     // store mapOptions
     return {mapOptions: snapshot.mapOptions}
   })
+  .views(self => ({
+    get filteredFriends() {
+      const {wocky} = getRoot(self)
+      if (!wocky || !wocky.profile) {
+        return []
+      }
+      return wocky.profile!.allFriends.filter((value: IProfile) =>
+        value.handle!.toLocaleLowerCase().startsWith(self.friendFilter.toLocaleLowerCase())
+      )
+    },
+  }))
 
 export default HomeStore
-type HomeStoreType = typeof HomeStore.Type
-export interface IHomeStore extends HomeStoreType {}
+
+export interface IHomeStore extends Instance<typeof HomeStore> {}

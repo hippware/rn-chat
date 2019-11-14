@@ -18,12 +18,11 @@ const SplitRenderer = (props: Props) => {
   const [scrollY] = useState(new Animated.Value(0))
 
   function _renderScene(transitionProps, scene) {
-    const {index} = scene
+    const {index, route} = scene
+
     if (index === 0) {
       // main screen
-      return (
-        <AnimatedMainScene transitionProps={transitionProps} key={scene.route.key} scene={scene} />
-      )
+      return <AnimatedMainScene transitionProps={transitionProps} key={route.key} scene={scene} />
     } else {
       return (
         <View
@@ -36,14 +35,14 @@ const SplitRenderer = (props: Props) => {
           key={scene.route.key}
           pointerEvents="box-none"
         >
-          <BackButton scene={scene} />
+          {!route.params.preview && <BackButton scene={scene} />}
           <AnimatedPushScene transitionProps={transitionProps} scene={scene} />
         </View>
       )
     }
   }
 
-  function _render(transitionProps, prevTransitionProps) {
+  function _render(transitionProps) {
     const {scenes, scene} = transitionProps
     const theScenes = scenes.map(s => _renderScene(transitionProps, s))
     return (

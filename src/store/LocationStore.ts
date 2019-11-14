@@ -1,5 +1,6 @@
 import {types, getEnv, flow, getParent, getRoot} from 'mobx-state-tree'
 import {autorun, IReactionDisposer} from 'mobx'
+import {AppState} from 'react-native'
 import BackgroundGeolocation from 'react-native-background-geolocation'
 import DeviceInfo from 'react-native-device-info'
 import {settings} from '../globals'
@@ -9,20 +10,20 @@ import * as RNLocalize from 'react-native-localize'
 import moment from 'moment'
 import {log, warn} from '../utils/logger'
 import analytics from '../utils/analytics'
-import {checkLocation, checkLocationWhenInUse} from '../utils/permissions'
+import {checkLocation} from '../utils/permissions'
 import Geolocation from 'react-native-geolocation-service'
+import {bugsnagNotify} from 'src/utils/bugsnagConfig'
 
 const MAX_DATE1 = '2030-01-01-17:00'
 const MAX_DATE2 = '2030-01-01-18:00'
 
-export const BG_STATE_PROPS = ['distanceFilter', 'autoSyncThreshold', 'debug']
+export const BG_STATE_PROPS = ['distanceFilter', 'autoSyncThreshold']
 
 const prefix = 'BGGL'
 
 const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOptions', {
   autoSyncThreshold: types.maybeNull(types.number),
   distanceFilter: types.maybeNull(types.number),
-  debug: types.maybeNull(types.boolean),
 })
 
 // todo: https://github.com/hippware/rn-chat/issues/3434
@@ -34,9 +35,7 @@ const LocationStore = types
     backgroundOptions: types.optional(BackgroundLocationConfigOptions, {}),
   })
   .volatile(() => ({
-    enabled: true,
     alwaysOn: true,
-    debugSounds: false,
   }))
   .views(self => ({
     distance: (lat1: number, lon1: number, lat2: number, lon2: number): number => {
@@ -80,7 +79,6 @@ const LocationStore = types
   }))
   .actions(self => ({
     setPosition(position) {
-      self.enabled = true
       self.location = createLocation({
         lat: position.coords.latitude,
         lon: position.coords.longitude,
@@ -109,9 +107,12 @@ const LocationStore = types
 
     // Set reset to true to reset to defaults
     configure: flow(function*(reset = false) {
+      singleton = self as any
+
       const config = {
         batchSync: true,
         desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
+        enableHeadless: true,
         foregroundService: true, // android only
         logLevel:
           __DEV__ || settings.configurableLocationSettings
@@ -140,69 +141,14 @@ const LocationStore = types
         yield BackgroundGeolocation.setConfig(config)
         log(prefix, 'Configure')
       }
+
+      setUploadRate(true)
     }),
   }))
   .actions(self => {
     const {transport} = getEnv(self)
     const wocky: IWocky = (getParent(self) as any).wocky
     let watcherID
-
-    function onLocation(position) {
-      if (__DEV__ || settings.isStaging) {
-        const text = `${position.isStandalone ? 'Standalone ' : ''}location: ${JSON.stringify(
-          position
-        )}`
-        log(prefix, text)
-
-        if (position.isStandalone) {
-          BackgroundGeolocation.logger.info(`${prefix} ${text}`)
-        }
-      }
-      self.setPosition(position)
-    }
-
-    function onLocationError(err) {
-      if (err === 1) {
-        // user denied location permissions
-        self.enabled = false
-      }
-
-      warn(prefix, 'location error', err)
-      BackgroundGeolocation.logger.error(`${prefix} onLocationError ${err}`)
-      if (self.debugSounds) BackgroundGeolocation.playSound(1024) // descent
-    }
-
-    function onHttp(response) {
-      log(prefix, 'on http', response)
-      if (response.status >= 200 && response.status < 300) {
-        if (self.debugSounds) BackgroundGeolocation.playSound(1016) // tweet sent
-        // analytics.track('location_bg_success', {location: self.location})
-      } else {
-        if (response.status === 401 || response.status === 403) {
-          BackgroundGeolocation.stop()
-          BackgroundGeolocation.stopSchedule()
-          BackgroundGeolocation.logger.error(`${prefix} BackgroundGeolocation.stop() due to error`)
-        }
-
-        if (self.debugSounds) BackgroundGeolocation.playSound(1024) // descent
-        analytics.track('location_bg_error', {error: response})
-      }
-    }
-
-    function onMotionChange(location) {
-      log(prefix, 'motionchanged:', location)
-    }
-
-    function onActivityChange(activityName) {
-      log(prefix, 'Current motion activity:', activityName)
-    }
-
-    function onProviderChange(provider) {
-      log(prefix, 'Location provider changed:', provider)
-      const info = JSON.stringify(provider)
-      BackgroundGeolocation.logger.info(`${prefix} onProviderChange(${info})`)
-      self.setAlwaysOn(provider.status === BackgroundGeolocation.AUTHORIZATION_STATUS_ALWAYS)
-    }
 
     const refreshCredentials = flow(function*() {
       try {
@@ -244,11 +190,6 @@ const LocationStore = types
     })
 
     function setBackgroundConfig(config) {
-      if (config.debugSounds && !self.debugSounds) BackgroundGeolocation.playSound(1028) // newsflash
-      self.setState({
-        debugSounds: config.debugSounds,
-      })
-
       // For some reason, these parameters must be ints, not strings
       config.autoSyncThreshold = parseInt(config.autoSyncThreshold)
       BackgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)
@@ -293,19 +234,13 @@ const LocationStore = types
     async function emailLog(email) {
       // emailLog doesn't work in iOS simulator so fetch and dump instead
       if (await DeviceInfo.isEmulator()) {
-        await BackgroundGeolocation.getLog(log)
+        log(prefix, await BackgroundGeolocation.logger.getLog())
       } else {
-        await BackgroundGeolocation.emailLog(email)
+        await BackgroundGeolocation.logger.emailLog(email)
       }
     }
 
     return {
-      onLocation,
-      onLocationError,
-      onHttp,
-      onMotionChange,
-      onActivityChange,
-      onProviderChange,
       refreshCredentials,
       invalidateCredentials,
       getCurrentPosition,
@@ -319,16 +254,20 @@ const LocationStore = types
     const {wocky} = getRoot<any>(self)
     let reactions: IReactionDisposer[] = []
 
-    const start = flow(function*() {
+    const init = flow(function*() {
       const resp1 = yield checkLocation()
       if (resp1) {
         self.setAlwaysOn(true)
-        self.setState({enabled: true})
       } else {
         self.setAlwaysOn(false)
-        const resp2 = yield checkLocationWhenInUse()
-        self.setState({enabled: resp2})
       }
+    })
+
+    const start = flow(function*() {
+      if (reactions.length) {
+        finish()
+      }
+      yield init()
 
       reactions = [
         autorun(
@@ -366,14 +305,13 @@ const LocationStore = types
 
     const didMount = flow(function*() {
       BackgroundGeolocation.logger.info(`${prefix} didMount`)
-      BackgroundGeolocation.on('location', self.onLocation, self.onLocationError)
-      BackgroundGeolocation.onHttp(self.onHttp)
-      // BackgroundGeolocation.onSchedule(state => console.log('ON SCHEDULE!!!!!!!!!' + state.enabled))
-      BackgroundGeolocation.onMotionChange(self.onMotionChange)
-      BackgroundGeolocation.onActivityChange(self.onActivityChange)
-      BackgroundGeolocation.onProviderChange(self.onProviderChange)
-      // need to run start to properly set self.alwaysOn
-      yield start()
+      BackgroundGeolocation.onLocation(onLocation, onLocationError)
+      BackgroundGeolocation.onHttp(onHttp)
+      BackgroundGeolocation.onMotionChange(onMotionChange)
+      BackgroundGeolocation.onActivityChange(onActivityChange)
+      BackgroundGeolocation.onProviderChange(onProviderChange)
+      // need to init() to initialise self.alwaysOn
+      yield init()
       if (self.alwaysOn) {
         yield self.configure()
         const config = yield BackgroundGeolocation.ready({reset: false})
@@ -384,12 +322,7 @@ const LocationStore = types
 
     function willUnmount() {
       BackgroundGeolocation.logger.info(`${prefix} willUnmount`)
-      BackgroundGeolocation.un('location', self.onLocation)
-      BackgroundGeolocation.un('http', self.onHttp)
-      // backgroundGeolocation.un('error', ??)
-      BackgroundGeolocation.un('motionchange', self.onMotionChange)
-      BackgroundGeolocation.un('activitychange', self.onActivityChange)
-      BackgroundGeolocation.un('providerchange', self.onProviderChange)
+      BackgroundGeolocation.removeAllListeners()
     }
 
     const logout = flow(function*() {
@@ -431,6 +364,130 @@ const LocationStore = types
 // .postProcessSnapshot((snapshot: any) => {
 //   return {} // huge performance optimization: don't persist frequently changed location and display only real location to an user
 // })
+
+let singleton: typeof LocationStore.Type
+
+function onLocation(position) {
+  if (__DEV__ || settings.isStaging) {
+    const text = `${position.isStandalone ? 'Standalone ' : ''}location: ${JSON.stringify(
+      position
+    )}`
+    log(prefix, text)
+
+    if (position.isStandalone) {
+      BackgroundGeolocation.logger.info(`${prefix} ${text}`)
+    }
+  }
+
+  if (AppState.currentState !== 'background' && singleton) {
+    singleton.setPosition(position)
+  }
+}
+
+function onLocationError(err) {
+  warn(prefix, 'location error', err)
+  BackgroundGeolocation.logger.error(`${prefix} onLocationError ${err}`)
+}
+
+// Use closure to define a function with a static variable
+// For some reason, _autoSyncThreshold is only static if setUploadRate is defined at the top scope.
+const setUploadRate = (() => {
+  let _autoSyncThreshold: number = -1
+
+  return (fast: boolean) => {
+    const autoSyncThreshold = fast ? 0 : 10
+    if (autoSyncThreshold !== _autoSyncThreshold) {
+      BackgroundGeolocation.logger.info(`${prefix} setUploadRate(${fast})`)
+      log(prefix, `setUploadRate(${fast})`)
+      BackgroundGeolocation.setConfig({
+        autoSyncThreshold,
+      })
+      _autoSyncThreshold = autoSyncThreshold
+
+      // Update locationStore if available
+      if (singleton) {
+        singleton.setState({
+          backgroundOptions: {
+            ...singleton.backgroundOptions,
+            autoSyncThreshold,
+          },
+        })
+      }
+    }
+  }
+})()
+
+function onHttp(response) {
+  log(prefix, 'on http', response)
+  if (response.status >= 200 && response.status < 300) {
+    // analytics.track('location_bg_success', {location: self.location})
+
+    let data: any = false
+    try {
+      data = response.responseText && JSON.parse(response.responseText)
+    } catch (e) {
+      // no-op
+    }
+
+    if (data) {
+      setUploadRate(!!data.watched)
+    }
+  } else {
+    if (response.status === 401 || response.status === 403) {
+      BackgroundGeolocation.stop()
+      BackgroundGeolocation.stopSchedule()
+      BackgroundGeolocation.logger.error(`${prefix} BackgroundGeolocation.stop() due to error`)
+    }
+
+    analytics.track('location_bg_error', {error: response})
+  }
+}
+
+function onMotionChange(location) {
+  log(prefix, 'motionchanged:', location)
+}
+
+function onActivityChange(activityName) {
+  log(prefix, 'Current motion activity:', activityName)
+}
+
+function onProviderChange(provider) {
+  log(prefix, 'Location provider changed:', provider)
+  const info = JSON.stringify(provider)
+  BackgroundGeolocation.logger.info(`${prefix} onProviderChange(${info})`)
+
+  if (singleton) {
+    singleton.setAlwaysOn(provider.status === BackgroundGeolocation.AUTHORIZATION_STATUS_ALWAYS)
+  }
+}
+
+async function HeadlessTask(event) {
+  switch (event.name) {
+    case 'location':
+      // It's not known how to distinguish between a location and a
+      //   location error event.
+      // To be on the safe side, call onLocation if the params are clearly
+      //   a location event, otherwise just log it for future debugging.
+      if (event.params && event.params.coords) {
+        return onLocation(event.params)
+      } else {
+        const text = `Unknown headless task event: ${JSON.stringify(event)}`
+        log(prefix, text)
+        BackgroundGeolocation.logger.info(`${prefix} ${text}`)
+        bugsnagNotify(new Error(text), 'headless_task_fail', {event})
+      }
+      break
+    case 'http':
+      return onHttp(event.params)
+    case 'motionchange':
+      return onMotionChange(event.params)
+    case 'activitychange':
+      return onActivityChange(event.params)
+    case 'providerchange':
+      return onProviderChange(event.params)
+  }
+}
+BackgroundGeolocation.registerHeadlessTask(HeadlessTask)
 
 export default LocationStore
 export type ILocationStore = typeof LocationStore.Type

@@ -32,7 +32,7 @@ type Props = {
   hideDot?: boolean
   borderColor?: string
   noScale?: boolean
-  isYou?: boolean
+  inactive?: boolean
 }
 
 const Avatar = observer(
@@ -49,7 +49,7 @@ const Avatar = observer(
     fontSize,
     fontFamily,
     noScale = false,
-    isYou = false,
+    inactive = false,
   }: Props) => {
     if ((!profile || (isStateTreeNode(profile) && !isAlive(profile))) && (!image && !displayName)) {
       return null
@@ -92,7 +92,8 @@ const Avatar = observer(
               fontFamily={fontFamily}
               letter={title.length > 1 ? title[0] : title}
               showMask={showMask}
-              isYou={isYou}
+              inactive={inactive}
+              isYou={profile && profile!.isOwn}
             />
           )}
           {!hideDot && !!profile && <PresenceDot profile={profile} size={size} />}
@@ -115,12 +116,22 @@ const AvatarImage = observer(({avatar, style, size, showMask}) => (
   </View>
 ))
 
-const AvatarLetterPlaceholder = ({size, style, fontSize, letter, showMask, fontFamily, isYou}) => {
-  const start = showMask ? {x: 0.5, y: 0} : {x: 0, y: 1}
-  const end = showMask ? {x: 0.5, y: 1} : {x: 1, y: 0}
-  const theColors = showMask
-    ? ['rgb(166,166,166)', 'rgb(74,74,74)']
-    : ['rgb(242,68,191)', 'rgb(254,110,98)', 'rgb(254,92,108)']
+const AvatarLetterPlaceholder = ({
+  size,
+  inactive,
+  style,
+  fontSize,
+  letter,
+  showMask,
+  fontFamily,
+  isYou,
+}) => {
+  const start = showMask || inactive ? {x: 0.5, y: 0} : {x: 0, y: 1}
+  const end = showMask || inactive ? {x: 0.5, y: 1} : {x: 1, y: 0}
+  const theColors =
+    showMask || inactive
+      ? ['rgb(166,166,166)', 'rgb(74,74,74)']
+      : ['rgb(242,68,191)', 'rgb(254,110,98)', 'rgb(254,92,108)']
   return (
     <LinearGradient
       start={start}
@@ -152,7 +163,7 @@ const AvatarLetterPlaceholder = ({size, style, fontSize, letter, showMask, fontF
 }
 
 const Mask = ({size}) => (
-  <View style={[styles.mask, styles.absolute]}>
+  <View style={[styles.mask, StyleSheet.absoluteFill]}>
     <Image
       source={require('../../../images/invisibleIconWhite.png')}
       style={[
@@ -182,13 +193,6 @@ const styles = StyleSheet.create({
   },
   frameOuter: {
     justifyContent: 'center',
-  },
-  absolute: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
   },
   mask: {
     backgroundColor: 'rgba(93,93,93,0.5)',

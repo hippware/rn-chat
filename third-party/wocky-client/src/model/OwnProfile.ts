@@ -77,6 +77,22 @@ export const OwnProfile = types
           return a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
         })
     },
+    get allFriends(): IProfile[] {
+      function compare(a: boolean, b: boolean) {
+        return b === a ? 0 : b ? 1 : -1
+      }
+      return self.friends.list
+        .map(({user}) => user)
+        .sort((a: IProfile, b: IProfile) => {
+          return (
+            compare(!!a.unreadCount, !!b.unreadCount) ||
+            (!!a.unreadCount && b.unreadTime - a.unreadTime) ||
+            compare(a.sharesLocation, b.sharesLocation) ||
+            (a.sharesLocation && a.distance - b.distance) ||
+            a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
+          )
+        })
+    },
     get sortedBlocked(): IProfile[] {
       return self.blocked.list
         .map(contact => contact.user)

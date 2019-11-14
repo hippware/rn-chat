@@ -7,6 +7,7 @@ import {ILocationStore} from '../../../store/LocationStore'
 import {IHomeStore, YouCard} from '../../../store/HomeStore'
 import LocationAvatar from '../LocationAvatar'
 import _ from 'lodash'
+import {Actions} from 'react-native-router-flux'
 
 interface IProps {
   locationStore?: ILocationStore
@@ -39,18 +40,14 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
         onPress={() => {
           homeStore!.select(card.id)
           homeStore!.followUserOnMap(profile)
+          Actions.popTo('home')
+          Actions.profileDetails({item: card.id, preview: true})
         }}
         stopPropagation
       >
         {/* extra padding here for the activity icon */}
         <View style={{paddingHorizontal: 9, paddingTop: 15}}>
-          <LocationAvatar
-            profile={profile}
-            hidden={profile.hidden.enabled}
-            sharesLocation={profile.isLocationShared} // computed isLocationShared must be used for OwnProfile instances
-            currentActivity={profile.currentActivity}
-            isYou
-          />
+          <LocationAvatar profile={profile} hidden={profile.hidden.enabled} />
         </View>
       </HackMarker>
     )

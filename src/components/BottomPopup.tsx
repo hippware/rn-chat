@@ -1,17 +1,83 @@
 import React from 'react'
-import {View, Image, StyleSheet} from 'react-native'
+import {Image, StyleSheet, ViewStyle, TouchableOpacity, Animated, PanResponder} from 'react-native'
 import {useHomeStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
+import {Actions} from 'react-native-router-flux'
 
 type Props = {
   children: any
+  style?: ViewStyle
+  preview?: boolean
+  cancelPanCapture?: boolean
+  onMoveShouldSetPanResponder?: (e, s) => boolean
 }
 
-const BottomPopup = observer(({children}: Props) => {
+const previewBtnUpImg = require('../../images/previewButtonUp.png')
+const previewBtnDownImg = require('../../images/previewButtonDown.png')
+
+// controls how far the user has to "pull" to trigger a toggle from preview -> full
+const PAN_THRESHOLD = 70
+
+const BottomPopup = observer(({children, style, preview, onMoveShouldSetPanResponder}: Props) => {
   const {mapType} = useHomeStore()
+  const panY = new Animated.Value(0)
+
+  panY.addListener(({value}) => {
+    if (preview && value <= -PAN_THRESHOLD) {
+      Actions.refresh({preview: false})
+    } else if (preview === false && value >= PAN_THRESHOLD) {
+      Actions.refresh({preview: true})
+    }
+  })
+
+  const panResponder = PanResponder.create({
+    onMoveShouldSetPanResponder: !!onMoveShouldSetPanResponder
+      ? onMoveShouldSetPanResponder
+      : () => preview !== undefined,
+    onPanResponderMove: Animated.event([
+      null,
+      {
+        dy: panY,
+      },
+    ]),
+    onPanResponderRelease: (e, gesture) => {
+      Animated.spring(panY, {
+        toValue: 0,
+        friction: 5,
+        useNativeDriver: true,
+      }).start()
+    },
+  })
+
   // TODO: style this with border radius and shadow rather than an image. Allows setting background color to white
+
+  // todo: adjust bottom margins for iPhones with bottom notches
   return (
-    <View style={{paddingTop: 50}}>
+    <Animated.View
+      style={[
+        {
+          paddingTop: 50,
+        },
+        preview !== undefined && {
+          transform: [
+            {
+              translateY: panY.interpolate({
+                inputRange: [
+                  -(PAN_THRESHOLD + 1),
+                  -PAN_THRESHOLD,
+                  0,
+                  PAN_THRESHOLD,
+                  PAN_THRESHOLD + 1,
+                ],
+                outputRange: [-PAN_THRESHOLD, -PAN_THRESHOLD, 0, PAN_THRESHOLD, PAN_THRESHOLD],
+              }),
+            },
+          ],
+        },
+        style,
+      ]}
+      {...panResponder.panHandlers}
+    >
       <Image
         style={styles.absolute}
         source={
@@ -21,11 +87,30 @@ const BottomPopup = observer(({children}: Props) => {
         }
         resizeMode="stretch"
       />
+      {preview !== undefined && (
+        <PreviewButton onPress={() => Actions.refresh({preview: !preview})} preview={preview} />
+      )}
       {children}
-    </View>
+    </Animated.View>
   )
 })
+
 export default BottomPopup
+
+const PreviewButton = ({onPress, preview}) => {
+  return (
+    <TouchableOpacity
+      style={{top: -28, alignSelf: 'center'}}
+      onPress={() => {
+        if (onPress) {
+          onPress(!preview)
+        }
+      }}
+    >
+      <Image source={preview ? previewBtnUpImg : previewBtnDownImg} />
+    </TouchableOpacity>
+  )
+}
 
 const styles = StyleSheet.create({
   absolute: {

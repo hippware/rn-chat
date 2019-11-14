@@ -32,15 +32,19 @@ const ChatScreen = withKeyboardHOC(
     }))
 
     useEffect(() => {
-      store.setChat(chats.createChat(item))
-      store.chat!.messages.load().then(() => {
-        store.chat!.readAll()
-      })
-      store.chat!.setActive(true)
+      const processChat = async () => {
+        store.setChat(chats.createChat(item))
+        try {
+          await store.chat!.messages.load() // catch here because some invalid picture could happen
+        } finally {
+          await store.chat!.readAll()
+        }
+        store.chat!.setActive(true)
 
-      // insert chat into props for accessing in navigationOptions
-      navigation.setParams({chat: store.chat})
-
+        // insert chat into props for accessing in navigationOptions
+        navigation.setParams({chat: store.chat})
+      }
+      processChat()
       return function cleanup() {
         if (store.chat) {
           store.chat.setActive(false)

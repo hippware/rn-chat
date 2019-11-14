@@ -4,6 +4,67 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.32.1 - 2019 Nov 14
+
+* Clear search store on logout. (PR #4387)
+  * Fix: Failed to resolve reference '...' to type 'Profile' (#4322)
+* Disambiguate auth/code-expired in bugsnags. (PR #4386)
+* Messaging CTA should exist on the user card. (#3962, multiple PRs)
+* Update: @babel/node (PR #4390), @babel/core (PR #4391)
+  * @types/react (PR #4392), @storybook/react-native (PR #4394)
+  * mobx-state-tree and typescript (PR #4395), @types/lodash (PR #4397)
+  * phoenix (PR #4398), ts-node (PR #4399)
+  * react-test-renderer (PR #4403), @types/jest (PR #4405),
+  * react-dom (PR #4406)
+* Error in Connectivity.tsx:140: Only promises can be yielded to `async` (#4385)
+* Finally fixing the bottom card swipe logic (#4212, multiple PRs)
+  * New UI preview -> full view drag animation (#4420)
+* Dynamic location upload rate (#4274)
+  * RNBGL android headless js mode (PR #4377, PR #4416)
+  * headless_task_fail in LocationStore - Singleton not initialised (#4415)
+* TypeError in third-party/wocky-client/src/model/Profile.ts:162 (#4422)
+* Don't continually persist location if backgrounded-ed. (PR #4424)
+  * [dev] Don't rebuild and persist MST tree every 3 seconds (#4324)
+* Don't create store if already exists. (PR #4425)
+
+# 4.32.0 - 2019 Nov 7
+
+**React Native upgrade to 0.61.4**
+
+* TypeError in src/components/common/Avatar.tsx:97 (#4354)
+* Remove LocationStore debug, debugSounds options. (PR #4356)
+* New UI screen to list all friends (#4325)
+* Update: react-native (#4371)
+  * react-native-background-geolocation (PR #4360)
+  * metro-react-native-babel-preset (PR #4362), @types/jest (PR #4363)
+  * @types/react-test-renderer (PR #4364)
+  * @react-native-community/netinfo (PR #4366)
+  * react-native-gesture-handler (PR #4367)
+  * bugsnag-sourcemaps (PR #4368), react-native-device-info (PR #4369)
+* Action avatar flashing off and on (#4353)
+* [dev] Avoid double RNBGL service and other code execution (#4263)
+* Fix tests: Define `__DEV__` (as true) (PR #4380)
+* Work-in-progress: Finally fixing the bottom card swipe logic (#4212)
+* Tidy LocationStore (PR #4381, PR #4382)
+
+# 4.31.0 - 2019 Oct 31
+
+* Update: react-navigation-stack (PR #4332), assert (PR #4335)
+  * @babel/runtime (PR #4336), pretty-quick (PR #4337)
+  * react-native-contacts (PR #4328), ts-unused-exports (removed, PR #4330)
+  * async-storage (PR #4344), react-native-image-crop-picker (PR #4345)
+  * react-native-config (PR #4343)
+* List all friends in Header Widget (#3960)
+* Replace deprecated `SendMessageInput` (PR #4347)
+* New UI screen to list all friends (#4325)
+* TypeError in Profile.ts:192: null is not an object (#4351)
+* Including unread message count in header widget. (#3959)
+
+# 4.30.2 - 2019 Nov 7
+
+* Update: react-native-background-geolocation 3.3.2
+  * Fix an android NullPointerException.
+
 # 4.30.1 - 2019 Oct 29
 
 * [dev] Make ownProfile.location as computed from locationStore (#4264)
@@ -43,6 +104,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 Special debug version for Prod.
 
 * Enable debugging features for PROD.
+* Work-around for Origin Connection Time-out (jitpack/jitpack.io#3973)
 
 # 4.29.1 - 2019 Oct 17
 

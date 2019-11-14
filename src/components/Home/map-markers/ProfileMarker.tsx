@@ -4,6 +4,7 @@ import HackMarker from '../../map/HackMarker'
 import {IHomeStore, LocationSharerCard} from '../../../store/HomeStore'
 import LocationAvatar from '../LocationAvatar'
 import {View} from 'react-native'
+import {Actions} from 'react-native-router-flux'
 
 type Props = {
   card: LocationSharerCard
@@ -21,22 +22,19 @@ const ProfileMarker = observer(({homeStore, card}: Props) => {
     profile && (
       <HackMarker
         zIndex={card.id === homeStore!.selectedId ? 1001 : 1}
-        key={`profilemarker${profile.avatar && profile.avatar.loaded}`}
+        key={`profilemarker${profile.avatar && profile.avatar.loaded}${profile.isLocationShared}`}
         coordinate={{latitude, longitude}}
         onPress={() => {
           homeStore!.select(card.id)
           homeStore!.followUserOnMap(profile)
+          Actions.popTo('home')
+          Actions.profileDetails({item: card.id, preview: true})
         }}
         stopPropagation
       >
         {/* extra padding here for the activity icon */}
         <View style={{paddingHorizontal: 9, paddingTop: 15}}>
-          <LocationAvatar
-            profile={profile}
-            sharesLocation={profile.sharesLocation}
-            currentActivity={profile.currentActivity}
-            noFade={homeStore!.mapType === 'hybrid'}
-          />
+          <LocationAvatar profile={profile} />
         </View>
       </HackMarker>
     )

@@ -26,17 +26,28 @@ type Props = {
   homeStore?: any
   navigation: any
   isActive: boolean
+  preview?: boolean
 }
 
 const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore')(
   observer((props: Props) => {
-    const list = useRef(null)
     let viewTimeout
 
     const [bot, setBot] = useState<IBot | undefined>(undefined)
+    const list = useRef(null)
+    const {
+      wocky,
+      analytics,
+      botId,
+      homeStore,
+      navigation,
+      isNew,
+      notificationStore,
+      preview,
+      isActive,
+    } = props
 
     useEffect(() => {
-      const {wocky, analytics, botId, homeStore, navigation, isNew, notificationStore} = props
       const tempBot = wocky!.getBot({id: botId})
       setBot(tempBot)
       if (!tempBot) {
@@ -69,7 +80,7 @@ const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore'
     }, [])
 
     const _footerComponent = observer(() => {
-      if (!bot) return null
+      if (!bot || preview) return null
 
       if (props.wocky!.connected && bot && isAlive(bot) && bot.posts.loading) return <Loader />
 
@@ -83,11 +94,16 @@ const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore'
       })
     }
 
-    return bot && isAlive(bot) ? (
+    if (!bot || !isAlive(bot)) {
+      return null
+    }
+
+    return (
       <View pointerEvents="box-none" style={{flex: 1}}>
         <DraggablePopupList
-          isActive={props.isActive}
-          data={!bot.error && bot.isSubscribed ? bot.posts.list.slice() : []}
+          isActive={isActive}
+          preview={preview}
+          data={!bot.error && bot.isSubscribed && !preview ? bot.posts.list.slice() : []}
           ref={list}
           contentContainerStyle={{
             flexGrow: 1,
@@ -105,11 +121,11 @@ const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore'
           bounces={false}
           keyboardDismissMode="on-drag"
         />
-        {!bot.error && bot.isSubscribed && (
+        {!preview && !bot.error && bot.isSubscribed && (
           <AddBotPost bot={bot} afterPostSent={scrollToNewestPost} />
         )}
       </View>
-    ) : null
+    )
   })
 )
 ;(BotDetails as any).navigationOptions = ({navigation}) => {

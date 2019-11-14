@@ -99,9 +99,10 @@ const MapHome = inject('locationStore', 'wocky', 'homeStore', 'navStore')(
     }
 
     function onMapPress() {
-      if (['botCompose', 'botEdit', 'createBot'].includes(navStore!.scene)) {
+      const {scene, params} = navStore!
+      if (['botCompose', 'botEdit', 'createBot'].includes(scene)) {
         return
-      } else if (navStore!.scene !== 'home') {
+      } else if (scene !== 'home' && !params.preview) {
         Actions.popTo('home')
       } else {
         homeStore!.toggleFullscreen()

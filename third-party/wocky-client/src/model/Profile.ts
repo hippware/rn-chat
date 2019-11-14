@@ -8,6 +8,8 @@ import {waitFor} from '../transport/utils'
 import {Location, ILocationSnapshot} from './Location'
 import {UserActivityType} from '../transport/types'
 import moment from 'moment'
+import {Address} from './Address'
+import {when} from 'mobx'
 
 export const Profile = types
   .compose(
@@ -30,6 +32,7 @@ export const Profile = types
       receivesLocationShare: false, // pseudo-calculated property for correct FlatList rendering
       roles: types.optional(types.array(types.string), []),
       subscribedBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
+      addressData: types.optional(Address, {}),
     })
   )
   .named('Profile')
@@ -147,6 +150,26 @@ export const Profile = types
         setStatus: (status: 'ONLINE' | 'OFFLINE') => {
           self.status = status
         },
+        asyncFetchRoughLocation: (): void => {
+          const {geocodingStore} = getRoot(self)
+          if (geocodingStore) {
+            when(
+              () => !!self.currentLocation,
+              () => {
+                geocodingStore
+                  .reverse(self.currentLocation)
+                  .then(data => {
+                    if (data && data.meta) {
+                      self.load({addressData: data.meta})
+                    }
+                  })
+                  .catch(e => {
+                    /* prevent app crash */
+                  })
+              }
+            )
+          }
+        },
       },
       views: {
         get isOwn(): boolean {
@@ -170,18 +193,38 @@ export const Profile = types
             return ' (Not completed) '
           }
         },
+        get unreadCount(): number {
+          const chat = (getRoot(self) as any).wocky.chats.get(self.id)
+          return chat ? chat.unreadCount : 0
+        },
+        get unreadTime(): number {
+          const chat = (getRoot(self) as any).wocky.chats.get(self.id)
+          return chat ? chat.time : 0
+        },
+        get distance(): number {
+          const {locationStore} = getRoot(self)
+          const ownProfile = self.service && self.service.profile
+          if (!self.location || !locationStore || !ownProfile || !ownProfile.currentLocation) {
+            return Number.MAX_SAFE_INTEGER
+          }
+          const loc1 = self.location
+          const loc2 = ownProfile.currentLocation
+          return locationStore.distance(
+            loc1.latitude,
+            loc1.longitude,
+            loc2.latitude,
+            loc2.longitude
+          )
+        },
+        get isLocationShared() {
+          return !!self.location && self.sharesLocation
+        },
         get currentActivity(): UserActivityType | null {
           const location = self.currentLocation // this way it will work for OwnProfile too
           if (!location) return null
 
           const now: Date = (getRoot(self) as any).wocky.timer.minute
-          const activity =
-            location &&
-            location.activity &&
-            location.activityConfidence &&
-            location.activityConfidence >= 50
-              ? location.activity
-              : null
+          const activity = location && location.activity ? location.activity : null
           const minsSinceLastUpdate = moment(now).diff(location!.createdAt, 'minutes')
           if (activity === 'still') {
             // delay 5 minutes before showing a user as 'still'
@@ -191,9 +234,22 @@ export const Profile = types
           // return null activity if no updates in last 5 mins
           return minsSinceLastUpdate > 5 ? null : activity
         },
+        get whenLastLocationSent(): string {
+          // console.log('& when', self.currentLocation)
+          return self.currentLocation
+            ? moment(self.currentLocation!.createdAt).fromNow()
+            : 'a while ago'
+        },
       },
     }
   })
+  .views(self => ({
+    get unreadCountString(): string {
+      // For large unreadCount, '9+' isn't centered nicely.
+      // Show ' 9+' instead. It's a hack.
+      return self.unreadCount > 9 ? ' 9+' : self.unreadCount.toString()
+    },
+  }))
 
 export const ProfilePaginableList = createPaginable<IProfile>(
   types.reference(types.late(() => Profile)),
