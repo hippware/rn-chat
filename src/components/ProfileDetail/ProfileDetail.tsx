@@ -68,11 +68,7 @@ const Default = observer(({profile}: {profile: IProfile}) => (
     <RText color={colors.PINK} weight="Bold" size={20} style={styles.displayName} numberOfLines={1}>
       @{profile.handle}
     </RText>
-    <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-      <Pill>
-        {profile.botsSize} Location{profile.botsSize !== 1 && 's'}
-      </Pill>
-    </View>
+    <InfoPills profile={profile} />
     <ConnectButton profile={profile!} myProfile={profile!} />
   </View>
 ))
@@ -112,12 +108,7 @@ const Preview = observer(({profile}: {profile: IProfile}) => {
         >
           {profile.handle}
         </RText>
-        {profile.currentLocation && (
-          <View style={{flexDirection: 'row'}}>
-            <Pill>{profile.addressData.locationShort}</Pill>
-            {!profile.isOwn && <Pill>{profile.whenLastLocationSent}</Pill>}
-          </View>
-        )}
+        <InfoPills profile={profile} />
       </View>
       {!profile.isOwn && (
         <TouchableOpacity
@@ -143,6 +134,14 @@ const Preview = observer(({profile}: {profile: IProfile}) => {
   )
 })
 
+const InfoPills = observer(({profile}: {profile: IProfile}) =>
+  profile.currentLocation ? (
+    <View style={{flexDirection: 'row'}}>
+      <Pill>{profile.addressData.locationShort}</Pill>
+      {!profile.isOwn && <Pill>{profile.whenLastLocationSent}</Pill>}
+    </View>
+  ) : null
+)
 const unreadCounter = require('../../../images/unreadBG.png')
 
 export default ProfileDetail

@@ -29,9 +29,9 @@ const shareIcon = require('../../../images/shareIcon.png')
 const followIcon = require('../../../images/shoesPink.png')
 
 const BotDetailsHeader = (props: Props) =>
-  props.preview ? <PreviewHeader bot={props.bot} /> : <Default {...props} />
+  props.preview ? <PreviewHeader bot={props.bot} /> : <DefaultHeader {...props} />
 
-const Default = inject('notificationStore', 'analytics', 'locationStore')(
+const DefaultHeader = inject('notificationStore', 'analytics', 'locationStore')(
   observer(({bot, locationStore, notificationStore}: Props) => {
     function copyAddress() {
       Clipboard.setString(bot.address)
@@ -126,17 +126,16 @@ const PreviewHeader = observer(({bot}: {bot: IBot}) => {
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 10,
-        marginHorizontal: 30,
+        marginHorizontal: 20,
       }}
     >
       {!!bot.image ? (
         <LazyImage
           file={bot.image}
           imageProps={{
-            style: styles.botImage,
-            resizeMode: 'contain',
+            style: styles.previewImage,
           }}
-          placeholder={<View style={[styles.botImage, {backgroundColor: GREY}]} />}
+          placeholder={<View style={[styles.previewImage, {backgroundColor: GREY}]} />}
         />
       ) : (
         <BotIcon size={47} icon={bot.icon} textStyle={{fontSize: 45, textAlign: 'center'}} />
@@ -151,7 +150,7 @@ const PreviewHeader = observer(({bot}: {bot: IBot}) => {
         >
           {bot.title}
         </RText>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', paddingBottom: 5}}>
           <Pill>{bot.addressData ? bot.addressData.locationShort : '          '}</Pill>
           <Pill>{locationStore!.distanceFromBot(bot.location) || '    '}</Pill>
         </View>
@@ -314,4 +313,5 @@ const styles = StyleSheet.create({
     marginTop: 15 * k,
   },
   botImage: {width, height: width, marginHorizontal: -20 * k, marginTop: 15 * minHeight},
+  previewImage: {width: 52, height: 52},
 })
