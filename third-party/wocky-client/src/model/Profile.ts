@@ -159,7 +159,9 @@ export const Profile = types
                 geocodingStore
                   .reverse(self.currentLocation)
                   .then(data => {
-                    self.load({addressData: data.meta})
+                    if (data && data.meta) {
+                      self.load({addressData: data.meta})
+                    }
                   })
                   .catch(e => {
                     /* prevent app crash */
