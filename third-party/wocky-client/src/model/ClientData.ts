@@ -1,6 +1,33 @@
 import {types, getSnapshot, Instance, onSnapshot, applySnapshot} from 'mobx-state-tree'
 import {Base} from './Base'
 
+const Hidden = types
+  .model('HiddenType', {
+    enabled: false,
+    expires: types.maybeNull(types.Date),
+  })
+  .actions(self => ({
+    setEnabled: (value: boolean) => {
+      self.enabled = value
+    },
+  }))
+  .actions(self => {
+    let timerId
+    return {
+      afterAttach: () => {
+        // change a value when it is expired!
+        if (self.enabled && self.expires) {
+          timerId = setTimeout(() => self.setEnabled(false), self.expires.getTime() - Date.now())
+        }
+      },
+      beforeDestroy: () => {
+        if (timerId !== undefined) {
+          clearTimeout(timerId)
+        }
+      },
+    }
+  })
+
 const ClientData = types
   .compose(
     Base,
@@ -8,6 +35,7 @@ const ClientData = types
       .model({
         sharePresencePrimed: false,
         guestOnce: false,
+        hidden: types.optional(Hidden, {}),
       })
       .views(self => ({
         get toJSON(): string {
@@ -22,6 +50,12 @@ const ClientData = types
         self.transport.updateProfile({clientData})
       })
     },
+    hide(value: boolean, expires: Date | undefined) {
+      self.hidden = Hidden.create({enabled: value, expires})
+    },
+    load: snapshot => {
+      applySnapshot(self, JSON.parse(snapshot))
+    },
     clear: () => {
       applySnapshot(self, {})
     },
@@ -33,14 +67,3 @@ const ClientData = types
 export default ClientData
 
 export interface IClientData extends Instance<typeof ClientData> {}
-export function createClientData(data: string, existingData?: object) {
-  let result: any = {}
-  if (data) {
-    try {
-      result = JSON.parse(data)
-    } catch (e) {
-      // ignore error
-    }
-  }
-  return ClientData.create({...existingData, ...result})
-}

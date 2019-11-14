@@ -6,34 +6,8 @@ import {InvitationPaginableList, Invitation} from './Invitation'
 import {ContactPaginableList, Contact} from './Contact'
 import {BlockedUserPaginableList, BlockedUser} from './BlockedUser'
 import {LocationSharePaginableList, LocationShare} from './LocationShare'
-import ClientData, {createClientData} from './ClientData'
+import ClientData from './ClientData'
 
-const Hidden = types
-  .model('HiddenType', {
-    enabled: false,
-    expires: types.maybeNull(types.Date),
-  })
-  .actions(self => ({
-    setEnabled: (value: boolean) => {
-      self.enabled = value
-    },
-  }))
-  .actions(self => {
-    let timerId
-    return {
-      afterAttach: () => {
-        // change a value when it is expired!
-        if (self.enabled && self.expires) {
-          timerId = setTimeout(() => self.setEnabled(false), self.expires.getTime() - Date.now())
-        }
-      },
-      beforeDestroy: () => {
-        if (timerId !== undefined) {
-          clearTimeout(timerId)
-        }
-      },
-    }
-  })
 export const OwnProfile = types
   .compose(
     types.compose(
@@ -44,7 +18,6 @@ export const OwnProfile = types
     types.model('OwnProfile', {
       email: types.maybeNull(types.string),
       phoneNumber: types.maybeNull(types.string),
-      hidden: types.optional(Hidden, {}),
       sentInvitations: types.optional(InvitationPaginableList, {}),
       receivedInvitations: types.optional(InvitationPaginableList, {}),
       friends: types.optional(ContactPaginableList, {}),
@@ -61,6 +34,9 @@ export const OwnProfile = types
     return res
   })
   .views(self => ({
+    get hidden() {
+      return self.clientData.hidden
+    },
     get currentLocation() {
       const {locationStore} = getRoot(self)
       return locationStore.location
@@ -175,7 +151,7 @@ export const OwnProfile = types
         if (locationStore) {
           yield locationStore.hide(value, expires)
         }
-        self.hidden = Hidden.create({enabled: value, expires})
+        self.clientData.hide(value, expires)
       }),
       addLocationSharer(sharedWith: IProfile, createdAt: number, expiresAt: number) {
         self.locationSharers.add(
@@ -223,7 +199,7 @@ export const OwnProfile = types
     }: any) {
       Object.assign(self, data)
       if (clientData) {
-        self.clientData = createClientData(clientData, self.clientData)
+        self.clientData.load(clientData)
       }
       if (avatar) {
         self.avatar = self.service.files.get(avatar.id, avatar)
