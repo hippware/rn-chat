@@ -241,6 +241,13 @@ export const Profile = types
       },
     }
   })
+  .views(self => ({
+    get unreadCountString(): string {
+      // For large unreadCount, '9+' isn't centered nicely.
+      // Show ' 9+' instead. It's a hack.
+      return self.unreadCount > 9 ? ' 9+' : self.unreadCount.toString()
+    },
+  }))
 
 export const ProfilePaginableList = createPaginable<IProfile>(
   types.reference(types.late(() => Profile)),
