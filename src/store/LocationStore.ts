@@ -140,6 +140,8 @@ const LocationStore = types
         yield BackgroundGeolocation.setConfig(config)
         log(prefix, 'Configure')
       }
+
+      setUploadRate(true)
     }),
   }))
   .actions(self => {
@@ -386,10 +388,49 @@ function onLocationError(err) {
   BackgroundGeolocation.logger.error(`${prefix} onLocationError ${err}`)
 }
 
+// Use closure to define a function with a static variable
+// For some reason, _autoSyncThreshold is only static if setUploadRate is defined at the top scope.
+const setUploadRate = (() => {
+  let _autoSyncThreshold: number = -1
+
+  return (fast: boolean) => {
+    const autoSyncThreshold = fast ? 0 : 10
+    if (autoSyncThreshold !== _autoSyncThreshold) {
+      BackgroundGeolocation.logger.info(`${prefix} setUploadRate(${fast})`)
+      log(prefix, `setUploadRate(${fast})`)
+      BackgroundGeolocation.setConfig({
+        autoSyncThreshold,
+      })
+      _autoSyncThreshold = autoSyncThreshold
+
+      // Update locationStore if available
+      if (singleton) {
+        singleton.setState({
+          backgroundOptions: {
+            ...singleton.backgroundOptions,
+            autoSyncThreshold,
+          },
+        })
+      }
+    }
+  }
+})()
+
 function onHttp(response) {
   log(prefix, 'on http', response)
   if (response.status >= 200 && response.status < 300) {
     // analytics.track('location_bg_success', {location: self.location})
+
+    let data: any = false
+    try {
+      data = response.responseText && JSON.parse(response.responseText)
+    } catch (e) {
+      // no-op
+    }
+
+    if (data) {
+      setUploadRate(!!data.watched)
+    }
   } else {
     if (response.status === 401 || response.status === 403) {
       BackgroundGeolocation.stop()
