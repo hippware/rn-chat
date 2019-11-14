@@ -1,5 +1,6 @@
 import {types, getEnv, flow, getParent, getRoot} from 'mobx-state-tree'
 import {autorun, IReactionDisposer} from 'mobx'
+import {AppState} from 'react-native'
 import BackgroundGeolocation from 'react-native-background-geolocation'
 import DeviceInfo from 'react-native-device-info'
 import {settings} from '../globals'
@@ -378,7 +379,7 @@ function onLocation(position) {
     }
   }
 
-  if (singleton) {
+  if (AppState.currentState !== 'background' && singleton) {
     singleton.setPosition(position)
   }
 }
