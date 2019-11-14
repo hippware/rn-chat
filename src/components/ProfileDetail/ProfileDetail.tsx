@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {IProfile} from 'wocky-client'
 import {isAlive} from 'mobx-state-tree'
 import BottomPopup from '../BottomPopup'
-import {RText, Pill} from '../common'
+import {RText, Pill, BubbleBadge} from '../common'
 import {colors} from 'src/constants'
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native'
 import ConnectButton from './ConnectButton'
@@ -121,6 +121,13 @@ const Preview = observer(({profile}: {profile: IProfile}) => {
             style={{width: 50 * avatarScale, height: 50 * avatarScale}}
             source={require('../../../images/MessageBtn.png')}
           />
+          {profile.unreadCount > 0 && (
+            <BubbleBadge
+              outerStyle={{top: -10, right: -10}}
+              text={profile.unreadCountString}
+              background={unreadCounter}
+            />
+          )}
         </TouchableOpacity>
       )}
     </View>
@@ -135,6 +142,7 @@ const InfoPills = observer(({profile}: {profile: IProfile}) =>
     </View>
   ) : null
 )
+const unreadCounter = require('../../../images/unreadBG.png')
 
 export default ProfileDetail
 
