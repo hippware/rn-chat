@@ -14,9 +14,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * phoenix (PR #4398), ts-node (PR #4399)
   * react-test-renderer (PR #4403), @types/jest (PR #4405),
   * react-dom (PR #4406)
-* RNBGL android headless js mode (experimental) (PR #4377)
 * Error in Connectivity.tsx:140: Only promises can be yielded to `async` (#4385)
 * Finally fixing the bottom card swipe logic (#4212, PR #4407, PR #4409)
+* Dynamic location upload rate (#4274)
+  * RNBGL android headless js mode (PR #4377, PR #4416)
+  * headless_task_fail in LocationStore - Singleton not initialised (#4415)
 
 # 4.32.0 - 2019 Nov 7
 
