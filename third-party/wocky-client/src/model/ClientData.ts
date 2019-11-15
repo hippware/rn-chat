@@ -45,13 +45,9 @@ const ClientData = types
   )
   .named('ClientData')
   .actions(self => ({
-    afterAttach() {
-      onSnapshot(self, clientData => {
-        self.transport.updateProfile({clientData})
-      })
-    },
     hide(value: boolean, expires: Date | undefined) {
       self.hidden = Hidden.create({enabled: value, expires})
+      self.transport.updateProfile({clientData: getSnapshot(self)})
     },
     load: snapshot => {
       applySnapshot(self, JSON.parse(snapshot))
@@ -61,6 +57,7 @@ const ClientData = types
     },
     flip: (property: 'sharePresencePrimed' | 'guestOnce') => {
       self[property] = true
+      self.transport.updateProfile({clientData: getSnapshot(self)})
     },
   }))
 
