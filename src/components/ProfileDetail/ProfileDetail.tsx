@@ -122,11 +122,7 @@ const Preview = observer(({profile}: {profile: IProfile}) => {
             source={require('../../../images/MessageBtn.png')}
           />
           {profile.unreadCount > 0 && (
-            <BubbleBadge
-              outerStyle={{top: -10, right: -10}}
-              text={profile.unreadCountString}
-              background={unreadCounter}
-            />
+            <BubbleBadge outerStyle={{top: -8, right: -8}} text="" background={unreadCounter} />
           )}
         </TouchableOpacity>
       )}
