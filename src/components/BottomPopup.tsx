@@ -107,6 +107,12 @@ const PreviewButton = ({onPress, preview}) => {
           onPress(!preview)
         }
       }}
+      hitSlop={{
+        top: 15,
+        left: 15,
+        bottom: 15,
+        right: 15,
+      }}
     >
       <Image source={preview ? previewBtnUpImg : previewBtnDownImg} />
     </TouchableOpacity>
