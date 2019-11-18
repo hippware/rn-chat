@@ -60,7 +60,7 @@ const LocationAvatar = observer(({profile, hidden, tappable, asHeaderItem}: Prop
         <BubbleBadge text={profile.unreadCountString} background={unreadCounter} />
       )}
       {(!asHeaderItem || !profile.unreadCount) && !!theActivity && (
-        <BubbleBadge style={{left: 1}} text={theActivity} background={activity} />
+        <BubbleBadge style={{bottom: 3, left: 1}} text={theActivity} background={activity} />
       )}
     </ImageBackground>
   )
