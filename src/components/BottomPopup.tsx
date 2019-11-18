@@ -33,7 +33,8 @@ const BottomPopup = observer(({children, style, preview, onMoveShouldSetPanRespo
   const panResponder = PanResponder.create({
     onMoveShouldSetPanResponder: !!onMoveShouldSetPanResponder
       ? onMoveShouldSetPanResponder
-      : () => preview !== undefined,
+      : // need to drag 5 pixels in order to interpret as not-a-press (allows touching message button)
+        (_0, state) => preview !== undefined && Math.abs(state.dy) > 5,
     onPanResponderMove: Animated.event([
       null,
       {
