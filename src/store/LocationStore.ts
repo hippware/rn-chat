@@ -270,7 +270,13 @@ const LocationStore = types
       reactions = [
         autorun(
           async () => {
-            if (wocky.connected && wocky.profile && wocky.profile.onboarded && self.alwaysOn) {
+            if (
+              wocky.connected &&
+              wocky.profile &&
+              wocky.profile.hidden &&
+              wocky.profile.onboarded &&
+              self.alwaysOn
+            ) {
               try {
                 await self.refreshCredentials()
                 if (!wocky.profile.hidden.enabled) {
