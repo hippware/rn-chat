@@ -1,4 +1,4 @@
-import {types, getSnapshot, Instance, onSnapshot, applySnapshot} from 'mobx-state-tree'
+import {types, getSnapshot, Instance, applySnapshot} from 'mobx-state-tree'
 import {Base} from './Base'
 
 const Hidden = types
