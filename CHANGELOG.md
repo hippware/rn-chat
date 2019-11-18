@@ -4,6 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Don't show the message count on MessageButton (PR #4433)
+  * Messaging CTA should exist on the user card. (#3962)
+* Initialise singleton earlier. Always call configure(). (PR #4435)
+  * Clean install results in an infinite loader on map (#4428)
+
 # 4.32.1 - 2019 Nov 14
 
 * Clear search store on logout. (PR #4387)
