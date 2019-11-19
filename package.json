@@ -124,7 +124,7 @@
     "jetifier": "^1.0.1",
     "jsrsasign": "^8.0.12",
     "metro-react-native-babel-preset": "^0.57.0",
-    "prettier": "^1.16.4",
+    "prettier": "^1.19.1",
     "pretty-quick": "^2.0.0",
     "react-dom": "^16.11.0",
     "react-test-renderer": "16.11.0",
