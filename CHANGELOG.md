@@ -8,6 +8,12 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Messaging CTA should exist on the user card. (#3962)
 * Initialise singleton earlier. Always call configure(). (PR #4435)
   * Clean install results in an infinite loader on map (#4428)
+* Invisible mode might prematurely end after codepush or upgrade (#3753)
+  * Store user preferences that remain after upgrade or codepush (#4410)
+* Argument "id" has invalid value "YouCard". (#4434)
+* [dev] Can't perform a React state update on an unmounted component. (#4438)
+* Activity indicator appears smaller (#4429)
+* Update: prettier (PR #4441), react-dom (PR #4445), ts-node (PR #4446)
 
 # 4.32.1 - 2019 Nov 14
 
