@@ -7,10 +7,9 @@ import {
   applySnapshot,
   flow,
 } from 'mobx-state-tree'
-import {simpleActionLogger} from 'mst-middlewares'
 import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
-import {Transport, Wocky} from 'wocky-client'
+import {actionLogger, Transport, Wocky} from 'wocky-client'
 import analytics from '../utils/analytics'
 import {bugsnagIdentify} from '../utils/bugsnagConfig'
 import FirebaseStore from './FirebaseStore'
@@ -183,7 +182,7 @@ export async function createStore() {
   )
 
   const requestPushPermissions = initializePushNotifications(mstStore.wocky.enablePush)
-  addMiddleware(mstStore, simpleActionLogger)
+  addMiddleware(mstStore, actionLogger)
   autorun(
     () => {
       const state = getSnapshot(mstStore!)

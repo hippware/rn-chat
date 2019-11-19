@@ -1,4 +1,4 @@
-import {Wocky, IWocky, Transport} from '../../src'
+import {actionLogger, Wocky, IWocky, Transport} from '../../src'
 import {waitFor as _waitFor} from '../../src/transport/utils'
 import {IBot} from '../../src/model/Bot'
 import fileService from './fileService'
@@ -73,7 +73,7 @@ export async function createUser(num?: number, phoneNum?: string): Promise<IWock
         logger: console,
       }
     )
-    addMiddleware(service, simpleActionLogger)
+    addMiddleware(service, process.env.WOCKY_VERBOSE ? actionLogger : simpleActionLogger)
 
     await service.login(
       token({
