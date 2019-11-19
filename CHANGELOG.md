@@ -4,8 +4,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-* Don't show the message count on MessageButton (PR #4433)
-  * Messaging CTA should exist on the user card. (#3962)
+* Messaging CTA should exist on the user card. (#3962)
+  * Don't show the message count on MessageButton (PR #4433)
+  * Pan improvements (PR #4449)
 * Initialise singleton earlier. Always call configure(). (PR #4435)
   * Clean install results in an infinite loader on map (#4428)
 * Invisible mode might prematurely end after codepush or upgrade (#3753)
@@ -13,7 +14,12 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Argument "id" has invalid value "YouCard". (#4434)
 * [dev] Can't perform a React state update on an unmounted component. (#4438)
 * Activity indicator appears smaller (#4429)
-* Update: prettier (PR #4441), react-dom (PR #4445), ts-node (PR #4446)
+* Update: https-proxy-agent (PR #4439), prettier (PR #4441)
+  * mobx-react (PR #4442), react-dom (PR #4445), ts-node (PR #4446)
+* Finally fixing the bottom card swipe logic... (#4212)
+  * Pan improvements (PR #4449)
+* Defaults for location info on ProfileDetails preview (#4413)
+* Implement own MST logger which prints args. (PR #4453)
 
 # 4.32.1 - 2019 Nov 14
 
