@@ -57,9 +57,9 @@ class DraggablePopupList<T> extends React.Component<IProps<T>> {
               <Filler style={{width, height: preview ? height - 170 : height / 2}} />
               <BottomPopup
                 preview={preview}
-                onMoveShouldSetPanResponder={(_0, state) => {
+                onMoveShouldSetPanResponder={(_0, gestureState) => {
                   // allow BottomPopup to take over pan handling if the user is already at the top of the list and trying to swipe down
-                  return !!preview || (this.state.scrollYValue < 5 && state.dy > 0)
+                  return preview || (this.state.scrollYValue < 5 && gestureState.dy > 5)
                 }}
               >
                 <View

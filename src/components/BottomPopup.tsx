@@ -33,7 +33,8 @@ const BottomPopup = observer(({children, style, preview, onMoveShouldSetPanRespo
   const panResponder = PanResponder.create({
     onMoveShouldSetPanResponder: !!onMoveShouldSetPanResponder
       ? onMoveShouldSetPanResponder
-      : () => preview !== undefined,
+      : // need to drag 5 pixels in order to interpret as not-a-press (allows touching message button)
+        (_0, state) => preview !== undefined && Math.abs(state.dy) > 5,
     onPanResponderMove: Animated.event([
       null,
       {
@@ -105,6 +106,12 @@ const PreviewButton = ({onPress, preview}) => {
         if (onPress) {
           onPress(!preview)
         }
+      }}
+      hitSlop={{
+        top: 15,
+        left: 15,
+        bottom: 15,
+        right: 15,
       }}
     >
       <Image source={preview ? previewBtnUpImg : previewBtnDownImg} />
