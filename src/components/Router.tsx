@@ -50,7 +50,6 @@ import LiveLocationSettings from './LiveLocation/LiveLocationSettings'
 import LiveLocationShare from './LiveLocation/LiveLocationShare'
 import  {IHomeStore} from 'src/store/HomeStore';
 import MapOptions from './MapOptions'
-import alert from 'src/utils/alert'
 
 export const iconClose = require('../../images/iconClose.png')
 
