@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react'
 import {View, Clipboard, TouchableOpacity} from 'react-native'
-import {inject} from 'mobx-react'
+import {inject, Observer} from 'mobx-react'
 import {k} from '../Global'
 import {colors} from '../../constants'
 import {IBot, IWocky} from 'wocky-client'
@@ -29,7 +29,12 @@ type Props = {
   preview?: boolean
 }
 
-const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore')(
+const BotDetails = inject(
+  'wocky',
+  'analytics',
+  'notificationStore',
+  'homeStore'
+)(
   observer((props: Props) => {
     let viewTimeout
 
@@ -79,14 +84,6 @@ const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore'
       }
     }, [])
 
-    const _footerComponent = observer(() => {
-      if (!bot || preview) return null
-
-      if (props.wocky!.connected && bot && isAlive(bot) && bot.posts.loading) return <Loader />
-
-      return <View style={{backgroundColor: 'white', height: 100 * k}} />
-    })
-
     function scrollToNewestPost() {
       ;(list.current as any).scrollToIndex({
         index: 0,
@@ -108,7 +105,15 @@ const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore'
           contentContainerStyle={{
             flexGrow: 1,
           }}
-          ListFooterComponent={_footerComponent}
+          ListFooterComponent={
+            <Observer>
+              {() => {
+                if (props.wocky!.connected && bot && isAlive(bot) && bot.posts.loading)
+                  return <Loader />
+                return <View style={{height: 0}} />
+              }}
+            </Observer>
+          }
           initialNumToRender={8}
           headerInner={<Header bot={bot!} {...props} />}
           ItemSeparatorComponent={() => (

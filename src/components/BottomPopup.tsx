@@ -1,5 +1,13 @@
 import React from 'react'
-import {Image, StyleSheet, ViewStyle, TouchableOpacity, Animated, PanResponder} from 'react-native'
+import {
+  Image,
+  StyleSheet,
+  ViewStyle,
+  TouchableOpacity,
+  Animated,
+  PanResponder,
+  View,
+} from 'react-native'
 import {useHomeStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
@@ -16,7 +24,7 @@ const previewBtnUpImg = require('../../images/previewButtonUp.png')
 const previewBtnDownImg = require('../../images/previewButtonDown.png')
 
 // controls how far the user has to "pull" to trigger a toggle from preview -> full
-const PAN_THRESHOLD = 70
+export const PAN_THRESHOLD = 70
 
 const BottomPopup = observer(({children, style, preview, onMoveShouldSetPanResponder}: Props) => {
   const {mapType} = useHomeStore()
@@ -58,6 +66,8 @@ const BottomPopup = observer(({children, style, preview, onMoveShouldSetPanRespo
       style={[
         {
           paddingTop: 50,
+          // ensure that content "behind" doesn't peek out below when bouncing or dragging
+          bottom: -PAN_THRESHOLD,
         },
         preview !== undefined && {
           transform: [
@@ -91,7 +101,7 @@ const BottomPopup = observer(({children, style, preview, onMoveShouldSetPanRespo
       {preview !== undefined && (
         <PreviewButton onPress={() => Actions.refresh({preview: !preview})} preview={preview} />
       )}
-      {children}
+      <View style={{paddingBottom: PAN_THRESHOLD, backgroundColor: 'white'}}>{children}</View>
     </Animated.View>
   )
 })
