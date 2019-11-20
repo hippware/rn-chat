@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.32.2 - 2019 Nov 20
+
 * Messaging CTA should exist on the user card. (#3962)
   * Don't show the message count on MessageButton (PR #4433)
   * Pan improvements (PR #4449)
