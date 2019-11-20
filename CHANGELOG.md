@@ -20,6 +20,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Pan improvements (PR #4449)
 * Defaults for location info on ProfileDetails preview (#4413)
 * Implement own MST logger which prints args. (PR #4453)
+* Gap seen with dragging animation (#4432)
+* Notifications: Infinite loader on Requests tab (#4191)
 
 # 4.32.1 - 2019 Nov 14
 
