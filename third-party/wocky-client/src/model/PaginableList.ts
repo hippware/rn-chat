@@ -44,6 +44,7 @@ export function createPaginable<T>(type: IType<any, any, T>, name: string) {
     }))
     .extend(self => {
       let request: RequestType
+      let concurrent: boolean = false
       return {
         views: {
           get length(): number {
@@ -61,6 +62,7 @@ export function createPaginable<T>(type: IType<any, any, T>, name: string) {
         },
         actions: {
           setRequest: (req: RequestType) => (request = req),
+          setConcurrency: (enable: boolean) => (concurrent = enable),
           exists: (id: string): boolean => {
             return self.result.find((el: any) => isAlive(el) && el.id === id) !== undefined
           },
@@ -70,7 +72,7 @@ export function createPaginable<T>(type: IType<any, any, T>, name: string) {
             self.finished = false
           },
           load: flow(function* load({force}: {force?: boolean} = {}) {
-            if (self.loading || (self.finished && !force)) {
+            if ((!concurrent && self.loading) || (self.finished && !force)) {
               return self.result
             }
             if (force) {

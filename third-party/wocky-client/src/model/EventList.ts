@@ -117,6 +117,7 @@ export const EventList = types
   }))
   .actions(self => ({
     afterCreate() {
+      self.setConcurrency(true)
       self.setRequest(self._loadNotifications)
     },
     readAll() {
