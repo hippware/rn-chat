@@ -6,18 +6,18 @@ type Props = {
   background: ImageSourcePropType
   text: string
   outerStyle?: ViewStyle
-  radius?: number
+  diameter?: number
 }
 
-const ProfileBadge = ({style, background, radius = 30, text, outerStyle}: Props) => (
+const ProfileBadge = ({style, background, diameter = 30, text, outerStyle}: Props) => (
   <ImageBackground
     style={[
       {
         position: 'absolute',
         top: 0,
         right: 0,
-        height: radius,
-        width: radius,
+        height: diameter,
+        width: diameter,
         alignItems: 'center',
         justifyContent: 'center',
       },
