@@ -2,7 +2,7 @@ import React, {ReactElement} from 'react'
 import {View, FlatList, FlatListProps, Animated} from 'react-native'
 import {width, height, k} from '../Global'
 import {TouchThroughView} from 'react-native-touch-through-view'
-import BottomPopup from '../BottomPopup'
+import BottomPopup, {PAN_THRESHOLD} from '../BottomPopup'
 import {TouchThroughWrapper} from 'react-native-touch-through-view'
 import {inject} from 'mobx-react'
 
@@ -37,15 +37,15 @@ class DraggablePopupList<T> extends React.Component<IProps<T>> {
   }
 
   render() {
-    const {headerInner, style, isActive, preview, ...listProps} = this.props
+    const {headerInner, style, isActive, preview, ListFooterComponent, ...listProps} = this.props
     const Wrapper = isActive ? TouchThroughWrapper : View
     const Filler = isActive ? TouchThroughView : View
 
     return (
-      <Wrapper style={{width, height}}>
+      <Wrapper style={{width, height: height + PAN_THRESHOLD, bottom: -PAN_THRESHOLD}}>
         <FlatList
           ref={r => (this.list = r)}
-          bounces={true}
+          bounces={false}
           keyboardDismissMode="on-drag"
           {...listProps}
           onScroll={Animated.event([{nativeEvent: {contentOffset: {y: this.props.scrollY!}}}])} // send the scrollY state "up" so we can deal with it in SplitRenderer and NavBarHeader
@@ -54,7 +54,9 @@ class DraggablePopupList<T> extends React.Component<IProps<T>> {
           ListHeaderComponent={
             // This list header wrapper ensures that the user can "touch through" to the map behind the list
             <>
-              <Filler style={{width, height: preview ? height - 170 : height / 2}} />
+              <Filler
+                style={{width, height: preview ? height - (170 + PAN_THRESHOLD) : height / 2}}
+              />
               <BottomPopup
                 preview={preview}
                 onMoveShouldSetPanResponder={(_0, gestureState) => {
@@ -76,6 +78,11 @@ class DraggablePopupList<T> extends React.Component<IProps<T>> {
             </>
           }
           showsVerticalScrollIndicator={false}
+          ListFooterComponent={
+            <View style={{paddingBottom: PAN_THRESHOLD, backgroundColor: 'white'}}>
+              {ListFooterComponent}
+            </View>
+          }
         />
       </Wrapper>
     )
