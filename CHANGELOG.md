@@ -8,6 +8,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Messaging CTA should exist on the user card. (#3962)
   * Reduce the size of the message badge on ProfileDetail (PR #4461)
 * App crash when navigating to Updates (#4458)
+* [android] Back button should exit app (#3994)
 
 # 4.32.2 - 2019 Nov 20
 
