@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import {when, autorun, reaction} from 'mobx'
 import {inject, observer} from 'mobx-react'
 import {settings} from '../globals'
-import {Keyboard, Platform} from 'react-native'
+import {Keyboard, Platform, BackHandler} from 'react-native'
 import {Actions, Router, Scene, Stack, Modal, Lightbox, Tabs} from 'react-native-router-flux'
 import {IWocky, IProfile} from 'wocky-client'
 import {ILocationStore} from '../store/LocationStore'
@@ -120,10 +120,24 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
       }
     }
 
+    const onBackPress = () => {
+      if (navStore!.params.hasPreview && !navStore!.params.preview) {
+        Actions.refresh({preview: true})
+      } else {
+        if (navStore!.scene === 'profileDetails') {
+          BackHandler.exitApp()
+        } else {
+          Actions.pop()
+        }
+      }
+      return true
+    }
+  
+
     const uriPrefix = Platform.select({ios: settings.uriPrefix, android: settings.uriPrefix.toLowerCase()})
 
     return (
-      <Router onStateChange={() => navStore!.setScene(Actions.currentScene, Actions.currentParams)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={onDeepLink}>
+      <Router backAndroidHandler={onBackPress} onStateChange={() => navStore!.setScene(Actions.currentScene, Actions.currentParams)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={onDeepLink}>
         <Tabs hideNavBar hideTabBar>
           <Lightbox hideNavBar type="replace">
             <Scene key="checkCredentials" component={Launch} on={() => authStore!.canLogin} success="checkProfile" failure="preConnection" />
