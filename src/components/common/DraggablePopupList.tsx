@@ -2,7 +2,7 @@ import React, {ReactElement} from 'react'
 import {View, FlatList, FlatListProps, Animated} from 'react-native'
 import {width, height, k} from '../Global'
 import {TouchThroughView} from 'react-native-touch-through-view'
-import BottomPopup, {PAN_THRESHOLD} from '../BottomPopup'
+import BottomPopup from '../BottomPopup'
 import {TouchThroughWrapper} from 'react-native-touch-through-view'
 import {inject} from 'mobx-react'
 
@@ -37,12 +37,14 @@ class DraggablePopupList<T> extends React.Component<IProps<T>> {
   }
 
   render() {
-    const {headerInner, style, isActive, preview, ListFooterComponent, ...listProps} = this.props
+    const {headerInner, style, isActive, preview, ...listProps} = this.props
+
+    // we have to switch this based on the active screen because of an Android-specific bug/feature in TouchThroughView
     const Wrapper = isActive ? TouchThroughWrapper : View
     const Filler = isActive ? TouchThroughView : View
 
     return (
-      <Wrapper style={{width, height: height + PAN_THRESHOLD, bottom: -PAN_THRESHOLD}}>
+      <Wrapper style={{width, height}}>
         <FlatList
           ref={r => (this.list = r)}
           bounces={false}
@@ -55,7 +57,10 @@ class DraggablePopupList<T> extends React.Component<IProps<T>> {
             // This list header wrapper ensures that the user can "touch through" to the map behind the list
             <>
               <Filler
-                style={{width, height: preview ? height - (170 + PAN_THRESHOLD) : height / 2}}
+                style={{
+                  width,
+                  height: preview ? height - 170 : height / 2,
+                }}
               />
               <BottomPopup
                 preview={preview}
@@ -78,11 +83,6 @@ class DraggablePopupList<T> extends React.Component<IProps<T>> {
             </>
           }
           showsVerticalScrollIndicator={false}
-          ListFooterComponent={
-            <View style={{paddingBottom: PAN_THRESHOLD, backgroundColor: 'white'}}>
-              {ListFooterComponent}
-            </View>
-          }
         />
       </Wrapper>
     )
