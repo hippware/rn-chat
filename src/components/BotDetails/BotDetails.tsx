@@ -48,7 +48,7 @@ const BotDetails = inject(
       navigation,
       isNew,
       notificationStore,
-      preview,
+      preview = false,
       isActive,
     } = props
 
@@ -134,13 +134,10 @@ const BotDetails = inject(
   })
 )
 ;(BotDetails as any).navigationOptions = ({navigation}) => {
-  const {isNew, bot, notificationStore} = navigation.state.params
-  const backAction = isNew ? () => Actions.popTo('home') : Actions.pop
+  const {bot, notificationStore} = navigation.state.params
   return {
-    backAction,
     fadeNavConfig: {
       back: true,
-      backAction,
       title: bot && (
         <NavTitle
           bot={bot}
