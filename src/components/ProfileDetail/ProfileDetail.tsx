@@ -121,7 +121,7 @@ const Preview = observer(({profile}: {profile: IProfile}) => {
             style={{width: 50 * avatarScale, height: 50 * avatarScale}}
             source={require('../../../images/MessageBtn.png')}
           />
-          {profile.unreadCount >= 0 && (
+          {profile.unreadCount > 0 && (
             <BubbleBadge
               diameter={13}
               outerStyle={{top: 4, right: 4}}
