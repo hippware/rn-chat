@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import {isAlive} from 'mobx-state-tree'
-import {observer} from 'mobx-react'
+import {observer, Observer} from 'mobx-react'
 import {IEvent} from 'wocky-client'
 import {RText} from './common'
 import DraggablePopupList from './common/DraggablePopupList'
@@ -65,26 +65,30 @@ const Notifications = observer(({isActive, navigation}: Props) => {
       keyExtractor={(item: IEvent) => item.id}
       onEndReachedThreshold={0.5}
       onEndReached={() => notifications.load()}
-      ListFooterComponent={observer(() => (
-        <View>
-          {notifications.data.length === 0 ? (
+      ListFooterComponent={
+        <Observer>
+          {() => (
             <View>
-              <RText
-                weight="Regular"
-                color={colors.GREY}
-                style={placeholderStyle.placeholderText as any}
-              >
-                {notifications.emptyTitle}
-              </RText>
+              {notifications.data.length === 0 ? (
+                <View>
+                  <RText
+                    weight="Regular"
+                    color={colors.GREY}
+                    style={placeholderStyle.placeholderText as any}
+                  >
+                    {notifications.emptyTitle}
+                  </RText>
+                </View>
+              ) : (
+                <ListFooter
+                  style={{backgroundColor: 'white'}}
+                  finished={notifications.finished || notifications.data.length === 0}
+                />
+              )}
             </View>
-          ) : (
-            <ListFooter
-              style={{backgroundColor: 'white'}}
-              finished={notifications.finished || notifications.data.length === 0}
-            />
           )}
-        </View>
-      ))}
+        </Observer>
+      }
     />
   )
 })
