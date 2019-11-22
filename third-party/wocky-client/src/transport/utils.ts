@@ -312,6 +312,9 @@ export function convertImage(image, preserveAspect: boolean = false) {
   if (image && image.trosUrl) {
     const aspect = image.urls.find(({type}) => type === 'ASPECT_THUMBNAIL')
     const thumbnail = image.urls.find(({type}) => type === 'THUMBNAIL')
+    if (!thumbnail) {
+      return null
+    }
     return preserveAspect && aspect
       ? {
           id: image.trosUrl,
