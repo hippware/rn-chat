@@ -4,11 +4,13 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-* Activity indicator appears smaller (#4429)
-* Messaging CTA should exist on the user card. (#3962)
+* Activity indicator appears smaller (#4429, PR #4456, PR #4466)
+* Messaging CTA should exist on the user card. (#3962, PR #4468)
   * Reduce the size of the message badge on ProfileDetail (PR #4461)
 * App crash when navigating to Updates (#4458)
 * [android] Back button should exit app (#3994)
+* Back button doesn't work for bot details (#4464)
+* Remove some yellowbox warnings (PR #4463)
 
 # 4.32.2 - 2019 Nov 20
 
