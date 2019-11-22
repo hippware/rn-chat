@@ -31,7 +31,10 @@ export const Profile = types
       sharesLocation: false, // pseudo-calculated property for correct FlatList rendering
       receivesLocationShare: false, // pseudo-calculated property for correct FlatList rendering
       roles: types.optional(types.array(types.string), []),
-      subscribedBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
+      subscribedBots: types.optional(
+        types.late((): IAnyModelType => BotPaginableList),
+        {}
+      ),
       addressData: types.optional(Address, {}),
     })
   )
@@ -243,13 +246,6 @@ export const Profile = types
       },
     }
   })
-  .views(self => ({
-    get unreadCountString(): string {
-      // For large unreadCount, '9+' isn't centered nicely.
-      // Show ' 9+' instead. It's a hack.
-      return self.unreadCount > 9 ? ' 9+' : self.unreadCount.toString()
-    },
-  }))
 
 export const ProfilePaginableList = createPaginable<IProfile>(
   types.reference(types.late(() => Profile)),
