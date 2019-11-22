@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.32.3 - 2019 Nov 22
+
 * Activity indicator appears smaller (#4429, PR #4456, PR #4466)
   * Revert LocationAvatar.tsx to 4.32.0 version. (PR #4470)
 * Messaging CTA should exist on the user card. (#3962, PR #4468)
