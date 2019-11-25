@@ -53,6 +53,7 @@ class DraggablePopupList<T> extends React.Component<IProps<T>> {
           onScroll={Animated.event([{nativeEvent: {contentOffset: {y: this.props.scrollY!}}}])} // send the scrollY state "up" so we can deal with it in SplitRenderer and NavBarHeader
           scrollEventThrottle={20}
           style={[{flex: 1}, style]}
+          ListFooterComponent={() => <View style={{height: 20}} />}
           ListHeaderComponent={
             // This list header wrapper ensures that the user can "touch through" to the map behind the list
             <>
@@ -64,10 +65,14 @@ class DraggablePopupList<T> extends React.Component<IProps<T>> {
               />
               <BottomPopup
                 preview={preview}
-                onMoveShouldSetPanResponder={(_0, gestureState) => {
-                  // allow BottomPopup to take over pan handling if the user is already at the top of the list and trying to swipe down
-                  return preview || (this.state.scrollYValue < 5 && gestureState.dy > 5)
-                }}
+                {...(preview
+                  ? {}
+                  : {
+                      onMoveShouldSetPanResponder: (_0, gestureState) => {
+                        // allow BottomPopup to take over pan handling if the user is already at the top of the list and trying to swipe down
+                        return this.state.scrollYValue < 5 && gestureState.dy > 5
+                      },
+                    })}
               >
                 <View
                   style={{

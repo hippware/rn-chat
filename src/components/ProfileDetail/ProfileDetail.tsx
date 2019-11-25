@@ -7,7 +7,7 @@ import {colors} from 'src/constants'
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native'
 import ConnectButton from './ConnectButton'
 import ProfileAvatar from '../ProfileAvatar'
-import {minHeight, avatarScale} from '../Global'
+import {avatarScale} from '../Global'
 import BlockReport from './BlockReport'
 import {useWocky} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
@@ -48,8 +48,7 @@ const Default = observer(({profile}: {profile: IProfile}) => (
       flex: 1,
       alignContent: 'center',
       alignItems: 'center',
-      paddingBottom: 46 * minHeight,
-      paddingTop: 20,
+      paddingBottom: 40,
     }}
     testID="profileDetail"
   >
