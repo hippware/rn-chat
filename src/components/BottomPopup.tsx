@@ -1,5 +1,5 @@
 import React from 'react'
-import {Image, StyleSheet, ViewStyle, TouchableOpacity, Animated, PanResponder} from 'react-native'
+import {Image, StyleSheet, ViewStyle, TouchableOpacity, Animated} from 'react-native'
 import {useHomeStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
