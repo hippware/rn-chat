@@ -4,6 +4,13 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Message screen is not loaded for some accounts (#4471)
+* Location Profile: Tap and drag issues with bottom card (Rework #4459)
+* Add 20 px margin to bottom of location profile (#4473)
+* Update: @babel/runtime (PR #4477), @babel/node (PR #4478)
+  * @react-native-community/netinfo (PR #4480)
+  * react-test-renderer (PR #4482)
+
 # 4.32.3 - 2019 Nov 22
 
 * Activity indicator appears smaller (#4429, PR #4456, PR #4466)
