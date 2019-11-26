@@ -935,50 +935,6 @@ export class Transport {
     })
   }
 
-  async loadRelations(
-    userId: string,
-    // TODO: use more specific typing when we can change IWockyTransport
-    // relation: 'FOLLOWER' | 'FOLLOWING' | 'FRIEND' | 'NONE' = 'FOLLOWING',
-    relation: string = 'FOLLOWING',
-    lastId?: string,
-    max: number = 10
-  ): Promise<IPagingList<any>> {
-    // TODO: remove this after IWockyTransport change
-    relation = relation.toUpperCase()
-    const res = await this.client!.query<any>({
-      query: gql`
-        query user($userId: UUID!, $relation: UserContactRelationship, $lastId: String, $max: Int) {
-          user(id: $userId) {
-            id
-            contacts(first: $max, relationship: $relation, after: $lastId) {
-              totalCount
-              edges {
-                relationship
-                createdAt
-                node {
-                  id
-                  roles
-                  firstName
-                  lastName
-                  handle
-                  presence {
-                    status
-                    updatedAt
-                  }
-                  ${MEDIA_PROPS}
-                }
-              }
-            }
-          }
-        }
-      `,
-      variables: {userId, relation, lastId, max},
-    })
-    const {totalCount, edges} = res.data.user!.contacts
-    const list = edges.map(e => convertProfile(e.node))
-    return {list, count: totalCount}
-  }
-
   async publishBotPost(botId: string, post: IBotPost): Promise<void> {
     return this.voidMutation({
       mutation: gql`
