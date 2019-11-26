@@ -21,21 +21,6 @@ interface IProps<T> extends FlatListProps<T> {
 
 class DraggablePopupList<T> extends React.Component<IProps<T>> {
   list: any
-  listener?: string
-
-  state = {
-    scrollYValue: 0,
-  }
-
-  componentDidMount() {
-    this.listener = this.props.scrollY!.addListener(({value}) => {
-      this.setState({scrollYValue: value})
-    })
-  }
-
-  componentWillUnmount() {
-    this.props.scrollY!.removeListener(this.listener!)
-  }
 
   render() {
     const {headerInner, style, isActive, preview, ...listProps} = this.props
