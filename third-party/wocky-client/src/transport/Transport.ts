@@ -78,6 +78,10 @@ export class Transport {
   @action
   async login(token: string, host: string): Promise<boolean> {
     this.host = host
+    if (this.connected) {
+      // Already connected
+      return this.connected
+    }
     if (this.connecting) {
       // prevent duplicate login
       // console.log('WAITING FOR CONNECTING COMPLETE')
