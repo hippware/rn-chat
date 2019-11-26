@@ -334,6 +334,7 @@ export function convertProfile({media, bots, presence, ...data}): IProfilePartia
   return {
     avatar: convertImage(media),
     status: presence ? presence.status : undefined,
+    statusUpdatedAt: presence ? new Date(presence.updatedAt) : undefined,
     botsSize: bots ? bots.totalCount : undefined,
     ...data,
   } as IProfilePartial
