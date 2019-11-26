@@ -33,9 +33,9 @@ const BottomPopup = observer(({children, style, preview}: Props) => {
     }
   })
 
-  const onPanStateChange = ({nativeEvent: {state, y}}) => {
+  const onPanStateChange = ({nativeEvent: {state, translationY}}) => {
     if (state === State.END) {
-      if ((preview && y < 0) || (!preview && y > 0)) {
+      if ((preview && translationY < 0) || (!preview && translationY > 0)) {
         Animated.spring(panY, {
           toValue: 0,
           useNativeDriver: true,
