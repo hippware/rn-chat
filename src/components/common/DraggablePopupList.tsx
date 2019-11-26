@@ -1,10 +1,11 @@
 import React, {ReactElement} from 'react'
-import {View, FlatList, FlatListProps, Animated} from 'react-native'
+import {View, FlatListProps, Animated} from 'react-native'
 import {width, height, k} from '../Global'
 import {TouchThroughView} from 'react-native-touch-through-view'
 import BottomPopup from '../BottomPopup'
 import {TouchThroughWrapper} from 'react-native-touch-through-view'
 import {inject} from 'mobx-react'
+import {FlatList} from 'react-native-gesture-handler'
 
 interface IProps<T> extends FlatListProps<T> {
   headerInner?: ReactElement<any>
@@ -63,17 +64,7 @@ class DraggablePopupList<T> extends React.Component<IProps<T>> {
                   height: preview ? height - 170 : height / 2,
                 }}
               />
-              <BottomPopup
-                preview={preview}
-                {...(preview
-                  ? {}
-                  : {
-                      onMoveShouldSetPanResponder: (_0, gestureState) => {
-                        // allow BottomPopup to take over pan handling if the user is already at the top of the list and trying to swipe down
-                        return this.state.scrollYValue < 5 && gestureState.dy > 5
-                      },
-                    })}
-              >
+              <BottomPopup preview={preview}>
                 <View
                   style={{
                     flex: preview ? 0 : 1,

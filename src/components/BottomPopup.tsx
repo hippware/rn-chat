@@ -3,6 +3,7 @@ import {Image, StyleSheet, ViewStyle, TouchableOpacity, Animated, PanResponder} 
 import {useHomeStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
+import {PanGestureHandler, State} from 'react-native-gesture-handler'
 
 type Props = {
   children: any
@@ -18,7 +19,7 @@ const previewBtnDownImg = require('../../images/previewButtonDown.png')
 // controls how far the user has to "pull" to trigger a toggle from preview -> full
 const PAN_THRESHOLD = 70
 
-const BottomPopup = observer(({children, style, preview, onMoveShouldSetPanResponder}: Props) => {
+const BottomPopup = observer(({children, style, preview}: Props) => {
   const {mapType} = useHomeStore()
   const panY = new Animated.Value(0)
 
@@ -32,29 +33,16 @@ const BottomPopup = observer(({children, style, preview, onMoveShouldSetPanRespo
     }
   })
 
-  const panResponder = PanResponder.create({
-    onMoveShouldSetPanResponder: !!onMoveShouldSetPanResponder
-      ? onMoveShouldSetPanResponder
-      : // need to drag 5 pixels in order to interpret as not-a-press (allows touching message button)
-        (_0, state) => preview !== undefined && Math.abs(state.dy) > 5,
-    onPanResponderMove: Animated.event([
-      null,
-      {
-        dy: panY,
-      },
-    ]),
-    onPanResponderRelease: (_0, gestureState) => {
-      const {dy} = gestureState
-
-      // Only "bounce back" if the user dragged up (in preview) or down (in default)
-      if ((preview && dy < 0) || (!preview && dy > 0)) {
+  const onPanStateChange = ({nativeEvent: {state, y}}) => {
+    if (state === State.END) {
+      if ((preview && y < 0) || (!preview && y > 0)) {
         Animated.spring(panY, {
           toValue: 0,
           useNativeDriver: true,
         }).start()
       }
-    },
-  })
+    }
+  }
 
   // if we're in preview then preventing dragging down. Else prevent dragging up
   const outputRange = preview
@@ -65,45 +53,52 @@ const BottomPopup = observer(({children, style, preview, onMoveShouldSetPanRespo
 
   // todo: adjust bottom margins for iPhones with bottom notches
   return (
-    <Animated.View
-      style={[
-        {
-          paddingTop: 50,
-        },
-        preview !== undefined && {
-          transform: [
-            {
-              translateY: panY.interpolate({
-                inputRange: [
-                  -(PAN_THRESHOLD + 1),
-                  -PAN_THRESHOLD,
-                  0,
-                  PAN_THRESHOLD,
-                  PAN_THRESHOLD + 1,
-                ],
-                outputRange,
-              }),
-            },
-          ],
-        },
-        style,
-      ]}
-      {...panResponder.panHandlers}
+    <PanGestureHandler
+      minDist={5}
+      onHandlerStateChange={onPanStateChange}
+      onGestureEvent={Animated.event([{nativeEvent: {translationY: panY}}], {
+        useNativeDriver: true,
+      })}
     >
-      <Image
-        style={styles.absolute}
-        source={
-          mapType === 'hybrid'
-            ? require('../../images/bottomPopupDarkShadow.png')
-            : require('../../images/bottomPopup.png')
-        }
-        resizeMode="stretch"
-      />
-      {preview !== undefined && (
-        <PreviewButton onPress={() => Actions.refresh({preview: !preview})} preview={preview} />
-      )}
-      {children}
-    </Animated.View>
+      <Animated.View
+        style={[
+          {
+            paddingTop: 50,
+          },
+          preview !== undefined && {
+            transform: [
+              {
+                translateY: panY.interpolate({
+                  inputRange: [
+                    -(PAN_THRESHOLD + 1),
+                    -PAN_THRESHOLD,
+                    0,
+                    PAN_THRESHOLD,
+                    PAN_THRESHOLD + 1,
+                  ],
+                  outputRange,
+                }),
+              },
+            ],
+          },
+          style,
+        ]}
+      >
+        <Image
+          style={styles.absolute}
+          source={
+            mapType === 'hybrid'
+              ? require('../../images/bottomPopupDarkShadow.png')
+              : require('../../images/bottomPopup.png')
+          }
+          resizeMode="stretch"
+        />
+        {preview !== undefined && (
+          <PreviewButton onPress={() => Actions.refresh({preview: !preview})} preview={preview} />
+        )}
+        {children}
+      </Animated.View>
+    </PanGestureHandler>
   )
 })
 
