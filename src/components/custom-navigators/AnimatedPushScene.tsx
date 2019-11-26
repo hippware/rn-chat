@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Animated} from 'react-native'
+import {Animated, Easing} from 'react-native'
 import {when} from 'mobx'
 import {height} from '../Global'
 import {observer} from 'mobx-react'
@@ -31,9 +31,13 @@ const AnimatedPushScene = observer(({scene, transitionProps}: Props) => {
   const hideScene = () => slideSceneTo(scene.route.params.fromTop ? -viewHeight : viewHeight)
 
   function slideSceneTo(offset) {
-    Animated.spring(slideHeight, {
+    // If we use `spring` then we need to account for "overshooting" as in https://github.com/hippware/rn-chat/issues/4432
+    // If we instead use `timing` then there is no overshooting.
+    Animated.timing(slideHeight, {
       toValue: offset,
       useNativeDriver: true,
+      easing: Easing.inOut(Easing.ease),
+      duration: 400,
     }).start()
   }
 
