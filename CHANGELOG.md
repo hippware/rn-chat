@@ -10,6 +10,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Update: @babel/runtime (PR #4477), @babel/node (PR #4478)
   * @react-native-community/netinfo (PR #4480)
   * react-test-renderer (PR #4482)
+* Gap seen with dragging animation (#4432)
+  * Remove animation overshoot (PR #4485)
+* Remove no longed used `loadRelations`. (PR #4488)
+* reconnect_fail: GraphQL error: already authenticated (#4452)
+  * Don't authenticate if already logged in. (PR #4489)
 
 # 4.32.3 - 2019 Nov 22
 
