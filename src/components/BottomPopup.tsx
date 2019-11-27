@@ -36,7 +36,7 @@ const BottomPopup = observer(
       }
     })
 
-    const onPanStateChange = ({nativeEvent: {state, y, absoluteY, translationY, velocityY}}) => {
+    const onPanStateChange = ({nativeEvent: {state, velocityY}}) => {
       // todo: figure out why Android sees State.CANCELLED when trying to swipe down
       if (state === State.END) {
         if ((preview && velocityY < 0) || (!preview && velocityY > 0)) {
