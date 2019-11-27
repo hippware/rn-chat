@@ -21,6 +21,7 @@ interface IProps<T> extends FlatListProps<T> {
 
 class DraggablePopupList<T> extends React.Component<IProps<T>> {
   list: any
+  popupRef: any
 
   render() {
     const {headerInner, style, isActive, preview, ...listProps} = this.props
@@ -32,11 +33,16 @@ class DraggablePopupList<T> extends React.Component<IProps<T>> {
     return (
       <Wrapper style={{width, height}}>
         <FlatList
+          shouldActivateOnStart
+          // disallowInterruption?: boolean;
           ref={r => (this.list = r)}
           bounces={false}
           keyboardDismissMode="on-drag"
           {...listProps}
-          onScroll={Animated.event([{nativeEvent: {contentOffset: {y: this.props.scrollY!}}}])} // send the scrollY state "up" so we can deal with it in SplitRenderer and NavBarHeader
+          onScroll={Animated.event([{nativeEvent: {contentOffset: {y: this.props.scrollY!}}}], {
+            useNativeDriver: true,
+          })} // send the scrollY state "up" so we can deal with it in SplitRenderer and NavBarHeader
+          waitFor={this.popupRef}
           scrollEventThrottle={20}
           style={[{flex: 1}, style]}
           ListFooterComponent={() => <View style={{height: 20}} />}
@@ -49,7 +55,12 @@ class DraggablePopupList<T> extends React.Component<IProps<T>> {
                   height: preview ? height - 170 : height / 2,
                 }}
               />
-              <BottomPopup preview={preview}>
+              <BottomPopup
+                preview={preview}
+                flatlistRef={this.list}
+                ref={r => (this.popupRef = r)}
+                scrollY={this.props.scrollY}
+              >
                 <View
                   style={{
                     flex: preview ? 0 : 1,

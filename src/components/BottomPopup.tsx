@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {createRef, forwardRef, useState} from 'react'
 import {Image, StyleSheet, ViewStyle, TouchableOpacity, Animated} from 'react-native'
 import {useHomeStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
@@ -11,6 +11,7 @@ type Props = {
   preview?: boolean
   cancelPanCapture?: boolean
   onMoveShouldSetPanResponder?: (e, s) => boolean
+  scrollY?: Animated.Value
 }
 
 const previewBtnUpImg = require('../../images/previewButtonUp.png')
@@ -19,88 +20,105 @@ const previewBtnDownImg = require('../../images/previewButtonDown.png')
 // controls how far the user has to "pull" to trigger a toggle from preview -> full
 const PAN_THRESHOLD = 70
 
-const BottomPopup = observer(({children, style, preview}: Props) => {
-  const {mapType} = useHomeStore()
-  const panY = new Animated.Value(0)
+const BottomPopup = observer(
+  forwardRef(({children, style, preview, scrollY}: Props, ref) => {
+    const {mapType} = useHomeStore()
+    const panY = new Animated.Value(0)
+    const [y, setY] = useState(0)
 
-  panY.addListener(({value}) => {
-    if (preview && value <= -PAN_THRESHOLD) {
-      Actions.refresh({preview: false})
-      panY.setValue(0)
-    } else if (preview === false && value >= PAN_THRESHOLD) {
-      Actions.refresh({preview: true})
-      panY.setValue(0)
-    }
-  })
+    panY.addListener(({value}) => {
+      if (preview && value <= -PAN_THRESHOLD) {
+        Actions.refresh({preview: false})
+        panY.setValue(0)
+      } else if (preview === false && value >= PAN_THRESHOLD) {
+        Actions.refresh({preview: true})
+        panY.setValue(0)
+      }
+    })
 
-  const onPanStateChange = ({nativeEvent: {state, translationY}}) => {
-    if (state === State.END) {
-      if ((preview && translationY < 0) || (!preview && translationY > 0)) {
-        Animated.spring(panY, {
-          toValue: 0,
-          useNativeDriver: true,
-        }).start()
+    const onPanStateChange = ({nativeEvent: {state, y, absoluteY, translationY, velocityY}}) => {
+      // todo: figure out why Android sees State.CANCELLED when trying to swipe down
+      if (state === State.END) {
+        if ((preview && velocityY < 0) || (!preview && velocityY > 0)) {
+          Animated.spring(panY, {
+            toValue: 0,
+            useNativeDriver: true,
+          }).start()
+        }
       }
     }
-  }
 
-  // if we're in preview then preventing dragging down. Else prevent dragging up
-  const outputRange = preview
-    ? [-PAN_THRESHOLD, -PAN_THRESHOLD, 0, 0, 0]
-    : [0, 0, 0, PAN_THRESHOLD, PAN_THRESHOLD]
+    // if we're in preview then preventing dragging down. Else prevent dragging up
+    const outputRange = preview
+      ? [-PAN_THRESHOLD, -PAN_THRESHOLD, 0, 0, 0]
+      : [0, 0, 0, PAN_THRESHOLD, PAN_THRESHOLD]
 
-  // TODO: style this with border radius and shadow rather than an image. Allows setting background color to white
+    // TODO: style this with border radius and shadow rather than an image. Allows setting background color to white
 
-  // todo: adjust bottom margins for iPhones with bottom notches
-  return (
-    <PanGestureHandler
-      minDist={5}
-      onHandlerStateChange={onPanStateChange}
-      onGestureEvent={Animated.event([{nativeEvent: {translationY: panY}}], {
-        useNativeDriver: true,
-      })}
-    >
-      <Animated.View
-        style={[
-          {
-            paddingTop: 50,
-          },
-          preview !== undefined && {
-            transform: [
-              {
-                translateY: panY.interpolate({
-                  inputRange: [
-                    -(PAN_THRESHOLD + 1),
-                    -PAN_THRESHOLD,
-                    0,
-                    PAN_THRESHOLD,
-                    PAN_THRESHOLD + 1,
-                  ],
-                  outputRange,
-                }),
-              },
-            ],
-          },
-          style,
-        ]}
+    // listen to the scroll events of a parent Flatlist
+    if (scrollY) {
+      scrollY!.addListener(({value}) => {
+        // console.log('& scroll y', value)
+        setY(value)
+      })
+    }
+
+    // todo: adjust bottom margins for iPhones with bottom notches
+    return (
+      <PanGestureHandler
+        // todo: need to add different states of "sensitivity" (?) Ideally we want this handler to take over more aggressively when swiping down from full mode
+        activeOffsetY={y > 5 ? [-30, 30] : [-15, 15]}
+        onHandlerStateChange={onPanStateChange}
+        onGestureEvent={Animated.event([{nativeEvent: {translationY: panY}}], {
+          useNativeDriver: true,
+        })}
+        // enabled
+        // simultaneousHandlers?: React.Ref<any> | React.Ref<any>[];
+        // shouldCancelWhenOutside?: boolean;
+        ref={ref as any}
       >
-        <Image
-          style={styles.absolute}
-          source={
-            mapType === 'hybrid'
-              ? require('../../images/bottomPopupDarkShadow.png')
-              : require('../../images/bottomPopup.png')
-          }
-          resizeMode="stretch"
-        />
-        {preview !== undefined && (
-          <PreviewButton onPress={() => Actions.refresh({preview: !preview})} preview={preview} />
-        )}
-        {children}
-      </Animated.View>
-    </PanGestureHandler>
-  )
-})
+        <Animated.View
+          style={[
+            {
+              paddingTop: 50,
+            },
+            preview !== undefined && {
+              transform: [
+                {
+                  translateY: panY.interpolate({
+                    inputRange: [
+                      -(PAN_THRESHOLD + 1),
+                      -PAN_THRESHOLD,
+                      0,
+                      PAN_THRESHOLD,
+                      PAN_THRESHOLD + 1,
+                    ],
+                    outputRange,
+                  }),
+                },
+              ],
+            },
+            style,
+          ]}
+        >
+          <Image
+            style={styles.absolute}
+            source={
+              mapType === 'hybrid'
+                ? require('../../images/bottomPopupDarkShadow.png')
+                : require('../../images/bottomPopup.png')
+            }
+            resizeMode="stretch"
+          />
+          {preview !== undefined && (
+            <PreviewButton onPress={() => Actions.refresh({preview: !preview})} preview={preview} />
+          )}
+          {children}
+        </Animated.View>
+      </PanGestureHandler>
+    )
+  })
+)
 
 export default BottomPopup
 
