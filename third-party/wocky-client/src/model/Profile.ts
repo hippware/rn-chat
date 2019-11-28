@@ -10,6 +10,7 @@ import {UserActivityType} from '../transport/types'
 import moment from 'moment'
 import {Address} from './Address'
 import {when} from 'mobx'
+import _ from 'lodash'
 
 export const Profile = types
   .compose(
@@ -23,6 +24,7 @@ export const Profile = types
       firstName: types.maybeNull(types.string),
       lastName: types.maybeNull(types.string),
       location: types.maybe(Location),
+      activity: types.maybe(Location),
       botsSize: 0,
       hasSentInvite: false,
       hasReceivedInvite: false,
@@ -54,6 +56,12 @@ export const Profile = types
     },
   }))
   .actions(self => ({
+    maybeUpdateActivity() {
+      // MST doesn't allow a node to be two children of the same parent so shallow clone
+      self.activity = _.clone(self.currentLocation) // this way it will work for OwnProfile too
+    },
+  }))
+  .actions(self => ({
     setSharesLocation(value: boolean) {
       self.sharesLocation = value
     },
@@ -78,6 +86,7 @@ export const Profile = types
     },
     setLocation(location: ILocationSnapshot) {
       self.location = Location.create(location)
+      self.maybeUpdateActivity()
     },
     setFriend: (friend: boolean) => {
       self.isFriend = friend
@@ -223,7 +232,7 @@ export const Profile = types
           return !!self.location && self.sharesLocation
         },
         get currentActivity(): UserActivityType | null {
-          const location = self.currentLocation // this way it will work for OwnProfile too
+          const location = self.activity
           if (!location) return null
 
           const now: Date = (getRoot(self) as any).wocky.timer.minute
