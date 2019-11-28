@@ -1185,14 +1185,20 @@ export class Transport {
         subscription presence {
           presence {
             id
-            presenceStatus
+            presence {
+              status
+              updatedAt
+            }
           }
         }
       `,
     }).subscribe({
       next: action((result: any) => {
-        const {id, presenceStatus} = result.data.presence
-        this.presence = {id, status: presenceStatus}
+        this.presence = {
+          id: result.data.presence.id,
+          status: result.data.presence.presence.status,
+          statusUpdatedAt: new Date(result.data.presence.presence.updatedAt),
+        }
       }),
     })
     this.subscriptions.push(subscription)

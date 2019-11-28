@@ -20,6 +20,7 @@ export const Profile = types
       avatar: FileRef,
       handle: types.maybeNull(types.string),
       status: types.optional(types.enumeration(['ONLINE', 'OFFLINE']), 'OFFLINE'),
+      statusUpdatedAt: types.optional(types.Date, () => new Date(0)),
       firstName: types.maybeNull(types.string),
       lastName: types.maybeNull(types.string),
       location: types.maybe(Location),
@@ -42,6 +43,7 @@ export const Profile = types
   .postProcessSnapshot(snapshot => {
     const res = {...snapshot}
     delete res.status
+    delete res.statusUpdatedAt
     delete res.sharesLocation
     delete res.receivesLocationShare
     // delete res.location - need to preserve location because now it is passed only via subscriptions
@@ -99,6 +101,11 @@ export const Profile = types
             self.avatar = self.service.files.get(avatar.id, avatar)
           }
           superLoad(data)
+
+          if (data.status && data.statusUpdatedAt && self.statusUpdatedAt < data.statusUpdatedAt) {
+            self.status = data.status
+            self.statusUpdatedAt = data.statusUpdatedAt
+          }
         },
         invite: flow(function*() {
           yield waitFor(() => self.connected)
@@ -150,8 +157,16 @@ export const Profile = types
             )
           }
         },
-        setStatus: (status: 'ONLINE' | 'OFFLINE') => {
-          self.status = status
+        setStatus: (status: 'ONLINE' | 'OFFLINE', updatedAt?: Date) => {
+          if (updatedAt === undefined) {
+            self.status = status
+            self.statusUpdatedAt = new Date(0)
+          } else {
+            if (self.statusUpdatedAt < updatedAt) {
+              self.status = status
+              self.statusUpdatedAt = updatedAt
+            }
+          }
         },
         asyncFetchRoughLocation: (): void => {
           const {geocodingStore} = getRoot(self)
@@ -279,6 +294,7 @@ export interface IProfilePartial {
   followersSize: number
   followedSize: number
   status: string
+  statusUpdatedAt: Date
   hidden: {
     enabled: boolean
     expires: Date

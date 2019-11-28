@@ -458,11 +458,11 @@ export const Wocky = types
         // reaction(() => self.transport.geoBot, self._onGeoBot),
         reaction(
           () => self.transport.presence,
-          ({id, status}) => {
+          ({id, status, statusUpdatedAt}) => {
             const profile = self.profiles.get(id)
-            profile.setStatus(status)
+            profile.setStatus(status, statusUpdatedAt)
             if (profile.isOwn && self.profile) {
-              self.profile!.setStatus(status)
+              self.profile!.setStatus(status, statusUpdatedAt)
             }
           }
         ),
