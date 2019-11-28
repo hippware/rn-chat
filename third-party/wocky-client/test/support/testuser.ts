@@ -82,6 +82,15 @@ export async function createUser(num?: number, phoneNum?: string): Promise<IWock
         sub: phoneNumber,
       })
     )
+
+    // HACK: Parts of the code use `getRoot(self as any).wocky.timer` but
+    //   in the test environment, the wocky object is getRoot(self), not
+    //   getRoot(self).wocky. Get around this by injecting a '.wocky'
+    //   variable into the root object.
+    // Do it in a way that bypasses typescript checking.
+    const root: any = service
+    root.wocky = service
+
     return service
   } catch (e) {
     console.error(e)
