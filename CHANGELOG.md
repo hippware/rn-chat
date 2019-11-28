@@ -4,6 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Update: mobx (PR #4479)
+
+# 4.32.4 - 2019 Nov 28
+
 * Message screen is not loaded for some accounts (#4471)
 * Location Profile: Tap and drag issues with bottom card (Rework #4459)
 * Add 20 px margin to bottom of location profile (#4473)
