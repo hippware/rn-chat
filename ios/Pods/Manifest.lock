@@ -1,10 +1,10 @@
 PODS:
   - Base64 (1.1.2)
   - boost-for-react-native (1.63.0)
-  - BugsnagReactNative (2.23.1):
-    - BugsnagReactNative/Core (= 2.23.1)
+  - BugsnagReactNative (2.23.2):
+    - BugsnagReactNative/Core (= 2.23.2)
     - React
-  - BugsnagReactNative/Core (2.23.1):
+  - BugsnagReactNative/Core (2.23.2):
     - React
   - BVLinearGradient (2.5.6):
     - React
@@ -365,7 +365,7 @@ PODS:
   - react-native-mixpanel (0.0.6):
     - Mixpanel (~> 3.4.5)
     - React
-  - react-native-netinfo (4.6.0):
+  - react-native-netinfo (4.6.1):
     - React
   - react-native-splash-screen (3.2.0):
     - React
@@ -681,7 +681,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
-  BugsnagReactNative: c6d12b6ea33c10db071c063b47c3b7f60ff75883
+  BugsnagReactNative: 0a24a1dd2cac88862d67b938f809bec8274130a9
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   CocoaLumberjack: 2f44e60eb91c176d471fdba43b9e3eae6a721947
   CodePush: d2e54ad42df82a8db65b2d23d8191b950ba945e1
@@ -740,7 +740,7 @@ SPEC CHECKSUMS:
   react-native-google-maps: 2e2e697dab576abd5809d78cd74e775865b62bf7
   react-native-maps: 6e499eee4eabf422ba8b6f94e993cc768bf35153
   react-native-mixpanel: f7ca1a4a436f1d3c19d9ca5d57aa47b848e97292
-  react-native-netinfo: fa32a5bb986924e9be82a261c262039042dde81e
+  react-native-netinfo: a59d8426a8484f739fe3a95dd6ad5af1435db05f
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   React-RCTActionSheet: 7369b7c85f99b6299491333affd9f01f5a130c22
   React-RCTAnimation: d07be15b2bd1d06d89417eb0343f98ffd2b099a7
