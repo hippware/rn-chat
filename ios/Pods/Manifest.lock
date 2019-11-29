@@ -150,7 +150,7 @@ PODS:
   - GTMSessionFetcher/Core (1.2.2)
   - JWT (3.0.0-beta.11):
     - Base64 (~> 1.1.2)
-  - Mixpanel (3.4.7)
+  - Mixpanel (3.4.9)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
@@ -530,7 +530,6 @@ SPEC REPOS:
     - Fabric
     - Google-Maps-iOS-Utils
     - JWT
-    - Mixpanel
     - QBImagePickerController
     - RSKImageCropper
     - SSZipArchive
@@ -554,6 +553,7 @@ SPEC REPOS:
     - GoogleMaps
     - GoogleUtilities
     - GTMSessionFetcher
+    - Mixpanel
     - nanopb
 
 EXTERNAL SOURCES:
@@ -713,7 +713,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: f895fde57977df4e0233edda0dbeac490e3703b6
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
   JWT: 05028b9624591bba9681bb57df2c5f95fa258bad
-  Mixpanel: 696e0a1c7f2685aa06bb23829b7a58ab7203d6c7
+  Mixpanel: 5aca6e506b34650b96dc759a208513d86650fac7
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Permission-Camera: 550f1b7609fc658fa2e28f930e235aa994c7b315
   Permission-Contacts: 3a6e04f3960fcaf6d352c9c4c5e82d42bcbcb4cc
@@ -771,6 +771,6 @@ SPEC CHECKSUMS:
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
   Yoga: ba3d99dbee6c15ea6bbe3783d1f0cb1ffb79af0f
 
-PODFILE CHECKSUM: 42e7388f1da828cf0d8874ba99f23372574927dc
+PODFILE CHECKSUM: 9cbc68a33b35a66c7be75922d1d8338fa12038ad
 
 COCOAPODS: 1.8.4
