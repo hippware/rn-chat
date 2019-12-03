@@ -11,10 +11,10 @@ YellowBox.ignoreWarnings([
 ])
 
 // Uncomment for storybook
-// export default from './storybook'
+export default from './storybook'
 
 // Comment for storybook
-AppRegistry.registerComponent('App', () => App)
+// AppRegistry.registerComponent('App', () => App)
 
 // https://rnfirebase.io/docs/v5.x.x/messaging/receiving-messages#4)-(Optional)(Android-only)-Listen-for-FCM-messages-in-the-background
 AppRegistry.registerHeadlessTask(
