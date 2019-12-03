@@ -7990,10 +7990,10 @@ react-native-mixpanel@^1.1.10:
   resolved "https://registry.yarnpkg.com/react-native-mixpanel/-/react-native-mixpanel-1.1.10.tgz#e8dede59b50500779d91d4f5fa44119e672b8cff"
   integrity sha512-I/4kihdHXC3oneq8lmULDOfpQE0D8xVjXZzBs3W7DtnjdGnhQC+UknnzzRAK7WBEnvdD5pUPp1Bku6nCn24FjA==
 
-react-native-permissions@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-2.0.0.tgz#a18a52bb17f992deb6e48dcc6f2bcc44793cb09c"
-  integrity sha512-cUBGfV5csl0tIhYK69jqXoRyupv7eHUfg2Ua0VkAXXfLOeOxcBgPjC8/BEkUGzi3gUd+tZbwuLg/+teiPbsfcg==
+react-native-permissions@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-2.0.5.tgz#fbb338f5f4fd3dfcaff415d614a5d3b4af63885b"
+  integrity sha512-6eKWGPvBL3RpobqumNNjXxCvZIfIZOKwOSPq8rGu2jL9O9jSllm0IqBcamRKhi3BN+uwh4gWaOBzFLLq2/94zQ==
 
 react-native-pure-jwt@^2.1.1:
   version "2.1.1"

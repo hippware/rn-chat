@@ -5,19 +5,19 @@
 
     ]
   },
-  "version": "2.0.0",
+  "version": "2.0.5",
   "license": "MIT",
-  "summary": "Check and request user permissions in React Native",
+  "summary": "An unified permissions API for React Native on iOS and Android",
   "authors": "Mathieu Acthernoene <zoontek@gmail.com>",
-  "homepage": "https://github.com/zoontek/react-native-permissions#readme",
+  "homepage": "https://github.com/react-native-community/react-native-permissions#readme",
   "platforms": {
     "ios": "9.0",
     "tvos": "11.0"
   },
   "requires_arc": true,
   "source": {
-    "git": "https://github.com/zoontek/react-native-permissions.git",
-    "tag": "2.0.0"
+    "git": "https://github.com/react-native-community/react-native-permissions.git",
+    "tag": "2.0.5"
   },
   "source_files": "Camera/*.{h,m}"
 }
