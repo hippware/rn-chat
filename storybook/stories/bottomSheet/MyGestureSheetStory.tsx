@@ -1,21 +1,27 @@
 import React, {Fragment} from 'react'
-import {StyleSheet, Text, View, Dimensions, FlatListProps} from 'react-native'
-import {TouchableOpacity} from 'react-native-gesture-handler'
+import {StyleSheet, Text, View} from 'react-native'
 import {LoremIpsum} from './GestureBottomSheetStory'
 import BottomPopupNew from '../../../src/components/common/BottomPopupNew'
+import MapView from 'react-native-maps'
 
 const Wrapper = ({children}) => (
   <View style={{flex: 1}}>
-    <View
-      style={[StyleSheet.absoluteFillObject, {marginTop: 100, padding: 10, alignItems: 'center'}]}
-    >
-      <Text style={{fontSize: 20}}>My Gesture Sheet Story</Text>
-      <TouchableOpacity onPress={() => null} style={{marginTop: 20}}>
-        <Text style={{padding: 10, backgroundColor: 'blue', color: 'white'}}>
-          Test background is touchable
-        </Text>
-      </TouchableOpacity>
-    </View>
+    <MapView
+      provider={'google'}
+      initialRegion={{
+        latitude: 34.141291,
+        longitude: -118.1413,
+        latitudeDelta: 0.04,
+        longitudeDelta: 0.04,
+      }}
+      style={StyleSheet.absoluteFill}
+      mapType={'standard'}
+      rotateEnabled={false}
+      pitchEnabled={false}
+    />
+    <Text style={[{marginTop: 100, padding: 10, textAlign: 'center', fontSize: 20}]}>
+      My Gesture Sheet Story
+    </Text>
     {children}
   </View>
 )

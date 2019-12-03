@@ -1,5 +1,14 @@
 import React, {Component} from 'react'
-import {Animated, StyleSheet, Text, View, Dimensions, FlatListProps, FlatList} from 'react-native'
+import {
+  Animated,
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  FlatListProps,
+  FlatList,
+  Image,
+} from 'react-native'
 import {
   PanGestureHandler,
   NativeViewGestureHandler,
@@ -13,7 +22,7 @@ const USE_NATIVE_DRIVER = true
 const HEADER_HEIGHT = 50
 const windowHeight = Dimensions.get('window').height
 // const SNAP_POINTS_FROM_TOP = [50, windowHeight * 0.4, windowHeight * 0.8]
-const SNAP_POINTS_FROM_TOP = [0, windowHeight * 0.5, windowHeight * 0.8]
+const SNAP_POINTS_FROM_TOP = [0, windowHeight * 0.4, windowHeight * 0.7]
 
 type Props = {
   // _lastScrollY?: any
@@ -127,8 +136,8 @@ export default class BottomPopupListNew extends Component<Props> {
           <Animated.View
             style={[
               StyleSheet.absoluteFillObject,
-              {borderColor: 'blue', borderWidth: 1, backgroundColor: 'white'},
               {
+                // backgroundColor: 'white',
                 transform: [{translateY: this._translateY}],
               },
             ]}
@@ -140,7 +149,19 @@ export default class BottomPopupListNew extends Component<Props> {
               onGestureEvent={this._onGestureEvent}
               onHandlerStateChange={this._onHeaderHandlerStateChange}
             >
-              <Animated.View style={styles.header} />
+              <Animated.View style={styles.header}>
+                <Image
+                  style={{width: '100%', position: 'absolute'}}
+                  // todo: emulate homestore in story
+                  // source={
+                  //   mapType === 'hybrid'
+                  //     ? require('../../images/bottomPopupDarkShadow.png')
+                  //     : require('../../images/bottomPopup.png')
+                  // }
+                  source={require('../../../images/bottomPopup.png')}
+                  resizeMode="stretch"
+                />
+              </Animated.View>
             </PanGestureHandler>
             <PanGestureHandler
               ref={this.drawer}
@@ -200,7 +221,8 @@ const styles = StyleSheet.create({
   },
   header: {
     height: HEADER_HEIGHT,
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
+    paddingTop: 50,
   },
   lipsum: {
     padding: 10,
