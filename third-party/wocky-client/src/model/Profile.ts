@@ -10,6 +10,7 @@ import {UserActivityType} from '../transport/types'
 import moment from 'moment'
 import {Address} from './Address'
 import {when} from 'mobx'
+import _ from 'lodash'
 
 export const Profile = types
   .compose(
@@ -24,6 +25,7 @@ export const Profile = types
       firstName: types.maybeNull(types.string),
       lastName: types.maybeNull(types.string),
       location: types.maybe(Location),
+      _activity: types.maybe(Location),
       botsSize: 0,
       hasSentInvite: false,
       hasReceivedInvite: false,
@@ -56,6 +58,14 @@ export const Profile = types
     },
   }))
   .actions(self => ({
+    maybeUpdateActivity() {
+      if (self.currentLocation && self.currentLocation.activityConfidence! >= 50) {
+        // MST doesn't allow a node to be two children of the same parent so shallow clone
+        self._activity = _.clone(self.currentLocation) // this way it will work for OwnProfile too
+      }
+    },
+  }))
+  .actions(self => ({
     setSharesLocation(value: boolean) {
       self.sharesLocation = value
     },
@@ -80,6 +90,7 @@ export const Profile = types
     },
     setLocation(location: ILocationSnapshot) {
       self.location = Location.create(location)
+      self.maybeUpdateActivity()
     },
     setFriend: (friend: boolean) => {
       self.isFriend = friend
@@ -237,13 +248,13 @@ export const Profile = types
         get isLocationShared() {
           return !!self.location && self.sharesLocation
         },
-        get currentActivity(): UserActivityType | null {
-          const location = self.currentLocation // this way it will work for OwnProfile too
-          if (!location) return null
+        get activity(): UserActivityType | null {
+          const data = self._activity
+          if (!data) return null
 
           const now: Date = (getRoot(self) as any).wocky.timer.minute
-          const activity = location && location.activity ? location.activity : null
-          const minsSinceLastUpdate = moment(now).diff(location!.createdAt, 'minutes')
+          const activity = data && data.activity ? data.activity : null
+          const minsSinceLastUpdate = moment(now).diff(data!.createdAt, 'minutes')
           if (activity === 'still') {
             // delay 5 minutes before showing a user as 'still'
             return minsSinceLastUpdate > 5 ? 'still' : null
