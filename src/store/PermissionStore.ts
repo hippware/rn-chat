@@ -60,6 +60,19 @@ export const PermissionStore = types
       })
     },
   }))
+  .views(self => ({
+    get onboarded() {
+      const {wocky} = getParent<any>(self)
+      return (
+        wocky &&
+        wocky.profile &&
+        wocky.profile.clientData.onboarded &&
+        self.allowsAccelerometer &&
+        self.allowsLocation &&
+        self.allowsNotification
+      )
+    },
+  }))
   .postProcessSnapshot(() => {
     // No need to persist this store
     return {}
