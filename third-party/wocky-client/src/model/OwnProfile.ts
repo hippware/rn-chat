@@ -7,6 +7,7 @@ import {ContactPaginableList, Contact} from './Contact'
 import {BlockedUserPaginableList, BlockedUser} from './BlockedUser'
 import {LocationSharePaginableList, LocationShare} from './LocationShare'
 import ClientData from './ClientData'
+import {reaction, IReactionDisposer} from 'mobx'
 
 export const OwnProfile = types
   .compose(
@@ -39,7 +40,7 @@ export const OwnProfile = types
     },
     get currentLocation() {
       const {locationStore} = getRoot(self)
-      return locationStore.location
+      return locationStore ? locationStore.location : self.location
     },
     get isLocationShared() {
       return self.locationShares.length > 0
@@ -145,9 +146,11 @@ export const OwnProfile = types
   }))
   .actions(self => {
     const timers: any[] = []
+    let reactions: IReactionDisposer[] = []
+    const {locationStore} = getRoot(self)
+
     return {
       hide: flow(function*(value: boolean, expires: Date | undefined) {
-        const {locationStore} = getRoot(self)
         if (locationStore) {
           yield locationStore.hide(value, expires)
         }
@@ -177,7 +180,19 @@ export const OwnProfile = types
         sharedWith.setReceivesLocationShare(true)
         timers.push(setTimeout(() => self.removeLocationShare(sharedWith), expiresAt - Date.now()))
       },
+      afterCreate() {
+        reactions = []
+        if (locationStore) {
+          reactions.push(
+            reaction(() => locationStore.location, self.maybeUpdateActivity, {
+              name: 'maybeUpdateActivity when location changes',
+            })
+          )
+        }
+      },
       beforeDestroy() {
+        reactions.forEach(disposer => disposer())
+        reactions = []
         timers.forEach(clearInterval)
       },
     }
