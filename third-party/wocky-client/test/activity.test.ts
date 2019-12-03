@@ -30,23 +30,19 @@ describe('Activity indicator tests', () => {
     })
   }
 
-  it('Test set A', async () => {
+  it('Test that high confidence values are used', async () => {
     const profile = service!.profile
     injectActivity('in_vehicle')
     expect(profile!.currentActivity).toBe('in_vehicle')
-    injectActivity('in_vehicle', 50)
-    expect(profile!.currentActivity).toBe('in_vehicle')
-    injectActivity('in_vehicle', 49)
-    expect(profile!.currentActivity).toBe('in_vehicle')
+    injectActivity('walking', 50)
+    expect(profile!.currentActivity).toBe('walking')
     injectActivity('in_vehicle')
     expect(profile!.currentActivity).toBe('in_vehicle')
   })
 
-  it('Test set B', async () => {
+  it('Test that low confidence values are ignored', async () => {
     const profile = service!.profile
     injectActivity('in_vehicle')
-    expect(profile!.currentActivity).toBe('in_vehicle')
-    injectActivity('in_vehicle', 50)
     expect(profile!.currentActivity).toBe('in_vehicle')
     injectActivity('walking', 49)
     expect(profile!.currentActivity).toBe('in_vehicle')
