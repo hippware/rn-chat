@@ -25,7 +25,7 @@ const store = types
       handle: 'jennyong',
       status: 'ONLINE',
       sharesLocation: true,
-      location: Location.create({
+      _location: Location.create({
         latitude: 1,
         longitude: 1,
         accuracy: 1,

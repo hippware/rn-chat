@@ -23,7 +23,7 @@ export const Profile = types
       status: types.optional(types.enumeration(['ONLINE', 'OFFLINE']), 'OFFLINE'),
       firstName: types.maybeNull(types.string),
       lastName: types.maybeNull(types.string),
-      location: types.maybe(Location),
+      _location: types.maybe(Location),
       _activity: types.maybe(Location),
       botsSize: 0,
       hasSentInvite: false,
@@ -51,15 +51,15 @@ export const Profile = types
     return res
   })
   .views(self => ({
-    get currentLocation() {
-      return self.location
+    get location() {
+      return self._location
     },
   }))
   .actions(self => ({
     maybeUpdateActivity() {
-      if (self.currentLocation && self.currentLocation.activityConfidence! >= 50) {
+      if (self.location && self.location.activityConfidence! >= 50) {
         // MST doesn't allow a node to be two children of the same parent so shallow clone
-        self._activity = _.clone(self.currentLocation) // this way it will work for OwnProfile too
+        self._activity = _.clone(self.location) // this way it will work for OwnProfile too
       }
     },
   }))
@@ -87,7 +87,7 @@ export const Profile = types
       }
     },
     setLocation(location: ILocationSnapshot) {
-      self.location = Location.create(location)
+      self._location = Location.create(location)
       self.maybeUpdateActivity()
     },
     setFriend: (friend: boolean) => {
@@ -168,10 +168,10 @@ export const Profile = types
           const {geocodingStore} = getRoot(self)
           if (geocodingStore) {
             when(
-              () => !!self.currentLocation,
+              () => !!self.location,
               () => {
                 geocodingStore
-                  .reverse(self.currentLocation)
+                  .reverse(self.location)
                   .then(data => {
                     if (data && data.meta) {
                       self.load({addressData: data.meta})
@@ -218,11 +218,11 @@ export const Profile = types
         get distance(): number {
           const {locationStore} = getRoot(self)
           const ownProfile = self.service && self.service.profile
-          if (!self.location || !locationStore || !ownProfile || !ownProfile.currentLocation) {
+          if (!self._location || !locationStore || !ownProfile || !ownProfile.location) {
             return Number.MAX_SAFE_INTEGER
           }
-          const loc1 = self.location
-          const loc2 = ownProfile.currentLocation
+          const loc1 = self._location
+          const loc2 = ownProfile.location
           return locationStore.distance(
             loc1.latitude,
             loc1.longitude,
@@ -231,7 +231,7 @@ export const Profile = types
           )
         },
         get isLocationShared() {
-          return !!self.location && self.sharesLocation
+          return !!self._location && self.sharesLocation
         },
         get activity(): UserActivityType | null {
           const data = self._activity
@@ -249,10 +249,8 @@ export const Profile = types
           return minsSinceLastUpdate > 5 ? null : activity
         },
         get whenLastLocationSent(): string {
-          // console.log('& when', self.currentLocation)
-          return self.currentLocation
-            ? moment(self.currentLocation!.createdAt).fromNow()
-            : 'a while ago'
+          // console.log('& when', self.location)
+          return self.location ? moment(self.location!.createdAt).fromNow() : 'a while ago'
         },
       },
     }
