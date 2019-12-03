@@ -1,5 +1,5 @@
-import React, {Component, forwardRef, Ref} from 'react'
-import {Animated, StyleSheet, Text, View, Dimensions, FlatListProps} from 'react-native'
+import React, {Component} from 'react'
+import {Animated, StyleSheet, Text, View, Dimensions, FlatListProps, FlatList} from 'react-native'
 import {
   PanGestureHandler,
   NativeViewGestureHandler,
@@ -8,8 +8,6 @@ import {
   PanGestureHandlerStateChangeEvent,
   TouchableOpacity,
 } from 'react-native-gesture-handler'
-import {LoremIpsum} from './GestureBottomSheetStory'
-import {Provider} from 'mobx-react'
 
 const USE_NATIVE_DRIVER = true
 const HEADER_HEIGHT = 50
@@ -17,9 +15,12 @@ const windowHeight = Dimensions.get('window').height
 // const SNAP_POINTS_FROM_TOP = [50, windowHeight * 0.4, windowHeight * 0.8]
 const SNAP_POINTS_FROM_TOP = [0, windowHeight * 0.5, windowHeight * 0.8]
 
-interface Props extends FlatListProps<any> {}
+type Props = {
+  // _lastScrollY?: any
+  listProps?: FlatListProps<any>
+}
 
-class BottomPopupList extends Component<Props> {
+export default class BottomPopupListNew extends Component<Props> {
   masterdrawer = React.createRef<TapGestureHandler>()
   drawer = React.createRef<PanGestureHandler>()
   drawerheader = React.createRef<PanGestureHandler>()
@@ -113,7 +114,7 @@ class BottomPopupList extends Component<Props> {
   }
 
   render() {
-    console.log('& max delta y', this.state.lastSnap - SNAP_POINTS_FROM_TOP[0])
+    // console.log('& max delta y', this.state.lastSnap - SNAP_POINTS_FROM_TOP[0])
 
     return (
       // todo: what does this wrapping gesture handler do? Taking it away does make the gesture handling wonky, but not sure why
@@ -149,56 +150,46 @@ class BottomPopupList extends Component<Props> {
               onHandlerStateChange={this._onHandlerStateChange}
             >
               <Animated.View style={styles.container}>
-                <Provider
-                  masterDrawerRef={this.masterdrawer}
-                  drawerRef={this.drawer}
-                  lastScrollY={this._lastScrollY}
+                <NativeViewGestureHandler
+                  ref={this.scroll as any}
+                  waitFor={this.masterdrawer}
+                  simultaneousHandlers={this.drawer}
                 >
-                  <NativeViewGestureHandler
-                    ref={this.scroll as any}
-                    waitFor={this.masterdrawer}
-                    simultaneousHandlers={this.drawer}
-                  >
+                  {/*
+                    // todo: DRY up this structure. It's difficult though because there's a tight coupling with refs and onScrollDrag event
+                    The main case that illustrates this is where you're in full view and at the bottom of the list and swipe down...
+                    Expected: scrolls list to top
+                    Observed: swipes down the popup container instead
+                  */}
+                  {!!this.props.listProps ? (
                     <Animated.FlatList
                       style={[{flex: 1}, {marginBottom: SNAP_POINTS_FROM_TOP[0]}]}
                       bounces={false}
-                      {...this.props}
+                      {...this.props.listProps}
                       onScrollBeginDrag={Animated.event(
                         [{nativeEvent: {contentOffset: {y: this._lastScrollY!}}}],
                         {useNativeDriver: true}
                       )}
                       scrollEventThrottle={1}
-                    ></Animated.FlatList>
-                  </NativeViewGestureHandler>
-                </Provider>
+                    />
+                  ) : (
+                    <Animated.ScrollView
+                      onScrollBeginDrag={Animated.event(
+                        [{nativeEvent: {contentOffset: {y: this._lastScrollY!}}}],
+                        {useNativeDriver: true}
+                      )}
+                      scrollEventThrottle={1}
+                      bounces={false}
+                    >
+                      {this.props.children}
+                    </Animated.ScrollView>
+                  )}
+                </NativeViewGestureHandler>
               </Animated.View>
             </PanGestureHandler>
           </Animated.View>
         </View>
       </TapGestureHandler>
-    )
-  }
-}
-
-export default class Example extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={[StyleSheet.absoluteFillObject, {marginTop: 100, padding: 10}]}>
-          <Text>This is an experimental version of GestureBottomSheetStory.tsx</Text>
-          <TouchableOpacity onPress={() => null} style={{marginTop: 20}}>
-            <Text style={{padding: 10, backgroundColor: 'blue'}}>
-              Press me to test that the background is still touchable
-            </Text>
-          </TouchableOpacity>
-        </View>
-        {/* <Text>A simple child</Text> */}
-        <BottomPopupList
-          data={[<LoremIpsum />, <LoremIpsum />, <LoremIpsum />]}
-          renderItem={({item}) => item}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      </View>
     )
   }
 }

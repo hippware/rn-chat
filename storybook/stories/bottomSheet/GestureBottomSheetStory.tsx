@@ -109,6 +109,7 @@ export class BottomSheet extends Component {
           <Animated.View
             style={[
               StyleSheet.absoluteFillObject,
+              {backgroundColor: 'white'},
               {
                 transform: [{translateY: this._translateY}],
               },
