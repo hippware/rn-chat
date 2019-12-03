@@ -4,7 +4,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-* Update: mobx (PR #4479)
+* Update: react-native-mixpanel (PR #4401), mobx (PR #4479)
+  * @types/jest (PR #4493), @babel/plugin-proposal-decorators (PR #4494)
+  * @babel/plugin-transform-flow-strip-types (PR #4495)
+  * husky (PR #4496), libphonenumber-js (PR #4497), jetifier (PR #4499)
+  * @types/lodash (PR #4504), @types/react (PR #4506)
+* [dev] Use `updatedAt` in presence subscription (#3949)
 
 # 4.32.4 - 2019 Nov 28
 
