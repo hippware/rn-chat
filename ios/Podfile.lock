@@ -1,10 +1,10 @@
 PODS:
   - Base64 (1.1.2)
   - boost-for-react-native (1.63.0)
-  - BugsnagReactNative (2.23.1):
-    - BugsnagReactNative/Core (= 2.23.1)
+  - BugsnagReactNative (2.23.2):
+    - BugsnagReactNative/Core (= 2.23.2)
     - React
-  - BugsnagReactNative/Core (2.23.1):
+  - BugsnagReactNative/Core (2.23.2):
     - React
   - BVLinearGradient (2.5.6):
     - React
@@ -681,7 +681,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
-  BugsnagReactNative: c6d12b6ea33c10db071c063b47c3b7f60ff75883
+  BugsnagReactNative: 0a24a1dd2cac88862d67b938f809bec8274130a9
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   CocoaLumberjack: 2f44e60eb91c176d471fdba43b9e3eae6a721947
   CodePush: d2e54ad42df82a8db65b2d23d8191b950ba945e1
