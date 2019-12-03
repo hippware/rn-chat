@@ -46,7 +46,7 @@ const Badge = ({style, background, text}) => {
 
 const LocationAvatar = observer(({profile, hidden, tappable, asHeaderItem}: Props) => {
   const sharesLocation = profile.isLocationShared
-  const currentActivity = profile.currentActivity
+  const currentActivity = profile.activity
   const isStill = currentActivity === 'still'
   const inactive = hidden || (!profile.isOwn && !sharesLocation)
   const currentBG = inactive ? avatarBGGray : sharesLocation && !isStill ? avatarBG : avatarBGNoRing

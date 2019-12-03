@@ -24,7 +24,7 @@ export const Profile = types
       firstName: types.maybeNull(types.string),
       lastName: types.maybeNull(types.string),
       location: types.maybe(Location),
-      activity: types.maybe(Location),
+      _activity: types.maybe(Location),
       botsSize: 0,
       hasSentInvite: false,
       hasReceivedInvite: false,
@@ -59,7 +59,7 @@ export const Profile = types
     maybeUpdateActivity() {
       if (self.currentLocation && self.currentLocation.activityConfidence! >= 50) {
         // MST doesn't allow a node to be two children of the same parent so shallow clone
-        self.activity = _.clone(self.currentLocation) // this way it will work for OwnProfile too
+        self._activity = _.clone(self.currentLocation) // this way it will work for OwnProfile too
       }
     },
   }))
@@ -233,13 +233,13 @@ export const Profile = types
         get isLocationShared() {
           return !!self.location && self.sharesLocation
         },
-        get currentActivity(): UserActivityType | null {
-          const location = self.activity
-          if (!location) return null
+        get activity(): UserActivityType | null {
+          const data = self._activity
+          if (!data) return null
 
           const now: Date = (getRoot(self) as any).wocky.timer.minute
-          const activity = location && location.activity ? location.activity : null
-          const minsSinceLastUpdate = moment(now).diff(location!.createdAt, 'minutes')
+          const activity = data && data.activity ? data.activity : null
+          const minsSinceLastUpdate = moment(now).diff(data!.createdAt, 'minutes')
           if (activity === 'still') {
             // delay 5 minutes before showing a user as 'still'
             return minsSinceLastUpdate > 5 ? 'still' : null

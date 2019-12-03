@@ -59,7 +59,7 @@ export default observer(() => (
       <RText>Toggle</RText>
     </TouchableOpacity>
 
-    <RText style={{marginBottom: 20}}>Current Activity: {store.profile.currentActivity}</RText>
+    <RText style={{marginBottom: 20}}>Current Activity: {store.profile.activity}</RText>
 
     <LocationAvatar profile={store.profile as IProfile} />
   </View>
