@@ -68,7 +68,6 @@ export const PermissionStore = types
         wocky.profile &&
         wocky.profile.clientData.onboarded &&
         self.allowsAccelerometer &&
-        self.allowsLocation &&
         self.allowsNotification
       )
     },
