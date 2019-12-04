@@ -133,7 +133,11 @@ export default class BottomPopupListNew extends Component<Props> {
 
   springTo = (toValue: number, velocity?: number) => {
     this.setState({lastSnap: toValue})
-    Actions.refresh({preview: toValue === this.previewY ? true : false})
+    const toPreview = toValue === this.previewY
+    const {preview} = this.props
+    if ((toPreview && !preview) || (!toPreview && preview)) {
+      Actions.refresh({preview: toPreview})
+    }
 
     Animated.spring(this._translateYOffset, {
       velocity,
