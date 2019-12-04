@@ -57,7 +57,7 @@ export class LocationSharerCard extends Card {
     this.profile = profile
   }
   get location() {
-    return this.profile.currentLocation
+    return this.profile.location
   }
   get name() {
     return 'LocationSharerCard'
@@ -184,10 +184,10 @@ const HomeStore = types
         self.mapOptions = value
       },
       followUserOnMap(user: IProfile) {
-        if (user.currentLocation) {
+        if (user.location) {
           if (disposer) disposer()
           self.followingUser = true
-          disposer = autorun(() => self.setFocusedLocation(user.currentLocation), {
+          disposer = autorun(() => self.setFocusedLocation(user.location), {
             name: 'FollowUserOnMap',
           })
         }

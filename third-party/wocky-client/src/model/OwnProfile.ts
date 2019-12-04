@@ -38,9 +38,9 @@ export const OwnProfile = types
     get hidden() {
       return self.clientData.hidden
     },
-    get currentLocation() {
+    get location() {
       const {locationStore} = getRoot(self)
-      return locationStore ? locationStore.location : self.location
+      return locationStore ? locationStore.location : self._location
     },
     get isLocationShared() {
       return self.locationShares.length > 0
