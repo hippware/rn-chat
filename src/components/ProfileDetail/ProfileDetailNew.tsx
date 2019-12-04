@@ -15,10 +15,9 @@ import {Actions} from 'react-native-router-flux'
 
 type Props = {
   item: string
-  preview?: boolean
 }
 
-const ProfileDetail = observer(({item, preview}: Props) => {
+const ProfileDetail = observer(({item}: Props) => {
   const [profile, setProfile] = useState<IProfile | null>(null)
 
   const {loadProfile} = useWocky()
@@ -35,12 +34,11 @@ const ProfileDetail = observer(({item, preview}: Props) => {
     return null
   }
 
-  console.log('& profile detail new', item)
-
   return (
-    <BottomPopupNew preview={preview}>
-      {preview ? <Preview profile={profile!} /> : <Default profile={profile!} />}
-    </BottomPopupNew>
+    <BottomPopupNew
+      renderPreview={() => <Preview profile={profile!} />}
+      renderContent={() => <Default profile={profile!} />}
+    />
   )
 })
 
@@ -137,7 +135,7 @@ const Preview = observer(({profile}: {profile: IProfile}) => {
 })
 
 const InfoPills = observer(({profile}: {profile: IProfile}) =>
-  profile.currentLocation ? (
+  profile.location ? (
     <View style={{flexDirection: 'row'}}>
       <Pill>{profile.addressData.locationShort}</Pill>
       {!profile.isOwn && <Pill>{profile.whenLastLocationSent}</Pill>}

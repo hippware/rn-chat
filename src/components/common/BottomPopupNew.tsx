@@ -1,36 +1,27 @@
 import React, {Component} from 'react'
-import {
-  Animated,
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  FlatListProps,
-  FlatList,
-  Image,
-} from 'react-native'
+import {Animated, StyleSheet, View, FlatListProps, Image} from 'react-native'
 import {
   PanGestureHandler,
   NativeViewGestureHandler,
   State,
   TapGestureHandler,
   PanGestureHandlerStateChangeEvent,
-  TouchableOpacity,
 } from 'react-native-gesture-handler'
 import {PreviewButton} from '../BottomPopup'
-import {Actions} from 'react-native-router-flux'
 import {height} from '../Global'
 
 const HEADER_HEIGHT = 50
-const PREVIEW_Y = height * 0.82
-const FULL_Y = height * 0.5
-const SNAP_POINTS_FROM_TOP = [0, FULL_Y, PREVIEW_Y]
+const PREVIEW_Y = height * 0.82 // TODO - fixed height? It should not depend from device height, because content doesn't depend from it
+const FULL_Y = height * 0.6 // TODO - fixed height?
+const SNAP_POINTS_FROM_TOP = [FULL_Y, PREVIEW_Y] // TODO - make it dynamic, pass via props depending from content (Profile/Bot)?
 const START = SNAP_POINTS_FROM_TOP[0]
 const END = SNAP_POINTS_FROM_TOP[SNAP_POINTS_FROM_TOP.length - 1]
 
 type Props = {
   listProps?: FlatListProps<any>
   // style?: ViewStyle
+  renderContent: any
+  renderPreview?: any
   preview?: boolean
 }
 
@@ -78,7 +69,6 @@ export default class BottomPopupListNew extends Component<Props> {
       extrapolate: 'clamp',
     })
   }
-
   componentDidUpdate(prevProps: Props) {
     if (prevProps.preview !== this.props.preview) {
       this.springTo(this.props.preview ? PREVIEW_Y : FULL_Y)
@@ -93,12 +83,21 @@ export default class BottomPopupListNew extends Component<Props> {
     this._onHandlerStateChange({nativeEvent})
   }
 
+  _isPreview = () => {
+    return this.state.lastSnap === SNAP_POINTS_FROM_TOP[1]
+  }
+
+  _switchMode = () => {
+    this.springTo(!this._isPreview() ? PREVIEW_Y : FULL_Y)
+  }
+
   _onHandlerStateChange = ({nativeEvent}: PanGestureHandlerStateChangeEvent) => {
     // console.log('& on handler state change')
 
     // if we've just released the pan gesture...
     if (nativeEvent.oldState === State.ACTIVE) {
-      let {velocityY, translationY} = nativeEvent
+      let {translationY} = nativeEvent
+      const velocityY = nativeEvent.velocityY
       translationY -= this._lastScrollYValue
       // not sure why this magic number
       const dragToss = 0.05
@@ -115,8 +114,6 @@ export default class BottomPopupListNew extends Component<Props> {
         }
       })
 
-      this.setState({lastSnap: destSnapPoint})
-
       // todo: is there a simpler way to do this?
       this._translateYOffset.extractOffset()
       this._translateYOffset.setValue(translationY)
@@ -130,8 +127,10 @@ export default class BottomPopupListNew extends Component<Props> {
   }
 
   springTo = (toValue: number, velocity?: number) => {
+    this.setState({lastSnap: toValue})
+
     Animated.spring(this._translateYOffset, {
-      velocity: velocity,
+      velocity,
       tension: 68,
       friction: 12,
       toValue,
@@ -140,7 +139,7 @@ export default class BottomPopupListNew extends Component<Props> {
   }
 
   render() {
-    const {preview} = this.props
+    const {renderContent, renderPreview} = this.props
 
     return (
       // todo: what does this wrapping gesture handler do? Taking it away does make the gesture handling wonky, but not sure why
@@ -181,11 +180,8 @@ export default class BottomPopupListNew extends Component<Props> {
                   source={require('../../../images/bottomPopup.png')}
                   resizeMode="stretch"
                 />
-                {preview !== undefined && (
-                  <PreviewButton
-                    onPress={() => Actions.refresh({preview: !preview})}
-                    preview={preview}
-                  />
+                {renderPreview !== undefined && (
+                  <PreviewButton onPress={this._switchMode} preview={this._isPreview()} />
                 )}
               </Animated.View>
             </PanGestureHandler>
@@ -228,7 +224,7 @@ export default class BottomPopupListNew extends Component<Props> {
                       scrollEventThrottle={1}
                       bounces={false}
                     >
-                      {this.props.children}
+                      {renderPreview && this._isPreview() ? renderPreview() : renderContent()}
                     </Animated.ScrollView>
                   )}
                 </NativeViewGestureHandler>
