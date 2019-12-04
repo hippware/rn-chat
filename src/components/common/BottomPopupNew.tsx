@@ -12,7 +12,7 @@ import {height} from '../Global'
 
 const HEADER_HEIGHT = 50
 const PREVIEW_Y = height * 0.82 // TODO - fixed height? It should not depend from device height, because content doesn't depend from it
-const FULL_Y = height * 0.6 // TODO - fixed height?
+const FULL_Y = height * 0.55 // TODO - fixed height?
 const SNAP_POINTS_FROM_TOP = [FULL_Y, PREVIEW_Y] // TODO - make it dynamic, pass via props depending from content (Profile/Bot)?
 const START = SNAP_POINTS_FROM_TOP[0]
 const END = SNAP_POINTS_FROM_TOP[SNAP_POINTS_FROM_TOP.length - 1]
@@ -20,7 +20,7 @@ const END = SNAP_POINTS_FROM_TOP[SNAP_POINTS_FROM_TOP.length - 1]
 type Props = {
   listProps?: FlatListProps<any>
   // style?: ViewStyle
-  renderContent: any
+  renderContent?: any
   renderPreview?: any
   preview?: boolean
 }
@@ -204,29 +204,24 @@ export default class BottomPopupListNew extends Component<Props> {
                     Expected: scrolls list to top
                     Observed: swipes down the popup container instead
                   */}
-                  {!!this.props.listProps ? (
-                    <Animated.FlatList
-                      style={[{flex: 1}, {marginBottom: SNAP_POINTS_FROM_TOP[0]}]}
-                      bounces={false}
-                      {...this.props.listProps}
-                      onScrollBeginDrag={Animated.event(
-                        [{nativeEvent: {contentOffset: {y: this._lastScrollY!}}}],
-                        {useNativeDriver: true}
-                      )}
-                      scrollEventThrottle={1}
-                    />
-                  ) : (
-                    <Animated.ScrollView
-                      onScrollBeginDrag={Animated.event(
-                        [{nativeEvent: {contentOffset: {y: this._lastScrollY!}}}],
-                        {useNativeDriver: true}
-                      )}
-                      scrollEventThrottle={1}
-                      bounces={false}
-                    >
-                      {renderPreview && this._isPreview() ? renderPreview() : renderContent()}
-                    </Animated.ScrollView>
-                  )}
+                  <Animated.FlatList
+                    style={[{flex: 1}, {marginBottom: SNAP_POINTS_FROM_TOP[0]}]}
+                    bounces={false}
+                    data={[]}
+                    ListHeaderComponent={() =>
+                      renderPreview && this._isPreview()
+                        ? renderPreview()
+                        : renderContent
+                        ? renderContent()
+                        : null
+                    }
+                    {...this.props.listProps}
+                    onScrollBeginDrag={Animated.event(
+                      [{nativeEvent: {contentOffset: {y: this._lastScrollY!}}}],
+                      {useNativeDriver: true}
+                    )}
+                    scrollEventThrottle={1}
+                  />
                 </NativeViewGestureHandler>
               </Animated.View>
             </PanGestureHandler>

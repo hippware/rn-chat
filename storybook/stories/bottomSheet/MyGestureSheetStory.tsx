@@ -41,23 +41,23 @@ export const BottomPopupWithList = () => (
 
 export const BottomPopupWithSmallContent = () => (
   <Wrapper>
-    <BottomPopupNew>
-      <Text>A simple child</Text>
-    </BottomPopupNew>
+    <BottomPopupNew renderContent={() => <Text>A simple child</Text>} />
   </Wrapper>
 )
 
 export const BottomPopupWithLargeContent = () => (
   <Wrapper>
-    <BottomPopupNew>
-      <Fragment>
-        <LoremIpsum />
-        <LoremIpsum />
-        <LoremIpsum />
-        <LoremIpsum />
-        <LoremIpsum />
-        <LoremIpsum />
-      </Fragment>
-    </BottomPopupNew>
+    <BottomPopupNew
+      renderContent={() => (
+        <Fragment>
+          <LoremIpsum />
+          <LoremIpsum />
+          <LoremIpsum />
+          <LoremIpsum />
+          <LoremIpsum />
+          <LoremIpsum />
+        </Fragment>
+      )}
+    />
   </Wrapper>
 )
