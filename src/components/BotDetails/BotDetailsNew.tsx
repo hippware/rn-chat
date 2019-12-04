@@ -101,6 +101,9 @@ const BotDetails = inject(
     return (
       // <View style={{flex: 0}}>
       <BottomPopupNew
+        previewHeight={150}
+        fullViewHeight={500}
+        allowFullScroll={true}
         renderContent={() => <DefaultHeader bot={bot} />}
         renderPreview={() => <PreviewHeader bot={bot} />}
         preview={preview}

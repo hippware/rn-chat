@@ -11,19 +11,14 @@ import {PreviewButton} from '../BottomPopup'
 import {height} from '../Global'
 import {Actions} from 'react-native-router-flux'
 
-const HEADER_HEIGHT = 50
-const PREVIEW_Y = height * 0.82 // TODO - fixed height? It should not depend from device height, because content doesn't depend from it
-const FULL_Y = height * 0.55 // TODO - fixed height?
-const SNAP_POINTS_FROM_TOP = [0, FULL_Y, PREVIEW_Y] // TODO - make it dynamic, pass via props depending from content (Profile/Bot)?
-const START = SNAP_POINTS_FROM_TOP[0]
-const END = SNAP_POINTS_FROM_TOP[SNAP_POINTS_FROM_TOP.length - 1]
-
 type Props = {
   listProps?: FlatListProps<any>
-  // style?: ViewStyle
-  renderContent?: any
-  renderPreview?: any
-  preview?: boolean
+  renderContent: any
+  renderPreview: any
+  preview: boolean
+  previewHeight: number
+  fullViewHeight: number
+  allowFullScroll: boolean
 }
 
 // todo: convert to functional component. I've tried a couple times, but each time its like it ignores the wrapping TapGestureHandler
@@ -42,12 +37,19 @@ export default class BottomPopupListNew extends Component<Props> {
   _reverseLastScrollY: Animated.AnimatedMultiplication
   _onGestureEvent
   state: any
+  snapPointsFromTop: number[] = []
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props)
+    if (props.allowFullScroll) {
+      this.snapPointsFromTop = [0]
+    }
+    this.snapPointsFromTop.push(height - props.fullViewHeight, height - props.previewHeight)
+    const start = this.snapPointsFromTop[0]
+    const end = this.snapPointsFromTop[this.snapPointsFromTop.length - 1]
 
     this.state = {
-      lastSnap: END,
+      lastSnap: end,
     }
 
     this._lastScrollY.addListener(({value}) => {
@@ -60,19 +62,30 @@ export default class BottomPopupListNew extends Component<Props> {
 
     this._reverseLastScrollY = Animated.multiply(new Animated.Value(-1), this._lastScrollY)
 
-    this._translateYOffset = new Animated.Value(END)
+    this._translateYOffset = new Animated.Value(end)
     this._translateY = Animated.add(
       this._translateYOffset,
       Animated.add(this._dragY, this._reverseLastScrollY)
     ).interpolate({
-      inputRange: [START, END],
-      outputRange: [START, END],
+      inputRange: [start, end],
+      outputRange: [start, end],
       extrapolate: 'clamp',
     })
   }
+
+  get previewY() {
+    return height - this.props.previewHeight
+  }
+
+  get fullViewY() {
+    return height - this.props.fullViewHeight
+  }
+
   componentDidUpdate(prevProps: Props) {
     if (prevProps.preview !== this.props.preview) {
-      this.springTo(this.props.preview ? PREVIEW_Y : FULL_Y)
+      this.springTo(
+        this.props.preview ? height - this.props.previewHeight : height - this.props.fullViewHeight
+      )
     }
   }
 
@@ -98,9 +111,9 @@ export default class BottomPopupListNew extends Component<Props> {
       // where the drag will eventually end when it slides to a stop (?)
       const endOffsetY = this.state.lastSnap + translationY + dragToss * velocityY
 
-      let destSnapPoint = SNAP_POINTS_FROM_TOP[0]
+      let destSnapPoint = this.snapPointsFromTop[0]
 
-      SNAP_POINTS_FROM_TOP.forEach(snapPoint => {
+      this.snapPointsFromTop.forEach(snapPoint => {
         const distFromSnap = Math.abs(snapPoint - endOffsetY)
         if (distFromSnap < Math.abs(destSnapPoint - endOffsetY)) {
           destSnapPoint = snapPoint
@@ -120,7 +133,7 @@ export default class BottomPopupListNew extends Component<Props> {
 
   springTo = (toValue: number, velocity?: number) => {
     this.setState({lastSnap: toValue})
-    Actions.refresh({preview: toValue === PREVIEW_Y ? true : false})
+    Actions.refresh({preview: toValue === this.previewY ? true : false})
 
     Animated.spring(this._translateYOffset, {
       velocity,
@@ -139,7 +152,7 @@ export default class BottomPopupListNew extends Component<Props> {
       <TapGestureHandler
         maxDurationMs={100000}
         ref={this.masterdrawer}
-        maxDeltaY={this.state.lastSnap - SNAP_POINTS_FROM_TOP[0]}
+        maxDeltaY={this.state.lastSnap - this.snapPointsFromTop[0]}
       >
         <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
           <Animated.View
@@ -201,7 +214,7 @@ export default class BottomPopupListNew extends Component<Props> {
                     Observed: swipes down the popup container instead
                   */}
                   <Animated.FlatList
-                    style={[{flex: 1}, {marginBottom: SNAP_POINTS_FROM_TOP[0]}]}
+                    style={[{flex: 1}, {marginBottom: this.snapPointsFromTop[0]}]}
                     bounces={false}
                     data={[]}
                     ListHeaderComponent={() =>
@@ -233,8 +246,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    height: HEADER_HEIGHT,
-    // backgroundColor: 'red',
     paddingTop: 50,
   },
   lipsum: {
