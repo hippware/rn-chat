@@ -17,23 +17,31 @@ import {
   PanGestureHandlerStateChangeEvent,
   TouchableOpacity,
 } from 'react-native-gesture-handler'
+import {PreviewButton} from '../BottomPopup'
+import {Actions} from 'react-native-router-flux'
+import {height} from '../Global'
 
-const USE_NATIVE_DRIVER = true
 const HEADER_HEIGHT = 50
-const windowHeight = Dimensions.get('window').height
-// const SNAP_POINTS_FROM_TOP = [50, windowHeight * 0.4, windowHeight * 0.8]
-const SNAP_POINTS_FROM_TOP = [0, windowHeight * 0.4, windowHeight * 0.7]
+const PREVIEW_Y = height * 0.82
+const FULL_Y = height * 0.5
+const SNAP_POINTS_FROM_TOP = [0, FULL_Y, PREVIEW_Y]
+const START = SNAP_POINTS_FROM_TOP[0]
+const END = SNAP_POINTS_FROM_TOP[SNAP_POINTS_FROM_TOP.length - 1]
 
 type Props = {
-  // _lastScrollY?: any
   listProps?: FlatListProps<any>
+  // style?: ViewStyle
+  preview?: boolean
 }
+
+// todo: convert to functional component. I've tried a couple times, but each time its like it ignores the wrapping TapGestureHandler
+// When this happens scrolling the internal view also scrolls the container
 
 export default class BottomPopupListNew extends Component<Props> {
   masterdrawer = React.createRef<TapGestureHandler>()
   drawer = React.createRef<PanGestureHandler>()
   drawerheader = React.createRef<PanGestureHandler>()
-  scroll = React.createRef()
+  scroll = React.createRef<NativeViewGestureHandler>()
   _lastScrollYValue = 0
   _lastScrollY = new Animated.Value(0)
   _dragY = new Animated.Value(0)
@@ -45,8 +53,6 @@ export default class BottomPopupListNew extends Component<Props> {
 
   constructor(props) {
     super(props)
-    const START = SNAP_POINTS_FROM_TOP[0]
-    const END = SNAP_POINTS_FROM_TOP[SNAP_POINTS_FROM_TOP.length - 1]
 
     this.state = {
       lastSnap: END,
@@ -57,7 +63,7 @@ export default class BottomPopupListNew extends Component<Props> {
     })
 
     this._onGestureEvent = Animated.event([{nativeEvent: {translationY: this._dragY}}], {
-      useNativeDriver: USE_NATIVE_DRIVER,
+      useNativeDriver: true,
     })
 
     this._reverseLastScrollY = Animated.multiply(new Animated.Value(-1), this._lastScrollY)
@@ -72,6 +78,13 @@ export default class BottomPopupListNew extends Component<Props> {
       extrapolate: 'clamp',
     })
   }
+
+  componentDidUpdate(prevProps: Props) {
+    if (prevProps.preview !== this.props.preview) {
+      this.springTo(this.props.preview ? PREVIEW_Y : FULL_Y)
+    }
+  }
+
   _onHeaderHandlerStateChange = ({nativeEvent}: PanGestureHandlerStateChangeEvent) => {
     // console.log('& on header')
     if (nativeEvent.oldState === State.BEGAN) {
@@ -112,18 +125,22 @@ export default class BottomPopupListNew extends Component<Props> {
       this._dragY.setValue(0)
 
       // animate to the closest clamp point
-      Animated.spring(this._translateYOffset, {
-        velocity: velocityY,
-        tension: 68,
-        friction: 12,
-        toValue: destSnapPoint,
-        useNativeDriver: USE_NATIVE_DRIVER,
-      }).start()
+      this.springTo(destSnapPoint, velocityY)
     }
   }
 
+  springTo = (toValue: number, velocity?: number) => {
+    Animated.spring(this._translateYOffset, {
+      velocity: velocity,
+      tension: 68,
+      friction: 12,
+      toValue,
+      useNativeDriver: true,
+    }).start()
+  }
+
   render() {
-    // console.log('& max delta y', this.state.lastSnap - SNAP_POINTS_FROM_TOP[0])
+    const {preview} = this.props
 
     return (
       // todo: what does this wrapping gesture handler do? Taking it away does make the gesture handling wonky, but not sure why
@@ -150,6 +167,9 @@ export default class BottomPopupListNew extends Component<Props> {
               onHandlerStateChange={this._onHeaderHandlerStateChange}
             >
               <Animated.View style={styles.header}>
+                {/* 
+                  // todo: replace this image with a View + borderRadius (no extra padding on bottom)
+                */}
                 <Image
                   style={{width: '100%', position: 'absolute'}}
                   // todo: emulate homestore in story
@@ -161,6 +181,12 @@ export default class BottomPopupListNew extends Component<Props> {
                   source={require('../../../images/bottomPopup.png')}
                   resizeMode="stretch"
                 />
+                {preview !== undefined && (
+                  <PreviewButton
+                    onPress={() => Actions.refresh({preview: !preview})}
+                    preview={preview}
+                  />
+                )}
               </Animated.View>
             </PanGestureHandler>
             <PanGestureHandler
@@ -172,12 +198,12 @@ export default class BottomPopupListNew extends Component<Props> {
             >
               <Animated.View style={styles.container}>
                 <NativeViewGestureHandler
-                  ref={this.scroll as any}
+                  ref={this.scroll}
                   waitFor={this.masterdrawer}
                   simultaneousHandlers={this.drawer}
                 >
                   {/*
-                    // todo: DRY up this structure. It's difficult though because there's a tight coupling with refs and onScrollDrag event
+                    // todo: DRY up this structure. It's difficult though because there's a tight coupling with refs and onScrollBeginDrag
                     The main case that illustrates this is where you're in full view and at the bottom of the list and swipe down...
                     Expected: scrolls list to top
                     Observed: swipes down the popup container instead

@@ -199,5 +199,6 @@ const styles = StyleSheet.create({
   },
   lipsum: {
     padding: 10,
+    backgroundColor: 'white',
   },
 })

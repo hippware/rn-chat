@@ -13,6 +13,7 @@ import SignUp from './SignUp'
 import Home from './Home/Home'
 import MyAccount from './MyAccount'
 import ProfileDetail from './ProfileDetail/ProfileDetail'
+import ProfileDetailNew from './ProfileDetail/ProfileDetailNew'
 import ChatListScreen from './Chats/ChatListScreen'
 import ChatScreen from './Chats/ChatScreen'
 import BotDetails from './BotDetails/BotDetails'
@@ -85,7 +86,7 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
       // ensure we always nav to the default card if we pop back to home (add small delay in case of a popTo -> nav)
       autorun(() => {
         if (navStore!.scene === 'home') {
-          Actions.profileDetails({item: wocky!.profile!.id, preview: true})
+          Actions.profileDetailsNew({item: wocky!.profile!.id, preview: true})
         }
       }, {delay: 200})
       
@@ -198,6 +199,7 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
 
               </Modal>
             </Stack>
+            <Scene key="profileDetailsNew" path="user/:item" component={ProfileDetailNew} hasPreview />
             <Scene key="reload" hideNavBar type="replace" component={Launch} />
             <Scene key="locationWarning" component={LocationWarning} />
             <Scene key="geofenceWarning" component={LocationGeofenceWarning} />

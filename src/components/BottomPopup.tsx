@@ -109,7 +109,7 @@ const BottomPopup = observer(({children, style, preview, onMoveShouldSetPanRespo
 
 export default BottomPopup
 
-const PreviewButton = ({onPress, preview}) => {
+export const PreviewButton = ({onPress, preview}) => {
   return (
     <TouchableOpacity
       style={{top: -28, alignSelf: 'center'}}

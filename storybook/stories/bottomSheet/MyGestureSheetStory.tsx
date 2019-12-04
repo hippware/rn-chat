@@ -29,6 +29,7 @@ const Wrapper = ({children}) => (
 export const BottomPopupWithList = () => (
   <Wrapper>
     <BottomPopupNew
+      preview
       listProps={{
         data: [<LoremIpsum />, <LoremIpsum />, <LoremIpsum />],
         renderItem: ({item}) => item,
