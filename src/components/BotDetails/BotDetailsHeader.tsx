@@ -31,7 +31,11 @@ const followIcon = require('../../../images/shoesPink.png')
 const BotDetailsHeader = (props: Props) =>
   props.preview ? <PreviewHeader bot={props.bot} /> : <DefaultHeader {...props} />
 
-const DefaultHeader = inject('notificationStore', 'analytics', 'locationStore')(
+export const DefaultHeader = inject(
+  'notificationStore',
+  'analytics',
+  'locationStore'
+)(
   observer(({bot, locationStore, notificationStore}: Props) => {
     function copyAddress() {
       Clipboard.setString(bot.address)
@@ -40,7 +44,10 @@ const DefaultHeader = inject('notificationStore', 'analytics', 'locationStore')(
 
     function acceptInvitation() {
       // avoid null locationStore.location here
-      when(() => !!locationStore!.location, () => bot.acceptInvitation(locationStore!.location!))
+      when(
+        () => !!locationStore!.location,
+        () => bot.acceptInvitation(locationStore!.location!)
+      )
     }
     if (!bot || !isAlive(bot))
       return (
@@ -117,8 +124,10 @@ const DefaultHeader = inject('notificationStore', 'analytics', 'locationStore')(
   })
 )
 
-const PreviewHeader = observer(({bot}: {bot: IBot}) => {
+export const PreviewHeader = observer(({bot}: {bot: IBot}) => {
   const locationStore = useLocationStore()
+
+  // console.log('& preview header', bot ? bot.id : 'no bot')
 
   return (
     <View

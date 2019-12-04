@@ -15,20 +15,17 @@ import {Actions} from 'react-native-router-flux'
 
 type Props = {
   item: string
+  preview: boolean
 }
 
-const ProfileDetail = observer(({item}: Props) => {
+const ProfileDetail = observer(({item, preview}: Props) => {
   const [profile, setProfile] = useState<IProfile | null>(null)
 
   const {loadProfile} = useWocky()
 
   useEffect(() => {
-    async function fetchProfile() {
-      const p = await loadProfile(item)
-      setProfile(p)
-    }
-    fetchProfile()
-  }, [])
+    loadProfile(item).then(p => setProfile(p))
+  }, [item])
 
   if (!profile || !isAlive(profile)) {
     return null
@@ -38,6 +35,7 @@ const ProfileDetail = observer(({item}: Props) => {
     <BottomPopupNew
       renderPreview={() => <Preview profile={profile!} />}
       renderContent={() => <Default profile={profile!} />}
+      preview={preview}
     />
   )
 })

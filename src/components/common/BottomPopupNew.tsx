@@ -9,11 +9,12 @@ import {
 } from 'react-native-gesture-handler'
 import {PreviewButton} from '../BottomPopup'
 import {height} from '../Global'
+import {Actions} from 'react-native-router-flux'
 
 const HEADER_HEIGHT = 50
 const PREVIEW_Y = height * 0.82 // TODO - fixed height? It should not depend from device height, because content doesn't depend from it
 const FULL_Y = height * 0.55 // TODO - fixed height?
-const SNAP_POINTS_FROM_TOP = [FULL_Y, PREVIEW_Y] // TODO - make it dynamic, pass via props depending from content (Profile/Bot)?
+const SNAP_POINTS_FROM_TOP = [0, FULL_Y, PREVIEW_Y] // TODO - make it dynamic, pass via props depending from content (Profile/Bot)?
 const START = SNAP_POINTS_FROM_TOP[0]
 const END = SNAP_POINTS_FROM_TOP[SNAP_POINTS_FROM_TOP.length - 1]
 
@@ -83,14 +84,6 @@ export default class BottomPopupListNew extends Component<Props> {
     this._onHandlerStateChange({nativeEvent})
   }
 
-  _isPreview = () => {
-    return this.state.lastSnap === SNAP_POINTS_FROM_TOP[1]
-  }
-
-  _switchMode = () => {
-    this.springTo(!this._isPreview() ? PREVIEW_Y : FULL_Y)
-  }
-
   _onHandlerStateChange = ({nativeEvent}: PanGestureHandlerStateChangeEvent) => {
     // console.log('& on handler state change')
 
@@ -114,7 +107,6 @@ export default class BottomPopupListNew extends Component<Props> {
         }
       })
 
-      // todo: is there a simpler way to do this?
       this._translateYOffset.extractOffset()
       this._translateYOffset.setValue(translationY)
       this._translateYOffset.flattenOffset()
@@ -128,6 +120,7 @@ export default class BottomPopupListNew extends Component<Props> {
 
   springTo = (toValue: number, velocity?: number) => {
     this.setState({lastSnap: toValue})
+    Actions.refresh({preview: toValue === PREVIEW_Y ? true : false})
 
     Animated.spring(this._translateYOffset, {
       velocity,
@@ -139,7 +132,7 @@ export default class BottomPopupListNew extends Component<Props> {
   }
 
   render() {
-    const {renderContent, renderPreview} = this.props
+    const {renderContent, renderPreview, preview} = this.props
 
     return (
       // todo: what does this wrapping gesture handler do? Taking it away does make the gesture handling wonky, but not sure why
@@ -181,7 +174,10 @@ export default class BottomPopupListNew extends Component<Props> {
                   resizeMode="stretch"
                 />
                 {renderPreview !== undefined && (
-                  <PreviewButton onPress={this._switchMode} preview={this._isPreview()} />
+                  <PreviewButton
+                    onPress={() => Actions.refresh({preview: !preview})}
+                    preview={preview}
+                  />
                 )}
               </Animated.View>
             </PanGestureHandler>
@@ -209,7 +205,7 @@ export default class BottomPopupListNew extends Component<Props> {
                     bounces={false}
                     data={[]}
                     ListHeaderComponent={() =>
-                      renderPreview && this._isPreview()
+                      renderPreview && preview
                         ? renderPreview()
                         : renderContent
                         ? renderContent()

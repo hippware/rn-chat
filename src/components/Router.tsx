@@ -12,11 +12,12 @@ import Launch from './Launch'
 import SignUp from './SignUp'
 import Home from './Home/Home'
 import MyAccount from './MyAccount'
-import ProfileDetail from './ProfileDetail/ProfileDetail'
+// import ProfileDetail from './ProfileDetail/ProfileDetail'
 import ProfileDetailNew from './ProfileDetail/ProfileDetailNew'
 import ChatListScreen from './Chats/ChatListScreen'
 import ChatScreen from './Chats/ChatScreen'
-import BotDetails from './BotDetails/BotDetails'
+// import BotDetails from './BotDetails/BotDetails'
+import BotDetailsNew from './BotDetails/BotDetailsNew'
 import TestRegister from './TestRegister'
 import CodePushScene from './CodePushScene'
 import OnboardingSlideshow from './OnboardingSlideshowScene'
@@ -86,7 +87,8 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
       // ensure we always nav to the default card if we pop back to home (add small delay in case of a popTo -> nav)
       autorun(() => {
         if (navStore!.scene === 'home') {
-          Actions.profileDetailsNew({item: wocky!.profile!.id, preview: true})
+          Actions.profileDetails({item: wocky!.profile!.id, preview: true})
+          // Actions.botDetails({botId: '6067f6d9-8f72-482b-8703-55f6039cad2a', preview: true})
         }
       }, {delay: 200})
       
@@ -165,7 +167,7 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
                     <Scene key="home" path="livelocation/:userId" component={Home} hideNavBar />
                     <Scene key="bottomMenu" component={BottomMenu} />
                     <Scene key="createBot" component={CreationHeader} fromTop />
-                    <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetails} hasPreview />
+                    {/* <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetails} hasPreview /> */}
                     <Scene key="botCompose" component={BotCompose} backAction={() => backAction(iconStore!)} />
                     <Scene key="botEdit" component={BotCompose} edit backAction={() => backAction(iconStore!)} />
                     <Scene key="editNote" component={EditNote} />
@@ -173,7 +175,7 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
                     <Scene key="friends" component={peopleLists.FriendList} />
                     <Scene key="friendSearch" component={FriendSearch} />
                     <Scene key="visitors" component={VisitorList} />
-                    <Scene key="profileDetails" path="user/:item" component={ProfileDetail} hasPreview />
+                    {/* <Scene key="profileDetails" path="user/:item" component={ProfileDetail} hasPreview /> */}
                     <Scene key="liveLocationCompose" component={LiveLocationCompose} />
                     <Scene key="liveLocationSettings" component={LiveLocationSettings} />
                     <Scene key="chats" component={ChatListScreen} title="Messages" />
@@ -199,7 +201,8 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
 
               </Modal>
             </Stack>
-            <Scene key="profileDetailsNew" path="user/:item" component={ProfileDetailNew} hasPreview />
+            <Scene key="profileDetails" path="user/:item" component={ProfileDetailNew} hasPreview />
+            <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetailsNew} hasPreview />
             <Scene key="reload" hideNavBar type="replace" component={Launch} />
             <Scene key="locationWarning" component={LocationWarning} />
             <Scene key="geofenceWarning" component={LocationGeofenceWarning} />
