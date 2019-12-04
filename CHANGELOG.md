@@ -4,12 +4,23 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-* Update: react-native-mixpanel (PR #4401), mobx (PR #4479)
+**React Native upgrade to 0.61.5**
+
+* Update: bugsnag-react-native (PR #4393), react-native-mixpanel (PR #4401)
+  * @react-native-community/push-notification-ios (PR #4444), mobx (PR #4479)
   * @types/jest (PR #4493), @babel/plugin-proposal-decorators (PR #4494)
-  * @babel/plugin-transform-flow-strip-types (PR #4495)
-  * husky (PR #4496), libphonenumber-js (PR #4497), jetifier (PR #4499)
-  * @types/lodash (PR #4504), @types/react (PR #4506)
+  * @babel/plugin-transform-flow-strip-types (PR #4495), husky (PR #4496)
+  * libphonenumber-js (PR #4497), react-native-fbsdk (PR #4498)
+  * jetifier (PR #4499), react-native (PR #4501)
+  * react-native-gesture-handler (PR #4503), @types/lodash (PR #4504)
+  * react-native-device-info (PR #4505), @types/react (PR #4506)
+  * @babel/preset-typescript (PR #4513)
+  * @react-native-community/async-storage (PR #4514)
+  * react-native-permissions (PR #4516), iOS Pods (PR #4516)
 * [dev] Use `updatedAt` in presence subscription (#3949)
+* Ignore activity data points with low confidence (#4475)
+  * Action avatar flashing off and on (#4353)
+  * Swipe-kill and screen lock removes mode of transport (#3950)
 
 # 4.32.4 - 2019 Nov 28
 

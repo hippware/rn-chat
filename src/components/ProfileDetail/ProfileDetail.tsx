@@ -135,7 +135,7 @@ const Preview = observer(({profile}: {profile: IProfile}) => {
 })
 
 const InfoPills = observer(({profile}: {profile: IProfile}) =>
-  profile.currentLocation ? (
+  profile.location ? (
     <View style={{flexDirection: 'row'}}>
       <Pill>{profile.addressData.locationShort}</Pill>
       {!profile.isOwn && <Pill>{profile.whenLastLocationSent}</Pill>}
