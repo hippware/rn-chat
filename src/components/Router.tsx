@@ -163,11 +163,9 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
               <Scene key="onboarding" component={OnboardingSwiper} hideNavBar type="replace" />
               <Modal key="logged" hideNavBar headerMode="screen" type="replace">
                 <Stack>
-                  <Stack hideNavBar renderer={SplitRenderer}>
-                    <Scene key="home" path="livelocation/:userId" component={Home} hideNavBar />
-                    <Scene key="bottomMenu" component={BottomMenu} />
+                  <Scene key="home" path="livelocation/:userId" component={Home} hideNavBar />
+                  <Stack hideNavBar renderer={SplitRenderer}>  
                     <Scene key="createBot" component={CreationHeader} fromTop />
-                    {/* <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetails} hasPreview /> */}
                     <Scene key="botCompose" component={BotCompose} backAction={() => backAction(iconStore!)} />
                     <Scene key="botEdit" component={BotCompose} edit backAction={() => backAction(iconStore!)} />
                     <Scene key="editNote" component={EditNote} />
@@ -175,7 +173,6 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
                     <Scene key="friends" component={peopleLists.FriendList} />
                     <Scene key="friendSearch" component={FriendSearch} />
                     <Scene key="visitors" component={VisitorList} />
-                    {/* <Scene key="profileDetails" path="user/:item" component={ProfileDetail} hasPreview /> */}
                     <Scene key="liveLocationCompose" component={LiveLocationCompose} />
                     <Scene key="liveLocationSettings" component={LiveLocationSettings} />
                     <Scene key="chats" component={ChatListScreen} title="Messages" />
@@ -186,7 +183,6 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
                   <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
                   <Scene key="liveLocationSelectFriends" component={LiveLocationShare} title="Select Friends" />
                   <Scene key="myAccount" component={MyAccount} editMode back />
-                  
                   <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked Users" back />
                   <Scene key="attribution" component={Attribution} leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
                   <Scene key="selectChatUser" component={SelectChatUser} title="Message" />
@@ -198,9 +194,9 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
                 </Stack>
                 <Scene key="reportUser" component={ReportUser} wrap title="Report User" leftButtonImage={iconClose} onLeft={Actions.pop} right={ReportUserRightButton} />
                 <Scene key="reportBot" component={ReportBot} wrap title="Report Location" leftButtonImage={iconClose} onLeft={Actions.pop} right={ReportBotRightButton}  />
-
               </Modal>
             </Stack>
+            <Scene key="bottomMenu" component={BottomMenu} />
             <Scene key="profileDetails" path="user/:item" component={ProfileDetailNew} hasPreview />
             <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetailsNew} hasPreview />
             <Scene key="reload" hideNavBar type="replace" component={Launch} />

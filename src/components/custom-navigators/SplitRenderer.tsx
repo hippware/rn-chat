@@ -20,27 +20,28 @@ const SplitRenderer = (props: Props) => {
   function _renderScene(transitionProps, scene) {
     const {index, route} = scene
 
-    if (index === 0) {
-      // main screen
-      return <AnimatedMainScene transitionProps={transitionProps} key={route.key} scene={scene} />
-    } else {
-      return (
-        <View
-          style={{
-            ...StyleSheet.absoluteFillObject,
-            // todo: remove borderWidth on Android (appears around edge of Bottom Menu screens)
-            borderWidth: Platform.OS === 'android' ? 1 : 0, // workaround to display 'Back' button for android
-            borderColor: 'transparent',
-          }}
-          key={scene.route.key}
-          pointerEvents="box-none"
-        >
-          {!route.params.preview && <BackButton scene={scene} />}
-          <AnimatedPushScene transitionProps={transitionProps} scene={scene} />
-        </View>
-      )
-    }
+    // todo: take care of map shifting inside MapHome.tsx instead of AnimatedMainScene
+    // if (index === 0) {
+    //   // main screen
+    //   return <AnimatedMainScene transitionProps={transitionProps} key={route.key} scene={scene} />
+    // } else {
+    return (
+      <View
+        style={{
+          ...StyleSheet.absoluteFillObject,
+          // todo: remove borderWidth on Android (appears around edge of Bottom Menu screens)
+          borderWidth: Platform.OS === 'android' ? 1 : 0, // workaround to display 'Back' button for android
+          borderColor: 'transparent',
+        }}
+        key={scene.route.key}
+        pointerEvents="box-none"
+      >
+        {!route.params.preview && <BackButton scene={scene} />}
+        <AnimatedPushScene transitionProps={transitionProps} scene={scene} />
+      </View>
+    )
   }
+  // }
 
   function _render(transitionProps) {
     const {scenes, scene} = transitionProps
