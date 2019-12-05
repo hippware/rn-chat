@@ -41,7 +41,7 @@ import GeoHeaderPrimer from './modals/GeoHeaderPrimer'
 import CreationHeader from './Home/CreationHeader'
 import BotCompose, {backAction} from './BotCompose/BotCompose'
 import EditNote from './BotCompose/EditNote'
-import Notifications from './Notifications'
+import NotificationsNew from './NotificationsNew'
 import Attribution from './Attribution'
 import {navBarStyle} from './styles'
 import IconStore from '../store/IconStore'
@@ -169,7 +169,6 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
                     <Scene key="botCompose" component={BotCompose} backAction={() => backAction(iconStore!)} />
                     <Scene key="botEdit" component={BotCompose} edit backAction={() => backAction(iconStore!)} />
                     <Scene key="editNote" component={EditNote} />
-                    <Scene key="notifications" path="invitations/:params*" component={Notifications} />
                     <Scene key="friends" component={peopleLists.FriendList} />
                     <Scene key="friendSearch" component={FriendSearch} />
                     <Scene key="visitors" component={VisitorList} />
@@ -199,6 +198,7 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
             <Scene key="bottomMenu" component={BottomMenu} />
             <Scene key="profileDetails" path="user/:item" component={ProfileDetailNew} hasPreview />
             <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetailsNew} hasPreview />
+            <Scene key="notifications" path="invitations/:params*" component={NotificationsNew} />
             <Scene key="reload" hideNavBar type="replace" component={Launch} />
             <Scene key="locationWarning" component={LocationWarning} />
             <Scene key="geofenceWarning" component={LocationGeofenceWarning} />

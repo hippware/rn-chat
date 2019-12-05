@@ -14,9 +14,9 @@ import {Actions} from 'react-native-router-flux'
 type Props = {
   listProps?: FlatListProps<any>
   renderContent: any
-  renderPreview: any
-  preview: boolean
-  previewHeight: number
+  renderPreview?: any
+  preview?: boolean
+  previewHeight?: number
   fullViewHeight: number
   allowFullScroll: boolean
 }
@@ -41,10 +41,14 @@ export default class BottomPopupListNew extends Component<Props> {
 
   constructor(props: Props) {
     super(props)
-    if (props.allowFullScroll) {
+    const {allowFullScroll, fullViewHeight, previewHeight} = props
+    if (allowFullScroll) {
       this.snapPointsFromTop = [0]
     }
-    this.snapPointsFromTop.push(height - props.fullViewHeight, height - props.previewHeight)
+    this.snapPointsFromTop.push(height - fullViewHeight)
+    if (previewHeight) {
+      this.snapPointsFromTop.push(height - previewHeight)
+    }
     const start = this.snapPointsFromTop[0]
     const end = this.snapPointsFromTop[this.snapPointsFromTop.length - 1]
 
@@ -74,7 +78,8 @@ export default class BottomPopupListNew extends Component<Props> {
   }
 
   get previewY() {
-    return height - this.props.previewHeight
+    const {previewHeight} = this.props
+    return previewHeight ? height - previewHeight : 0
   }
 
   get fullViewY() {
@@ -84,7 +89,7 @@ export default class BottomPopupListNew extends Component<Props> {
   componentDidUpdate(prevProps: Props) {
     if (prevProps.preview !== this.props.preview) {
       this.springTo(
-        this.props.preview ? height - this.props.previewHeight : height - this.props.fullViewHeight
+        this.props.preview ? height - this.props.previewHeight! : height - this.props.fullViewHeight
       )
     }
   }
@@ -218,7 +223,10 @@ export default class BottomPopupListNew extends Component<Props> {
                     Observed: swipes down the popup container instead
                   */}
                   <Animated.FlatList
-                    style={[{flex: 1}, {marginBottom: this.snapPointsFromTop[0]}]}
+                    style={[
+                      {flex: 1},
+                      // , {marginBottom: this.snapPointsFromTop[0]}
+                    ]}
                     bounces={false}
                     data={[]}
                     ListHeaderComponent={() =>
