@@ -35,6 +35,7 @@ const ClientData = types
       .model({
         sharePresencePrimed: false,
         guestOnce: false,
+        onboarded: false,
         hidden: types.optional(Hidden, {}),
       })
       .views(self => ({
@@ -55,7 +56,7 @@ const ClientData = types
     clear: () => {
       applySnapshot(self, {})
     },
-    flip: (property: 'sharePresencePrimed' | 'guestOnce') => {
+    flip: (property: 'sharePresencePrimed' | 'guestOnce' | 'onboarded') => {
       self[property] = true
       self.transport.updateProfile({clientData: getSnapshot(self)})
     },
