@@ -39,7 +39,9 @@ export default class BottomPopupListNew extends Component<Props> {
   _translateYOffset: Animated.Value
   _reverseLastScrollY: Animated.AnimatedMultiplication
   _onGestureEvent
-  state: any
+  state: {
+    lastSnap: number
+  }
   snapPointsFromTop: number[] = []
 
   constructor(props: Props) {
@@ -168,8 +170,6 @@ export default class BottomPopupListNew extends Component<Props> {
         maxDeltaY={this.state.lastSnap - this.snapPointsFromTop[0]}
       >
         <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
-          {/* TODO use Animated.Value here */}
-          {fullScreen && fullScreenHeader}
           {!fullScreen && (
             <BackButton preview={!!preview} backAction={() => Actions.refresh({preview: true})} />
           )}
@@ -257,6 +257,8 @@ export default class BottomPopupListNew extends Component<Props> {
               </Animated.View>
             </PanGestureHandler>
           </Animated.View>
+          {/* TODO use Animated.Value here */}
+          {fullScreen && fullScreenHeader}
         </View>
       </TapGestureHandler>
     )
