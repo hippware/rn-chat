@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef, Fragment} from 'react'
-import {View, Clipboard, TouchableOpacity} from 'react-native'
+import {View, Clipboard, TouchableOpacity, Animated} from 'react-native'
 import {inject, Observer} from 'mobx-react'
 import {k} from '../Global'
 import {colors} from '../../constants'
@@ -15,6 +15,7 @@ import {Actions} from 'react-native-router-flux'
 import {navBarStyle} from '../styles'
 import NotificationStore from '../../store/NotificationStore'
 import {observer} from 'mobx-react'
+import NavBarHeader from '../custom-navigators/NavBarHeaderNew'
 
 type Props = {
   botId: string
@@ -103,10 +104,26 @@ const BotDetails = inject(
       <BottomPopupNew
         previewHeight={150}
         fullViewHeight={500}
-        allowFullScroll={true}
+        allowFullScroll
         renderContent={() => <DefaultHeader bot={bot} />}
         renderPreview={() => <PreviewHeader bot={bot} />}
         preview={preview}
+        fullScreenHeader={
+          <NavBarHeader
+            backAction={() => Actions.refresh({preview: true})}
+            title={
+              bot && (
+                <NavTitle
+                  bot={bot}
+                  onLongPress={() => {
+                    Clipboard.setString(bot.address)
+                    notificationStore!.flash('Address copied to clipboard 👍')
+                  }}
+                />
+              )
+            }
+          />
+        }
         listProps={{
           data: !bot.error && bot.isSubscribed && !preview ? bot.posts.list.slice() : [],
           contentContainerStyle: {
@@ -140,24 +157,6 @@ const BotDetails = inject(
     )
   })
 )
-;(BotDetails as any).navigationOptions = ({navigation}) => {
-  const {bot, notificationStore} = navigation.state.params
-  return {
-    fadeNavConfig: {
-      back: true,
-      title: bot && (
-        <NavTitle
-          bot={bot}
-          onLongPress={() => {
-            Clipboard.setString(bot.address)
-            notificationStore.flash('Address copied to clipboard 👍')
-          }}
-        />
-      ),
-    },
-  }
-}
-
 export default BotDetails
 
 const NavTitle = ({bot, onLongPress}) => {

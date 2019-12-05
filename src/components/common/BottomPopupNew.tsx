@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Animated, StyleSheet, View, FlatListProps, Image} from 'react-native'
+import {Animated, StyleSheet, Text, View, FlatListProps, Image} from 'react-native'
 import {
   PanGestureHandler,
   NativeViewGestureHandler,
@@ -10,6 +10,8 @@ import {
 import {PreviewButton} from '../BottomPopup'
 import {height} from '../Global'
 import {Actions} from 'react-native-router-flux'
+import BackButton from '../custom-navigators/BackButtonNew'
+import alert from 'src/utils/alert'
 
 type Props = {
   listProps?: FlatListProps<any>
@@ -19,6 +21,7 @@ type Props = {
   previewHeight?: number
   fullViewHeight: number
   allowFullScroll: boolean
+  fullScreenHeader?: any
 }
 
 // todo: convert to functional component. I've tried a couple times, but each time its like it ignores the wrapping TapGestureHandler
@@ -154,7 +157,8 @@ export default class BottomPopupListNew extends Component<Props> {
   }
 
   render() {
-    const {renderContent, renderPreview, preview} = this.props
+    const {renderContent, fullScreenHeader, renderPreview, preview} = this.props
+    const fullScreen = fullScreenHeader && this.state.lastSnap === 0 // TODO: replace with Animated.Value so header/back button will be re-rendered dynamically during gestures?
 
     return (
       // todo: what does this wrapping gesture handler do? Taking it away does make the gesture handling wonky, but not sure why
@@ -164,11 +168,16 @@ export default class BottomPopupListNew extends Component<Props> {
         maxDeltaY={this.state.lastSnap - this.snapPointsFromTop[0]}
       >
         <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
+          {/* TODO use Animated.Value here */}
+          {fullScreen && fullScreenHeader}
+          {!fullScreen && (
+            <BackButton preview={!!preview} backAction={() => Actions.refresh({preview: true})} />
+          )}
           <Animated.View
             style={[
               StyleSheet.absoluteFillObject,
               {
-                // backgroundColor: 'white',
+                // backgroundColor: fullScreen ? 'white' : 'transparent',
                 transform: [{translateY: this._translateY}],
               },
             ]}
@@ -203,6 +212,7 @@ export default class BottomPopupListNew extends Component<Props> {
                 )}
               </Animated.View>
             </PanGestureHandler>
+
             <PanGestureHandler
               ref={this.drawer}
               simultaneousHandlers={[this.scroll, this.masterdrawer]}
