@@ -81,12 +81,11 @@ export const OwnProfile = types
     },
   }))
   .actions(self => ({
-    addFriend: (profile: IProfile, createdAt: Date, name: string = '') => {
+    addFriend: (profile: IProfile, createdAt: Date) => {
       self.friends.add(
         Contact.create({
           id: profile.id,
           createdAt,
-          name,
           user: profile.id,
         })
       )
@@ -226,7 +225,7 @@ export const OwnProfile = types
         self.sendInvitation(self.service.profiles.get(user.id, user), createdAt)
       )
       friends.forEach(({createdAt, user, name}) =>
-        self.addFriend(self.service.profiles.get(user.id, user), createdAt, name)
+        self.addFriend(self.service.profiles.get(user.id, user), createdAt)
       )
       blocked.forEach(({createdAt, user}) => {
         user.isBlocked = true
