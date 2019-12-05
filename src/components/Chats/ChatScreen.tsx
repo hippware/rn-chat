@@ -81,18 +81,26 @@ export const ChatView = observer(({chat}: {chat: IChat}) => {
     return null
   }
 
+  const renderItem = ({item, index}: {item: IMessage; index: number}) => {
+    if (item.unread) {
+      chat.readOne(item)
+    }
+
+    return (
+      <>
+        <ChatMessage message={item} diffMessage={getPreviousMessage(index)} />
+        {renderDate(item, index)}
+      </>
+    )
+  }
+
   return (
     <View style={{flex: 1}}>
       <KeyboardAwareFlatList
         style={{paddingHorizontal: 10}}
         inverted
         data={chat.sortedMessages.slice()}
-        renderItem={({item, index}: {item: IMessage; index: number}) => (
-          <>
-            <ChatMessage message={item} diffMessage={getPreviousMessage(index)} />
-            {renderDate(item, index)}
-          </>
-        )}
+        renderItem={renderItem}
         keyExtractor={i => i.id}
         onEndReached={() => chat.messages.load()}
         onEndReachedThreshold={0.5}
