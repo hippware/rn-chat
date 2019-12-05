@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react'
 import MapView from 'react-native-maps'
-import {StyleSheet, Text, Image, View} from 'react-native'
+import {StyleSheet, Text, Image, View, Animated} from 'react-native'
 import {inject} from 'mobx-react'
 import {observer} from 'mobx-react'
 import {autorun} from 'mobx'
@@ -31,7 +31,12 @@ const markerMap: {[key: string]: any} = {
   LocationSharerCard: ProfileMarker,
 }
 
-const MapHome = inject('locationStore', 'wocky', 'homeStore', 'navStore')(
+const MapHome = inject(
+  'locationStore',
+  'wocky',
+  'homeStore',
+  'navStore'
+)(
   observer((props: Props) => {
     const {locationStore, homeStore, navStore, wocky} = props
     const {
@@ -47,6 +52,7 @@ const MapHome = inject('locationStore', 'wocky', 'homeStore', 'navStore')(
 
     const [areaTooLarge, setAreaTooLarge] = useState(false)
     const mapRef = useRef<MapView>(null)
+    const [yOffset] = useState(new Animated.Value(0))
 
     useEffect(() => {
       let reactions = [
@@ -55,11 +61,25 @@ const MapHome = inject('locationStore', 'wocky', 'homeStore', 'navStore')(
         }),
       ]
 
+      autorun(
+        () => {
+          slideSceneTo(homeStore!.previewMode ? 0 : -150)
+        },
+        {name: 'Animate map up/down based on preview mode'}
+      )
+
       return () => {
         reactions.forEach(disposer => disposer())
         reactions = []
       }
     }, [])
+
+    function slideSceneTo(toHeight) {
+      Animated.spring(yOffset, {
+        toValue: toHeight,
+        useNativeDriver: true,
+      }).start()
+    }
 
     const setCenterCoordinate = (loc: ILocation) => {
       if (mapRef && loc) {
@@ -127,7 +147,19 @@ const MapHome = inject('locationStore', 'wocky', 'homeStore', 'navStore')(
     }
     const {latitude, longitude} = location
     return (
-      <View style={[StyleSheet.absoluteFill, {bottom: -50 * k}]}>
+      <Animated.View
+        style={[
+          StyleSheet.absoluteFill,
+          {
+            bottom: -50 * k,
+            transform: [
+              {
+                translateY: yOffset,
+              },
+            ],
+          },
+        ]}
+      >
         <MapView
           provider={'google'}
           ref={mapRef}
@@ -162,7 +194,7 @@ const MapHome = inject('locationStore', 'wocky', 'homeStore', 'navStore')(
             <Text style={styles.areaTooLargeText}>Zoom In To See Locations</Text>
           </View>
         )}
-      </View>
+      </Animated.View>
     )
   })
 )

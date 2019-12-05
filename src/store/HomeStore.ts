@@ -94,6 +94,9 @@ const HomeStore = types
       get detailsMode() {
         return navStore && navStore.scene === 'botDetails' && !navStore.params.preview
       },
+      get previewMode() {
+        return navStore && navStore.params.preview
+      },
       get isIconEditable() {
         return ['botCompose', 'botEdit'].includes(navStore.scene)
       },
