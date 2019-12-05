@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Animated, StyleSheet, Text, View, FlatListProps, Image} from 'react-native'
+import {Animated, StyleSheet, View, FlatListProps, Image} from 'react-native'
 import {
   PanGestureHandler,
   NativeViewGestureHandler,
@@ -11,7 +11,6 @@ import {PreviewButton} from '../BottomPopup'
 import {height} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import BackButton from '../custom-navigators/BackButtonNew'
-import alert from 'src/utils/alert'
 
 type Props = {
   listProps?: FlatListProps<any>
@@ -43,6 +42,7 @@ export default class BottomPopupListNew extends Component<Props> {
     lastSnap: number
   }
   snapPointsFromTop: number[] = []
+  activelyScrolling: boolean = false
 
   constructor(props: Props) {
     super(props)
@@ -60,6 +60,21 @@ export default class BottomPopupListNew extends Component<Props> {
     this.state = {
       lastSnap: end,
     }
+
+    // transition preview -> full view based on scroll position
+    this._dragY.addListener(({value}) => {
+      if (this.props.previewHeight && value !== 0) {
+        const {preview} = this.props
+        const draggedTop = this.state.lastSnap + value
+        const closerToPreviewHeight =
+          this.previewY - draggedTop < Math.abs(this.fullViewY - draggedTop)
+        if (preview && !closerToPreviewHeight) {
+          Actions.refresh({preview: false})
+        } else if (!preview && closerToPreviewHeight) {
+          Actions.refresh({preview: true})
+        }
+      }
+    })
 
     this._lastScrollY.addListener(({value}) => {
       this._lastScrollYValue = value
@@ -92,7 +107,7 @@ export default class BottomPopupListNew extends Component<Props> {
   }
 
   componentDidUpdate(prevProps: Props) {
-    if (prevProps.preview !== this.props.preview) {
+    if (prevProps.preview !== this.props.preview && !this.activelyScrolling) {
       this.springTo(
         this.props.preview ? height - this.props.previewHeight! : height - this.props.fullViewHeight
       )
@@ -100,7 +115,6 @@ export default class BottomPopupListNew extends Component<Props> {
   }
 
   _onHeaderHandlerStateChange = ({nativeEvent}: PanGestureHandlerStateChangeEvent) => {
-    // console.log('& on header')
     if (nativeEvent.oldState === State.BEGAN) {
       this._lastScrollY.setValue(0)
     }
@@ -108,10 +122,9 @@ export default class BottomPopupListNew extends Component<Props> {
   }
 
   _onHandlerStateChange = ({nativeEvent}: PanGestureHandlerStateChangeEvent) => {
-    // console.log('& on handler state change')
-
     // if we've just released the pan gesture...
     if (nativeEvent.oldState === State.ACTIVE) {
+      this.activelyScrolling = false
       let {translationY} = nativeEvent
       const velocityY = nativeEvent.velocityY
       translationY -= this._lastScrollYValue
@@ -138,6 +151,8 @@ export default class BottomPopupListNew extends Component<Props> {
 
       // animate to the closest clamp point
       this.springTo(destSnapPoint, velocityY)
+    } else {
+      this.activelyScrolling = true
     }
   }
 
@@ -246,6 +261,7 @@ export default class BottomPopupListNew extends Component<Props> {
                         ? renderContent()
                         : null
                     }
+                    showsVerticalScrollIndicator={false}
                     {...this.props.listProps}
                     onScrollBeginDrag={Animated.event(
                       [{nativeEvent: {contentOffset: {y: this._lastScrollY!}}}],
