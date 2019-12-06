@@ -84,7 +84,7 @@ const BotDetails = inject(
     }, [botId])
 
     function scrollToNewestPost() {
-      // todo: scrollToNewestPost (requires proper ref forwarding)
+      // todo: scrollToNewestPost...apparently not available on Animated.FlatList (?)
       // ;(list.current as any).scrollToIndex({
       //   index: 0,
       //   viewPosition: 0.5,
