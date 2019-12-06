@@ -61,12 +61,9 @@ const MapHome = inject(
         }),
       ]
 
-      autorun(
-        () => {
-          slideSceneTo(homeStore!.previewMode ? 0 : -200)
-        },
-        {name: 'Animate map up/down based on preview mode'}
-      )
+      autorun(() => slideSceneTo(homeStore!.bottomViewMode ? -200 : 0), {
+        name: 'Animate map up/down based on bottomView mode',
+      })
 
       return () => {
         reactions.forEach(disposer => disposer())
