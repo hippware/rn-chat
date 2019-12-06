@@ -4,17 +4,23 @@ import {minHeight} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import {colors} from '../../constants'
 import {navBarStyle} from '../styles'
-import {height} from '../Global'
 
-type Props = {
+export const FULL_SCREEN_POS = 10
+
+export type NavConfig = {
   title?: ReactElement<any>
   backAction?: () => void
-  scrollY?: Animated.Value
+}
+
+type Props = {
+  config: NavConfig
+  scrollY?: Animated.Value | Animated.AnimatedInterpolation
 }
 
 export const FADE_NAV_BAR_HEADER_HEIGHT = 64 * minHeight
 
-const NavBarHeader = ({scrollY, backAction, title}: Props) => {
+const NavBarHeader = ({scrollY, config}: Props) => {
+  const {backAction, title} = config
   const {backButtonImage, navBarButtonColor} = navBarStyle
 
   const [keyboardHeight, setKeyboardHeight] = useState(0)
@@ -33,16 +39,13 @@ const NavBarHeader = ({scrollY, backAction, title}: Props) => {
     }
   }, [])
 
-  // todo: need a better way to calculate the height of the popup screen. Maybe a global constant calculated once based on screen height
-  const listHeight = height / 2 + keyboardHeight
-
-  // const opacity = scrollY!.interpolate({
-  //   inputRange: [-1000, height - listHeight - 160, height - listHeight - 40],
-  //   outputRange: [0, 0, 1],
-  // })
+  const opacity = scrollY!.interpolate({
+    inputRange: [FULL_SCREEN_POS, 100, 1000],
+    outputRange: [1, 0, 0],
+  })
 
   return (
-    <Animated.View style={[{position: 'none'}, styles.header]}>
+    <Animated.View style={[{opacity, position: 'none'}, styles.header]}>
       {/* <Animated.View style={[{opacity, position: 'none'}, styles.header]}> */}
       <View style={{width: 23}}>
         <TouchableOpacity onPress={() => (backAction ? backAction() : Actions.pop())}>

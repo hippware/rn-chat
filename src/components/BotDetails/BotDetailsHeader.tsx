@@ -70,7 +70,7 @@ export const DefaultHeader = inject(
           </RText>
           <ActionButton
             bot={bot}
-            style={{position: 'absolute', right: 0}}
+            style={{position: 'absolute', right: 10}}
             copyAddress={copyAddress}
           />
         </View>

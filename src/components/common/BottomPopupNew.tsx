@@ -11,6 +11,7 @@ import {PreviewButton} from '../BottomPopup'
 import {height} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import BackButton from '../custom-navigators/BackButtonNew'
+import NavBarHeader, {NavConfig, FULL_SCREEN_POS} from '../custom-navigators/NavBarHeaderNew'
 
 type Props = {
   listProps?: FlatListProps<any>
@@ -20,7 +21,8 @@ type Props = {
   previewHeight?: number
   fullViewHeight: number
   allowFullScroll: boolean
-  fullScreenHeader?: any
+  navBarConfig?: NavConfig
+  renderFooter?: any
 }
 
 // todo: convert to functional component. I've tried a couple times, but each time its like it ignores the wrapping TapGestureHandler
@@ -48,7 +50,7 @@ export default class BottomPopupListNew extends Component<Props> {
     super(props)
     const {allowFullScroll, fullViewHeight, previewHeight} = props
     if (allowFullScroll) {
-      this.snapPointsFromTop = [0]
+      this.snapPointsFromTop = [FULL_SCREEN_POS]
     }
     this.snapPointsFromTop.push(height - fullViewHeight)
     if (previewHeight) {
@@ -87,6 +89,7 @@ export default class BottomPopupListNew extends Component<Props> {
     this._reverseLastScrollY = Animated.multiply(new Animated.Value(-1), this._lastScrollY)
 
     this._translateYOffset = new Animated.Value(end)
+
     this._translateY = Animated.add(
       this._translateYOffset,
       Animated.add(this._dragY, this._reverseLastScrollY)
@@ -174,8 +177,8 @@ export default class BottomPopupListNew extends Component<Props> {
   }
 
   render() {
-    const {renderContent, fullScreenHeader, renderPreview, preview} = this.props
-    const fullScreen = fullScreenHeader && this.state.lastSnap === 0 // TODO: replace with Animated.Value so header/back button will be re-rendered dynamically during gestures?
+    const {renderContent, renderFooter, navBarConfig, renderPreview, preview} = this.props
+    const fullScreen = navBarConfig && this.state.lastSnap === FULL_SCREEN_POS
 
     return (
       // todo: what does this wrapping gesture handler do? Taking it away does make the gesture handling wonky, but not sure why
@@ -273,8 +276,8 @@ export default class BottomPopupListNew extends Component<Props> {
               </Animated.View>
             </PanGestureHandler>
           </Animated.View>
-          {/* TODO use Animated.Value here */}
-          {fullScreen && fullScreenHeader}
+          {navBarConfig && <NavBarHeader config={navBarConfig!} scrollY={this._translateY} />}
+          {renderFooter && renderFooter()}
         </View>
       </TapGestureHandler>
     )

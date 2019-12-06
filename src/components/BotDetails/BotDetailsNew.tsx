@@ -10,12 +10,10 @@ import AddBotPost from './AddBotPost'
 import Header, {PreviewHeader, DefaultHeader} from './BotDetailsHeader'
 import {isAlive} from 'mobx-state-tree'
 import Separator from './Separator'
-import DraggablePopupList from '../common/DraggablePopupList'
 import {Actions} from 'react-native-router-flux'
 import {navBarStyle} from '../styles'
 import NotificationStore from '../../store/NotificationStore'
 import {observer} from 'mobx-react'
-import NavBarHeader from '../custom-navigators/NavBarHeaderNew'
 
 type Props = {
   botId: string
@@ -86,21 +84,18 @@ const BotDetails = inject(
     }, [botId])
 
     function scrollToNewestPost() {
-      ;(list.current as any).scrollToIndex({
-        index: 0,
-        viewPosition: 0.5,
-      })
+      // todo: scrollToNewestPost (requires proper ref forwarding)
+      // ;(list.current as any).scrollToIndex({
+      //   index: 0,
+      //   viewPosition: 0.5,
+      // })
     }
 
     if (!bot || !isAlive(bot)) {
       return null
     }
 
-    // todo: AddBotPost + styling
-    // todo: static fade header
-    // todo: scrollToNewestPost (requires proper ref forwarding)
     return (
-      // <View style={{flex: 0}}>
       <BottomPopupNew
         previewHeight={150}
         fullViewHeight={500}
@@ -108,22 +103,18 @@ const BotDetails = inject(
         renderContent={() => <DefaultHeader bot={bot} />}
         renderPreview={() => <PreviewHeader bot={bot} />}
         preview={preview}
-        fullScreenHeader={
-          <NavBarHeader
-            backAction={() => Actions.refresh({preview: true})}
-            title={
-              bot && (
-                <NavTitle
-                  bot={bot}
-                  onLongPress={() => {
-                    Clipboard.setString(bot.address)
-                    notificationStore!.flash('Address copied to clipboard 👍')
-                  }}
-                />
-              )
-            }
-          />
-        }
+        navBarConfig={{
+          backAction: () => Actions.refresh({preview: true}),
+          title: bot && (
+            <NavTitle
+              bot={bot}
+              onLongPress={() => {
+                Clipboard.setString(bot.address)
+                notificationStore!.flash('Address copied to clipboard 👍')
+              }}
+            />
+          ),
+        }}
         listProps={{
           data: !bot.error && bot.isSubscribed && !preview ? bot.posts.list.slice() : [],
           contentContainerStyle: {
@@ -134,7 +125,7 @@ const BotDetails = inject(
               {() => {
                 if (props.wocky!.connected && bot && isAlive(bot) && bot.posts.loading)
                   return <Loader />
-                return <View style={{height: 0}} />
+                return <View style={{height: 80}} />
               }}
             </Observer>
           ),
@@ -149,11 +140,16 @@ const BotDetails = inject(
           bounces: false,
           keyboardDismissMode: 'on-drag',
         }}
+        renderFooter={() =>
+          !preview &&
+          !bot.error &&
+          bot.isSubscribed && (
+            <View style={{position: 'absolute', bottom: 0, right: 0, left: 0}}>
+              <AddBotPost bot={bot} afterPostSent={scrollToNewestPost} />
+            </View>
+          )
+        }
       />
-      // {!preview && !bot.error && bot.isSubscribed && (
-      //   <AddBotPost bot={bot} afterPostSent={scrollToNewestPost} />
-      // )}
-      // </View>
     )
   })
 )

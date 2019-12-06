@@ -63,7 +63,7 @@ const MapHome = inject(
 
       autorun(
         () => {
-          slideSceneTo(homeStore!.previewMode ? 0 : -150)
+          slideSceneTo(homeStore!.previewMode ? 0 : -200)
         },
         {name: 'Animate map up/down based on preview mode'}
       )
