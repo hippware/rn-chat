@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.33.0 - 2019 Dec 5
+
 **React Native upgrade to 0.61.5**
 
 * Update: bugsnag-react-native (PR #4393), react-native-mixpanel (PR #4401)
@@ -21,6 +23,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Ignore activity data points with low confidence (#4475)
   * Action avatar flashing off and on (#4353)
   * Swipe-kill and screen lock removes mode of transport (#3950)
+* Tidy/rename profile location variables (PR #4520)
+* Prevent 'Find Friends' prompt after every codepush (#3840)
 
 # 4.32.4 - 2019 Nov 28
 
