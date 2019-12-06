@@ -44,17 +44,15 @@ const NavBarHeader = ({scrollY, config}: Props) => {
     outputRange: [1, 0, 0],
   })
 
+  // todo: add logic to ignore pointerEvents until the view has opacity > 0
   return (
-    <Animated.View style={[{opacity, position: 'none'}, styles.header]}>
-      {/* <Animated.View style={[{opacity, position: 'none'}, styles.header]}> */}
-      <View style={{width: 23}}>
-        <TouchableOpacity onPress={() => (backAction ? backAction() : Actions.pop())}>
-          <Image
-            source={backButtonImage}
-            style={{tintColor: navBarButtonColor, width: 13, height: 21, marginLeft: 10}}
-          />
-        </TouchableOpacity>
-      </View>
+    <Animated.View style={[{opacity}, styles.header]}>
+      <TouchableOpacity onPress={() => (backAction ? backAction() : Actions.pop())}>
+        <Image
+          source={backButtonImage}
+          style={{tintColor: navBarButtonColor, width: 13, height: 21, marginLeft: 10}}
+        />
+      </TouchableOpacity>
 
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>{title}</View>
     </Animated.View>
