@@ -17,7 +17,12 @@ type Props = {
   homeStore?: IHomeStore
 }
 
-const CreationHeader = inject('wocky', 'analytics', 'iconStore', 'homeStore')(
+const CreationHeader = inject(
+  'wocky',
+  'analytics',
+  'iconStore',
+  'homeStore'
+)(
   observer(({wocky, analytics, homeStore}: Props) => {
     let trackTimeout: any
 
@@ -72,6 +77,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 20,
     backgroundColor: 'white',
+    ...StyleSheet.absoluteFillObject,
+    bottom: undefined,
   },
   nav: {
     flexDirection: 'row',

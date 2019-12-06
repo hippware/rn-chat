@@ -138,7 +138,7 @@ const BotCompose = inject(
 
     return bot ? (
       <View>
-        {props.iconStore!.isEmojiKeyboardShown && (
+        {props.iconStore!.isEmojiKeyboardShown ? (
           <View
             style={{
               shadowColor: 'rgba(254, 92, 108, 0.3)',
@@ -178,8 +178,7 @@ const BotCompose = inject(
               columns={8}
             />
           </View>
-        )}
-        {!props.iconStore!.isEmojiKeyboardShown && (
+        ) : (
           <View>
             <TextInput
               style={styles.textStyle}
@@ -192,44 +191,42 @@ const BotCompose = inject(
               value={text}
               selectionColor={colors.COVER_BLUE}
             />
-            <View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  backgroundColor: 'white',
-                  paddingVertical: 20 * k,
-                  paddingHorizontal: 30 * k,
-                }}
-              >
-                <EditCTA
-                  text="Note"
-                  icon={bot!.description ? noteIconDone : noteIcon}
-                  onPress={() => Actions.editNote({botId: bot!.id})}
-                />
-                <EditCTA
-                  text="Photo"
-                  icon={bot!.image ? photoIconDone : photoIcon}
-                  onPress={addPhoto}
-                  pending={uploadingPhoto}
-                />
-              </View>
-              <TouchableOpacity
-                style={{width: '100%', height: 50 * minHeight}}
-                disabled={!text}
-                onPress={save}
-              >
-                <LinearGradient
-                  start={{x: 0, y: 0.5}}
-                  end={{x: 1, y: 0.5}}
-                  colors={theColors}
-                  style={styles.gradient}
-                >
-                  <RText color="white" size={15}>
-                    {props.edit ? 'Save Changes' : 'Pin Location'}
-                  </RText>
-                </LinearGradient>
-              </TouchableOpacity>
+            <View
+              style={{
+                flexDirection: 'row',
+                backgroundColor: 'white',
+                paddingVertical: 20 * k,
+                paddingHorizontal: 30 * k,
+              }}
+            >
+              <EditCTA
+                text="Note"
+                icon={bot!.description ? noteIconDone : noteIcon}
+                onPress={() => Actions.editNote({botId: bot!.id})}
+              />
+              <EditCTA
+                text="Photo"
+                icon={bot!.image ? photoIconDone : photoIcon}
+                onPress={addPhoto}
+                pending={uploadingPhoto}
+              />
             </View>
+            <TouchableOpacity
+              style={{width: '100%', height: 50 * minHeight}}
+              disabled={!text}
+              onPress={save}
+            >
+              <LinearGradient
+                start={{x: 0, y: 0.5}}
+                end={{x: 1, y: 0.5}}
+                colors={theColors}
+                style={styles.gradient}
+              >
+                <RText color="white" size={15}>
+                  {props.edit ? 'Save Changes' : 'Pin Location'}
+                </RText>
+              </LinearGradient>
+            </TouchableOpacity>
           </View>
         )}
       </View>
