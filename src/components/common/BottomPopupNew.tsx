@@ -10,7 +10,6 @@ import {
 import {PreviewButton} from '../BottomPopup'
 import {height} from '../Global'
 import {Actions} from 'react-native-router-flux'
-import BackButton from '../custom-navigators/BackButtonNew'
 import NavBarHeader, {NavConfig, FULL_SCREEN_POS} from '../custom-navigators/NavBarHeaderNew'
 
 type Props = {
@@ -178,7 +177,6 @@ export default class BottomPopupListNew extends Component<Props> {
 
   render() {
     const {renderContent, renderFooter, navBarConfig, renderPreview, preview} = this.props
-    const fullScreen = navBarConfig && this.state.lastSnap === FULL_SCREEN_POS
 
     return (
       // todo: what does this wrapping gesture handler do? Taking it away does make the gesture handling wonky, but not sure why
@@ -188,9 +186,6 @@ export default class BottomPopupListNew extends Component<Props> {
         maxDeltaY={this.state.lastSnap - this.snapPointsFromTop[0]}
       >
         <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
-          {!fullScreen && (
-            <BackButton preview={!!preview} backAction={() => Actions.refresh({preview: true})} />
-          )}
           <Animated.View
             style={[
               StyleSheet.absoluteFillObject,

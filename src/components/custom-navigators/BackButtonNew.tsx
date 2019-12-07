@@ -1,28 +1,38 @@
-import React, {useState} from 'react'
-import {TouchableOpacity, Image, Animated} from 'react-native'
+import React, {useState, useEffect} from 'react'
+import {TouchableOpacity, Image, Animated, ImageBackground} from 'react-native'
 import {navBarStyle} from '../styles'
 import {FADE_NAV_BAR_HEADER_HEIGHT} from './NavBarHeader'
-import {useHomeStore} from 'src/utils/injectors'
+import {useHomeStore, useNavStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
+import {Actions} from 'react-native-router-flux'
+import {autorun} from 'mobx'
 
-type Props = {
-  backAction: any
-  preview: boolean
-}
-
-const BackButton = observer(({preview, backAction}: Props) => {
+const BackButton = observer(() => {
   const [offsetLeft] = useState(new Animated.Value(-100))
   const {mapType} = useHomeStore()
-  Animated.spring(offsetLeft, {
-    toValue: !preview ? 0 : -100,
-    useNativeDriver: true,
-  }).start()
+  const navStore = useNavStore()
+
+  useEffect(() => {
+    autorun(
+      () => {
+        const {preview, backButton, backAction} = navStore!.params
+        const show = preview === false || backButton || !!backAction
+        Animated.spring(offsetLeft, {
+          toValue: show ? 0 : -100,
+          useNativeDriver: true,
+        }).start()
+      },
+      {
+        name: 'BackButton: show/hide based on nav store changes',
+      }
+    )
+  }, [])
 
   return (
     <Animated.View
       style={{
         position: 'absolute',
-        top: FADE_NAV_BAR_HEADER_HEIGHT + 10,
+        top: FADE_NAV_BAR_HEADER_HEIGHT + 75,
         left: -5,
         width: 51,
         height: 55,
@@ -33,20 +43,21 @@ const BackButton = observer(({preview, backAction}: Props) => {
         ],
       }}
     >
-      <Image
-        style={{position: 'absolute', top: 0, left: 0}}
+      <ImageBackground
+        style={{flex: 1}}
         source={
           mapType === 'hybrid'
             ? require('../../../images/backButtonContainerDarkShadow.png')
             : require('../../../images/backButtonContainer.png')
         }
-      />
-      <TouchableOpacity
-        style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
-        onPress={backAction}
       >
-        <Image source={navBarStyle.backButtonImage} />
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
+          onPress={navStore!.params.backAction || (() => Actions.pop())}
+        >
+          <Image source={navBarStyle.backButtonImage} />
+        </TouchableOpacity>
+      </ImageBackground>
     </Animated.View>
   )
 })

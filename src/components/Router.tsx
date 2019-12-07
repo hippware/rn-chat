@@ -30,7 +30,6 @@ import ReportBot, {ReportBotRightButton} from './report-modals/ReportBot'
 import SignIn from './SignIn'
 import VerifyCode from './VerifyCode'
 import LocationDebug from './LocationDebug'
-import SplitRenderer from './custom-navigators/SplitRenderer'
 import BottomMenu from './BottomMenu'
 import DebugScreen from './DebugScreen'
 import LocationGeofenceWarning from './modals/LocationGeofenceWarning'
@@ -87,8 +86,9 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
       // ensure we always nav to the default card if we pop back to home (add small delay in case of a popTo -> nav)
       autorun(() => {
         if (navStore!.scene === 'home') {
-          // Actions.profileDetails({item: wocky!.profile!.id, preview: true})
+          Actions.profileDetails({item: wocky!.profile!.id, preview: true})
           // Actions.botDetails({botId: '6067f6d9-8f72-482b-8703-55f6039cad2a', preview: true})
+          // Actions.botEdit({botId: '6067f6d9-8f72-482b-8703-55f6039cad2a'})
         }
       }, {delay: 200})
       
@@ -184,9 +184,8 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
             </Stack>
             <Scene key="createBot" component={CreationHeader} fromTop />
             <Scene key="botCompose" component={BotCompose} backAction={() => backAction(iconStore!)} />
-            {/* <Scene key="botEdit" component={BotCompose} edit backAction={() => backAction(iconStore!)} /> */}
-            <Scene key="botEdit" component={BotCompose} />
-            <Scene key="editNote" component={EditNote} />
+            <Scene key="botEdit" component={BotCompose} edit backAction={() => backAction(iconStore!)} />
+            <Scene key="editNote" component={EditNote} backButton />
             <Scene key="friends" component={peopleLists.FriendList} />
             <Scene key="friendSearch" component={FriendSearch} />
             <Scene key="visitors" component={VisitorList} />
