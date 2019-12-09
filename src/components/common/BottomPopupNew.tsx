@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Animated, StyleSheet, View, FlatListProps, Image} from 'react-native'
+import {Animated, StyleSheet, View, FlatList, FlatListProps, Image} from 'react-native'
 import {
   PanGestureHandler,
   NativeViewGestureHandler,
@@ -12,14 +12,17 @@ import {height} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import NavBarHeader, {NavConfig, FULL_SCREEN_POS} from '../custom-navigators/NavBarHeaderNew'
 
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
+
 type Props = {
   listProps?: FlatListProps<any>
-  renderContent: any
+  animatedFlatListRef?: any
+  renderContent?: any
   renderPreview?: any
   preview?: boolean
   previewHeight?: number
   fullViewHeight: number
-  allowFullScroll: boolean
+  allowFullScroll?: boolean
   navBarConfig?: NavConfig
   renderFooter?: any
 }
@@ -47,7 +50,7 @@ export default class BottomPopupListNew extends Component<Props> {
 
   constructor(props: Props) {
     super(props)
-    const {allowFullScroll, fullViewHeight, previewHeight} = props
+    const {allowFullScroll = false, fullViewHeight, previewHeight} = props
     if (allowFullScroll) {
       this.snapPointsFromTop = [FULL_SCREEN_POS]
     }
@@ -176,7 +179,14 @@ export default class BottomPopupListNew extends Component<Props> {
   }
 
   render() {
-    const {renderContent, renderFooter, navBarConfig, renderPreview, preview} = this.props
+    const {
+      renderContent,
+      renderFooter,
+      navBarConfig,
+      renderPreview,
+      preview,
+      animatedFlatListRef,
+    } = this.props
 
     return (
       // todo: what does this wrapping gesture handler do? Taking it away does make the gesture handling wonky, but not sure why
@@ -245,7 +255,7 @@ export default class BottomPopupListNew extends Component<Props> {
                     Expected: scrolls list to top
                     Observed: swipes down the popup container instead
                   */}
-                  <Animated.FlatList
+                  <AnimatedFlatList
                     style={[
                       {flex: 1},
                       // , {marginBottom: this.snapPointsFromTop[0]}
@@ -259,6 +269,7 @@ export default class BottomPopupListNew extends Component<Props> {
                         ? renderContent()
                         : null
                     }
+                    ref={animatedFlatListRef}
                     showsVerticalScrollIndicator={false}
                     {...this.props.listProps}
                     onScrollBeginDrag={Animated.event(

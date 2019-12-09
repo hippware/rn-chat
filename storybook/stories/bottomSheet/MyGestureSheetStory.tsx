@@ -30,8 +30,9 @@ export const BottomPopupWithList = () => (
   <Wrapper>
     <BottomPopupNew
       preview
+      fullViewHeight={200}
       listProps={{
-        data: [<LoremIpsum />, <LoremIpsum />, <LoremIpsum />],
+        data: [<LoremIpsum key="1" />, <LoremIpsum key="2" />, <LoremIpsum key="3" />],
         renderItem: ({item}) => item,
         keyExtractor: (item, index) => index.toString(),
       }}
@@ -41,13 +42,14 @@ export const BottomPopupWithList = () => (
 
 export const BottomPopupWithSmallContent = () => (
   <Wrapper>
-    <BottomPopupNew renderContent={() => <Text>A simple child</Text>} />
+    <BottomPopupNew fullViewHeight={200} renderContent={() => <Text>A simple child</Text>} />
   </Wrapper>
 )
 
 export const BottomPopupWithLargeContent = () => (
   <Wrapper>
     <BottomPopupNew
+      fullViewHeight={200}
       renderContent={() => (
         <Fragment>
           <LoremIpsum />

@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useRef, Fragment} from 'react'
-import {View, Clipboard, TouchableOpacity, Animated} from 'react-native'
+import React, {useState, useEffect, useRef} from 'react'
+import {View, Clipboard, TouchableOpacity} from 'react-native'
 import {inject, Observer} from 'mobx-react'
 import {k} from '../Global'
 import {colors} from '../../constants'
@@ -7,7 +7,7 @@ import {IBot, IWocky} from 'wocky-client'
 import BotPostCard from './BotPostCard'
 import {RText, Spinner, BottomPopupNew} from '../common'
 import AddBotPost from './AddBotPost'
-import Header, {PreviewHeader, DefaultHeader} from './BotDetailsHeader'
+import {PreviewHeader, DefaultHeader} from './BotDetailsHeader'
 import {isAlive} from 'mobx-state-tree'
 import Separator from './Separator'
 import {Actions} from 'react-native-router-flux'
@@ -48,7 +48,6 @@ const BotDetails = inject(
       isNew,
       notificationStore,
       preview = false,
-      isActive,
     } = props
 
     useEffect(() => {
@@ -84,11 +83,10 @@ const BotDetails = inject(
     }, [botId])
 
     function scrollToNewestPost() {
-      // todo: scrollToNewestPost...apparently not available on Animated.FlatList (?)
-      // ;(list.current as any).scrollToIndex({
-      //   index: 0,
-      //   viewPosition: 0.5,
-      // })
+      ;(list.current as any).getNode().scrollToIndex({
+        index: 0,
+        viewPosition: 1,
+      })
     }
 
     if (!bot || !isAlive(bot)) {
@@ -115,6 +113,7 @@ const BotDetails = inject(
             />
           ),
         }}
+        animatedFlatListRef={list}
         listProps={{
           data: !bot.error && bot.isSubscribed && !preview ? bot.posts.list.slice() : [],
           contentContainerStyle: {

@@ -72,8 +72,7 @@ export class BottomSheet extends Component {
       const endOffsetY = this.state.lastSnap + translationY + dragToss * velocityY
 
       let destSnapPoint = SNAP_POINTS_FROM_TOP[0]
-      for (let i = 0; i < SNAP_POINTS_FROM_TOP.length; i++) {
-        const snapPoint = SNAP_POINTS_FROM_TOP[i]
+      for (const snapPoint of SNAP_POINTS_FROM_TOP) {
         const distFromSnap = Math.abs(snapPoint - endOffsetY)
         if (distFromSnap < Math.abs(destSnapPoint - endOffsetY)) {
           destSnapPoint = snapPoint

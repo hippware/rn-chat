@@ -12,11 +12,9 @@ import Launch from './Launch'
 import SignUp from './SignUp'
 import Home from './Home/Home'
 import MyAccount from './MyAccount'
-// import ProfileDetail from './ProfileDetail/ProfileDetail'
 import ProfileDetailNew from './ProfileDetail/ProfileDetailNew'
 import ChatListScreen from './Chats/ChatListScreen'
 import ChatScreen from './Chats/ChatScreen'
-// import BotDetails from './BotDetails/BotDetails'
 import BotDetailsNew from './BotDetails/BotDetailsNew'
 import TestRegister from './TestRegister'
 import CodePushScene from './CodePushScene'
@@ -193,7 +191,7 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
             <Scene key="liveLocationSettings" component={LiveLocationSettings} />
             <Scene key="chats" component={ChatListScreen} title="Messages" />
             <Scene key="mapOptions" component={MapOptions} />
-            <Scene key="bottomMenu" component={BottomMenu} />
+            <Scene key="bottomMenu" component={BottomMenu} hasPreview />
             <Scene key="profileDetails" path="user/:item" component={ProfileDetailNew} hasPreview />
             <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetailsNew} hasPreview />
             <Scene key="notifications" path="invitations/:params*" component={NotificationsNew} />

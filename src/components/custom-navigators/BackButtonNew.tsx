@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {TouchableOpacity, Image, Animated, ImageBackground} from 'react-native'
 import {navBarStyle} from '../styles'
-import {FADE_NAV_BAR_HEADER_HEIGHT} from './NavBarHeader'
+import {FADE_NAV_BAR_HEADER_HEIGHT} from './NavBarHeaderNew'
 import {useHomeStore, useNavStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
@@ -32,7 +32,7 @@ const BackButton = observer(() => {
     <Animated.View
       style={{
         position: 'absolute',
-        top: FADE_NAV_BAR_HEADER_HEIGHT + 75,
+        top: FADE_NAV_BAR_HEADER_HEIGHT + 30,
         left: -5,
         width: 51,
         height: 55,
