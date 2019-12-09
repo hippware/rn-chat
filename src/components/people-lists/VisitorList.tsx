@@ -1,10 +1,8 @@
 import React, {useState, useEffect} from 'react'
-import {RText} from '../common'
+import {RText, BottomPopupNew, withKeyboardHOC} from '../common'
 import {IBot} from 'wocky-client'
 import {isAlive} from 'mobx-state-tree'
 import FriendCard from './FriendCard'
-import DraggablePopupList from '../common/DraggablePopupList'
-import withKeyboardHOC from '../common/withKeyboardHOC'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {useWocky} from 'src/utils/injectors'
@@ -16,7 +14,7 @@ type Props = {
   isActive: boolean
 }
 
-const KeyboardAwareDraggablePopupList = withKeyboardHOC(DraggablePopupList)
+// const KeyboardAwareDraggablePopupList = withKeyboardHOC(DraggablePopupList)
 
 const VisitorList = observer(({botId, isActive}: Props) => {
   const [bot, setBot] = useState<IBot | null>(null)
@@ -47,19 +45,22 @@ const VisitorList = observer(({botId, isActive}: Props) => {
 
   // TODO display spinner during loading
   return (
-    <KeyboardAwareDraggablePopupList
-      headerInner={renderHeader()}
-      renderItem={renderItem}
-      keyExtractor={item => item.id}
-      data={data}
-      keyboardShouldPersistTaps="handled"
-      onEndReachedThreshold={0.5}
-      onEndReached={() => bot!.visitors.load()}
-      isActive={isActive}
-      // prevent gap underneath list: https://github.com/hippware/rn-chat/issues/4129
-      ListFooterComponent={
-        data.length < 4 ? <View style={{backgroundColor: 'white', height: 200}} /> : null
-      }
+    // <KeyboardAwareDraggablePopupList
+    <BottomPopupNew
+      fullViewHeight={400}
+      allowFullScroll
+      listProps={{
+        ListHeaderComponent: renderHeader(),
+        renderItem: renderItem,
+        keyExtractor: item => item.id,
+        data,
+        keyboardShouldPersistTaps: 'handled',
+        onEndReachedThreshold: 0.5,
+        onEndReached: () => bot!.visitors.load(),
+        // prevent gap underneath list: https://github.com/hippware/rn-chat/issues/4129
+        ListFooterComponent:
+          data.length < 4 ? <View style={{backgroundColor: 'white', height: 200}} /> : null,
+      }}
     />
   )
 })
