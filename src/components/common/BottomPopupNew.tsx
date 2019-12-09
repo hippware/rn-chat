@@ -7,7 +7,7 @@ import {
   TapGestureHandler,
   PanGestureHandlerStateChangeEvent,
 } from 'react-native-gesture-handler'
-import {PreviewButton} from '../BottomPopup'
+import {PreviewButton} from '../BottomSceneStatic'
 import {height} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import NavBarHeader, {NavConfig, FULL_SCREEN_POS} from '../custom-navigators/NavBarHeaderNew'
@@ -95,6 +95,9 @@ export default class BottomPopupListNew extends Component<Props> {
     this._translateY = Animated.add(
       this._translateYOffset,
       Animated.add(this._dragY, this._reverseLastScrollY)
+      // new Animated.Value(0)
+      // Animated.add(this._dragY, new Animated.Value(0))
+      // Animated.add(new Animated.Value(0), this._reverseLastScrollY)
     ).interpolate({
       inputRange: [start, end],
       outputRange: [start, end],

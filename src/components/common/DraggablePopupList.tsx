@@ -2,7 +2,7 @@ import React, {ReactElement} from 'react'
 import {View, FlatList, FlatListProps, Animated} from 'react-native'
 import {width, height, k} from '../Global'
 import {TouchThroughView} from 'react-native-touch-through-view'
-import BottomPopup from '../BottomPopup'
+import BottomPopup from '../BottomSceneStatic'
 import {TouchThroughWrapper} from 'react-native-touch-through-view'
 import {inject} from 'mobx-react'
 
