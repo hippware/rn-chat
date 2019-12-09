@@ -182,7 +182,7 @@ export const OwnProfile = types
     }
   })
   .actions(self => ({
-    setOnboarded: (value: boolean) => {
+    setOnboarded: () => {
       self.clientData.flip('onboarded')
     },
     load({
