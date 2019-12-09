@@ -191,7 +191,7 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
             <Scene key="liveLocationSettings" component={LiveLocationSettings} />
             <Scene key="chats" component={ChatListScreen} title="Messages" />
             <Scene key="mapOptions" component={MapOptions} />
-            <Scene key="bottomMenu" component={BottomMenu} hasPreview />
+            <Scene key="bottomMenu" component={BottomMenu} backButton hasPreview />
             <Scene key="profileDetails" path="user/:item" component={ProfileDetailNew} hasPreview />
             <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetailsNew} hasPreview />
             <Scene key="notifications" path="invitations/:params*" component={NotificationsNew} />

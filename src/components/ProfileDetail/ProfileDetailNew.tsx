@@ -35,7 +35,6 @@ const ProfileDetail = observer(({item, preview}: Props) => {
     <BottomPopupNew
       previewHeight={150}
       fullViewHeight={340}
-      allowFullScroll={false}
       renderPreview={() => <Preview profile={profile!} />}
       renderContent={() => <Default profile={profile!} />}
       preview={preview}
