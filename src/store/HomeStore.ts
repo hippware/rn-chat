@@ -95,7 +95,13 @@ const HomeStore = types
         return navStore && navStore.scene === 'botDetails' && !navStore.params.preview
       },
       get bottomViewMode() {
-        return navStore && navStore.params.preview === false
+        if (navStore) {
+          const {
+            params: {preview, shiftMap},
+          } = navStore
+          return preview === false || shiftMap
+        }
+        return false
       },
       get isIconEditable() {
         return ['botCompose', 'botEdit'].includes(navStore.scene)

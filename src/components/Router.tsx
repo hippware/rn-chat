@@ -87,6 +87,8 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
           Actions.profileDetails({item: wocky!.profile!.id, preview: true})
           // Actions.botDetails({botId: '6067f6d9-8f72-482b-8703-55f6039cad2a', preview: true})
           // Actions.botEdit({botId: '6067f6d9-8f72-482b-8703-55f6039cad2a'})
+          // Actions.friends()
+          // Actions.friendSearch()
         }
       }, {delay: 200})
       
@@ -122,6 +124,7 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
     }
 
     const onBackPress = () => {
+      // todo: fix this logic based on new nav
       if (navStore!.params.hasPreview && !navStore!.params.preview) {
         Actions.refresh({preview: true})
       } else {
@@ -181,20 +184,20 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
               </Modal>
             </Stack>
             <Scene key="createBot" component={CreationHeader} fromTop />
-            <Scene key="botCompose" component={BotCompose} backAction={() => backAction(iconStore!)} />
-            <Scene key="botEdit" component={BotCompose} edit backAction={() => backAction(iconStore!)} />
-            <Scene key="editNote" component={EditNote} backButton />
-            <Scene key="friends" component={peopleLists.FriendList} />
-            <Scene key="friendSearch" component={FriendSearch} />
-            <Scene key="visitors" component={VisitorList} />
-            <Scene key="liveLocationCompose" component={LiveLocationCompose} />
-            <Scene key="liveLocationSettings" component={LiveLocationSettings} />
-            <Scene key="chats" component={ChatListScreen} title="Messages" />
-            <Scene key="mapOptions" component={MapOptions} />
-            <Scene key="bottomMenu" component={BottomMenu} backButton hasPreview />
+            <Scene key="botCompose" component={BotCompose} backAction={() => backAction(iconStore!)} shiftMap />
+            <Scene key="botEdit" component={BotCompose} edit backAction={() => backAction(iconStore!)} shiftMap />
+            <Scene key="editNote" component={EditNote} backButton shiftMap />
+            <Scene key="friends" component={peopleLists.FriendList} shiftMap />
+            <Scene key="friendSearch" component={FriendSearch} shiftMap />
+            <Scene key="visitors" component={VisitorList} shiftMap />
+            <Scene key="liveLocationCompose" component={LiveLocationCompose} shiftMap />
+            <Scene key="liveLocationSettings" component={LiveLocationSettings} shiftMap />
+            <Scene key="chats" component={ChatListScreen} title="Messages" shiftMap />
+            <Scene key="mapOptions" component={MapOptions} shiftMap />
+            <Scene key="bottomMenu" component={BottomMenu} backButton hasPreview  shiftMap />
             <Scene key="profileDetails" path="user/:item" component={ProfileDetailNew} hasPreview />
             <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetailsNew} hasPreview />
-            <Scene key="notifications" path="invitations/:params*" component={NotificationsNew} backButton />
+            <Scene key="notifications" path="invitations/:params*" component={NotificationsNew} backButton shiftMap />
             <Scene key="reload" hideNavBar type="replace" component={Launch} />
             <Scene key="locationWarning" component={LocationWarning} />
             <Scene key="geofenceWarning" component={LocationGeofenceWarning} />
