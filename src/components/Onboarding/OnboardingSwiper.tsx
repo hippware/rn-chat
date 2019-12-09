@@ -25,7 +25,11 @@ type Props = {
   permissionStore?: IPermissionStore
 }
 
-const OnboardingSwiper = inject('wocky', 'contactStore', 'permissionStore')(
+const OnboardingSwiper = inject(
+  'wocky',
+  'contactStore',
+  'permissionStore'
+)(
   observer(({wocky, contactStore, permissionStore}: Props) => {
     const swiper = useRef<any>(null)
 
@@ -79,7 +83,7 @@ const OnboardingSwiper = inject('wocky', 'contactStore', 'permissionStore')(
     }
 
     const done = () => {
-      wocky!.profile!.setOnboarded(true)
+      wocky!.profile!.setOnboarded()
       Actions.logged()
     }
 

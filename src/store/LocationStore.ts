@@ -274,7 +274,7 @@ const LocationStore = types
               wocky.connected &&
               wocky.profile &&
               wocky.profile.hidden &&
-              wocky.profile.onboarded &&
+              wocky.profile.clientData.onboarded &&
               self.alwaysOn
             ) {
               try {
