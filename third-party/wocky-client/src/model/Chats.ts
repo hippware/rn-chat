@@ -57,7 +57,9 @@ export const Chats = types
       const msg = createMessage(message, self.service)
       if (existingChat) {
         existingChat.messages.addToTop(msg)
-        if (!existingChat.active) {
+        if (existingChat.active) {
+          existingChat.readOne(msg)
+        } else {
           msg!.setUnread(unread)
         }
       } else {

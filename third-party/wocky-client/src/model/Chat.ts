@@ -42,12 +42,22 @@ export const Chat = types
   }))
   .actions(self => ({
     setActive: (active: boolean) => (self.active = active),
+    readOne: flow(function*(msg) {
+      if (msg.unread) {
+        msg.setUnread(false)
+        if (msg.sid && !msg.isOutgoing) {
+          yield self.transport.messageMarkRead([msg.sid])
+        }
+      }
+    }),
     readAll: flow(function*() {
       const ids: number[] = []
       self.messages.list.forEach(msg => {
-        if (msg.unread && msg.sid) {
+        if (msg.unread) {
           msg.setUnread(false)
-          ids.push(msg.sid)
+          if (msg.sid && !msg.isOutgoing) {
+            ids.push(msg.sid)
+          }
         }
       })
       if (ids.length) {
