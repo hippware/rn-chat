@@ -49,6 +49,7 @@ import LiveLocationSettings from './LiveLocation/LiveLocationSettings'
 import LiveLocationShare from './LiveLocation/LiveLocationShare'
 import  {IHomeStore} from 'src/store/HomeStore';
 import MapOptions from './MapOptions'
+import {IPermissionStore} from 'src/store/PermissionStore'
 
 export const iconClose = require('../../images/iconClose.png')
 
@@ -59,17 +60,18 @@ type Props = {
   homeStore?: IHomeStore
   iconStore?: IconStore
   authStore?: IAuthStore
+  permissionStore?: IPermissionStore
   analytics?: any
 }
 
-const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics', 'homeStore', 'navStore', 'authStore')(
-  observer(({wocky, locationStore, navStore, homeStore, iconStore, authStore, analytics}: Props) => {
+const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'iconStore', 'analytics', 'homeStore', 'navStore', 'authStore')(
+  observer(({wocky, permissionStore, locationStore, navStore, homeStore, iconStore, authStore, analytics}: Props) => {
     useEffect(() => {
       reaction(() => navStore!.scene, () => Keyboard.dismiss())
 
       autorun(
         () => {
-          const onboarded = wocky!.profile && wocky!.profile.onboarded
+          const {onboarded} = permissionStore!
           const {scene} = navStore!
           const {alwaysOn} = locationStore!
           if (onboarded && !alwaysOn) {
@@ -148,7 +150,7 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
             <Scene key="connect" on={authStore!.login} success="checkHandle" failure="preConnection" />
             <Scene key="checkProfile" on={() => wocky!.profile} success="checkHandle" failure="connect" />
             <Scene key="checkHandle" on={() => wocky!.profile!.handle} success="checkOnboarded" failure="signUp" />
-            <Scene key="checkOnboarded" on={() => wocky!.profile!.onboarded} success="logged" failure="onboarding" />
+            <Scene key="checkOnboarded" on={() => permissionStore!.onboarded} success="logged" failure="onboarding" />
             <Scene key="logout" on={authStore!.logout} success="preConnection" />
             <Scene key="liveLocationShare" on={() => wocky!.profile!.isLocationShared} success='liveLocationSettings' failure='liveLocationSelectFriends'/>
           </Lightbox>
