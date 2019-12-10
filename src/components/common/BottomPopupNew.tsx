@@ -1,5 +1,14 @@
 import React, {Component} from 'react'
-import {Animated, StyleSheet, View, FlatList, FlatListProps, Image, Keyboard} from 'react-native'
+import {
+  Animated,
+  StyleSheet,
+  View,
+  FlatList,
+  FlatListProps,
+  Image,
+  Keyboard,
+  Platform,
+} from 'react-native'
 import {
   PanGestureHandler,
   NativeViewGestureHandler,
@@ -11,6 +20,7 @@ import {PreviewButton} from '../BottomSceneStatic'
 import {height} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import NavBarHeader, {NavConfig, FULL_SCREEN_POS} from '../custom-navigators/NavBarHeaderNew'
+import {keyboardShowListenerName, keyboardHideListenerName} from './withKeyboardHOC'
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
@@ -48,8 +58,8 @@ export default class BottomPopupListNew extends Component<Props> {
   }
   snapPointsFromTop: number[] = []
   activelyScrolling: boolean = false
-  keyboardDidShowListener
-  keyboardDidHideListener
+  keyboardShowListener
+  keyboardHideListener
 
   constructor(props: Props) {
     super(props)
@@ -108,31 +118,38 @@ export default class BottomPopupListNew extends Component<Props> {
     })
   }
 
+  showKeyboardHandler = ({endCoordinates: {height}, duration}: any) => {
+    Animated.timing(this._keyboardOffset, {
+      toValue: -height,
+      duration,
+      useNativeDriver: true,
+    }).start()
+  }
+
+  hideKeyboardHandler = ({duration}: any) => {
+    Animated.timing(this._keyboardOffset, {
+      toValue: 0,
+      duration,
+      useNativeDriver: true,
+    }).start()
+  }
+
   componentDidMount() {
-    this.keyboardDidShowListener = Keyboard.addListener(
-      'keyboardWillShow',
-      ({endCoordinates: {height}, duration}: any) => {
-        // setKeyboardShowing(true)
-        Animated.timing(this._keyboardOffset, {
-          toValue: -height,
-          duration,
-          useNativeDriver: true,
-        }).start()
-      }
+    this.keyboardShowListener = Keyboard.addListener(
+      keyboardShowListenerName,
+      this.showKeyboardHandler
     )
-    this.keyboardDidHideListener = Keyboard.addListener('keyboardWillHide', ({duration}: any) => {
-      // setKeyboardShowing(false)
-      Animated.timing(this._keyboardOffset, {
-        toValue: 0,
-        duration,
-        useNativeDriver: true,
-      }).start()
-    })
+    this.keyboardHideListener = Keyboard.addListener(
+      keyboardHideListenerName,
+      this.hideKeyboardHandler
+    )
   }
 
   componentWillUnmount() {
-    Keyboard.removeListener('keyboardWillHide', this.keyboardDidHideListener as any)
-    Keyboard.removeListener('keyboardWillShow', this.keyboardDidShowListener as any)
+    Keyboard.removeListener('keyboardWillHide', this.keyboardHideListener as any)
+    Keyboard.removeListener('keyboardWillShow', this.keyboardShowListener as any)
+    Keyboard.removeListener('keyboardDidHide', this.keyboardHideListener as any)
+    Keyboard.removeListener('keyboardDidShow', this.keyboardShowListener as any)
   }
 
   get previewY() {
