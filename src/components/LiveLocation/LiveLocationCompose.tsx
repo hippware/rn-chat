@@ -43,7 +43,11 @@ const CHOICES = [
 ]
 const UNTIL_OFF = Date.now() + 24 * HOUR * 365
 
-const LiveLocationCompose = inject('wocky', 'searchStore', 'locationStore')(
+const LiveLocationCompose = inject(
+  'wocky',
+  'searchStore',
+  'locationStore'
+)(
   observer(({wocky, searchStore, locationStore, profile}: Props) => {
     const [option, setOption] = useState(1)
     const [duration, setDuration] = useState(2)
@@ -94,6 +98,7 @@ const LiveLocationCompose = inject('wocky', 'searchStore', 'locationStore')(
     return (
       <View
         style={{
+          position: 'absolute',
           bottom: 0,
           width: '100%',
           backgroundColor: 'white',
