@@ -52,7 +52,7 @@ const BotButtons = observer((props: Props) => {
                 style: 'destructive',
                 onPress: () => {
                   removeBot(bot!.id)
-                  Actions.popTo('home')
+                  Actions.pop()
                 },
               },
             ])
