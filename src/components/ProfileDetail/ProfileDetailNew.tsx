@@ -48,6 +48,7 @@ const Default = observer(({profile}: {profile: IProfile}) => (
       flex: 1,
       alignContent: 'center',
       alignItems: 'center',
+      paddingTop: 10,
       paddingBottom: 40,
     }}
     testID="profileDetail"
