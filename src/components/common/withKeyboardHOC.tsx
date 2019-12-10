@@ -43,7 +43,7 @@ export default (Component): any => {
         pointerEvents="box-none"
         style={{
           // todo: this messed up the styling on BotCompose...need to check other uses of withKeyboardHOC
-          // flex: 1,
+          flex: 1,
 
           transform: [
             {

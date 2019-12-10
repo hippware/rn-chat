@@ -164,7 +164,24 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
               <Scene key="onboarding" component={OnboardingSwiper} hideNavBar type="replace" />
               <Modal key="logged" hideNavBar headerMode="screen" type="replace">
                 <Stack>
-                  <Scene key="home" path="livelocation/:userId" component={Home} hideNavBar />
+                  <Lightbox hideNavBar>
+                    <Scene key="home" path="livelocation/:userId" component={Home} hideNavBar />
+                    <Scene key="createBot" component={CreationHeader} fromTop />
+                    <Scene key="botCompose" component={BotCompose} backAction={() => backAction(iconStore!)} shiftMap />
+                    <Scene key="botEdit" component={BotCompose} edit backAction={() => backAction(iconStore!)} shiftMap />
+                    <Scene key="editNote" component={EditNote} backButton shiftMap />
+                    <Scene key="friends" component={peopleLists.FriendList} shiftMap backButton />
+                    <Scene key="friendSearch" component={FriendSearch} shiftMap backButton/>
+                    <Scene key="visitors" component={VisitorList} shiftMap backButton />
+                    <Scene key="liveLocationCompose" component={LiveLocationCompose} shiftMap backButton />
+                    <Scene key="liveLocationSettings" component={LiveLocationSettings} shiftMap backButton />
+                    <Scene key="chats" component={ChatListScreen} title="Messages" shiftMap backButton />
+                    <Scene key="mapOptions" component={MapOptions} shiftMap backButton />
+                    <Scene key="bottomMenu" component={BottomMenu} backButton hasPreview shiftMap />
+                    <Scene key="profileDetails" path="user/:item" component={ProfileDetailNew} hasPreview />
+                    <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetailsNew} hasPreview />
+                    <Scene key="notifications" path="invitations/:params*" component={NotificationsNew} backButton shiftMap />
+                  </Lightbox>
                   <Scene key="chat" path="conversation/:item" component={ChatScreen} />
                   <Scene key="allFriends" component={AllFriendList} title="Friends" />
                   <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
@@ -183,21 +200,6 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
                 <Scene key="reportBot" component={ReportBot} wrap title="Report Location" leftButtonImage={iconClose} onLeft={Actions.pop} right={ReportBotRightButton}  />
               </Modal>
             </Stack>
-            <Scene key="createBot" component={CreationHeader} fromTop />
-            <Scene key="botCompose" component={BotCompose} backAction={() => backAction(iconStore!)} shiftMap />
-            <Scene key="botEdit" component={BotCompose} edit backAction={() => backAction(iconStore!)} shiftMap />
-            <Scene key="editNote" component={EditNote} backButton shiftMap />
-            <Scene key="friends" component={peopleLists.FriendList} shiftMap backButton />
-            <Scene key="friendSearch" component={FriendSearch} shiftMap backButton />
-            <Scene key="visitors" component={VisitorList} shiftMap backButton />
-            <Scene key="liveLocationCompose" component={LiveLocationCompose} shiftMap backButton />
-            <Scene key="liveLocationSettings" component={LiveLocationSettings} shiftMap backButton />
-            <Scene key="chats" component={ChatListScreen} title="Messages" shiftMap backButton />
-            <Scene key="mapOptions" component={MapOptions} shiftMap backButton />
-            <Scene key="bottomMenu" component={BottomMenu} backButton hasPreview shiftMap />
-            <Scene key="profileDetails" path="user/:item" component={ProfileDetailNew} hasPreview />
-            <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetailsNew} hasPreview />
-            <Scene key="notifications" path="invitations/:params*" component={NotificationsNew} backButton shiftMap />
             <Scene key="reload" hideNavBar type="replace" component={Launch} />
             <Scene key="locationWarning" component={LocationWarning} />
             <Scene key="geofenceWarning" component={LocationGeofenceWarning} />
