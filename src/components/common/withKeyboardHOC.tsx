@@ -42,9 +42,6 @@ export default (Component): any => {
       <Animated.View
         pointerEvents="box-none"
         style={{
-          // todo: this messed up the styling on BotCompose...need to check other uses of withKeyboardHOC
-          flex: 1,
-
           transform: [
             {
               translateY: keyboardHeight,

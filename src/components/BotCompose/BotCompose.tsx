@@ -9,8 +9,7 @@ import {
   Alert,
   Platform,
 } from 'react-native'
-import {RText, Spinner} from '../common'
-import withKeyboard from '../common/withKeyboardHOC'
+import {RText, Spinner, withKeyboardHOC} from '../common'
 import {colors} from '../../constants'
 import {k, height, minHeight} from '../Global'
 import {IWocky, IBot} from 'wocky-client'
@@ -304,7 +303,9 @@ const EditCTA = ({text, icon, onPress, pending}: any) => (
   </TouchableOpacity>
 )
 
-export default withKeyboard(BotCompose)
+const KeyboardAwareBotCompose = Platform.OS === 'ios' ? withKeyboardHOC(BotCompose) : BotCompose
+
+export default KeyboardAwareBotCompose
 
 const styles = StyleSheet.create({
   textStyle: {

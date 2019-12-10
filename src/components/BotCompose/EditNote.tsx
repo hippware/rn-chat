@@ -24,7 +24,7 @@ const EditNote = withKeyboardHOC(
     }, [])
 
     return bot ? (
-      <View>
+      <View style={{position: 'absolute', bottom: 0}}>
         <TextInput
           style={[
             styles.textStyle,
