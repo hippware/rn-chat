@@ -203,7 +203,6 @@ export default class BottomPopupListNew extends Component<Props> {
             style={[
               StyleSheet.absoluteFillObject,
               {
-                // backgroundColor: fullScreen ? 'white' : 'transparent',
                 transform: [{translateY: this._translateY}],
               },
             ]}
@@ -216,6 +215,7 @@ export default class BottomPopupListNew extends Component<Props> {
               onHandlerStateChange={this._onHeaderHandlerStateChange}
             >
               <Animated.View style={styles.header}>
+                <WhiteListBackground />
                 {/* 
                   // todo: replace this image with a View + borderRadius (no extra padding on bottom)
                 */}
@@ -252,12 +252,6 @@ export default class BottomPopupListNew extends Component<Props> {
                   waitFor={this.masterdrawer}
                   simultaneousHandlers={this.drawer}
                 >
-                  {/*
-                    // todo: DRY up this structure. It's difficult though because there's a tight coupling with refs and onScrollBeginDrag
-                    The main case that illustrates this is where you're in full view and at the bottom of the list and swipe down...
-                    Expected: scrolls list to top
-                    Observed: swipes down the popup container instead
-                  */}
                   <AnimatedFlatList
                     style={[
                       {flex: 1},
@@ -292,6 +286,18 @@ export default class BottomPopupListNew extends Component<Props> {
     )
   }
 }
+
+const WhiteListBackground = () => (
+  <View
+    style={{
+      position: 'absolute',
+      top: 50,
+      height,
+      width: '100%',
+      backgroundColor: 'white',
+    }}
+  />
+)
 
 const styles = StyleSheet.create({
   container: {
