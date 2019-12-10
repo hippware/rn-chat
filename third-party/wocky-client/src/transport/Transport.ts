@@ -176,7 +176,6 @@ export class Transport {
                     edges {
                       node {
                         createdAt
-                        name
                         user {
                           ${PROFILE_PROPS}
                         }

@@ -6,7 +6,6 @@ export const Contact = types
   .model('Contact', {
     id: types.identifier,
     createdAt: types.optional(types.Date, () => new Date()),
-    name: types.maybe(types.string),
     user: types.reference(Profile),
   })
   .views(self => ({
