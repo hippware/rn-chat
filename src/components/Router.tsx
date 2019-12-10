@@ -187,14 +187,14 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
             <Scene key="botCompose" component={BotCompose} backAction={() => backAction(iconStore!)} shiftMap />
             <Scene key="botEdit" component={BotCompose} edit backAction={() => backAction(iconStore!)} shiftMap />
             <Scene key="editNote" component={EditNote} backButton shiftMap />
-            <Scene key="friends" component={peopleLists.FriendList} shiftMap />
-            <Scene key="friendSearch" component={FriendSearch} shiftMap />
-            <Scene key="visitors" component={VisitorList} shiftMap />
-            <Scene key="liveLocationCompose" component={LiveLocationCompose} shiftMap />
-            <Scene key="liveLocationSettings" component={LiveLocationSettings} shiftMap />
-            <Scene key="chats" component={ChatListScreen} title="Messages" shiftMap />
-            <Scene key="mapOptions" component={MapOptions} shiftMap />
-            <Scene key="bottomMenu" component={BottomMenu} backButton hasPreview  shiftMap />
+            <Scene key="friends" component={peopleLists.FriendList} shiftMap backButton />
+            <Scene key="friendSearch" component={FriendSearch} shiftMap backButton />
+            <Scene key="visitors" component={VisitorList} shiftMap backButton />
+            <Scene key="liveLocationCompose" component={LiveLocationCompose} shiftMap backButton />
+            <Scene key="liveLocationSettings" component={LiveLocationSettings} shiftMap backButton />
+            <Scene key="chats" component={ChatListScreen} title="Messages" shiftMap backButton />
+            <Scene key="mapOptions" component={MapOptions} shiftMap backButton />
+            <Scene key="bottomMenu" component={BottomMenu} backButton hasPreview shiftMap />
             <Scene key="profileDetails" path="user/:item" component={ProfileDetailNew} hasPreview />
             <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetailsNew} hasPreview />
             <Scene key="notifications" path="invitations/:params*" component={NotificationsNew} backButton shiftMap />
