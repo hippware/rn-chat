@@ -8072,11 +8072,6 @@ react-native-tab-view@^2.9.0:
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.10.0.tgz#5e249e5650502010013449ffd4e5edc18a95364b"
   integrity sha512-qgexVz5eO4yaFjdkmn/sURXgVvaBo6pZD/q1eoca96SbPVbaH3WzVhF3bRUfeTHwZkXwznFTpS3JURqIFU8vQA==
 
-react-native-touch-through-view@^1.1.0-beta.0:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/react-native-touch-through-view/-/react-native-touch-through-view-1.1.2.tgz#4bb2bad3862c9977030dc2fd62ef6e9c0b95b7d3"
-  integrity sha512-FzI7XIuoM+yKoHK3dBs4kRsGKlYhV57NTwUXkqn71jzoj7GVKlSH8pu5rg9QeMqEKB43ockltYQ/DhUdbfO5JQ==
-
 react-native@0.61.5:
   version "0.61.5"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.61.5.tgz#6e21acb56cbd75a3baeb1f70201a66f42600bba8"
