@@ -4,6 +4,14 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Update: tslint (PR #4525), @types/react-native (PR #4526)
+  * websocket (PR #4527), typescript (PR #4528), ts-jest (PR #4530)
+  * @types/react (PR #4531), pretty-quick (PR #4532), @babel/core (PR #4534)
+  * appcenter-cli (PR #4538), ts-node (PR #4539), @babel/runtime (PR #4540)
+  * @types/react (PR #4541), @babel/plugin-proposal-object-rest-spread (PR #4543)
+  * @storybook/react-native (PR #4544)
+* Clean install results in an infinite loader on map (Regression #4428)
+
 # 4.33.0 - 2019 Dec 5
 
 **React Native upgrade to 0.61.5**
