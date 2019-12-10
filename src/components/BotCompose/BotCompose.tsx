@@ -137,7 +137,7 @@ const BotCompose = inject(
       : [colors.DARK_GREY, colors.DARK_GREY]
 
     return bot ? (
-      <View>
+      <View style={styles.container}>
         {props.iconStore!.isEmojiKeyboardShown ? (
           <View
             style={{
@@ -179,7 +179,7 @@ const BotCompose = inject(
             />
           </View>
         ) : (
-          <View>
+          <View style={styles.container}>
             <TextInput
               style={styles.textStyle}
               placeholder="Name this place"
@@ -326,4 +326,5 @@ const styles = StyleSheet.create({
     paddingVertical: 15 * minHeight,
     alignItems: 'center',
   },
+  container: {position: 'absolute', bottom: 0, left: 0, right: 0},
 })
