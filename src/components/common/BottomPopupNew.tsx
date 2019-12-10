@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Animated, StyleSheet, View, FlatList, FlatListProps, Image} from 'react-native'
+import {Animated, StyleSheet, View, FlatList, FlatListProps, Image, Keyboard} from 'react-native'
 import {
   PanGestureHandler,
   NativeViewGestureHandler,
@@ -42,11 +42,14 @@ export default class BottomPopupListNew extends Component<Props> {
   _translateYOffset: Animated.Value
   _reverseLastScrollY: Animated.AnimatedMultiplication
   _onGestureEvent
+  _keyboardOffset: Animated.Value
   state: {
     lastSnap: number
   }
   snapPointsFromTop: number[] = []
   activelyScrolling: boolean = false
+  keyboardDidShowListener
+  keyboardDidHideListener
 
   constructor(props: Props) {
     super(props)
@@ -64,6 +67,8 @@ export default class BottomPopupListNew extends Component<Props> {
     this.state = {
       lastSnap: end,
     }
+
+    this._keyboardOffset = new Animated.Value(0)
 
     // transition preview -> full view based on scroll position
     this._dragY.addListener(({value}) => {
@@ -90,19 +95,44 @@ export default class BottomPopupListNew extends Component<Props> {
 
     this._reverseLastScrollY = Animated.multiply(new Animated.Value(-1), this._lastScrollY)
 
+    // todo: modify this for cases where we want to open to "full view" but still have the option of preview
     this._translateYOffset = new Animated.Value(end)
 
     this._translateY = Animated.add(
-      this._translateYOffset,
+      Animated.add(this._translateYOffset, this._keyboardOffset),
       Animated.add(this._dragY, this._reverseLastScrollY)
-      // new Animated.Value(0)
-      // Animated.add(this._dragY, new Animated.Value(0))
-      // Animated.add(new Animated.Value(0), this._reverseLastScrollY)
     ).interpolate({
       inputRange: [start, end],
       outputRange: [start, end],
       extrapolate: 'clamp',
     })
+  }
+
+  componentDidMount() {
+    this.keyboardDidShowListener = Keyboard.addListener(
+      'keyboardWillShow',
+      ({endCoordinates: {height}, duration}: any) => {
+        // setKeyboardShowing(true)
+        Animated.timing(this._keyboardOffset, {
+          toValue: -height,
+          duration,
+          useNativeDriver: true,
+        }).start()
+      }
+    )
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardWillHide', ({duration}: any) => {
+      // setKeyboardShowing(false)
+      Animated.timing(this._keyboardOffset, {
+        toValue: 0,
+        duration,
+        useNativeDriver: true,
+      }).start()
+    })
+  }
+
+  componentWillUnmount() {
+    Keyboard.removeListener('keyboardWillHide', this.keyboardDidHideListener as any)
+    Keyboard.removeListener('keyboardWillShow', this.keyboardDidShowListener as any)
   }
 
   get previewY() {
