@@ -133,7 +133,7 @@ const BottomMenu = observer(() => {
   }
 
   return (
-    <BottomSceneStatic style={{marginTop: -70, marginBottom: 30}}>
+    <BottomSceneStatic>
       <MenuItemWrapper
         style={{
           marginTop: 35 * k,

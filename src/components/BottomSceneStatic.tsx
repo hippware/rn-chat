@@ -8,14 +8,12 @@ type Props = {
   children: any
   style?: ViewStyle
   preview?: boolean
-  cancelPanCapture?: boolean
-  onMoveShouldSetPanResponder?: (e, s) => boolean
 }
 
 const previewBtnUpImg = require('../../images/previewButtonUp.png')
 const previewBtnDownImg = require('../../images/previewButtonDown.png')
 
-const BottomPopup = observer(({children, style, preview, onMoveShouldSetPanResponder}: Props) => {
+const BottomPopup = observer(({children, style, preview}: Props) => {
   const {mapType} = useHomeStore()
 
   // TODO: style this with border radius and shadow rather than an image. Allows setting background color to white
@@ -26,6 +24,10 @@ const BottomPopup = observer(({children, style, preview, onMoveShouldSetPanRespo
       style={[
         {
           paddingTop: 50,
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
         },
         style,
       ]}
