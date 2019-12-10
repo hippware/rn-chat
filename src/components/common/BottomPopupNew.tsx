@@ -63,7 +63,7 @@ export default class BottomPopupListNew extends Component<Props> {
 
   constructor(props: Props) {
     super(props)
-    const {allowFullScroll = false, fullViewHeight, previewHeight} = props
+    const {allowFullScroll = false, fullViewHeight, previewHeight, preview} = props
     if (allowFullScroll) {
       this.snapPointsFromTop = [FULL_SCREEN_POS]
     }
@@ -105,8 +105,9 @@ export default class BottomPopupListNew extends Component<Props> {
 
     this._reverseLastScrollY = Animated.multiply(new Animated.Value(-1), this._lastScrollY)
 
-    // todo: modify this for cases where we want to open to "full view" but still have the option of preview
-    this._translateYOffset = new Animated.Value(end)
+    this._translateYOffset = new Animated.Value(
+      preview || !previewHeight ? end : this.snapPointsFromTop[this.snapPointsFromTop.length - 2]
+    )
 
     this._translateY = Animated.add(
       Animated.add(this._translateYOffset, this._keyboardOffset),
