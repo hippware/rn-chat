@@ -11,6 +11,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * @types/react (PR #4541), @babel/plugin-proposal-object-rest-spread (PR #4543)
   * @storybook/react-native (PR #4544)
 * Clean install results in an infinite loader on map (Regression #4428)
+* New message is not marked as read if message thread is open (#4476)
+* Remove unused `... friend { name }` field. (PR #4545)
 
 # 4.33.0 - 2019 Dec 5
 
