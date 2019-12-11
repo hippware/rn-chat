@@ -4,7 +4,6 @@ import {Actions} from 'react-native-router-flux'
 import ChatCard from './ChatCard'
 import {RText, BottomPopupNew} from '../common'
 import {colors} from '../../constants'
-import DraggablePopupList from '../common/DraggablePopupList'
 import {useWocky} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
 

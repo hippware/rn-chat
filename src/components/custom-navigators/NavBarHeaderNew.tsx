@@ -1,5 +1,5 @@
-import React, {ReactElement, useEffect, useState} from 'react'
-import {View, Image, TouchableOpacity, StyleSheet, Animated, Keyboard} from 'react-native'
+import React, {ReactElement} from 'react'
+import {View, Image, TouchableOpacity, StyleSheet, Animated} from 'react-native'
 import {minHeight} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import {colors} from '../../constants'
@@ -22,22 +22,6 @@ export const FADE_NAV_BAR_HEADER_HEIGHT = 64 * minHeight
 const NavBarHeader = ({scrollY, config}: Props) => {
   const {backAction, title} = config
   const {backButtonImage, navBarButtonColor} = navBarStyle
-
-  const [keyboardHeight, setKeyboardHeight] = useState(0)
-
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', ({endCoordinates}) =>
-      setKeyboardHeight(endCoordinates.height)
-    )
-    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () =>
-      setKeyboardHeight(0)
-    )
-
-    return function cleanup() {
-      keyboardDidShowListener.remove()
-      keyboardDidHideListener.remove()
-    }
-  }, [])
 
   const opacity = scrollY!.interpolate({
     inputRange: [FULL_SCREEN_POS, 100, 1000],

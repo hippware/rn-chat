@@ -28,8 +28,6 @@ const BackButton = observer(() => {
     )
   }, [])
 
-  const {preview, backAction} = navStore!.params
-
   return (
     <Animated.View
       style={{
@@ -56,7 +54,7 @@ const BackButton = observer(() => {
         <TouchableOpacity
           style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
           onPress={
-            backAction || preview === false
+            navStore!.params.backAction || navStore!.params.preview === false
               ? () => Actions.refresh({preview: true})
               : () => Actions.pop()
           }

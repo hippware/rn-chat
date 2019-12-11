@@ -1,14 +1,5 @@
 import React, {Component} from 'react'
-import {
-  Animated,
-  StyleSheet,
-  View,
-  FlatList,
-  FlatListProps,
-  Image,
-  Keyboard,
-  Platform,
-} from 'react-native'
+import {Animated, StyleSheet, View, FlatList, FlatListProps, Image, Keyboard} from 'react-native'
 import {
   PanGestureHandler,
   NativeViewGestureHandler,
@@ -83,7 +74,6 @@ export default class BottomPopupListNew extends Component<Props> {
     // transition preview -> full view based on scroll position
     this._dragY.addListener(({value}) => {
       if (this.props.previewHeight && value !== 0) {
-        const {preview} = this.props
         const draggedTop = this.state.lastSnap + value
         const closerToPreviewHeight =
           this.previewY - draggedTop < Math.abs(this.fullViewY - draggedTop)
@@ -119,9 +109,9 @@ export default class BottomPopupListNew extends Component<Props> {
     })
   }
 
-  showKeyboardHandler = ({endCoordinates: {height}, duration}: any) => {
+  showKeyboardHandler = ({endCoordinates: {height: eHeight}, duration}: any) => {
     Animated.timing(this._keyboardOffset, {
-      toValue: -height,
+      toValue: -eHeight,
       duration,
       useNativeDriver: true,
     }).start()

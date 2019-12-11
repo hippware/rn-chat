@@ -1,10 +1,9 @@
 import React, {useRef} from 'react'
-import {View, TextInput, Image, Platform, Keyboard} from 'react-native'
+import {View, TextInput, Image, Keyboard} from 'react-native'
 import {inject} from 'mobx-react'
 import FriendCard from './FriendCard'
 import {colors} from '../../constants'
 import {RText, BottomPopupNew} from '../common'
-import withKeyboardHOC from '../common/withKeyboardHOC'
 import {ISearchStore} from '../../store/SearchStore'
 import {Actions} from 'react-native-router-flux'
 import {observer} from 'mobx-react'
@@ -13,9 +12,6 @@ type Props = {
   searchStore?: ISearchStore
   isActive: boolean
 }
-
-export const KeyboardAwareDraggablePopupList: any =
-  Platform.OS === 'ios' ? withKeyboardHOC(BottomPopupNew) : BottomPopupNew
 
 const searchIcon = require('../../../images/search.png')
 
@@ -74,7 +70,6 @@ const FriendSearch = inject('searchStore')(
     const listData = searchStore!.globalResult.filteredList.map(p => p.profile)
     // todo: figure out withKeyboardHOC + BottomPopupNew
     return (
-      // <KeyboardAwareDraggablePopupList
       <BottomPopupNew
         fullViewHeight={400}
         allowFullScroll

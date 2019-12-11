@@ -43,10 +43,7 @@ YellowBox.ignoreWarnings([
 
 // storiesOf('UserActivity', module).add('1 - Default', () => <UserActivityStory />)
 
-// storiesOf('Custom Transitioner', module).add('1 - Default', () => <CustomTransitionerStory />)
-
 // storiesOf('Chat', module)
-//   .add('1 - Messages flow in router', () => <MessagesRouterStory />)
 //   .add('2 - Chat user search screen', () => <ChatUserSearchScreen />)
 //   .add('3 - Chat', () => <ChatViewStory />)
 

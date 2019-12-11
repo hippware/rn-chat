@@ -1,7 +1,7 @@
 import 'react-native'
 import React from 'react'
 import renderer from 'react-test-renderer'
-import BotDetails from '../src/components/BotDetails/BotDetails'
+import BotDetails from '../src/components/BotDetails/BotDetailsNew'
 import {Provider} from 'mobx-react'
 import mockStore from './utils/mockStore'
 
