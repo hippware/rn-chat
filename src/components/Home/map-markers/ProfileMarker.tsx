@@ -27,7 +27,6 @@ const ProfileMarker = observer(({homeStore, card}: Props) => {
         onPress={() => {
           homeStore!.select(card.id)
           homeStore!.followUserOnMap(profile)
-          Actions.popTo('home')
           Actions.profileDetails({item: profile.id, preview: true})
         }}
         stopPropagation

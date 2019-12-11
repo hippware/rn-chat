@@ -1,11 +1,5 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {Provider} from 'mobx-react'
-import {Router, Stack, Scene, Actions} from 'react-native-router-flux'
-import {navBarStyle} from '../../src/components/styles'
-import SplitRenderer from 'src/components/custom-navigators/SplitRenderer'
-import {View, TouchableOpacity} from 'react-native'
-import {RText} from 'src/components/common'
-import ChatListScreen from 'src/components/Chats/ChatListScreen'
 import {Wocky} from 'wocky-client'
 import {types} from 'mobx-state-tree'
 import SelectChatUser from 'src/components/Chats/SelectChatUser'
@@ -105,21 +99,21 @@ const store = types
     }
   )
 
-export const MessagesRouterStory = () => (
-  <Provider {...store}>
-    <Router {...navBarStyle}>
-      <Stack>
-        <Stack hideNavBar renderer={SplitRenderer}>
-          <Scene key="home" component={Home} />
-          <Scene key="chats" component={ChatListScreen} />
-        </Stack>
-        <Scene key="selectChatUser" component={SelectChatUser} title="Message" />
-      </Stack>
-    </Router>
-  </Provider>
-)
+// export const MessagesRouterStory = () => (
+//   <Provider {...store}>
+//     <Router {...navBarStyle}>
+//       <Stack>
+//         <Stack hideNavBar renderer={SplitRenderer}>
+//           <Scene key="home" component={Home} />
+//           <Scene key="chats" component={ChatListScreen} />
+//         </Stack>
+//         <Scene key="selectChatUser" component={SelectChatUser} title="Message" />
+//       </Stack>
+//     </Router>
+//   </Provider>
+// )
 
-export const ChatUserSearchScreen = () => <SelectChatUser {...store as any} />
+export const ChatUserSearchScreen = () => <SelectChatUser {...(store as any)} />
 
 const otherUser = {
   id: '1',
@@ -224,17 +218,17 @@ export const ChatViewStory = () => (
   </Provider>
 )
 
-const Home = () => {
-  useEffect(() => {
-    Actions.chats()
-  }, [])
+// const Home = () => {
+//   useEffect(() => {
+//     Actions.chats()
+//   }, [])
 
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'red'}}>
-      <RText size={50}>Home Screen</RText>
-      <TouchableOpacity style={{padding: 10, borderWidth: 1}} onPress={() => Actions.chats()}>
-        <RText>Press me</RText>
-      </TouchableOpacity>
-    </View>
-  )
-}
+//   return (
+//     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'red'}}>
+//       <RText size={50}>Home Screen</RText>
+//       <TouchableOpacity style={{padding: 10, borderWidth: 1}} onPress={() => Actions.chats()}>
+//         <RText>Press me</RText>
+//       </TouchableOpacity>
+//     </View>
+//   )
+// }

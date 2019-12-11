@@ -31,7 +31,11 @@ const followIcon = require('../../../images/shoesPink.png')
 const BotDetailsHeader = (props: Props) =>
   props.preview ? <PreviewHeader bot={props.bot} /> : <DefaultHeader {...props} />
 
-const DefaultHeader = inject('notificationStore', 'analytics', 'locationStore')(
+export const DefaultHeader = inject(
+  'notificationStore',
+  'analytics',
+  'locationStore'
+)(
   observer(({bot, locationStore, notificationStore}: Props) => {
     function copyAddress() {
       Clipboard.setString(bot.address)
@@ -40,7 +44,10 @@ const DefaultHeader = inject('notificationStore', 'analytics', 'locationStore')(
 
     function acceptInvitation() {
       // avoid null locationStore.location here
-      when(() => !!locationStore!.location, () => bot.acceptInvitation(locationStore!.location!))
+      when(
+        () => !!locationStore!.location,
+        () => bot.acceptInvitation(locationStore!.location!)
+      )
     }
     if (!bot || !isAlive(bot))
       return (
@@ -50,7 +57,7 @@ const DefaultHeader = inject('notificationStore', 'analytics', 'locationStore')(
       )
     if (bot.error) return <BotUnavailable />
     return (
-      <View>
+      <View style={{backgroundColor: 'white'}}>
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           <RText
             size={21}
@@ -63,7 +70,7 @@ const DefaultHeader = inject('notificationStore', 'analytics', 'locationStore')(
           </RText>
           <ActionButton
             bot={bot}
-            style={{position: 'absolute', right: 0}}
+            style={{position: 'absolute', right: 10}}
             copyAddress={copyAddress}
           />
         </View>
@@ -93,11 +100,9 @@ const DefaultHeader = inject('notificationStore', 'analytics', 'locationStore')(
               {/* TODO: add bot.createdAt when ready on the backend */}
             </View>
             {!!bot.description && (
-              <View style={styles.descriptionContainer}>
-                <RText size={17} weight="Light" color={colors.DARK_PURPLE}>
-                  {bot.description}
-                </RText>
-              </View>
+              <RText size={17} weight="Light" color={colors.DARK_PURPLE}>
+                {bot.description}
+              </RText>
             )}
             {!!bot.image && (
               <LazyImage
@@ -117,8 +122,10 @@ const DefaultHeader = inject('notificationStore', 'analytics', 'locationStore')(
   })
 )
 
-const PreviewHeader = observer(({bot}: {bot: IBot}) => {
+export const PreviewHeader = observer(({bot}: {bot: IBot}) => {
   const locationStore = useLocationStore()
+
+  // console.log('& preview header', bot ? bot.id : 'no bot')
 
   return (
     <View
@@ -276,7 +283,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20 * k,
   },
-  descriptionContainer: {},
   botAddedContainer: {
     height: width,
     position: 'absolute',
@@ -312,6 +318,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 15 * k,
   },
-  botImage: {width, height: width, marginHorizontal: -20 * k, marginTop: 15 * minHeight},
+  botImage: {width, height: width, marginTop: 15 * minHeight},
   previewImage: {width: 52, height: 52},
 })

@@ -2,8 +2,7 @@ import React from 'react'
 import {View, TouchableOpacity, Image} from 'react-native'
 import FriendCard from './FriendCard'
 import {colors} from '../../constants'
-import {RText} from '../common'
-import DraggablePopupList from '../common/DraggablePopupList'
+import {RText, BottomPopupNew} from '../common'
 import InviteFriendsRowNew from './InviteFriendsRowNew'
 import {Actions} from 'react-native-router-flux'
 import {placeholderStyle} from '../styles'
@@ -48,14 +47,16 @@ const FriendList = observer(({isActive}: Props) => {
 
   // Sometimes wocky.profile is null. Race condition?
   return (
-    <DraggablePopupList
-      headerInner={profile ? renderHeader() : undefined}
-      renderItem={({item}) => <FriendCard profile={item.user} />}
-      keyExtractor={({user}) => user.id}
-      data={profile ? profile!.friends.list.slice() : []}
-      keyboardShouldPersistTaps="handled"
-      isActive={isActive}
-      // keyboardDismissMode="interactive"
+    <BottomPopupNew
+      listProps={{
+        ListHeaderComponent: profile ? renderHeader() : undefined,
+        renderItem: ({item}) => <FriendCard profile={item.user} />,
+        keyExtractor: ({user}) => user.id,
+        data: profile ? profile!.friends.list.slice() : [],
+        keyboardShouldPersistTaps: 'handled',
+      }}
+      fullViewHeight={400}
+      allowFullScroll
     />
   )
 })

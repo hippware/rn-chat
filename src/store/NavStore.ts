@@ -6,7 +6,7 @@ import {IStore} from './store'
 const NavStore = types
   .model('NavStore', {})
   .volatile(() => ({
-    _props: {},
+    _props: types.frozen({}),
     scene: '',
   }))
   .views(self => ({

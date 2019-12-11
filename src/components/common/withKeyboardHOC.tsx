@@ -1,40 +1,44 @@
 import React, {useState, useEffect} from 'react'
-import {Animated, Keyboard} from 'react-native'
+import {Animated, Keyboard, Platform, KeyboardEventName} from 'react-native'
+
+export const keyboardShowListenerName = Platform.select({
+  ios: 'keyboardWillShow',
+  android: 'keyboardDidShow',
+}) as KeyboardEventName
+
+export const keyboardHideListenerName = Platform.select({
+  ios: 'keyboardWillHide',
+  android: 'keyboardDidHide',
+}) as KeyboardEventName
 
 export default (Component): any => {
   const KeyboardAwareView = props => {
     const {forwardedRef, ...rest} = props
-
-    const [keyboardShowing, setKeyboardShowing] = useState(false)
     const [keyboardHeight] = useState(new Animated.Value(0))
 
     useEffect(() => {
-      const keyboardDidShowListener = Keyboard.addListener(
-        'keyboardWillShow',
-        ({endCoordinates, duration}: any) => {
-          setKeyboardShowing(true)
-          Animated.timing(keyboardHeight, {
-            toValue: -endCoordinates.height,
-            duration,
-            useNativeDriver: true,
-          }).start()
-        }
-      )
-      const keyboardDidHideListener = Keyboard.addListener(
-        'keyboardWillHide',
-        ({duration}: any) => {
-          setKeyboardShowing(false)
-          Animated.timing(keyboardHeight, {
-            toValue: 0,
-            duration,
-            useNativeDriver: true,
-          }).start()
-        }
-      )
+      const showHandler = ({endCoordinates, duration}: any) => {
+        Animated.timing(keyboardHeight, {
+          toValue: -endCoordinates.height,
+          duration,
+          useNativeDriver: true,
+        }).start()
+      }
+
+      const hideHandler = ({duration}: any) => {
+        Animated.timing(keyboardHeight, {
+          toValue: 0,
+          duration,
+          useNativeDriver: true,
+        }).start()
+      }
+
+      const keyboardShowListener = Keyboard.addListener(keyboardShowListenerName, showHandler)
+      const keyboardHideListener = Keyboard.addListener(keyboardHideListenerName, hideHandler)
 
       return () => {
-        Keyboard.removeListener('keyboardWillHide', keyboardDidHideListener as any)
-        Keyboard.removeListener('keyboardWillShow', keyboardDidShowListener as any)
+        Keyboard.removeListener('keyboardWillHide', keyboardHideListener as any)
+        Keyboard.removeListener('keyboardWillShow', keyboardShowListener as any)
       }
     }, [])
 
@@ -50,7 +54,7 @@ export default (Component): any => {
           ],
         }}
       >
-        <Component ref={forwardedRef} {...rest} keyboardShowing={keyboardShowing} />
+        <Component ref={forwardedRef} {...rest} />
       </Animated.View>
     )
     // }

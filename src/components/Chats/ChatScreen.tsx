@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {View, Text, StyleSheet, ActivityIndicator} from 'react-native'
+import {View, Text, StyleSheet, ActivityIndicator, Platform} from 'react-native'
 import moment from 'moment'
 import {useLocalStore, observer} from 'mobx-react'
 import {isAlive} from 'mobx-state-tree'
@@ -19,42 +19,40 @@ type Props = {
 
 type StoreShape = {chat?: IChat; setChat: (c) => void}
 
-const ChatScreen = withKeyboardHOC(
-  observer((props: Props) => {
-    const {item, navigation} = props
-    const {chats} = useWocky()
+const ChatScreen = observer((props: Props) => {
+  const {item, navigation} = props
+  const {chats} = useWocky()
 
-    const store = useLocalStore<StoreShape>(() => ({
-      chat: undefined,
-      setChat(c) {
-        store.chat = c
-      },
-    }))
+  const store = useLocalStore<StoreShape>(() => ({
+    chat: undefined,
+    setChat(c) {
+      store.chat = c
+    },
+  }))
 
-    useEffect(() => {
-      const processChat = async () => {
-        store.setChat(chats.createChat(item))
-        try {
-          await store.chat!.messages.load() // catch here because some invalid picture could happen
-        } finally {
-          await store.chat!.readAll()
-        }
-        store.chat!.setActive(true)
-
-        // insert chat into props for accessing in navigationOptions
-        navigation.setParams({chat: store.chat})
+  useEffect(() => {
+    const processChat = async () => {
+      store.setChat(chats.createChat(item))
+      try {
+        await store.chat!.messages.load() // catch here because some invalid picture could happen
+      } finally {
+        await store.chat!.readAll()
       }
-      processChat()
-      return function cleanup() {
-        if (store.chat) {
-          store.chat.setActive(false)
-        }
-      }
-    }, [])
+      store.chat!.setActive(true)
 
-    return store.chat && isAlive(store.chat) ? <ChatView chat={store.chat} /> : <Screen />
-  })
-)
+      // insert chat into props for accessing in navigationOptions
+      navigation.setParams({chat: store.chat})
+    }
+    processChat()
+    return function cleanup() {
+      if (store.chat) {
+        store.chat.setActive(false)
+      }
+    }
+  }, [])
+
+  return store.chat && isAlive(store.chat) ? <ChatView chat={store.chat} /> : <Screen />
+})
 ;(ChatScreen as any).navigationOptions = ({navigation}) => {
   const chat = navigation.getParam('chat')
   return {
@@ -107,7 +105,9 @@ export const ChatView = observer(({chat}: {chat: IChat}) => {
   )
 })
 
-export default ChatScreen
+const KeyboardAwareChatScreen = Platform.OS === 'ios' ? withKeyboardHOC(ChatScreen) : ChatScreen
+
+export default KeyboardAwareChatScreen
 
 const styles = StyleSheet.create({
   date: {

@@ -5,12 +5,11 @@ import {k} from '../Global'
 import {colors} from '../../constants'
 import {IBot, IWocky} from 'wocky-client'
 import BotPostCard from './BotPostCard'
-import {RText, Spinner} from '../common'
+import {RText, Spinner, BottomPopupNew} from '../common'
 import AddBotPost from './AddBotPost'
-import Header from './BotDetailsHeader'
+import {PreviewHeader, DefaultHeader} from './BotDetailsHeader'
 import {isAlive} from 'mobx-state-tree'
 import Separator from './Separator'
-import DraggablePopupList from '../common/DraggablePopupList'
 import {Actions} from 'react-native-router-flux'
 import {navBarStyle} from '../styles'
 import NotificationStore from '../../store/NotificationStore'
@@ -49,7 +48,6 @@ const BotDetails = inject(
       isNew,
       notificationStore,
       preview = false,
-      isActive,
     } = props
 
     useEffect(() => {
@@ -82,12 +80,12 @@ const BotDetails = inject(
           clearTimeout(viewTimeout)
         }
       }
-    }, [])
+    }, [botId])
 
     function scrollToNewestPost() {
-      ;(list.current as any).scrollToIndex({
+      ;(list.current as any).getNode().scrollToIndex({
         index: 0,
-        viewPosition: 0.5,
+        viewPosition: 1,
       })
     }
 
@@ -96,61 +94,64 @@ const BotDetails = inject(
     }
 
     return (
-      <View pointerEvents="box-none" style={{flex: 1}}>
-        <DraggablePopupList
-          isActive={isActive}
-          preview={preview}
-          data={!bot.error && bot.isSubscribed && !preview ? bot.posts.list.slice() : []}
-          ref={list}
-          contentContainerStyle={{
+      <BottomPopupNew
+        previewHeight={150}
+        fullViewHeight={500}
+        allowFullScroll
+        renderContent={() => <DefaultHeader bot={bot} />}
+        renderPreview={() => <PreviewHeader bot={bot} />}
+        preview={preview}
+        navBarConfig={{
+          backAction: () => Actions.refresh({preview: true}),
+          title: bot && (
+            <NavTitle
+              bot={bot}
+              onLongPress={() => {
+                Clipboard.setString(bot.address)
+                notificationStore!.flash('Address copied to clipboard 👍')
+              }}
+            />
+          ),
+        }}
+        animatedFlatListRef={list}
+        listProps={{
+          data: !bot.error && bot.isSubscribed && !preview ? bot.posts.list.slice() : [],
+          contentContainerStyle: {
             flexGrow: 1,
-          }}
-          ListFooterComponent={
+          },
+          ListFooterComponent: (
             <Observer>
               {() => {
                 if (props.wocky!.connected && bot && isAlive(bot) && bot.posts.loading)
                   return <Loader />
-                return <View style={{height: 0}} />
+                return <View style={{height: 80}} />
               }}
             </Observer>
-          }
-          initialNumToRender={8}
-          headerInner={<Header bot={bot!} {...props} />}
-          ItemSeparatorComponent={() => (
+          ),
+          initialNumToRender: 8,
+          ItemSeparatorComponent: () => (
             <View style={{backgroundColor: 'white'}}>
               <Separator />
             </View>
-          )}
-          renderItem={({item}) => <BotPostCard item={item} bot={bot!} />}
-          keyExtractor={item => item.id}
-          bounces={false}
-          keyboardDismissMode="on-drag"
-        />
-        {!preview && !bot.error && bot.isSubscribed && (
-          <AddBotPost bot={bot} afterPostSent={scrollToNewestPost} />
-        )}
-      </View>
+          ),
+          renderItem: ({item}) => <BotPostCard item={item} bot={bot!} />,
+          keyExtractor: item => item.id,
+          bounces: false,
+          keyboardDismissMode: 'on-drag',
+        }}
+        renderFooter={() =>
+          !preview &&
+          !bot.error &&
+          bot.isSubscribed && (
+            <View style={{position: 'absolute', bottom: 0, right: 0, left: 0}}>
+              <AddBotPost bot={bot} afterPostSent={scrollToNewestPost} />
+            </View>
+          )
+        }
+      />
     )
   })
 )
-;(BotDetails as any).navigationOptions = ({navigation}) => {
-  const {bot, notificationStore} = navigation.state.params
-  return {
-    fadeNavConfig: {
-      back: true,
-      title: bot && (
-        <NavTitle
-          bot={bot}
-          onLongPress={() => {
-            Clipboard.setString(bot.address)
-            notificationStore.flash('Address copied to clipboard 👍')
-          }}
-        />
-      ),
-    },
-  }
-}
-
 export default BotDetails
 
 const NavTitle = ({bot, onLongPress}) => {

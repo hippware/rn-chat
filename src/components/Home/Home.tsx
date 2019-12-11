@@ -6,6 +6,7 @@ import ButtonColumn from './ButtonColumn'
 import HomeBanner from './HomeBanner'
 import {width, height} from '../Global'
 import {useNavStore, useHomeStore} from 'src/utils/injectors'
+import BackButton from '../custom-navigators/BackButtonNew'
 
 type Props = {
   name: string
@@ -28,6 +29,7 @@ const Home = observer(({name}: Props) => {
       testID="screenHome"
     >
       <MapHome />
+      <BackButton />
       <HomeBanner enabled={!fullScreenMode && isCurrent} />
       {isCurrent && <ButtonColumn enabled={!fullScreenMode && isCurrent} />}
     </View>

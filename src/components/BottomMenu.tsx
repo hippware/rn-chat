@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, Image, Alert, StyleSheet, TouchableOpacity, TouchableOpacityProps} from 'react-native'
-import BottomPopup from './BottomPopup'
+import BottomSceneStatic from './BottomSceneStatic'
 import {Actions} from 'react-native-router-flux'
 import {isAlive} from 'mobx-state-tree'
 import {colors} from '../constants'
@@ -133,7 +133,7 @@ const BottomMenu = observer(() => {
   }
 
   return (
-    <BottomPopup>
+    <BottomSceneStatic>
       <MenuItemWrapper
         style={{
           marginTop: 35 * k,
@@ -204,7 +204,7 @@ const BottomMenu = observer(() => {
           <RText style={styles.text}>Invisible</RText>
         </MenuItem>
       </View>
-    </BottomPopup>
+    </BottomSceneStatic>
   )
 })
 
@@ -218,6 +218,7 @@ const styles = StyleSheet.create({
     color: colors.DARK_PURPLE,
     fontSize: 14,
     textAlign: 'center',
+    height: 20,
   },
   menuItem: {
     width: 75,

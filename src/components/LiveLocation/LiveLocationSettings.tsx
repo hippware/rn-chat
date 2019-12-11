@@ -16,6 +16,7 @@ const LiveLocationSettings = observer(() => {
   return (
     <View
       style={{
+        position: 'absolute',
         bottom: 0,
         width: '100%',
         backgroundColor: 'white',

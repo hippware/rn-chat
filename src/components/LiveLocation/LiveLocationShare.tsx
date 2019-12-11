@@ -15,7 +15,10 @@ type Props = {
   searchStore?: ISearchStore
 }
 
-const LiveLocationShare = inject('wocky', 'searchStore')(
+const LiveLocationShare = inject(
+  'wocky',
+  'searchStore'
+)(
   observer(({wocky, searchStore}: Props) => {
     useEffect(() => {
       searchStore!.localResult.setList(wocky.profile!.sortedFriends.map(f => ({profile: f})))
@@ -31,7 +34,7 @@ const LiveLocationShare = inject('wocky', 'searchStore')(
         <BottomButton
           isDisabled={!selected}
           onPress={() => {
-            Actions.popTo('home')
+            Actions.pop()
             Actions.liveLocationCompose()
           }}
         >

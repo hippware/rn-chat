@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {IProfile} from 'wocky-client'
 import {isAlive} from 'mobx-state-tree'
-import BottomPopup from '../BottomPopup'
+import {BottomPopupNew} from '../common'
 import {RText, Pill, BubbleBadge} from '../common'
 import {colors} from 'src/constants'
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native'
@@ -15,7 +15,7 @@ import {Actions} from 'react-native-router-flux'
 
 type Props = {
   item: string
-  preview?: boolean
+  preview: boolean
 }
 
 const ProfileDetail = observer(({item, preview}: Props) => {
@@ -24,21 +24,21 @@ const ProfileDetail = observer(({item, preview}: Props) => {
   const {loadProfile} = useWocky()
 
   useEffect(() => {
-    async function fetchProfile() {
-      const p = await loadProfile(item)
-      setProfile(p)
-    }
-    fetchProfile()
-  }, [])
+    loadProfile(item).then(p => setProfile(p))
+  }, [item])
 
   if (!profile || !isAlive(profile)) {
     return null
   }
 
   return (
-    <BottomPopup preview={preview}>
-      {preview ? <Preview profile={profile!} /> : <Default profile={profile!} />}
-    </BottomPopup>
+    <BottomPopupNew
+      previewHeight={150}
+      fullViewHeight={340}
+      renderPreview={() => <Preview profile={profile!} />}
+      renderContent={() => <Default profile={profile!} />}
+      preview={preview}
+    />
   )
 })
 
@@ -48,6 +48,7 @@ const Default = observer(({profile}: {profile: IProfile}) => (
       flex: 1,
       alignContent: 'center',
       alignItems: 'center',
+      paddingTop: 10,
       paddingBottom: 40,
     }}
     testID="profileDetail"

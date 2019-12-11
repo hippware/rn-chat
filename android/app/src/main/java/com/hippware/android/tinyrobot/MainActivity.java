@@ -4,15 +4,11 @@ import android.os.Bundle;
 import com.facebook.react.ReactRootView;
 import com.facebook.react.ReactActivity;
 import android.view.MotionEvent;
-import com.rome2rio.android.reactnativetouchthroughview.TouchThroughTouchHandlerInterface;
-import com.rome2rio.android.reactnativetouchthroughview.TouchThroughTouchHandler;
 import com.facebook.react.ReactActivityDelegate;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 import org.devio.rn.splashscreen.SplashScreen;
 
-public class MainActivity extends ReactActivity implements TouchThroughTouchHandlerInterface {
-    private TouchThroughTouchHandler touchThroughTouchHandler = new TouchThroughTouchHandler();
-
+public class MainActivity extends ReactActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SplashScreen.show(this);
@@ -27,17 +23,6 @@ public class MainActivity extends ReactActivity implements TouchThroughTouchHand
     @Override
     protected String getMainComponentName() {
         return "App";
-    }
-
-    public TouchThroughTouchHandler getTouchThroughTouchHandler() {
-        return touchThroughTouchHandler;
-    }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        touchThroughTouchHandler.handleTouchEvent(ev);
-
-        return super.dispatchTouchEvent(ev);
     }
 
     @Override
