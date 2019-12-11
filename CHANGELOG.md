@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+**New animation stack and architecture**
+
 * Update: tslint (PR #4525), @types/react-native (PR #4526)
   * websocket (PR #4527), typescript (PR #4528), ts-jest (PR #4530)
   * @types/react (PR #4531), pretty-quick (PR #4532), @babel/core (PR #4534)
@@ -13,6 +15,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Clean install results in an infinite loader on map (Regression #4428)
 * New message is not marked as read if message thread is open (#4476)
 * Remove unused `... friend { name }` field. (PR #4545)
+* New animation stack and architecture
+  * New BottomPopup + DraggablePopupList (PR #4517)
+  * Remove react-native-touch-through-view
 
 # 4.33.0 - 2019 Dec 5
 
