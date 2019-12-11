@@ -59,7 +59,7 @@ export const Profile = types
   }))
   .actions(self => ({
     maybeUpdateActivity() {
-      if (self.location && self.location.activityConfidence! >= 50) {
+      if (self.location && self.location.activity && self.location.activityConfidence! >= 50) {
         // MST doesn't allow a node to be two children of the same parent so shallow clone
         self._activity = _.clone(self.location) // this way it will work for OwnProfile too
       }
