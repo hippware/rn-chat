@@ -37,8 +37,8 @@ export default (Component): any => {
       const keyboardHideListener = Keyboard.addListener(keyboardHideListenerName, hideHandler)
 
       return () => {
-        Keyboard.removeListener('keyboardWillHide', keyboardHideListener as any)
-        Keyboard.removeListener('keyboardWillShow', keyboardShowListener as any)
+        Keyboard.removeListener(keyboardHideListenerName, keyboardHideListener as any)
+        Keyboard.removeListener(keyboardShowListenerName, keyboardShowListener as any)
       }
     }, [])
 

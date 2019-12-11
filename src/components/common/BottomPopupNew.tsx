@@ -140,10 +140,8 @@ export default class BottomPopupListNew extends Component<Props> {
   }
 
   componentWillUnmount() {
-    Keyboard.removeListener('keyboardWillHide', this.keyboardHideListener as any)
-    Keyboard.removeListener('keyboardWillShow', this.keyboardShowListener as any)
-    Keyboard.removeListener('keyboardDidHide', this.keyboardHideListener as any)
-    Keyboard.removeListener('keyboardDidShow', this.keyboardShowListener as any)
+    Keyboard.removeListener(keyboardHideListenerName, this.keyboardHideListener as any)
+    Keyboard.removeListener(keyboardShowListenerName, this.keyboardShowListener as any)
   }
 
   get previewY() {
