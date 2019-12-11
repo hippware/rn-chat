@@ -1,13 +1,12 @@
 import {createUser, dumpProfile} from './support/testuser'
-import {ILocationSnapshot} from '../src/model/Location'
-import {UserActivityType} from '../src/transport/types'
+import {createLocation} from '../src/model/Location'
 import {IWocky} from '../src'
 
 let service: IWocky
 
-const location: ILocationSnapshot = {
-  latitude: 1,
-  longitude: 2,
+const location = {
+  lat: 1,
+  lon: 2,
   accuracy: 3,
   activity: undefined,
   activityConfidence: undefined,
@@ -21,13 +20,15 @@ describe('Activity indicator tests', () => {
   })
 
   // Just a convenience to reduce typing
-  function injectActivity(activity: UserActivityType, activityConfidence = 100) {
-    service!.profile!.setLocation({
-      ...location,
-      createdAt: new Date(),
-      activity,
-      activityConfidence,
-    })
+  function injectActivity(activity, activityConfidence = 100) {
+    service!.profile!.setLocation(
+      createLocation({
+        ...location,
+        createdAt: new Date(),
+        activity,
+        activityConfidence,
+      })
+    )
   }
 
   it('Test that high confidence values are used', async () => {
@@ -45,6 +46,16 @@ describe('Activity indicator tests', () => {
     injectActivity('in_vehicle')
     expect(profile!.activity).toBe('in_vehicle')
     injectActivity('walking', 49)
+    expect(profile!.activity).toBe('in_vehicle')
+    injectActivity('in_vehicle')
+    expect(profile!.activity).toBe('in_vehicle')
+  })
+
+  it('Test that activity unknown is ignored', async () => {
+    const profile = service!.profile
+    injectActivity('in_vehicle')
+    expect(profile!.activity).toBe('in_vehicle')
+    injectActivity('unknown')
     expect(profile!.activity).toBe('in_vehicle')
     injectActivity('in_vehicle')
     expect(profile!.activity).toBe('in_vehicle')
