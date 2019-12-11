@@ -72,18 +72,7 @@ export default class BottomPopupListNew extends Component<Props> {
     this._keyboardOffset = new Animated.Value(0)
 
     // transition preview -> full view based on scroll position
-    this._dragY.addListener(({value}) => {
-      if (this.props.previewHeight && value !== 0) {
-        const draggedTop = this.state.lastSnap + value
-        const closerToPreviewHeight =
-          this.previewY - draggedTop < Math.abs(this.fullViewY - draggedTop)
-        if (preview && !closerToPreviewHeight) {
-          Actions.refresh({preview: false})
-        } else if (!preview && closerToPreviewHeight) {
-          Actions.refresh({preview: true})
-        }
-      }
-    })
+    this._dragY.addListener(this.dragYListener)
 
     this._lastScrollY.addListener(({value}) => {
       this._lastScrollYValue = value
@@ -107,6 +96,20 @@ export default class BottomPopupListNew extends Component<Props> {
       outputRange: [start, end],
       extrapolate: 'clamp',
     })
+  }
+
+  dragYListener = ({value}) => {
+    const {previewHeight, preview} = this.props
+    if (previewHeight && value !== 0) {
+      const draggedTop = this.state.lastSnap + value
+      const closerToPreviewHeight =
+        this.previewY - draggedTop < Math.abs(this.fullViewY - draggedTop)
+      if (preview && !closerToPreviewHeight) {
+        Actions.refresh({preview: false})
+      } else if (!preview && closerToPreviewHeight) {
+        Actions.refresh({preview: true})
+      }
+    }
   }
 
   showKeyboardHandler = ({endCoordinates: {height: eHeight}, duration}: any) => {
