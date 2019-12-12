@@ -89,7 +89,7 @@ const BotDetails = inject(
       })
     }
 
-    if (!bot || !isAlive(bot)) {
+    if (homeStore.fullScreenMode || !bot || !isAlive(bot)) {
       return null
     }
 
