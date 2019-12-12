@@ -98,8 +98,6 @@ const BotDetails = inject(
         previewHeight={150}
         fullViewHeight={500}
         allowFullScroll
-        renderContent={() => <DefaultHeader bot={bot} />}
-        renderPreview={() => <PreviewHeader bot={bot} />}
         preview={preview}
         navBarConfig={{
           backAction: () => Actions.refresh({preview: true}),
@@ -119,6 +117,11 @@ const BotDetails = inject(
           contentContainerStyle: {
             flexGrow: 1,
           },
+          ListHeaderComponent: preview ? (
+            <PreviewHeader bot={bot!} />
+          ) : (
+            <DefaultHeader bot={bot!} />
+          ),
           ListFooterComponent: (
             <Observer>
               {() => {

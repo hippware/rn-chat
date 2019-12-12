@@ -259,7 +259,7 @@ const BottomPopupListNew = ({
                 source={require('../../../images/bottomPopup.png')}
                 resizeMode="stretch"
               />
-              {renderPreview !== undefined && (
+              {preview !== undefined && (
                 <PreviewButton
                   onPress={() => Actions.refresh({preview: !preview})}
                   preview={preview}
