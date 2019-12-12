@@ -163,10 +163,10 @@ const BottomPopupListNew = ({
   }
 
   const _onHandlerStateChange = ({nativeEvent}: PanGestureHandlerStateChangeEvent) => {
+    let {translationY} = nativeEvent
     // if we've just released the pan gesture...
     if (nativeEvent.oldState === State.ACTIVE) {
       setActivelyScrolling(false)
-      let {translationY} = nativeEvent
       const velocityY = nativeEvent.velocityY
       translationY -= _lastScrollYValue
       // not sure why this magic number
@@ -193,7 +193,11 @@ const BottomPopupListNew = ({
       // animate to the closest clamp point
       springTo(destSnapPoint, velocityY)
     } else {
-      setActivelyScrolling(true)
+      // since this handler gets called for taps (Android only) then we have to ensure that the y value has changed
+      // https://github.com/hippware/rn-chat/issues/4560
+      if (Math.abs(translationY) > 5) {
+        setActivelyScrolling(true)
+      }
     }
   }
 
