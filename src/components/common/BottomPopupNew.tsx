@@ -28,6 +28,8 @@ type Props = {
   renderFooter?: any
 }
 
+type ScrollState = {lastSnap: number; preview: boolean}
+
 // todo: ref forwarding
 
 const BottomPopupListNew = ({
@@ -60,33 +62,29 @@ const BottomPopupListNew = ({
   const fullViewY = height - fullViewHeight
 
   // by using a reducer (instead of traditional `useState`) I get around this problem: https://github.com/facebook/react/issues/14042
-  function reducer(state, action: {type: string; payload: number}) {
+  function reducer(
+    state: ScrollState,
+    action: {type: 'set'; payload: Partial<ScrollState>} | {type: 'check'; payload: number}
+  ) {
     switch (action.type) {
       case 'set':
-        return action.payload
+        return {...state, ...action.payload}
       case 'check':
-        // console.log('& dragy', state)
         const value = action.payload
         if (previewHeight && value !== 0) {
-          const draggedTop = lastSnap + value
+          const draggedTop = state.lastSnap + value
           const closerToPreviewHeight = previewY - draggedTop < Math.abs(fullViewY - draggedTop)
-          // & closer? 816 626
-          // console.log('& closer?', previewY - draggedTop, Math.abs(fullViewY - draggedTop))
-          if (preview && !closerToPreviewHeight) {
-            console.log('& refresh false')
-            // Actions.refresh({preview: false})
-          } else if (!preview && closerToPreviewHeight) {
-            console.log('& refresh true')
-            // Actions.refresh({preview: true})
+          if (state.preview && !closerToPreviewHeight) {
+            Actions.refresh({preview: false})
+          } else if (!state.preview && closerToPreviewHeight) {
+            Actions.refresh({preview: true})
           }
         }
         return state
-      default:
-        throw new Error('bad dispatch' + action.type)
     }
   }
 
-  const [lastSnap, setLastSnap] = useReducer(reducer, 0)
+  const [scrollState, dispatch] = useReducer(reducer, {lastSnap: 0, preview: !!preview})
   const [snapPointsFromTop, setSnapPoints] = useState<number[]>([])
   const [activelyScrolling, setActivelyScrolling] = useState(false)
   const [start, setStart] = useState(0)
@@ -105,12 +103,11 @@ const BottomPopupListNew = ({
     setStart(snapPoints[0])
     const tempEnd = snapPoints[snapPoints.length - 1]
     setEnd(tempEnd)
-    setLastSnap({type: 'set', payload: tempEnd})
+    dispatch({type: 'set', payload: {lastSnap: tempEnd}})
 
     // transition preview -> full view based on scroll position
     _dragY.addListener(({value}) => {
-      // If I try to access state or props in this listener in the "traditional" way then the values never update. This is why I need to use a reducer
-      setLastSnap({type: 'check', payload: value})
+      dispatch({type: 'check', payload: value})
     })
 
     _lastScrollY.addListener(({value}) => _setLastScrollYValue(value))
@@ -153,6 +150,7 @@ const BottomPopupListNew = ({
       }
       springTo(preview ? height - previewHeight! : height - fullViewHeight)
     }
+    dispatch({type: 'set', payload: {preview}})
   }, [preview])
 
   const _onHeaderHandlerStateChange = ({nativeEvent}: PanGestureHandlerStateChangeEvent) => {
@@ -173,7 +171,7 @@ const BottomPopupListNew = ({
       const dragToss = 0.05
 
       // where the drag will eventually end when it slides to a stop (?)
-      const endOffsetY = lastSnap + translationY + dragToss * velocityY
+      const endOffsetY = scrollState.lastSnap + translationY + dragToss * velocityY
 
       let destSnapPoint = snapPointsFromTop[0]
 
@@ -198,8 +196,7 @@ const BottomPopupListNew = ({
   }
 
   const springTo = (toValue: number, velocity?: number) => {
-    // setLastSnap(toValue)
-    setLastSnap({type: 'set', payload: toValue})
+    dispatch({type: 'set', payload: {lastSnap: toValue}})
     const toPreview = toValue === previewY
     if ((toPreview && !preview) || (!toPreview && preview)) {
       Actions.refresh({preview: toPreview})
@@ -228,7 +225,7 @@ const BottomPopupListNew = ({
     <TapGestureHandler
       maxDurationMs={100000}
       ref={masterdrawer}
-      maxDeltaY={snapPointsFromTop.length ? lastSnap - snapPointsFromTop[0] : height}
+      maxDeltaY={snapPointsFromTop.length ? scrollState.lastSnap - snapPointsFromTop[0] : height}
     >
       <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
         <Animated.View
