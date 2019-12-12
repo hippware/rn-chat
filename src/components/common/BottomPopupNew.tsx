@@ -136,6 +136,8 @@ const BottomPopupListNew = ({
     const keyboardHideListener = Keyboard.addListener(keyboardHideListenerName, hideKeyboardHandler)
 
     return () => {
+      _dragY.removeAllListeners()
+      _lastScrollY.removeAllListeners()
       Keyboard.removeListener(keyboardHideListenerName, keyboardHideListener as any)
       Keyboard.removeListener(keyboardShowListenerName, keyboardShowListener as any)
     }
