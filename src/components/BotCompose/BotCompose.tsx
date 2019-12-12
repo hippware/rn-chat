@@ -126,7 +126,6 @@ const BotCompose = inject(
       )
 
       return () => {
-        props.iconStore!.reset()
         disposer()
       }
     }, [])
@@ -201,7 +200,10 @@ const BotCompose = inject(
               <EditCTA
                 text="Note"
                 icon={bot!.description ? noteIconDone : noteIcon}
-                onPress={() => Actions.editNote({botId: bot!.id})}
+                onPress={() => {
+                  bot!.load({title: text, icon: props.iconStore!.emoji})
+                  Actions.editNote({botId: bot!.id})
+                }}
               />
               <EditCTA
                 text="Photo"
