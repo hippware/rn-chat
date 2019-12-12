@@ -155,6 +155,13 @@ export default class BottomPopupListNew extends Component<Props> {
 
   componentDidUpdate(prevProps: Props) {
     if (prevProps.preview !== this.props.preview && !this.activelyScrolling) {
+      // scroll to top when back button/dismiss is pressed
+      if (this.props.animatedFlatListRef && this.props.allowFullScroll && this.props.preview) {
+        ;(this.props.animatedFlatListRef as any).current
+          .getNode()
+          .scrollToOffset({animated: true, offset: 0})
+      }
+
       this.springTo(
         this.props.preview ? height - this.props.previewHeight! : height - this.props.fullViewHeight
       )
