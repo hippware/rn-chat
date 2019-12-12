@@ -9,7 +9,7 @@ import ConnectButton from './ConnectButton'
 import ProfileAvatar from '../ProfileAvatar'
 import {avatarScale} from '../Global'
 import BlockReport from './BlockReport'
-import {useWocky} from 'src/utils/injectors'
+import {useWocky, useHomeStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
 
@@ -22,12 +22,13 @@ const ProfileDetail = observer(({item, preview}: Props) => {
   const [profile, setProfile] = useState<IProfile | null>(null)
 
   const {loadProfile} = useWocky()
+  const {fullScreenMode} = useHomeStore()
 
   useEffect(() => {
     loadProfile(item).then(p => setProfile(p))
   }, [item])
 
-  if (!profile || !isAlive(profile)) {
+  if (fullScreenMode || !profile || !isAlive(profile)) {
     return null
   }
 
