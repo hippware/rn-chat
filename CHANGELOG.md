@@ -18,6 +18,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * New message is not marked as read if message thread is open (#4476)
 * Remove unused `... friend { name }` field. (PR #4545)
 * New animation stack and architecture
+  * Location Profile: Tap and drag issues with bottom card (#4459)
   * New BottomPopup + DraggablePopupList (PR #4517)
   * Remove react-native-touch-through-view
 * Mode of Trans: Swipe-kill and screen lock removes mode of trans (#3950)
