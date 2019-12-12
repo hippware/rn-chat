@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.34.0 - 2019 Dec 11
+
 **New animation stack and architecture**
 
 * Update: tslint (PR #4525), @types/react-native (PR #4526)
@@ -18,6 +20,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * New animation stack and architecture
   * New BottomPopup + DraggablePopupList (PR #4517)
   * Remove react-native-touch-through-view
+* Mode of Trans: Swipe-kill and screen lock removes mode of trans (#3950)
+* Edit Location: Back caret doesn't take user to HS from a location edit (#4550)
 
 # 4.33.0 - 2019 Dec 5
 
