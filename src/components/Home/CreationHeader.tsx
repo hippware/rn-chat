@@ -10,11 +10,13 @@ import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 import {IHomeStore} from 'src/store/HomeStore'
 import {observer} from 'mobx-react'
+import IconStore from 'src/store/IconStore'
 
 type Props = {
   wocky?: IWocky
   analytics?: any
   homeStore?: IHomeStore
+  iconStore?: IconStore
 }
 
 const CreationHeader = inject(
@@ -23,12 +25,13 @@ const CreationHeader = inject(
   'iconStore',
   'homeStore'
 )(
-  observer(({wocky, analytics, homeStore}: Props) => {
+  observer(({wocky, analytics, homeStore, iconStore}: Props) => {
     let trackTimeout: any
 
     const [bot, setBot] = useState<IBot | null>(null)
 
     useEffect(() => {
+      iconStore!.reset()
       wocky!.createBot().then(b => {
         setBot(b)
         homeStore!.stopFollowingUserOnMap()
