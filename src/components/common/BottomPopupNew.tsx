@@ -156,6 +156,7 @@ const BottomPopupListNew = forwardRef(
         // scroll to top when back button/dismiss is pressed
         // todo: test this with notifications screen where we don't need to get the ref on the parent element
         if (ref && allowFullScroll && preview) {
+          _lastScrollY.setValue(0)
           _dragY.setValue(0)
           ;(ref as any).current.getNode().scrollToOffset({animated: false, offset: 0})
         }
