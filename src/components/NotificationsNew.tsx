@@ -33,7 +33,7 @@ const Notifications = observer(({isActive, navigation}: Props) => {
       fullViewHeight={400}
       allowFullScroll={true}
       renderContent={() => (
-        <View style={{flex: 1, alignItems: 'center'}}>
+        <View style={{flex: 1, paddingTop: 3, alignItems: 'center'}}>
           <SwitchButton
             value={notifications.mode as 1 | 2 | undefined}
             text1="Updates"
@@ -54,7 +54,7 @@ const Notifications = observer(({isActive, navigation}: Props) => {
               notifications.load()
             }}
           >
-            {notifications.hasUnreadRequests && <View style={styles.newDot} />}
+            <View style={styles.newDot} />
           </SwitchButton>
         </View>
       )}

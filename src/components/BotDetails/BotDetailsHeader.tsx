@@ -57,7 +57,7 @@ export const DefaultHeader = inject(
       )
     if (bot.error) return <BotUnavailable />
     return (
-      <View style={{backgroundColor: 'white'}}>
+      <View style={{backgroundColor: 'white', paddingLeft: 20 * k}}>
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           <RText
             size={21}
