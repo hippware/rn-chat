@@ -20,6 +20,13 @@ const ChatListScreen = observer(({isActive}: Props) => {
     <BottomPopupNew
       fullViewHeight={400}
       allowFullScroll
+      navBarConfig={{
+        title: (
+          <RText size={16} color={colors.DARK_PURPLE}>
+            Messages
+          </RText>
+        ),
+      }}
       listProps={{
         data: chats.list.slice(),
         initialNumToRender: 6,
@@ -76,15 +83,5 @@ const ChatListScreen = observer(({isActive}: Props) => {
     />
   )
 })
-;(ChatListScreen as any).navigationOptions = {
-  fadeNavConfig: {
-    back: true,
-    title: (
-      <RText size={16} color={colors.DARK_PURPLE}>
-        Messages
-      </RText>
-    ),
-  },
-}
 
 export default ChatListScreen

@@ -95,11 +95,10 @@ const BotDetails = inject(
 
     return (
       <BottomPopupNew
+        ref={list}
         previewHeight={150}
         fullViewHeight={500}
         allowFullScroll
-        renderContent={() => <DefaultHeader bot={bot} />}
-        renderPreview={() => <PreviewHeader bot={bot} />}
         preview={preview}
         navBarConfig={{
           backAction: () => Actions.refresh({preview: true}),
@@ -113,12 +112,16 @@ const BotDetails = inject(
             />
           ),
         }}
-        animatedFlatListRef={list}
         listProps={{
           data: !bot.error && bot.isSubscribed && !preview ? bot.posts.list.slice() : [],
           contentContainerStyle: {
             flexGrow: 1,
           },
+          ListHeaderComponent: preview ? (
+            <PreviewHeader bot={bot!} />
+          ) : (
+            <DefaultHeader bot={bot!} />
+          ),
           ListFooterComponent: (
             <Observer>
               {() => {
