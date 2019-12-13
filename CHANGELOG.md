@@ -7,6 +7,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Alignment of location profile card is off when user leaves (#4555)
 * Full map: Bottom card remains when user taps on HS map (#4553)
 * Location Creation: Emoji and Location Title go away with Note Add (#4554)
+* [android] Location Profile: Tap on the up caret shifts the map up (#4560)
+* Header not displaying with scroll (#4565)
+* [android] Location details image flickering on scroll (#4567)
 
 # 4.34.0 - 2019 Dec 11
 
