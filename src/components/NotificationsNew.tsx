@@ -54,7 +54,7 @@ const Notifications = observer(({isActive, navigation}: Props) => {
               notifications.load()
             }}
           >
-            <View style={styles.newDot} />
+            {notifications.hasUnreadRequests && <View style={styles.newDot} />}
           </SwitchButton>
         </View>
       )}
