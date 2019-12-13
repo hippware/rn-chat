@@ -57,7 +57,7 @@ export const DefaultHeader = inject(
       )
     if (bot.error) return <BotUnavailable />
     return (
-      <View style={{backgroundColor: 'white', paddingLeft: 20 * k}}>
+      <View style={{backgroundColor: 'white'}}>
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           <RText
             size={21}
@@ -100,9 +100,11 @@ export const DefaultHeader = inject(
               {/* TODO: add bot.createdAt when ready on the backend */}
             </View>
             {!!bot.description && (
-              <RText size={17} weight="Light" color={colors.DARK_PURPLE}>
-                {bot.description}
-              </RText>
+              <View style={{paddingLeft: 20 * k}}>
+                <RText size={17} weight="Light" color={colors.DARK_PURPLE}>
+                  {bot.description}
+                </RText>
+              </View>
             )}
             {!!bot.image && (
               <LazyImage
@@ -296,6 +298,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.WHITE,
     marginBottom: 10,
+    paddingLeft: 20 * k,
   },
   invite: {
     height: 40 * minHeight,
