@@ -12,6 +12,8 @@ import {height} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import NavBarHeader, {NavConfig, FULL_SCREEN_POS} from '../custom-navigators/NavBarHeaderNew'
 import {keyboardShowListenerName, keyboardHideListenerName} from './withKeyboardHOC'
+import {useHomeStore} from '../../utils/injectors'
+import {observer} from 'mobx-react'
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
@@ -258,18 +260,7 @@ const BottomPopupListNew = forwardRef(
             >
               <Animated.View style={styles.header}>
                 <WhiteListBackground />
-                {/* // todo: replace this image with a View + borderRadius (no extra padding on bottom) */}
-                <Image
-                  style={{width: '100%', position: 'absolute'}}
-                  // todo: emulate homestore in story
-                  // source={
-                  //   mapType === 'hybrid'
-                  //     ? require('../../images/bottomPopupDarkShadow.png')
-                  //     : require('../../images/bottomPopup.png')
-                  // }
-                  source={require('../../../images/bottomPopup.png')}
-                  resizeMode="stretch"
-                />
+                <CurveImage />
                 {preview !== undefined && (
                   <PreviewButton
                     onPress={() => Actions.refresh({preview: !preview})}
@@ -293,10 +284,7 @@ const BottomPopupListNew = forwardRef(
                   simultaneousHandlers={drawer}
                 >
                   <AnimatedFlatList
-                    style={[
-                      {flex: 1},
-                      // , {marginBottom: snapPointsFromTop[0]}
-                    ]}
+                    style={[{flex: 1}]}
                     bounces={false}
                     data={[]}
                     ListHeaderComponent={() =>
@@ -340,6 +328,22 @@ const WhiteListBackground = () => (
     }}
   />
 )
+
+// todo: replace this image with a View + borderRadius (no extra padding on bottom)
+const CurveImage = observer(() => {
+  const {mapType} = useHomeStore()
+  return (
+    <Image
+      style={{width: '100%', position: 'absolute'}}
+      source={
+        mapType === 'hybrid'
+          ? require('../../../images/bottomPopupDarkShadow.png')
+          : require('../../../images/bottomPopup.png')
+      }
+      resizeMode="stretch"
+    />
+  )
+})
 
 const styles = StyleSheet.create({
   container: {
