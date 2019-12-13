@@ -73,7 +73,7 @@ const FriendSearch = inject('searchStore')(
       <BottomPopupNew
         fullViewHeight={400}
         allowFullScroll
-        animatedFlatListRef={list}
+        ref={list}
         listProps={{
           ListHeaderComponent: renderHeader(),
           ListFooterComponent:

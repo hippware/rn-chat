@@ -95,6 +95,7 @@ const BotDetails = inject(
 
     return (
       <BottomPopupNew
+        ref={list}
         previewHeight={150}
         fullViewHeight={500}
         allowFullScroll
@@ -111,7 +112,6 @@ const BotDetails = inject(
             />
           ),
         }}
-        animatedFlatListRef={list}
         listProps={{
           data: !bot.error && bot.isSubscribed && !preview ? bot.posts.list.slice() : [],
           contentContainerStyle: {
