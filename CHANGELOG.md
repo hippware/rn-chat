@@ -25,6 +25,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Location Profile: Tap and drag issues with bottom card (#4459)
   * New BottomPopup + DraggablePopupList (PR #4517)
   * Remove react-native-touch-through-view
+  * Android: Map is visible on the bottom of the location profile card (#4511)
+  * Search for friends is showing map instead of white background (#4512)
 * Mode of Trans: Swipe-kill and screen lock removes mode of trans (#3950)
 * Edit Location: Back caret doesn't take user to HS from a location edit (#4550)
 
