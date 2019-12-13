@@ -20,8 +20,6 @@ type Props = {
 const Notifications = observer(({isActive, navigation}: Props) => {
   const wocky = useWocky()
   useEffect(() => {
-    // send all injected props + bot "up" to static context
-    navigation.setParams({wocky})
     wocky.notifications.load().then(() => wocky.notifications.readAll())
     return () => wocky.notifications.setMode(1) // reset
   }, [])
@@ -32,7 +30,6 @@ const Notifications = observer(({isActive, navigation}: Props) => {
   }
   return (
     <BottomPopupNew
-      // previewHeight={150}
       fullViewHeight={400}
       allowFullScroll={true}
       renderContent={() => (
@@ -61,6 +58,9 @@ const Notifications = observer(({isActive, navigation}: Props) => {
           </SwitchButton>
         </View>
       )}
+      navBarConfig={{
+        title: <RText style={navBarStyle.titleStyle}>{wocky.notifications.title}</RText>,
+      }}
       listProps={{
         data: notifications.data,
         renderItem: ({item}: {item: IEvent}) => <EventCard item={item} />,
@@ -95,18 +95,6 @@ const Notifications = observer(({isActive, navigation}: Props) => {
       }}
     />
   )
-})
-;(Notifications as any).navigationOptions = ({
-  navigation: {
-    state: {
-      params: {wocky},
-    },
-  },
-}) => ({
-  fadeNavConfig: {
-    back: true,
-    title: wocky && <RText style={navBarStyle.titleStyle}>{wocky.notifications.title}</RText>,
-  },
 })
 
 const styles = StyleSheet.create({

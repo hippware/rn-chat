@@ -43,6 +43,13 @@ const VisitorList = observer(({botId, isActive}: Props) => {
     <BottomPopupNew
       fullViewHeight={400}
       allowFullScroll
+      navBarConfig={{
+        title: (
+          <RText size={18} color={colors.PURPLE}>
+            Who's Here
+          </RText>
+        ),
+      }}
       listProps={{
         ListHeaderComponent: header,
         renderItem: ({item}) => <FriendCard profile={item} />,
@@ -55,15 +62,5 @@ const VisitorList = observer(({botId, isActive}: Props) => {
     />
   )
 })
-;(VisitorList as any).navigationOptions = {
-  fadeNavConfig: {
-    back: true,
-    title: (
-      <RText size={18} color={colors.PURPLE}>
-        Who's Here
-      </RText>
-    ),
-  },
-}
 
 export default VisitorList

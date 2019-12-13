@@ -74,6 +74,13 @@ const FriendSearch = inject('searchStore')(
         fullViewHeight={400}
         allowFullScroll
         ref={list}
+        navBarConfig={{
+          title: (
+            <RText size={16} color={colors.DARK_PURPLE}>
+              Friends
+            </RText>
+          ),
+        }}
         listProps={{
           ListHeaderComponent: renderHeader(),
           ListFooterComponent:
@@ -95,15 +102,5 @@ const FriendSearch = inject('searchStore')(
     )
   })
 )
-;(FriendSearch as any).navigationOptions = {
-  fadeNavConfig: {
-    back: true,
-    title: (
-      <RText size={16} color={colors.DARK_PURPLE}>
-        Friends
-      </RText>
-    ),
-  },
-}
 
 export default FriendSearch

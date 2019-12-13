@@ -48,6 +48,13 @@ const FriendList = observer(({isActive}: Props) => {
   // Sometimes wocky.profile is null. Race condition?
   return (
     <BottomPopupNew
+      navBarConfig={{
+        title: (
+          <RText size={16} color={colors.DARK_PURPLE}>
+            Friends
+          </RText>
+        ),
+      }}
       listProps={{
         ListHeaderComponent: profile ? renderHeader() : undefined,
         renderItem: ({item}) => <FriendCard profile={item.user} />,
@@ -60,16 +67,6 @@ const FriendList = observer(({isActive}: Props) => {
     />
   )
 })
-;(FriendList as any).navigationOptions = {
-  fadeNavConfig: {
-    back: true,
-    title: (
-      <RText size={16} color={colors.DARK_PURPLE}>
-        Friends
-      </RText>
-    ),
-  },
-}
 
 const FriendCount = ({count}) =>
   count >= 0 ? (
