@@ -10,6 +10,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [android] Location Profile: Tap on the up caret shifts the map up (#4560)
 * Header not displaying with scroll (#4565)
 * [android] Location details image flickering on scroll (#4567)
+* Location Profile: The margin needs aligned on the initial post (#4548)
+* Updates: Yellow dot notification indicator doesn't fully display (#4566)
 
 # 4.34.0 - 2019 Dec 11
 
