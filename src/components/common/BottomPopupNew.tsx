@@ -62,6 +62,7 @@ const BottomPopupListNew = forwardRef(
 
     const previewY = previewHeight ? height - previewHeight : 0
     const fullViewY = height - fullViewHeight
+    const [navBarEnabled, setNavBarEnabled] = useState(false)
 
     // by using a reducer (instead of traditional `useState`) I get around this problem: https://github.com/facebook/react/issues/14042
     function reducer(
@@ -218,6 +219,12 @@ const BottomPopupListNew = forwardRef(
         Actions.refresh({preview: toPreview})
       }
 
+      if (navBarConfig && toValue === FULL_SCREEN_POS) {
+        setNavBarEnabled(true)
+      } else {
+        setNavBarEnabled(false)
+      }
+
       Animated.spring(_translateYOffset, {
         velocity,
         tension: 68,
@@ -308,7 +315,9 @@ const BottomPopupListNew = forwardRef(
               </Animated.View>
             </PanGestureHandler>
           </Animated.View>
-          {navBarConfig && <NavBarHeader config={navBarConfig!} scrollY={_translateY} />}
+          {navBarConfig && (
+            <NavBarHeader config={navBarConfig!} scrollY={_translateY} enabled={navBarEnabled} />
+          )}
           {renderFooter && renderFooter()}
         </View>
       </TapGestureHandler>
