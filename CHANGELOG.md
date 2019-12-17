@@ -12,6 +12,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [android] Location details image flickering on scroll (#4567)
 * Location Profile: The margin needs aligned on the initial post (#4548)
 * Updates: Yellow dot notification indicator doesn't fully display (#4566)
+* Location Profile: Back caret doesn't shrink bottom card (#4571)
 
 # 4.34.0 - 2019 Dec 11
 
