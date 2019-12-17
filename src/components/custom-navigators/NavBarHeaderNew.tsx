@@ -15,22 +15,24 @@ export type NavConfig = {
 type Props = {
   config: NavConfig
   scrollY?: Animated.Value | Animated.AnimatedInterpolation
+  enabled: boolean
 }
 
 export const FADE_NAV_BAR_HEADER_HEIGHT = 64 * minHeight
 
-const NavBarHeader = ({scrollY, config}: Props) => {
+const NavBarHeader = ({scrollY, config, enabled}: Props) => {
   const {backAction, title} = config
   const {backButtonImage, navBarButtonColor} = navBarStyle
 
   const opacity = scrollY!.interpolate({
-    inputRange: [FULL_SCREEN_POS, 100, 1000],
-    outputRange: [1, 0, 0],
+    inputRange: [FULL_SCREEN_POS, 100],
+    outputRange: [1, 0],
+    extrapolate: 'clamp',
   })
 
   // todo: add logic to ignore pointerEvents until the view has opacity > 0
   return (
-    <Animated.View style={[{opacity}, styles.header]}>
+    <Animated.View style={[{opacity}, styles.header]} pointerEvents={enabled ? 'auto' : 'none'}>
       <TouchableOpacity onPress={() => (backAction ? backAction() : Actions.pop())}>
         <Image
           source={backButtonImage}
