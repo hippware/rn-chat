@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.34.1 - 2019 Dec 17
+
 * Alignment of location profile card is off when user leaves (#4555)
 * Full map: Bottom card remains when user taps on HS map (#4553)
 * Location Creation: Emoji and Location Title go away with Note Add (#4554)
