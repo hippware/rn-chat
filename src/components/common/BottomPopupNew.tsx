@@ -53,7 +53,6 @@ const BottomPopupListNew = forwardRef(
     const [_lastScrollYValue, _setLastScrollYValue] = useState(0)
     const [_lastScrollY] = useState(new Animated.Value(0))
     const [_dragY] = useState(new Animated.Value(0))
-    const [_translateYOffset] = useState(new Animated.Value(0))
     const _reverseLastScrollY = Animated.multiply(new Animated.Value(-1), _lastScrollY)
     const _onGestureEvent = Animated.event([{nativeEvent: {translationY: _dragY}}], {
       useNativeDriver: true,
@@ -86,35 +85,34 @@ const BottomPopupListNew = forwardRef(
           return state
       }
     }
-
-    const [scrollState, dispatch] = useReducer(reducer, {lastSnap: 0, preview: !!preview})
-    const [snapPointsFromTop, setSnapPoints] = useState<number[]>([])
     const [activelyScrolling, setActivelyScrolling] = useState(false)
-    const [start, setStart] = useState(0)
-    const [end, setEnd] = useState(height)
+
+    let start = 0
+    let end = height
+    let snapPointsFromTop: number[] = []
+    if (allowFullScroll) {
+      snapPointsFromTop = [FULL_SCREEN_POS]
+    }
+    snapPointsFromTop.push(height - fullViewHeight)
+    if (previewHeight) {
+      snapPointsFromTop.push(height - previewHeight)
+    }
+    start = snapPointsFromTop[0]
+    end = snapPointsFromTop[snapPointsFromTop.length - 1]
+
+    const [scrollState, dispatch] = useReducer(reducer, {lastSnap: end, preview: !!preview})
+    const [_translateYOffset] = useState(
+      new Animated.Value(
+        preview || !previewHeight ? end : snapPointsFromTop[snapPointsFromTop.length - 2]
+      )
+    )
 
     useEffect(() => {
-      let snapPoints: number[] = []
-      if (allowFullScroll) {
-        snapPoints = [FULL_SCREEN_POS]
-      }
-      snapPoints.push(height - fullViewHeight)
-      if (previewHeight) {
-        snapPoints.push(height - previewHeight)
-      }
-      setSnapPoints(snapPoints)
-      setStart(snapPoints[0])
-      const tempEnd = snapPoints[snapPoints.length - 1]
-      setEnd(tempEnd)
-      dispatch({type: 'set', payload: {lastSnap: tempEnd}})
       // transition preview -> full view based on scroll position
       _dragY.addListener(({value}) => {
         dispatch({type: 'check', payload: value})
       })
       _lastScrollY.addListener(({value}) => _setLastScrollYValue(value))
-      _translateYOffset.setValue(
-        preview || !previewHeight ? tempEnd : snapPoints[snapPoints.length - 2]
-      )
       const showKeyboardHandler = ({endCoordinates: {height: eHeight}, duration}: any) => {
         Animated.timing(_keyboardOffset, {
           toValue: -eHeight,
