@@ -250,7 +250,7 @@ const BottomPopupListNew = forwardRef(
         ref={masterdrawer}
         maxDeltaY={snapPointsFromTop.length ? scrollState.lastSnap - snapPointsFromTop[0] : height}
       >
-        <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
+        <Animated.View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
           <Animated.View
             style={[
               StyleSheet.absoluteFillObject,
@@ -319,7 +319,7 @@ const BottomPopupListNew = forwardRef(
             <NavBarHeader config={navBarConfig!} scrollY={_translateY} enabled={navBarEnabled} />
           )}
           {renderFooter && renderFooter()}
-        </View>
+        </Animated.View>
       </TapGestureHandler>
     )
   }
