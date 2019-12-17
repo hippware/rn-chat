@@ -91,7 +91,7 @@ const BottomPopupListNew = forwardRef(
     const [snapPointsFromTop, setSnapPoints] = useState<number[]>([])
     const [activelyScrolling, setActivelyScrolling] = useState(false)
     const [start, setStart] = useState(0)
-    const [end, setEnd] = useState(1)
+    const [end, setEnd] = useState(height)
 
     useEffect(() => {
       let snapPoints: number[] = []
@@ -107,18 +107,14 @@ const BottomPopupListNew = forwardRef(
       const tempEnd = snapPoints[snapPoints.length - 1]
       setEnd(tempEnd)
       dispatch({type: 'set', payload: {lastSnap: tempEnd}})
-
       // transition preview -> full view based on scroll position
       _dragY.addListener(({value}) => {
         dispatch({type: 'check', payload: value})
       })
-
       _lastScrollY.addListener(({value}) => _setLastScrollYValue(value))
-
       _translateYOffset.setValue(
         preview || !previewHeight ? tempEnd : snapPoints[snapPoints.length - 2]
       )
-
       const showKeyboardHandler = ({endCoordinates: {height: eHeight}, duration}: any) => {
         Animated.timing(_keyboardOffset, {
           toValue: -eHeight,
@@ -126,7 +122,6 @@ const BottomPopupListNew = forwardRef(
           useNativeDriver: true,
         }).start()
       }
-
       const hideKeyboardHandler = ({duration}: any) => {
         Animated.timing(_keyboardOffset, {
           toValue: 0,
@@ -134,7 +129,6 @@ const BottomPopupListNew = forwardRef(
           useNativeDriver: true,
         }).start()
       }
-
       const keyboardShowListener = Keyboard.addListener(
         keyboardShowListenerName,
         showKeyboardHandler
@@ -143,7 +137,6 @@ const BottomPopupListNew = forwardRef(
         keyboardHideListenerName,
         hideKeyboardHandler
       )
-
       return () => {
         _dragY.removeAllListeners()
         _lastScrollY.removeAllListeners()
