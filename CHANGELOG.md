@@ -13,6 +13,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Location Profile: The margin needs aligned on the initial post (#4548)
 * Updates: Yellow dot notification indicator doesn't fully display (#4566)
 * Location Profile: Back caret doesn't shrink bottom card (#4571)
+* Location profile header remains after collapse (#4484)
 
 # 4.34.0 - 2019 Dec 11
 
