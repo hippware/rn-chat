@@ -40,8 +40,7 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
         onPress={() => {
           homeStore!.select(card.id)
           homeStore!.followUserOnMap(profile)
-          Actions.popTo('home')
-          Actions.profileDetails({item: card.id, preview: true})
+          Actions.profileDetails({item: profile.id, preview: true})
         }}
         stopPropagation
       >

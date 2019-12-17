@@ -314,7 +314,6 @@ dependencies {
   implementation project(':react-native-push-notification')
   implementation project(':react-native-linear-gradient')
   implementation project(':react-native-fs')
-  implementation project(':react-native-touch-through-view')
   implementation project(':react-native-mixpanel')
   implementation project(':react-native-device-info')
   implementation project(':react-native-code-push')

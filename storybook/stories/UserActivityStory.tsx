@@ -25,7 +25,7 @@ const store = types
       handle: 'jennyong',
       status: 'ONLINE',
       sharesLocation: true,
-      location: Location.create({
+      _location: Location.create({
         latitude: 1,
         longitude: 1,
         accuracy: 1,
@@ -59,7 +59,7 @@ export default observer(() => (
       <RText>Toggle</RText>
     </TouchableOpacity>
 
-    <RText style={{marginBottom: 20}}>Current Activity: {store.profile.currentActivity}</RText>
+    <RText style={{marginBottom: 20}}>Current Activity: {store.profile.activity}</RText>
 
     <LocationAvatar profile={store.profile as IProfile} />
   </View>

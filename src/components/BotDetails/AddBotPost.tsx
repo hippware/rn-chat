@@ -1,5 +1,13 @@
 import React, {useState, useEffect, useRef} from 'react'
-import {View, Keyboard, TextInput, TouchableOpacity, Image, StyleSheet} from 'react-native'
+import {
+  View,
+  Keyboard,
+  TextInput,
+  TouchableOpacity,
+  Platform,
+  Image,
+  StyleSheet,
+} from 'react-native'
 import {inject} from 'mobx-react'
 import {observer} from 'mobx-react'
 import {Spinner, RText} from '../common'
@@ -20,7 +28,11 @@ type Props = {
   navStore: any
 }
 
-const AddBotPost = inject('notificationStore', 'wocky', 'navStore')(
+const AddBotPost = inject(
+  'notificationStore',
+  'wocky',
+  'navStore'
+)(
   observer((props: Props) => {
     const [imageURI, setImageURI] = useState('')
     const [text, setText] = useState('')
@@ -175,7 +187,8 @@ const ImagePost = ({imageURI, deleteImage}) => {
   ) : null
 }
 
-export default withKeyboardHOC(AddBotPost)
+const KeyboardAwareBotPost = Platform.OS === 'ios' ? withKeyboardHOC(AddBotPost) : AddBotPost
+export default KeyboardAwareBotPost
 
 const styles = StyleSheet.create({
   imageContainer: {

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import {when, autorun, reaction} from 'mobx'
 import {inject, observer} from 'mobx-react'
 import {settings} from '../globals'
-import {Keyboard, Platform} from 'react-native'
+import {Keyboard, Platform, BackHandler} from 'react-native'
 import {Actions, Router, Scene, Stack, Modal, Lightbox, Tabs} from 'react-native-router-flux'
 import {IWocky, IProfile} from 'wocky-client'
 import {ILocationStore} from '../store/LocationStore'
@@ -12,10 +12,10 @@ import Launch from './Launch'
 import SignUp from './SignUp'
 import Home from './Home/Home'
 import MyAccount from './MyAccount'
-import ProfileDetail from './ProfileDetail/ProfileDetail'
+import ProfileDetailNew from './ProfileDetail/ProfileDetailNew'
 import ChatListScreen from './Chats/ChatListScreen'
 import ChatScreen from './Chats/ChatScreen'
-import BotDetails from './BotDetails/BotDetails'
+import BotDetailsNew from './BotDetails/BotDetailsNew'
 import TestRegister from './TestRegister'
 import CodePushScene from './CodePushScene'
 import OnboardingSlideshow from './OnboardingSlideshowScene'
@@ -28,7 +28,6 @@ import ReportBot, {ReportBotRightButton} from './report-modals/ReportBot'
 import SignIn from './SignIn'
 import VerifyCode from './VerifyCode'
 import LocationDebug from './LocationDebug'
-import SplitRenderer from './custom-navigators/SplitRenderer'
 import BottomMenu from './BottomMenu'
 import DebugScreen from './DebugScreen'
 import LocationGeofenceWarning from './modals/LocationGeofenceWarning'
@@ -39,7 +38,7 @@ import GeoHeaderPrimer from './modals/GeoHeaderPrimer'
 import CreationHeader from './Home/CreationHeader'
 import BotCompose, {backAction} from './BotCompose/BotCompose'
 import EditNote from './BotCompose/EditNote'
-import Notifications from './Notifications'
+import NotificationsNew from './NotificationsNew'
 import Attribution from './Attribution'
 import {navBarStyle} from './styles'
 import IconStore from '../store/IconStore'
@@ -50,6 +49,7 @@ import LiveLocationSettings from './LiveLocation/LiveLocationSettings'
 import LiveLocationShare from './LiveLocation/LiveLocationShare'
 import  {IHomeStore} from 'src/store/HomeStore';
 import MapOptions from './MapOptions'
+import {IPermissionStore} from 'src/store/PermissionStore'
 
 export const iconClose = require('../../images/iconClose.png')
 
@@ -60,17 +60,18 @@ type Props = {
   homeStore?: IHomeStore
   iconStore?: IconStore
   authStore?: IAuthStore
+  permissionStore?: IPermissionStore
   analytics?: any
 }
 
-const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics', 'homeStore', 'navStore', 'authStore')(
-  observer(({wocky, locationStore, navStore, homeStore, iconStore, authStore, analytics}: Props) => {
+const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'iconStore', 'analytics', 'homeStore', 'navStore', 'authStore')(
+  observer(({wocky, permissionStore, locationStore, navStore, homeStore, iconStore, authStore, analytics}: Props) => {
     useEffect(() => {
       reaction(() => navStore!.scene, () => Keyboard.dismiss())
 
       autorun(
         () => {
-          const onboarded = wocky!.profile && wocky!.profile.onboarded
+          const {onboarded} = permissionStore!
           const {scene} = navStore!
           const {alwaysOn} = locationStore!
           if (onboarded && !alwaysOn) {
@@ -86,6 +87,10 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
       autorun(() => {
         if (navStore!.scene === 'home') {
           Actions.profileDetails({item: wocky!.profile!.id, preview: true})
+          // Actions.botDetails({botId: '6067f6d9-8f72-482b-8703-55f6039cad2a', preview: true})
+          // Actions.botEdit({botId: '6067f6d9-8f72-482b-8703-55f6039cad2a'})
+          // Actions.friends()
+          // Actions.friendSearch()
         }
       }, {delay: 200})
       
@@ -120,17 +125,32 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
       }
     }
 
+    const onBackPress = () => {
+      // todo: fix this logic based on new nav
+      if (navStore!.params.hasPreview && !navStore!.params.preview) {
+        Actions.refresh({preview: true})
+      } else {
+        if (navStore!.scene === 'profileDetails') {
+          BackHandler.exitApp()
+        } else {
+          Actions.pop()
+        }
+      }
+      return true
+    }
+  
+
     const uriPrefix = Platform.select({ios: settings.uriPrefix, android: settings.uriPrefix.toLowerCase()})
 
     return (
-      <Router onStateChange={() => navStore!.setScene(Actions.currentScene, Actions.currentParams)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={onDeepLink}>
+      <Router backAndroidHandler={onBackPress} onStateChange={() => navStore!.setScene(Actions.currentScene, Actions.currentParams)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={onDeepLink}>
         <Tabs hideNavBar hideTabBar>
           <Lightbox hideNavBar type="replace">
             <Scene key="checkCredentials" component={Launch} on={() => authStore!.canLogin} success="checkProfile" failure="preConnection" />
             <Scene key="connect" on={authStore!.login} success="checkHandle" failure="preConnection" />
             <Scene key="checkProfile" on={() => wocky!.profile} success="checkHandle" failure="connect" />
             <Scene key="checkHandle" on={() => wocky!.profile!.handle} success="checkOnboarded" failure="signUp" />
-            <Scene key="checkOnboarded" on={() => wocky!.profile!.onboarded} success="logged" failure="onboarding" />
+            <Scene key="checkOnboarded" on={() => permissionStore!.onboarded} success="logged" failure="onboarding" />
             <Scene key="logout" on={authStore!.logout} success="preConnection" />
             <Scene key="liveLocationShare" on={() => wocky!.profile!.isLocationShared} success='liveLocationSettings' failure='liveLocationSelectFriends'/>
           </Lightbox>
@@ -146,30 +166,29 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
               <Scene key="onboarding" component={OnboardingSwiper} hideNavBar type="replace" />
               <Modal key="logged" hideNavBar headerMode="screen" type="replace">
                 <Stack>
-                  <Stack hideNavBar renderer={SplitRenderer}>
+                  <Lightbox hideNavBar>
                     <Scene key="home" path="livelocation/:userId" component={Home} hideNavBar />
-                    <Scene key="bottomMenu" component={BottomMenu} />
                     <Scene key="createBot" component={CreationHeader} fromTop />
-                    <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetails} hasPreview />
-                    <Scene key="botCompose" component={BotCompose} backAction={() => backAction(iconStore!)} />
-                    <Scene key="botEdit" component={BotCompose} edit backAction={() => backAction(iconStore!)} />
-                    <Scene key="editNote" component={EditNote} />
-                    <Scene key="notifications" path="invitations/:params*" component={Notifications} />
-                    <Scene key="friends" component={peopleLists.FriendList} />
-                    <Scene key="friendSearch" component={FriendSearch} />
-                    <Scene key="visitors" component={VisitorList} />
-                    <Scene key="profileDetails" path="user/:item" component={ProfileDetail} hasPreview />
-                    <Scene key="liveLocationCompose" component={LiveLocationCompose} />
-                    <Scene key="liveLocationSettings" component={LiveLocationSettings} />
-                    <Scene key="chats" component={ChatListScreen} title="Messages" />
-                    <Scene key="mapOptions" component={MapOptions} />
-                  </Stack>
+                    <Scene key="botCompose" component={BotCompose} backAction={() => backAction(iconStore!)} shiftMap />
+                    <Scene key="botEdit" component={BotCompose} edit backAction={() => backAction(iconStore!)} shiftMap />
+                    <Scene key="editNote" component={EditNote} backButton shiftMap />
+                    <Scene key="friends" component={peopleLists.FriendList} shiftMap backButton />
+                    <Scene key="friendSearch" component={FriendSearch} shiftMap backButton/>
+                    <Scene key="visitors" component={VisitorList} shiftMap backButton />
+                    <Scene key="liveLocationCompose" component={LiveLocationCompose} shiftMap backButton />
+                    <Scene key="liveLocationSettings" component={LiveLocationSettings} shiftMap backButton />
+                    <Scene key="chats" component={ChatListScreen} title="Messages" shiftMap backButton />
+                    <Scene key="mapOptions" component={MapOptions} shiftMap backButton />
+                    <Scene key="bottomMenu" component={BottomMenu} backButton hasPreview shiftMap />
+                    <Scene key="profileDetails" path="user/:item" component={ProfileDetailNew} hasPreview />
+                    <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetailsNew} hasPreview />
+                    <Scene key="notifications" path="invitations/:params*" component={NotificationsNew} backButton shiftMap />
+                  </Lightbox>
                   <Scene key="chat" path="conversation/:item" component={ChatScreen} />
                   <Scene key="allFriends" component={AllFriendList} title="Friends" />
                   <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
                   <Scene key="liveLocationSelectFriends" component={LiveLocationShare} title="Select Friends" />
                   <Scene key="myAccount" component={MyAccount} editMode back />
-                  
                   <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked Users" back />
                   <Scene key="attribution" component={Attribution} leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
                   <Scene key="selectChatUser" component={SelectChatUser} title="Message" />
@@ -181,7 +200,6 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
                 </Stack>
                 <Scene key="reportUser" component={ReportUser} wrap title="Report User" leftButtonImage={iconClose} onLeft={Actions.pop} right={ReportUserRightButton} />
                 <Scene key="reportBot" component={ReportBot} wrap title="Report Location" leftButtonImage={iconClose} onLeft={Actions.pop} right={ReportBotRightButton}  />
-
               </Modal>
             </Stack>
             <Scene key="reload" hideNavBar type="replace" component={Launch} />

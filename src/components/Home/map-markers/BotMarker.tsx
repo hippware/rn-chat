@@ -38,7 +38,6 @@ const BotMarker = observer(({card}: Props) => {
       zIndex={isSelected ? 2000 : 1} // selected marker should be on top #2696
       onPress={() => {
         select(card.id)
-        Actions.popTo('home')
         Actions.botDetails({botId: card.id, preview: true})
       }}
       key={card.bot.id}

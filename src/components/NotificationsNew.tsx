@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react'
 import {isAlive} from 'mobx-state-tree'
-import {observer} from 'mobx-react'
+import {observer, Observer} from 'mobx-react'
 import {IEvent} from 'wocky-client'
-import {RText} from './common'
-import DraggablePopupList from './common/DraggablePopupList'
+import {RText, BottomPopupNew} from './common'
 import EventCard from './event-cards/EventCard'
 import ListFooter from './ListFooter'
 import {navBarStyle, placeholderStyle} from './styles'
@@ -21,8 +20,6 @@ type Props = {
 const Notifications = observer(({isActive, navigation}: Props) => {
   const wocky = useWocky()
   useEffect(() => {
-    // send all injected props + bot "up" to static context
-    navigation.setParams({wocky})
     wocky.notifications.load().then(() => wocky.notifications.readAll())
     return () => wocky.notifications.setMode(1) // reset
   }, [])
@@ -32,10 +29,11 @@ const Notifications = observer(({isActive, navigation}: Props) => {
     return null
   }
   return (
-    <DraggablePopupList
-      isActive={isActive}
-      headerInner={
-        <View style={{flex: 1, alignItems: 'center'}}>
+    <BottomPopupNew
+      fullViewHeight={400}
+      allowFullScroll={true}
+      renderContent={() => (
+        <View style={{flex: 1, paddingTop: 3, alignItems: 'center'}}>
           <SwitchButton
             value={notifications.mode as 1 | 2 | undefined}
             text1="Updates"
@@ -59,46 +57,44 @@ const Notifications = observer(({isActive, navigation}: Props) => {
             {notifications.hasUnreadRequests && <View style={styles.newDot} />}
           </SwitchButton>
         </View>
-      }
-      data={notifications.data}
-      renderItem={({item}: {item: IEvent}) => <EventCard item={item} />}
-      keyExtractor={(item: IEvent) => item.id}
-      onEndReachedThreshold={0.5}
-      onEndReached={() => notifications.load()}
-      ListFooterComponent={observer(() => (
-        <View>
-          {notifications.data.length === 0 ? (
-            <View>
-              <RText
-                weight="Regular"
-                color={colors.GREY}
-                style={placeholderStyle.placeholderText as any}
-              >
-                {notifications.emptyTitle}
-              </RText>
-            </View>
-          ) : (
-            <ListFooter
-              style={{backgroundColor: 'white'}}
-              finished={notifications.finished || notifications.data.length === 0}
-            />
-          )}
-        </View>
-      ))}
+      )}
+      navBarConfig={{
+        title: <RText style={navBarStyle.titleStyle}>{wocky.notifications.title}</RText>,
+      }}
+      listProps={{
+        data: notifications.data,
+        renderItem: ({item}: {item: IEvent}) => <EventCard item={item} />,
+        keyExtractor: (item: IEvent) => item.id,
+        onEndReachedThreshold: 0.5,
+        onEndReached: () => notifications.load(),
+        ListFooterComponent: (
+          <Observer>
+            {() => (
+              <View>
+                {notifications.data.length === 0 ? (
+                  <View>
+                    <RText
+                      weight="Regular"
+                      color={colors.GREY}
+                      style={placeholderStyle.placeholderText as any}
+                    >
+                      {notifications.emptyTitle}
+                    </RText>
+                  </View>
+                ) : (
+                  <ListFooter
+                    style={{backgroundColor: 'white'}}
+                    finished={notifications.finished || notifications.data.length === 0}
+                  />
+                )}
+              </View>
+            )}
+          </Observer>
+        ),
+        bounces: false,
+      }}
     />
   )
-})
-;(Notifications as any).navigationOptions = ({
-  navigation: {
-    state: {
-      params: {wocky},
-    },
-  },
-}) => ({
-  fadeNavConfig: {
-    back: true,
-    title: wocky && <RText style={navBarStyle.titleStyle}>{wocky.notifications.title}</RText>,
-  },
 })
 
 const styles = StyleSheet.create({

@@ -9,8 +9,7 @@ import {
   Alert,
   Platform,
 } from 'react-native'
-import {RText, Spinner} from '../common'
-import withKeyboard from '../common/withKeyboardHOC'
+import {RText, Spinner, withKeyboardHOC} from '../common'
 import {colors} from '../../constants'
 import {k, height, minHeight} from '../Global'
 import {IWocky, IBot} from 'wocky-client'
@@ -127,7 +126,6 @@ const BotCompose = inject(
       )
 
       return () => {
-        props.iconStore!.reset()
         disposer()
       }
     }, [])
@@ -137,8 +135,8 @@ const BotCompose = inject(
       : [colors.DARK_GREY, colors.DARK_GREY]
 
     return bot ? (
-      <View>
-        {props.iconStore!.isEmojiKeyboardShown && (
+      <View style={styles.container}>
+        {props.iconStore!.isEmojiKeyboardShown ? (
           <View
             style={{
               shadowColor: 'rgba(254, 92, 108, 0.3)',
@@ -178,9 +176,8 @@ const BotCompose = inject(
               columns={8}
             />
           </View>
-        )}
-        {!props.iconStore!.isEmojiKeyboardShown && (
-          <View>
+        ) : (
+          <View style={styles.container}>
             <TextInput
               style={styles.textStyle}
               placeholder="Name this place"
@@ -192,44 +189,45 @@ const BotCompose = inject(
               value={text}
               selectionColor={colors.COVER_BLUE}
             />
-            <View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  backgroundColor: 'white',
-                  paddingVertical: 20 * k,
-                  paddingHorizontal: 30 * k,
+            <View
+              style={{
+                flexDirection: 'row',
+                backgroundColor: 'white',
+                paddingVertical: 20 * k,
+                paddingHorizontal: 30 * k,
+              }}
+            >
+              <EditCTA
+                text="Note"
+                icon={bot!.description ? noteIconDone : noteIcon}
+                onPress={() => {
+                  bot!.load({title: text, icon: props.iconStore!.emoji})
+                  Actions.editNote({botId: bot!.id})
                 }}
-              >
-                <EditCTA
-                  text="Note"
-                  icon={bot!.description ? noteIconDone : noteIcon}
-                  onPress={() => Actions.editNote({botId: bot!.id})}
-                />
-                <EditCTA
-                  text="Photo"
-                  icon={bot!.image ? photoIconDone : photoIcon}
-                  onPress={addPhoto}
-                  pending={uploadingPhoto}
-                />
-              </View>
-              <TouchableOpacity
-                style={{width: '100%', height: 50 * minHeight}}
-                disabled={!text}
-                onPress={save}
-              >
-                <LinearGradient
-                  start={{x: 0, y: 0.5}}
-                  end={{x: 1, y: 0.5}}
-                  colors={theColors}
-                  style={styles.gradient}
-                >
-                  <RText color="white" size={15}>
-                    {props.edit ? 'Save Changes' : 'Pin Location'}
-                  </RText>
-                </LinearGradient>
-              </TouchableOpacity>
+              />
+              <EditCTA
+                text="Photo"
+                icon={bot!.image ? photoIconDone : photoIcon}
+                onPress={addPhoto}
+                pending={uploadingPhoto}
+              />
             </View>
+            <TouchableOpacity
+              style={{width: '100%', height: 50 * minHeight}}
+              disabled={!text}
+              onPress={save}
+            >
+              <LinearGradient
+                start={{x: 0, y: 0.5}}
+                end={{x: 1, y: 0.5}}
+                colors={theColors}
+                style={styles.gradient}
+              >
+                <RText color="white" size={15}>
+                  {props.edit ? 'Save Changes' : 'Pin Location'}
+                </RText>
+              </LinearGradient>
+            </TouchableOpacity>
           </View>
         )}
       </View>
@@ -307,7 +305,9 @@ const EditCTA = ({text, icon, onPress, pending}: any) => (
   </TouchableOpacity>
 )
 
-export default withKeyboard(BotCompose)
+const KeyboardAwareBotCompose = Platform.OS === 'ios' ? withKeyboardHOC(BotCompose) : BotCompose
+
+export default KeyboardAwareBotCompose
 
 const styles = StyleSheet.create({
   textStyle: {
@@ -329,4 +329,5 @@ const styles = StyleSheet.create({
     paddingVertical: 15 * minHeight,
     alignItems: 'center',
   },
+  container: {position: 'absolute', bottom: 0, left: 0, right: 0},
 })

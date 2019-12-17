@@ -1,11 +1,9 @@
 import React, {useRef} from 'react'
-import {View, TextInput, Image, Platform, Keyboard} from 'react-native'
+import {View, TextInput, Image, Keyboard} from 'react-native'
 import {inject} from 'mobx-react'
 import FriendCard from './FriendCard'
 import {colors} from '../../constants'
-import {RText} from '../common'
-import DraggablePopupList from '../common/DraggablePopupList'
-import withKeyboardHOC from '../common/withKeyboardHOC'
+import {RText, BottomPopupNew} from '../common'
 import {ISearchStore} from '../../store/SearchStore'
 import {Actions} from 'react-native-router-flux'
 import {observer} from 'mobx-react'
@@ -14,9 +12,6 @@ type Props = {
   searchStore?: ISearchStore
   isActive: boolean
 }
-
-export const KeyboardAwareDraggablePopupList: any =
-  Platform.OS === 'ios' ? withKeyboardHOC(DraggablePopupList) : DraggablePopupList
 
 const searchIcon = require('../../../images/search.png')
 
@@ -62,8 +57,8 @@ const FriendSearch = inject('searchStore')(
             returnKeyType="search"
             clearButtonMode="while-editing"
             onFocus={() =>
-              list.current!.scrollToOffset &&
-              list.current!.scrollToOffset({offset: 0, animated: false})
+              list.current!.getNode().scrollToOffset &&
+              list.current!.getNode().scrollToOffset({offset: 0, animated: false})
             }
             placeholder="Search by name or username"
             selectionColor={colors.COVER_BLUE}
@@ -73,40 +68,39 @@ const FriendSearch = inject('searchStore')(
     }
 
     const listData = searchStore!.globalResult.filteredList.map(p => p.profile)
+    // todo: figure out withKeyboardHOC + BottomPopupNew
     return (
-      <KeyboardAwareDraggablePopupList
+      <BottomPopupNew
+        fullViewHeight={400}
+        allowFullScroll
         ref={list}
-        headerInner={renderHeader()}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        data={listData}
-        keyboardShouldPersistTaps="handled"
-        isActive={isActive}
-        // keyboardDismissMode="interactive"
-        ListFooterComponent={
-          listData.length < 5 ? (
-            <View
-              style={{
-                flex: 1,
-                height: 250,
-                backgroundColor: 'white',
-              }}
-            />
-          ) : null
-        }
+        navBarConfig={{
+          title: (
+            <RText size={16} color={colors.DARK_PURPLE}>
+              Friends
+            </RText>
+          ),
+        }}
+        listProps={{
+          ListHeaderComponent: renderHeader(),
+          ListFooterComponent:
+            listData.length < 5 ? (
+              <View
+                style={{
+                  flex: 1,
+                  height: 250,
+                  backgroundColor: 'white',
+                }}
+              />
+            ) : null,
+          renderItem,
+          keyExtractor: item => item.id,
+          data: listData,
+          keyboardShouldPersistTaps: 'handled',
+        }}
       />
     )
   })
 )
-;(FriendSearch as any).navigationOptions = {
-  fadeNavConfig: {
-    back: true,
-    title: (
-      <RText size={16} color={colors.DARK_PURPLE}>
-        Friends
-      </RText>
-    ),
-  },
-}
 
 export default FriendSearch

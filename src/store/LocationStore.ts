@@ -107,8 +107,6 @@ const LocationStore = types
 
     // Set reset to true to reset to defaults
     configure: flow(function*(reset = false) {
-      singleton = self as any
-
       const config = {
         batchSync: true,
         desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
@@ -272,7 +270,13 @@ const LocationStore = types
       reactions = [
         autorun(
           async () => {
-            if (wocky.connected && wocky.profile && wocky.profile.onboarded && self.alwaysOn) {
+            if (
+              wocky.connected &&
+              wocky.profile &&
+              wocky.profile.hidden &&
+              wocky.profile.clientData.onboarded &&
+              self.alwaysOn
+            ) {
               try {
                 await self.refreshCredentials()
                 if (!wocky.profile.hidden.enabled) {
@@ -305,19 +309,18 @@ const LocationStore = types
 
     const didMount = flow(function*() {
       BackgroundGeolocation.logger.info(`${prefix} didMount`)
+
+      singleton = self as any
       BackgroundGeolocation.onLocation(onLocation, onLocationError)
       BackgroundGeolocation.onHttp(onHttp)
       BackgroundGeolocation.onMotionChange(onMotionChange)
       BackgroundGeolocation.onActivityChange(onActivityChange)
       BackgroundGeolocation.onProviderChange(onProviderChange)
-      // need to init() to initialise self.alwaysOn
-      yield init()
-      if (self.alwaysOn) {
-        yield self.configure()
-        const config = yield BackgroundGeolocation.ready({reset: false})
-        log(prefix, 'Ready: ', config)
-        self.updateBackgroundConfigSuccess(config)
-      }
+
+      yield self.configure()
+      const config = yield BackgroundGeolocation.ready({reset: false})
+      log(prefix, 'Ready: ', config)
+      self.updateBackgroundConfigSuccess(config)
     })
 
     function willUnmount() {

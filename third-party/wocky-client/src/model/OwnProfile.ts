@@ -6,34 +6,9 @@ import {InvitationPaginableList, Invitation} from './Invitation'
 import {ContactPaginableList, Contact} from './Contact'
 import {BlockedUserPaginableList, BlockedUser} from './BlockedUser'
 import {LocationSharePaginableList, LocationShare} from './LocationShare'
-import ClientData, {createClientData} from './ClientData'
+import ClientData from './ClientData'
+import {reaction, IReactionDisposer} from 'mobx'
 
-const Hidden = types
-  .model('HiddenType', {
-    enabled: false,
-    expires: types.maybeNull(types.Date),
-  })
-  .actions(self => ({
-    setEnabled: (value: boolean) => {
-      self.enabled = value
-    },
-  }))
-  .actions(self => {
-    let timerId
-    return {
-      afterAttach: () => {
-        // change a value when it is expired!
-        if (self.enabled && self.expires) {
-          timerId = setTimeout(() => self.setEnabled(false), self.expires.getTime() - Date.now())
-        }
-      },
-      beforeDestroy: () => {
-        if (timerId !== undefined) {
-          clearTimeout(timerId)
-        }
-      },
-    }
-  })
 export const OwnProfile = types
   .compose(
     types.compose(
@@ -44,7 +19,6 @@ export const OwnProfile = types
     types.model('OwnProfile', {
       email: types.maybeNull(types.string),
       phoneNumber: types.maybeNull(types.string),
-      hidden: types.optional(Hidden, {}),
       sentInvitations: types.optional(InvitationPaginableList, {}),
       receivedInvitations: types.optional(InvitationPaginableList, {}),
       friends: types.optional(ContactPaginableList, {}),
@@ -52,7 +26,6 @@ export const OwnProfile = types
       locationShares: types.optional(LocationSharePaginableList, {}),
       locationSharers: types.optional(LocationSharePaginableList, {}),
       clientData: types.optional(ClientData, {}),
-      onboarded: false,
     })
   )
   .postProcessSnapshot(snapshot => {
@@ -61,9 +34,12 @@ export const OwnProfile = types
     return res
   })
   .views(self => ({
-    get currentLocation() {
+    get hidden() {
+      return self.clientData.hidden
+    },
+    get location() {
       const {locationStore} = getRoot(self)
-      return locationStore.location
+      return locationStore ? locationStore.location : self._location
     },
     get isLocationShared() {
       return self.locationShares.length > 0
@@ -104,12 +80,11 @@ export const OwnProfile = types
     },
   }))
   .actions(self => ({
-    addFriend: (profile: IProfile, createdAt: Date, name: string = '') => {
+    addFriend: (profile: IProfile, createdAt: Date) => {
       self.friends.add(
         Contact.create({
           id: profile.id,
           createdAt,
-          name,
           user: profile.id,
         })
       )
@@ -169,13 +144,15 @@ export const OwnProfile = types
   }))
   .actions(self => {
     const timers: any[] = []
+    let reactions: IReactionDisposer[] = []
+    const {locationStore} = getRoot(self)
+
     return {
       hide: flow(function*(value: boolean, expires: Date | undefined) {
-        const {locationStore} = getRoot(self)
         if (locationStore) {
           yield locationStore.hide(value, expires)
         }
-        self.hidden = Hidden.create({enabled: value, expires})
+        self.clientData.hide(value, expires)
       }),
       addLocationSharer(sharedWith: IProfile, createdAt: number, expiresAt: number) {
         self.locationSharers.add(
@@ -201,14 +178,26 @@ export const OwnProfile = types
         sharedWith.setReceivesLocationShare(true)
         timers.push(setTimeout(() => self.removeLocationShare(sharedWith), expiresAt - Date.now()))
       },
+      afterCreate() {
+        reactions = []
+        if (locationStore) {
+          reactions.push(
+            reaction(() => locationStore.location, self.maybeUpdateActivity, {
+              name: 'maybeUpdateActivity when location changes',
+            })
+          )
+        }
+      },
       beforeDestroy() {
+        reactions.forEach(disposer => disposer())
+        reactions = []
         timers.forEach(clearInterval)
       },
     }
   })
   .actions(self => ({
-    setOnboarded: (value: boolean) => {
-      self.onboarded = value
+    setOnboarded: () => {
+      self.clientData.flip('onboarded')
     },
     load({
       avatar,
@@ -223,7 +212,7 @@ export const OwnProfile = types
     }: any) {
       Object.assign(self, data)
       if (clientData) {
-        self.clientData = createClientData(clientData, self.clientData)
+        self.clientData.load(clientData)
       }
       if (avatar) {
         self.avatar = self.service.files.get(avatar.id, avatar)
@@ -235,7 +224,7 @@ export const OwnProfile = types
         self.sendInvitation(self.service.profiles.get(user.id, user), createdAt)
       )
       friends.forEach(({createdAt, user, name}) =>
-        self.addFriend(self.service.profiles.get(user.id, user), createdAt, name)
+        self.addFriend(self.service.profiles.get(user.id, user), createdAt)
       )
       blocked.forEach(({createdAt, user}) => {
         user.isBlocked = true

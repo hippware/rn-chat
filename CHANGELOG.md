@@ -4,6 +4,111 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.34.1 - 2019 Dec 17
+
+* Alignment of location profile card is off when user leaves (#4555)
+* Full map: Bottom card remains when user taps on HS map (#4553)
+* Location Creation: Emoji and Location Title go away with Note Add (#4554)
+* [android] Location Profile: Tap on the up caret shifts the map up (#4560)
+* Header not displaying with scroll (#4565)
+* [android] Location details image flickering on scroll (#4567)
+* Location Profile: The margin needs aligned on the initial post (#4548)
+* Updates: Yellow dot notification indicator doesn't fully display (#4566)
+* Location Profile: Back caret doesn't shrink bottom card (#4571)
+* Location profile header remains after collapse (#4484)
+* Update: @types/react-native (PR #4576), appcenter-cli (PR #4577)
+
+# 4.34.0 - 2019 Dec 11
+
+**New animation stack and architecture**
+
+* Update: tslint (PR #4525), @types/react-native (PR #4526)
+  * websocket (PR #4527), typescript (PR #4528), ts-jest (PR #4530)
+  * @types/react (PR #4531), pretty-quick (PR #4532), @babel/core (PR #4534)
+  * appcenter-cli (PR #4538), ts-node (PR #4539), @babel/runtime (PR #4540)
+  * @types/react (PR #4541), @babel/plugin-proposal-object-rest-spread (PR #4543)
+  * @storybook/react-native (PR #4544)
+* Clean install results in an infinite loader on map (Regression #4428)
+* New message is not marked as read if message thread is open (#4476)
+* Remove unused `... friend { name }` field. (PR #4545)
+* New animation stack and architecture
+  * Location Profile: Tap and drag issues with bottom card (#4459)
+  * New BottomPopup + DraggablePopupList (PR #4517)
+  * Remove react-native-touch-through-view
+  * Android: Map is visible on the bottom of the location profile card (#4511)
+  * Search for friends is showing map instead of white background (#4512)
+* Mode of Trans: Swipe-kill and screen lock removes mode of trans (#3950)
+* Edit Location: Back caret doesn't take user to HS from a location edit (#4550)
+
+# 4.33.0 - 2019 Dec 5
+
+**React Native upgrade to 0.61.5**
+
+* Update: bugsnag-react-native (PR #4393), react-native-mixpanel (PR #4401)
+  * @react-native-community/push-notification-ios (PR #4444), mobx (PR #4479)
+  * @types/jest (PR #4493), @babel/plugin-proposal-decorators (PR #4494)
+  * @babel/plugin-transform-flow-strip-types (PR #4495), husky (PR #4496)
+  * libphonenumber-js (PR #4497), react-native-fbsdk (PR #4498)
+  * jetifier (PR #4499), react-native (PR #4501)
+  * react-native-gesture-handler (PR #4503), @types/lodash (PR #4504)
+  * react-native-device-info (PR #4505), @types/react (PR #4506)
+  * @babel/preset-typescript (PR #4513)
+  * @react-native-community/async-storage (PR #4514)
+  * react-native-permissions (PR #4516), iOS Pods (PR #4516)
+* [dev] Use `updatedAt` in presence subscription (#3949)
+* Ignore activity data points with low confidence (#4475)
+  * Action avatar flashing off and on (#4353)
+  * Swipe-kill and screen lock removes mode of transport (#3950)
+* Tidy/rename profile location variables (PR #4520)
+* Prevent 'Find Friends' prompt after every codepush (#3840)
+
+# 4.32.4 - 2019 Nov 28
+
+* Message screen is not loaded for some accounts (#4471)
+* Location Profile: Tap and drag issues with bottom card (Rework #4459)
+* Add 20 px margin to bottom of location profile (#4473)
+* Update: @babel/runtime (PR #4477), @babel/node (PR #4478)
+  * @react-native-community/netinfo (PR #4480)
+  * react-test-renderer (PR #4482)
+* Gap seen with dragging animation (#4432)
+  * Remove animation overshoot (PR #4485)
+* Remove no longed used `loadRelations`. (PR #4488)
+* reconnect_fail: GraphQL error: already authenticated (#4452)
+  * Don't authenticate if already logged in. (PR #4489)
+
+# 4.32.3 - 2019 Nov 22
+
+* Activity indicator appears smaller (#4429, PR #4456, PR #4466)
+  * Revert LocationAvatar.tsx to 4.32.0 version. (PR #4470)
+* Messaging CTA should exist on the user card. (#3962, PR #4468)
+  * Reduce the size of the message badge on ProfileDetail (PR #4461)
+* App crash when navigating to Updates (#4458)
+* [android] Back button should exit app (#3994)
+* Back button doesn't work for bot details (#4464)
+* Remove some yellowbox warnings (PR #4463)
+* Location Profile: Tap and drag issues with bottom card (#4459)
+
+# 4.32.2 - 2019 Nov 20
+
+* Messaging CTA should exist on the user card. (#3962)
+  * Don't show the message count on MessageButton (PR #4433)
+  * Pan improvements (PR #4449)
+* Initialise singleton earlier. Always call configure(). (PR #4435)
+  * Clean install results in an infinite loader on map (#4428)
+* Invisible mode might prematurely end after codepush or upgrade (#3753)
+  * Store user preferences that remain after upgrade or codepush (#4410)
+* Argument "id" has invalid value "YouCard". (#4434)
+* [dev] Can't perform a React state update on an unmounted component. (#4438)
+* Activity indicator appears smaller (#4429)
+* Update: https-proxy-agent (PR #4439), prettier (PR #4441)
+  * mobx-react (PR #4442), react-dom (PR #4445), ts-node (PR #4446)
+* Finally fixing the bottom card swipe logic... (#4212)
+  * Pan improvements (PR #4449)
+* Defaults for location info on ProfileDetails preview (#4413)
+* Implement own MST logger which prints args. (PR #4453)
+* Gap seen with dragging animation (#4432)
+* Notifications: Infinite loader on Requests tab (#4191)
+
 # 4.32.1 - 2019 Nov 14
 
 * Clear search store on logout. (PR #4387)

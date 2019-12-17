@@ -1,16 +1,15 @@
 import React, {useState, useEffect, useRef} from 'react'
 import {View, Clipboard, TouchableOpacity} from 'react-native'
-import {inject} from 'mobx-react'
+import {inject, Observer} from 'mobx-react'
 import {k} from '../Global'
 import {colors} from '../../constants'
 import {IBot, IWocky} from 'wocky-client'
 import BotPostCard from './BotPostCard'
-import {RText, Spinner} from '../common'
+import {RText, Spinner, BottomPopupNew} from '../common'
 import AddBotPost from './AddBotPost'
-import Header from './BotDetailsHeader'
+import {PreviewHeader, DefaultHeader} from './BotDetailsHeader'
 import {isAlive} from 'mobx-state-tree'
 import Separator from './Separator'
-import DraggablePopupList from '../common/DraggablePopupList'
 import {Actions} from 'react-native-router-flux'
 import {navBarStyle} from '../styles'
 import NotificationStore from '../../store/NotificationStore'
@@ -29,7 +28,12 @@ type Props = {
   preview?: boolean
 }
 
-const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore')(
+const BotDetails = inject(
+  'wocky',
+  'analytics',
+  'notificationStore',
+  'homeStore'
+)(
   observer((props: Props) => {
     let viewTimeout
 
@@ -43,8 +47,7 @@ const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore'
       navigation,
       isNew,
       notificationStore,
-      preview,
-      isActive,
+      preview = false,
     } = props
 
     useEffect(() => {
@@ -77,78 +80,81 @@ const BotDetails = inject('wocky', 'analytics', 'notificationStore', 'homeStore'
           clearTimeout(viewTimeout)
         }
       }
-    }, [])
-
-    const _footerComponent = observer(() => {
-      if (!bot || preview) return null
-
-      if (props.wocky!.connected && bot && isAlive(bot) && bot.posts.loading) return <Loader />
-
-      return <View style={{backgroundColor: 'white', height: 100 * k}} />
-    })
+    }, [botId])
 
     function scrollToNewestPost() {
-      ;(list.current as any).scrollToIndex({
+      ;(list.current as any).getNode().scrollToIndex({
         index: 0,
-        viewPosition: 0.5,
+        viewPosition: 1,
       })
     }
 
-    if (!bot || !isAlive(bot)) {
+    if (homeStore.fullScreenMode || !bot || !isAlive(bot)) {
       return null
     }
 
     return (
-      <View pointerEvents="box-none" style={{flex: 1}}>
-        <DraggablePopupList
-          isActive={isActive}
-          preview={preview}
-          data={!bot.error && bot.isSubscribed && !preview ? bot.posts.list.slice() : []}
-          ref={list}
-          contentContainerStyle={{
+      <BottomPopupNew
+        ref={list}
+        previewHeight={150}
+        fullViewHeight={500}
+        allowFullScroll
+        preview={preview}
+        navBarConfig={{
+          backAction: () => Actions.refresh({preview: true}),
+          title: bot && (
+            <NavTitle
+              bot={bot}
+              onLongPress={() => {
+                Clipboard.setString(bot.address)
+                notificationStore!.flash('Address copied to clipboard 👍')
+              }}
+            />
+          ),
+        }}
+        listProps={{
+          data: !bot.error && bot.isSubscribed && !preview ? bot.posts.list.slice() : [],
+          contentContainerStyle: {
             flexGrow: 1,
-          }}
-          ListFooterComponent={_footerComponent}
-          initialNumToRender={8}
-          headerInner={<Header bot={bot!} {...props} />}
-          ItemSeparatorComponent={() => (
+          },
+          ListHeaderComponent: preview ? (
+            <PreviewHeader bot={bot!} />
+          ) : (
+            <DefaultHeader bot={bot!} />
+          ),
+          ListFooterComponent: (
+            <Observer>
+              {() => {
+                if (props.wocky!.connected && bot && isAlive(bot) && bot.posts.loading)
+                  return <Loader />
+                return <View style={{height: 80}} />
+              }}
+            </Observer>
+          ),
+          initialNumToRender: 8,
+          ItemSeparatorComponent: () => (
             <View style={{backgroundColor: 'white'}}>
               <Separator />
             </View>
-          )}
-          renderItem={({item}) => <BotPostCard item={item} bot={bot!} />}
-          keyExtractor={item => item.id}
-          bounces={false}
-          keyboardDismissMode="on-drag"
-        />
-        {!preview && !bot.error && bot.isSubscribed && (
-          <AddBotPost bot={bot} afterPostSent={scrollToNewestPost} />
-        )}
-      </View>
+          ),
+          renderItem: ({item}) => <BotPostCard item={item} bot={bot!} />,
+          keyExtractor: item => item.id,
+          bounces: false,
+          keyboardDismissMode: 'on-drag',
+        }}
+        renderFooter={() =>
+          !preview &&
+          !bot.error &&
+          bot.isSubscribed && (
+            <View style={{position: 'absolute', bottom: 0, right: 0, left: 0}}>
+              <AddBotPost bot={bot} afterPostSent={scrollToNewestPost} />
+            </View>
+          )
+        }
+      />
     )
   })
 )
-;(BotDetails as any).navigationOptions = ({navigation}) => {
-  const {isNew, bot, notificationStore} = navigation.state.params
-  const backAction = isNew ? () => Actions.popTo('home') : Actions.pop
-  return {
-    backAction,
-    fadeNavConfig: {
-      back: true,
-      backAction,
-      title: bot && (
-        <NavTitle
-          bot={bot}
-          onLongPress={() => {
-            Clipboard.setString(bot.address)
-            notificationStore.flash('Address copied to clipboard 👍')
-          }}
-        />
-      ),
-    },
-  }
-}
-
 export default BotDetails
 
 const NavTitle = ({bot, onLongPress}) => {

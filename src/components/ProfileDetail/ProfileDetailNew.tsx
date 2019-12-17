@@ -1,44 +1,45 @@
 import React, {useEffect, useState} from 'react'
 import {IProfile} from 'wocky-client'
 import {isAlive} from 'mobx-state-tree'
-import BottomPopup from '../BottomPopup'
+import {BottomPopupNew} from '../common'
 import {RText, Pill, BubbleBadge} from '../common'
 import {colors} from 'src/constants'
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native'
 import ConnectButton from './ConnectButton'
 import ProfileAvatar from '../ProfileAvatar'
-import {minHeight, avatarScale} from '../Global'
+import {avatarScale} from '../Global'
 import BlockReport from './BlockReport'
-import {useWocky} from 'src/utils/injectors'
+import {useWocky, useHomeStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
 
 type Props = {
   item: string
-  preview?: boolean
+  preview: boolean
 }
 
 const ProfileDetail = observer(({item, preview}: Props) => {
   const [profile, setProfile] = useState<IProfile | null>(null)
 
   const {loadProfile} = useWocky()
+  const {fullScreenMode} = useHomeStore()
 
   useEffect(() => {
-    async function fetchProfile() {
-      const p = await loadProfile(item)
-      setProfile(p)
-    }
-    fetchProfile()
-  }, [])
+    loadProfile(item).then(p => setProfile(p))
+  }, [item])
 
-  if (!profile || !isAlive(profile)) {
+  if (fullScreenMode || !profile || !isAlive(profile)) {
     return null
   }
 
   return (
-    <BottomPopup preview={preview}>
-      {preview ? <Preview profile={profile!} /> : <Default profile={profile!} />}
-    </BottomPopup>
+    <BottomPopupNew
+      previewHeight={150}
+      fullViewHeight={340}
+      renderPreview={() => <Preview profile={profile!} />}
+      renderContent={() => <Default profile={profile!} />}
+      preview={preview}
+    />
   )
 })
 
@@ -48,8 +49,8 @@ const Default = observer(({profile}: {profile: IProfile}) => (
       flex: 1,
       alignContent: 'center',
       alignItems: 'center',
-      paddingBottom: 46 * minHeight,
-      paddingTop: 20,
+      paddingTop: 10,
+      paddingBottom: 40,
     }}
     testID="profileDetail"
   >
@@ -123,8 +124,9 @@ const Preview = observer(({profile}: {profile: IProfile}) => {
           />
           {profile.unreadCount > 0 && (
             <BubbleBadge
-              outerStyle={{top: -10, right: -10}}
-              text={profile.unreadCountString}
+              diameter={13}
+              outerStyle={{top: 4, right: 4}}
+              text=""
               background={unreadCounter}
             />
           )}
@@ -135,12 +137,14 @@ const Preview = observer(({profile}: {profile: IProfile}) => {
 })
 
 const InfoPills = observer(({profile}: {profile: IProfile}) =>
-  profile.currentLocation ? (
+  profile.location ? (
     <View style={{flexDirection: 'row'}}>
       <Pill>{profile.addressData.locationShort}</Pill>
       {!profile.isOwn && <Pill>{profile.whenLastLocationSent}</Pill>}
     </View>
-  ) : null
+  ) : (
+    <Pill solidColor="rgb(155,155,155)">Not Sharing Location</Pill>
+  )
 )
 const unreadCounter = require('../../../images/unreadBG.png')
 

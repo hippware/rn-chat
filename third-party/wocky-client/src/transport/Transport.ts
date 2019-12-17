@@ -78,6 +78,10 @@ export class Transport {
   @action
   async login(token: string, host: string): Promise<boolean> {
     this.host = host
+    if (this.connected) {
+      // Already connected
+      return this.connected
+    }
     if (this.connecting) {
       // prevent duplicate login
       // console.log('WAITING FOR CONNECTING COMPLETE')
@@ -172,7 +176,6 @@ export class Transport {
                     edges {
                       node {
                         createdAt
-                        name
                         user {
                           ${PROFILE_PROPS}
                         }
@@ -935,50 +938,6 @@ export class Transport {
     })
   }
 
-  async loadRelations(
-    userId: string,
-    // TODO: use more specific typing when we can change IWockyTransport
-    // relation: 'FOLLOWER' | 'FOLLOWING' | 'FRIEND' | 'NONE' = 'FOLLOWING',
-    relation: string = 'FOLLOWING',
-    lastId?: string,
-    max: number = 10
-  ): Promise<IPagingList<any>> {
-    // TODO: remove this after IWockyTransport change
-    relation = relation.toUpperCase()
-    const res = await this.client!.query<any>({
-      query: gql`
-        query user($userId: UUID!, $relation: UserContactRelationship, $lastId: String, $max: Int) {
-          user(id: $userId) {
-            id
-            contacts(first: $max, relationship: $relation, after: $lastId) {
-              totalCount
-              edges {
-                relationship
-                createdAt
-                node {
-                  id
-                  roles
-                  firstName
-                  lastName
-                  handle
-                  presence {
-                    status
-                    updatedAt
-                  }
-                  ${MEDIA_PROPS}
-                }
-              }
-            }
-          }
-        }
-      `,
-      variables: {userId, relation, lastId, max},
-    })
-    const {totalCount, edges} = res.data.user!.contacts
-    const list = edges.map(e => convertProfile(e.node))
-    return {list, count: totalCount}
-  }
-
   async publishBotPost(botId: string, post: IBotPost): Promise<void> {
     return this.voidMutation({
       mutation: gql`
@@ -1225,14 +1184,20 @@ export class Transport {
         subscription presence {
           presence {
             id
-            presenceStatus
+            presence {
+              status
+              updatedAt
+            }
           }
         }
       `,
     }).subscribe({
       next: action((result: any) => {
-        const {id, presenceStatus} = result.data.presence
-        this.presence = {id, status: presenceStatus}
+        this.presence = {
+          id: result.data.presence.id,
+          status: result.data.presence.presence.status,
+          statusUpdatedAt: new Date(result.data.presence.presence.updatedAt),
+        }
       }),
     })
     this.subscriptions.push(subscription)

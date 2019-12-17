@@ -10,6 +10,7 @@ import {UserActivityType} from '../transport/types'
 import moment from 'moment'
 import {Address} from './Address'
 import {when} from 'mobx'
+import _ from 'lodash'
 
 export const Profile = types
   .compose(
@@ -20,9 +21,11 @@ export const Profile = types
       avatar: FileRef,
       handle: types.maybeNull(types.string),
       status: types.optional(types.enumeration(['ONLINE', 'OFFLINE']), 'OFFLINE'),
+      statusUpdatedAt: types.optional(types.Date, () => new Date(0)),
       firstName: types.maybeNull(types.string),
       lastName: types.maybeNull(types.string),
-      location: types.maybe(Location),
+      _location: types.maybe(Location),
+      _activity: types.maybe(Location),
       botsSize: 0,
       hasSentInvite: false,
       hasReceivedInvite: false,
@@ -31,7 +34,10 @@ export const Profile = types
       sharesLocation: false, // pseudo-calculated property for correct FlatList rendering
       receivesLocationShare: false, // pseudo-calculated property for correct FlatList rendering
       roles: types.optional(types.array(types.string), []),
-      subscribedBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
+      subscribedBots: types.optional(
+        types.late((): IAnyModelType => BotPaginableList),
+        {}
+      ),
       addressData: types.optional(Address, {}),
     })
   )
@@ -39,6 +45,7 @@ export const Profile = types
   .postProcessSnapshot(snapshot => {
     const res = {...snapshot}
     delete res.status
+    delete res.statusUpdatedAt
     delete res.sharesLocation
     delete res.receivesLocationShare
     // delete res.location - need to preserve location because now it is passed only via subscriptions
@@ -46,8 +53,16 @@ export const Profile = types
     return res
   })
   .views(self => ({
-    get currentLocation() {
-      return self.location
+    get location() {
+      return self._location
+    },
+  }))
+  .actions(self => ({
+    maybeUpdateActivity() {
+      if (self.location && self.location.activity && self.location.activityConfidence! >= 50) {
+        // MST doesn't allow a node to be two children of the same parent so shallow clone
+        self._activity = _.clone(self.location) // this way it will work for OwnProfile too
+      }
     },
   }))
   .actions(self => ({
@@ -74,7 +89,8 @@ export const Profile = types
       }
     },
     setLocation(location: ILocationSnapshot) {
-      self.location = Location.create(location)
+      self._location = Location.create(location)
+      self.maybeUpdateActivity()
     },
     setFriend: (friend: boolean) => {
       self.isFriend = friend
@@ -96,6 +112,11 @@ export const Profile = types
             self.avatar = self.service.files.get(avatar.id, avatar)
           }
           superLoad(data)
+
+          if (data.status && data.statusUpdatedAt && self.statusUpdatedAt < data.statusUpdatedAt) {
+            self.status = data.status
+            self.statusUpdatedAt = data.statusUpdatedAt
+          }
         },
         invite: flow(function*() {
           yield waitFor(() => self.connected)
@@ -147,17 +168,25 @@ export const Profile = types
             )
           }
         },
-        setStatus: (status: 'ONLINE' | 'OFFLINE') => {
-          self.status = status
+        setStatus: (status: 'ONLINE' | 'OFFLINE', updatedAt?: Date) => {
+          if (updatedAt === undefined) {
+            self.status = status
+            self.statusUpdatedAt = new Date(0)
+          } else {
+            if (self.statusUpdatedAt < updatedAt) {
+              self.status = status
+              self.statusUpdatedAt = updatedAt
+            }
+          }
         },
         asyncFetchRoughLocation: (): void => {
           const {geocodingStore} = getRoot(self)
           if (geocodingStore) {
             when(
-              () => !!self.currentLocation,
+              () => !!self.location,
               () => {
                 geocodingStore
-                  .reverse(self.currentLocation)
+                  .reverse(self.location)
                   .then(data => {
                     if (data && data.meta) {
                       self.load({addressData: data.meta})
@@ -204,11 +233,11 @@ export const Profile = types
         get distance(): number {
           const {locationStore} = getRoot(self)
           const ownProfile = self.service && self.service.profile
-          if (!self.location || !locationStore || !ownProfile || !ownProfile.currentLocation) {
+          if (!self._location || !locationStore || !ownProfile || !ownProfile.location) {
             return Number.MAX_SAFE_INTEGER
           }
-          const loc1 = self.location
-          const loc2 = ownProfile.currentLocation
+          const loc1 = self._location
+          const loc2 = ownProfile.location
           return locationStore.distance(
             loc1.latitude,
             loc1.longitude,
@@ -217,15 +246,15 @@ export const Profile = types
           )
         },
         get isLocationShared() {
-          return !!self.location && self.sharesLocation
+          return !!self._location && self.sharesLocation
         },
-        get currentActivity(): UserActivityType | null {
-          const location = self.currentLocation // this way it will work for OwnProfile too
-          if (!location) return null
+        get activity(): UserActivityType | null {
+          const data = self._activity
+          if (!data) return null
 
           const now: Date = (getRoot(self) as any).wocky.timer.minute
-          const activity = location && location.activity ? location.activity : null
-          const minsSinceLastUpdate = moment(now).diff(location!.createdAt, 'minutes')
+          const activity = data && data.activity ? data.activity : null
+          const minsSinceLastUpdate = moment(now).diff(data!.createdAt, 'minutes')
           if (activity === 'still') {
             // delay 5 minutes before showing a user as 'still'
             return minsSinceLastUpdate > 5 ? 'still' : null
@@ -235,21 +264,12 @@ export const Profile = types
           return minsSinceLastUpdate > 5 ? null : activity
         },
         get whenLastLocationSent(): string {
-          // console.log('& when', self.currentLocation)
-          return self.currentLocation
-            ? moment(self.currentLocation!.createdAt).fromNow()
-            : 'a while ago'
+          // console.log('& when', self.location)
+          return self.location ? moment(self.location!.createdAt).fromNow() : 'a while ago'
         },
       },
     }
   })
-  .views(self => ({
-    get unreadCountString(): string {
-      // For large unreadCount, '9+' isn't centered nicely.
-      // Show ' 9+' instead. It's a hack.
-      return self.unreadCount > 9 ? ' 9+' : self.unreadCount.toString()
-    },
-  }))
 
 export const ProfilePaginableList = createPaginable<IProfile>(
   types.reference(types.late(() => Profile)),
@@ -283,6 +303,7 @@ export interface IProfilePartial {
   followersSize: number
   followedSize: number
   status: string
+  statusUpdatedAt: Date
   hidden: {
     enabled: boolean
     expires: Date
