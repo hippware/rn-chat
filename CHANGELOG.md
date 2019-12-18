@@ -4,6 +4,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Flashing screen (#4581)
+* Missing the back caret on user profile screens (#4580)
+
 # 4.34.1 - 2019 Dec 17
 
 * Alignment of location profile card is off when user leaves (#4555)
