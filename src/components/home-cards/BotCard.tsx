@@ -21,7 +21,7 @@ const BotCard = observer(({id, bot}: Props) => {
   return (
     <Card
       profile={isSelected && bot.owner ? bot.owner! : undefined}
-      onPress={() => Actions.botDetails({botId: bot.id})}
+      onPress={() => Actions.botDetails({botId: bot.id, preview: false})}
     >
       <View
         style={{

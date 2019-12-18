@@ -21,7 +21,7 @@ const UserInfoRow = observer(({profile, style}: Props) => {
         <ProfileAvatar profile={profile} size={40} fontFamily="regular" />
         <ProfileHandle
           style={botProfileStyle.userInfoRow}
-          onPress={() => Actions.profileDetails({item: profile.id})}
+          onPress={() => Actions.profileDetails({item: profile.id, preview: false})}
           size={16}
           profile={profile}
         />

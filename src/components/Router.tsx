@@ -87,10 +87,6 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
       autorun(() => {
         if (navStore!.scene === 'home') {
           Actions.profileDetails({item: wocky!.profile!.id, preview: true})
-          // Actions.botDetails({botId: '6067f6d9-8f72-482b-8703-55f6039cad2a', preview: true})
-          // Actions.botEdit({botId: '6067f6d9-8f72-482b-8703-55f6039cad2a'})
-          // Actions.friends()
-          // Actions.friendSearch()
         }
       }, {delay: 200})
       

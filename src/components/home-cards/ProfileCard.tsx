@@ -16,7 +16,7 @@ type Props = {
 
 const ProfileCard = observer(({profile, children, showAvatarDot}: Props) => {
   return (
-    <Card onPress={() => Actions.profileDetails({item: profile!.id})}>
+    <Card onPress={() => Actions.profileDetails({item: profile!.id, preview: false})}>
       <View style={styles.imageContainer}>
         <Avatar
           profile={profile}

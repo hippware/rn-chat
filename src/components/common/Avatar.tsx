@@ -51,7 +51,7 @@ const Avatar = observer(
     noScale = false,
     inactive = false,
   }: Props) => {
-    if ((!profile || (isStateTreeNode(profile) && !isAlive(profile))) && (!image && !displayName)) {
+    if ((!profile || (isStateTreeNode(profile) && !isAlive(profile))) && !image && !displayName) {
       return null
     }
     const showMask =
@@ -74,7 +74,9 @@ const Avatar = observer(
     return (
       <Clazz
         style={{justifyContent: 'flex-end'}}
-        onPress={() => (profile ? Actions.profileDetails({item: profile.id}) : null)}
+        onPress={() =>
+          profile ? Actions.profileDetails({item: profile.id, preview: false}) : null
+        }
       >
         <View style={[style, {height: scaledSize, width: scaledSize}]}>
           {(!!profile && !!profile.avatar) || image ? (
