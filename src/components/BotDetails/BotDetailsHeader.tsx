@@ -91,7 +91,7 @@ export const DefaultHeader = inject(
               {!!bot.owner && (
                 <ProfileHandle
                   style={botProfileStyle.userInfoRow}
-                  onPress={() => Actions.profileDetails({item: bot.owner!.id})}
+                  onPress={() => Actions.profileDetails({item: bot.owner!.id, preview: false})}
                   size={16}
                   profile={bot.owner}
                 />

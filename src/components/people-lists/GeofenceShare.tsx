@@ -22,7 +22,12 @@ type Props = {
   searchStore?: ISearchStore
 }
 
-const GeofenceShare = inject('wocky', 'notificationStore', 'analytics', 'searchStore')(
+const GeofenceShare = inject(
+  'wocky',
+  'notificationStore',
+  'analytics',
+  'searchStore'
+)(
   observer(({botId, wocky, notificationStore, analytics, searchStore}: Props) => {
     const [bot, setBot] = useState<IBot | null>(null)
 
@@ -53,7 +58,7 @@ const GeofenceShare = inject('wocky', 'notificationStore', 'analytics', 'searchS
           } to follow the location`
         )
         Actions.popTo('home')
-        Actions.botDetails({botId, isNew: true})
+        Actions.botDetails({botId, isNew: true, preview: false})
         analytics.track('bot_share_geo')
       } catch (e) {
         Alert.alert('There was a problem sharing the location.')
@@ -97,7 +102,7 @@ const RightButton = ({botId}: Props) => {
       onPress={() => {
         // TODO: fix hacky nav animation
         Actions.pop({animated: false})
-        Actions.botDetails({botId, isNew: true})
+        Actions.botDetails({botId, isNew: true, preview: false})
         track('bot_share_geo_skip')
       }}
     >

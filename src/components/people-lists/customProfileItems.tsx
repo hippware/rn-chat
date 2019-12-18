@@ -78,7 +78,7 @@ type Props = {
 }
 
 export const FollowableProfileItem = observer(({profile}: Props) => (
-  <TouchableOpacity onPress={() => Actions.profileDetails({item: profile.id})}>
+  <TouchableOpacity onPress={() => Actions.profileDetails({item: profile.id, preview: false})}>
     <ProfileItem profile={profile}>
       {!profile.isOwn &&
         (profile.isFollowed ? (

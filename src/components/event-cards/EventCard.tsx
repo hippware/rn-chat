@@ -29,7 +29,7 @@ const EventBotInviteCard = observer(
           : 'invited you to follow'
       }
       line2={bot.title}
-      onPress={() => Actions.botDetails({botId: bot.id})}
+      onPress={() => Actions.botDetails({botId: bot.id, preview: false})}
     />
   )
 )
@@ -46,7 +46,7 @@ export const EventBotPostCard = observer(
         timestamp={relativeDateAsString}
         action="commented on"
         line2={bot.title}
-        onPress={() => Actions.botDetails({botId: bot.id})}
+        onPress={() => Actions.botDetails({botId: bot.id, preview: false})}
       />
     )
   }
@@ -60,7 +60,7 @@ const EventBotGeofenceCard = observer(
       timestamp={relativeDateAsString}
       action={isEnter ? 'is at' : 'left'}
       line2={bot.title}
-      onPress={() => Actions.botDetails({botId: bot.id})}
+      onPress={() => Actions.botDetails({botId: bot.id, preview: false})}
     />
   )
 )

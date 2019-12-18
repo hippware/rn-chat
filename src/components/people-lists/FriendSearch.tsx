@@ -24,7 +24,7 @@ const FriendSearch = inject('searchStore')(
         profile={profile}
         onPress={() => {
           Keyboard.dismiss()
-          Actions.profileDetails({item: profile.id})
+          Actions.profileDetails({item: profile.id, preview: false})
         }}
       />
     )
