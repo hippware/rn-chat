@@ -61,8 +61,9 @@ const BotDetails = inject(
       props.navigation.setParams({isNew, bot: tempBot, notificationStore})
 
       homeStore.select(tempBot.id)
-      homeStore.setFocusedLocation(tempBot.location)
       wocky!.loadBot(botId).then(() => {
+        homeStore.setFocusedLocation(tempBot.location)
+
         viewTimeout = setTimeout(() => {
           if (tempBot && isAlive(tempBot))
             analytics.track('bot_view', {id: tempBot.id, title: tempBot.title})
