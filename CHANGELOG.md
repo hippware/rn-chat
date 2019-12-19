@@ -4,8 +4,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.34.2 - 2019 Dec 18
+
 * Flashing screen (#4581)
 * Missing the back caret on user profile screens (#4580)
+* Updates: Location pin not visible when user taps on notification (#4582)
+* Prevent intermediate faded header (Part of #4579)
 
 # 4.34.1 - 2019 Dec 17
 
