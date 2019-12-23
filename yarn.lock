@@ -1455,10 +1455,10 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/detox@^12.8.2":
-  version "12.8.4"
-  resolved "https://registry.yarnpkg.com/@types/detox/-/detox-12.8.4.tgz#afd9999b0de62938d261577ccc8f5e0617bcc028"
-  integrity sha512-ZqjfETBta4Ku31qeOBzk+/YwXPmbDBNDASFnzTmOpWoCAQJusSNpw4v7Taw0zGtFW55GgLwOYEVGb1Rxt7MtnQ==
+"@types/detox@^14.5.2":
+  version "14.5.2"
+  resolved "https://registry.yarnpkg.com/@types/detox/-/detox-14.5.2.tgz#7890d5338cdb453a66bdc58a3ce92e4118c32625"
+  integrity sha512-IGeXr20JY3XNkieXY6hsFSbmhH8By7QDG6feW4eHYdOcudaHwB/K/X82AXxxbGYoi9hehvv2vMLfZqd6NtM6hw==
 
 "@types/history@*":
   version "4.7.3"
