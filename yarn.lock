@@ -1223,10 +1223,10 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/geolocation/-/geolocation-1.4.2.tgz#7228c6d37c2f55017af9c49c2b9ad586d9bcb9f8"
   integrity sha512-9x9dHDeUXnh2larA4zTT3y/tXPmRnysh5o9fsNbGcnUKPj1BUCIHnGGPxEIDnwP1DNIMP2DN9DmuMHImtTbX6A==
 
-"@react-native-community/netinfo@^4.6.1":
-  version "4.6.1"
-  resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-4.6.1.tgz#09960b49217d555e54144f54e63485fe55d673ad"
-  integrity sha512-RIcrNzVnkes6/d5jFprce8i6ruUO9+/FVZZgejlu/TSnysyFXHNJKgcIqxbKx+7XfQxfjrCGeCvsfYxrFrU0zw==
+"@react-native-community/netinfo@^5.2.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-5.2.0.tgz#0ad6d5d5cfd01d31d16ef819fe15c29fa7352bd4"
+  integrity sha512-AhpRzJEAPnqNS6hN8xluoKC5t0toaTQTl+IlGdKhGbvvTvarANnBvmvwLbvTyOOkDCZJc2RTPKVXqhPk/O6P/g==
 
 "@react-native-community/push-notification-ios@^1.0.1", "@react-native-community/push-notification-ios@^1.0.3":
   version "1.0.3"
