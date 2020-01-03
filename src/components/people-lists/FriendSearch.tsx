@@ -1,5 +1,5 @@
 import React, {useRef} from 'react'
-import {View, TextInput, Image, Keyboard} from 'react-native'
+import {View, Image, Keyboard} from 'react-native'
 import {inject} from 'mobx-react'
 import FriendCard from './FriendCard'
 import {colors} from '../../constants'
@@ -7,6 +7,7 @@ import {RText, BottomPopupNew} from '../common'
 import {ISearchStore} from '../../store/SearchStore'
 import {Actions} from 'react-native-router-flux'
 import {observer} from 'mobx-react'
+import TextInput from '../common/TextInput'
 
 type Props = {
   searchStore?: ISearchStore
