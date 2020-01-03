@@ -337,7 +337,7 @@ PODS:
   - React-jsinspector (0.61.5)
   - react-native-blur (0.8.0):
     - React
-  - react-native-config (0.11.7):
+  - react-native-config (0.12.0):
     - React
   - react-native-contacts (5.0.4):
     - React
@@ -733,7 +733,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
   react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
-  react-native-config: 55548054279d92e0e4566ea15a8b9b81028ec342
+  react-native-config: f2c2ae45625a068c35681a16b9bfb1ca58b0adc7
   react-native-contacts: 7d0b7ccd5f00df82ceca035935fc9d6e63af5aec
   react-native-fbsdk: b94a83971c496a35803f38b921aec6d637ba07b5
   react-native-geolocation: a7b94614afbd5fd8350e0233a2025c8228fc8041
@@ -771,6 +771,6 @@ SPEC CHECKSUMS:
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: 9cbc68a33b35a66c7be75922d1d8338fa12038ad
+PODFILE CHECKSUM: d853ddae3dcea7942463464bc2fc8068b8a803c0
 
 COCOAPODS: 1.8.4
