@@ -316,6 +316,7 @@ const LocationStore = types
       BackgroundGeolocation.onMotionChange(onMotionChange)
       BackgroundGeolocation.onActivityChange(onActivityChange)
       BackgroundGeolocation.onProviderChange(onProviderChange)
+      BackgroundGeolocation.onConnectivityChange(onConnectivityChange)
 
       yield self.configure()
       const config = yield BackgroundGeolocation.ready({reset: false})
@@ -423,6 +424,7 @@ const setUploadRate = (() => {
 function onHttp(response) {
   log(prefix, 'on http', response)
   if (response.status >= 200 && response.status < 300) {
+    BackgroundGeolocation.logger.info(`${prefix} onHttp success: ${JSON.stringify(response)}`)
     // analytics.track('location_bg_success', {location: self.location})
 
     let data: any = false
@@ -443,6 +445,7 @@ function onHttp(response) {
       BackgroundGeolocation.logger.error(`${prefix} BackgroundGeolocation.stop() due to forbidden`)
     }
 
+    BackgroundGeolocation.logger.error(`${prefix} onHttp error: ${JSON.stringify(response)}`)
     analytics.track('location_bg_error', {error: response})
   }
 }
@@ -463,6 +466,10 @@ function onProviderChange(provider) {
   if (singleton) {
     singleton.setAlwaysOn(provider.status === BackgroundGeolocation.AUTHORIZATION_STATUS_ALWAYS)
   }
+}
+
+function onConnectivityChange(event) {
+  BackgroundGeolocation.logger.info(`${prefix} onConnectivityChange(${JSON.stringify(event)})`)
 }
 
 async function HeadlessTask(event) {
@@ -489,6 +496,8 @@ async function HeadlessTask(event) {
       return onActivityChange(event.params)
     case 'providerchange':
       return onProviderChange(event.params)
+    case 'connectivitychange':
+      return onConnectivityChange(event.params)
   }
 }
 BackgroundGeolocation.registerHeadlessTask(HeadlessTask)
