@@ -12,6 +12,7 @@ import {IAuthStore} from 'src/store/AuthStore'
 import _ from 'lodash'
 import NotificationStore from 'src/store/NotificationStore'
 import {bugsnagNotify} from 'src/utils/bugsnagConfig'
+import BackgroundGeolocation from 'react-native-background-geolocation'
 
 type Props = {
   wocky?: IWocky
@@ -55,7 +56,10 @@ const Connectivity = inject(
         await tryReconnect(`retry: ${retryDelay}`)
       }
     }, 1000)
-    const disposer = reaction(() => !wocky!.connected, () => (lastDisconnected = Date.now()))
+    const disposer = reaction(
+      () => !wocky!.connected,
+      () => (lastDisconnected = Date.now())
+    )
 
     locationStore!.didMount()
     setTimeout(() => _handleAppStateChange('active'))
@@ -110,6 +114,13 @@ const Connectivity = inject(
     const oldInfo = connectionInfo || {}
     log('CONNECTIVITY:', ci)
     connectionInfo = ci
+
+    BackgroundGeolocation.logger.info(
+      `Connectivity.tsx _handleConnectionInfoChange: ` +
+        `old=(${oldInfo.type},${oldInfo.effectiveType}), ` +
+        `new=(${connectionInfo.type},${connectionInfo.effectiveType})`
+    )
+
     if (connectionInfo.type === 'unknown') {
       return
     }
@@ -132,6 +143,8 @@ const Connectivity = inject(
   const _handleAppStateChange = async currentAppState => {
     retryDelay = 1000
     log('CURRENT APPSTATE:', currentAppState)
+    BackgroundGeolocation.logger.info(`Connectivity.tsx _handleAppStateChange(${currentAppState})`)
+
     // reconnect automatically
     if (currentAppState === 'active') {
       debouncedDisconnect.cancel()
