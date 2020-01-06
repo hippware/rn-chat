@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, StyleSheet, Image, TouchableOpacity, Text} from 'react-native'
+import {View, StyleSheet, Image, TouchableOpacity} from 'react-native'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {RText} from '../common'
@@ -40,7 +40,9 @@ const InvisibleExpirationSelector = observer(() => {
         />
         <RText style={styles.text} weight="Light" size={15} color={colors.DARK_GREY}>
           {'Are you sure you want to go '}
-          <Text style={styles.bold}>{'invisible'}</Text>
+          <RText size={15} style={styles.bold}>
+            {'invisible'}
+          </RText>
           {'?\r\nYou will stop seeing visits to your favorite locations.'}
         </RText>
         <ExpireButton onPress={expire(3)} text="3 hours" />

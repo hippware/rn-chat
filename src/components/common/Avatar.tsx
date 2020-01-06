@@ -2,7 +2,6 @@ import React from 'react'
 import {
   View,
   Image,
-  Text,
   TouchableOpacity,
   StyleSheet,
   ViewStyle,
@@ -18,6 +17,7 @@ import {IProfile, IOwnProfile} from 'wocky-client'
 import PresenceDot from './PresenceDot'
 import LazyImage from './LazyImage'
 import {toJS} from 'mobx'
+import RText from './RText'
 
 type Props = {
   profile?: IProfile
@@ -145,7 +145,7 @@ const AvatarLetterPlaceholder = ({
         {showMask ? (
           <Mask size={size * 0.65} />
         ) : (
-          <Text
+          <RText
             style={[
               styles.title,
               {
@@ -157,7 +157,7 @@ const AvatarLetterPlaceholder = ({
             ]}
           >
             {isYou ? 'YOU' : letter.toUpperCase()}
-          </Text>
+          </RText>
         )}
       </View>
     </LinearGradient>

@@ -3,7 +3,7 @@ import {View, Image, Keyboard} from 'react-native'
 import {inject} from 'mobx-react'
 import FriendCard from './FriendCard'
 import {colors} from '../../constants'
-import {RText, BottomPopupNew, TextInput} from '../common'
+import {RText, BottomPopupNew, TextInputWithClearButton} from '../common'
 import {ISearchStore} from '../../store/SearchStore'
 import {Actions} from 'react-native-router-flux'
 import {observer} from 'mobx-react'
@@ -44,7 +44,7 @@ const FriendSearch = inject('searchStore')(
           }}
         >
           <Image source={searchIcon} style={{marginRight: 10}} />
-          <TextInput
+          <TextInputWithClearButton
             style={{
               flex: 1,
               fontSize: 16,

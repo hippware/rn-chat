@@ -4,7 +4,6 @@ import {
   TextInput,
   Image,
   StyleSheet,
-  Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native'
@@ -14,7 +13,7 @@ import {observer} from 'mobx-react'
 import {when} from 'mobx'
 import {k} from './Global'
 import {colors} from '../constants'
-import {RText} from './common'
+import {RText, RTextInput} from './common'
 import {Actions} from 'react-native-router-flux'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {IFirebaseStore} from '../store/FirebaseStore'
@@ -123,10 +122,10 @@ const VerifyCode = inject('firebaseStore')(
                   style={{marginRight: 10}}
                   source={require('../../images/iconCheckBotAdded.png')}
                 />
-                <Text style={styles.resendTxt}>Code Sent</Text>
+                <RText style={styles.resendTxt}>Code Sent</RText>
               </View>
             ) : (
-              <Text style={styles.resendTxt}>{isResending ? 'Resending...' : 'Resend Code'}</Text>
+              <RText style={styles.resendTxt}>{isResending ? 'Resending...' : 'Resend Code'}</RText>
             )}
           </TouchableOpacity>
           <TouchableOpacity
@@ -134,17 +133,17 @@ const VerifyCode = inject('firebaseStore')(
             style={styles.button}
             disabled={hiddenCode.length < 6 || isConfirming}
           >
-            <Text style={styles.verifyTxt}>{firebaseStore!.buttonText}</Text>
+            <RText style={styles.verifyTxt}>{firebaseStore!.buttonText}</RText>
           </TouchableOpacity>
         </View>
-        <TextInput
+        <RTextInput
           value={hiddenCode}
           onChangeText={processText}
           style={styles.hiddenText}
           autoFocus
           autoCorrect={false}
           keyboardType="numeric"
-          ref={input}
+          textInputRef={input}
           maxLength={6}
           caretHidden
         />

@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Image, Text} from 'react-native'
+import {View, Image} from 'react-native'
 import {RText, GradientButton} from '../common'
 import {WHITE} from 'src/constants/colors'
 import {s} from '../Global'
@@ -24,8 +24,8 @@ const OnboardingLocation = ({onPress}: Props) => (
 
     <View style={{width: '70%', marginBottom: 67 * s}}>
       <RText style={styles.onboardingSubtext}>
-        With '<Text style={{color: '#fe5c6c'}}>Always Allow</Text>' you won’t miss out on relevant
-        location notifications.
+        With '<RText style={{fontSize: 19, color: '#fe5c6c'}}>Always Allow</RText>' you won’t miss
+        out on relevant location notifications.
       </RText>
     </View>
 

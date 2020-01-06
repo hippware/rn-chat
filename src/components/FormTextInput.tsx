@@ -1,10 +1,10 @@
 import React from 'react'
-import {Image, View, TextInput, TextInputProperties, TouchableOpacity, Platform} from 'react-native'
+import {Image, View, TextInputProperties, TouchableOpacity, Platform} from 'react-native'
 import {k} from './Global'
 import {colors} from '../constants'
 import {observer} from 'mobx-react'
 import {ValidateItem} from '../utils/formValidation'
-import {RText, Separator} from './common'
+import {RText, RTextInput, Separator} from './common'
 import Cell from './Cell'
 
 interface IProps extends TextInputProperties {
@@ -44,7 +44,7 @@ export class FormTextInput extends React.Component<IProps> {
           imageStyle={[{marginRight: 13, marginLeft: 8 * k}, imageStyle]}
         >
           {icon ? null : <View style={{width: 40}} />}
-          <TextInput
+          <RTextInput
             style={{
               width: '100%',
               color: colors.DARK_PURPLE,
@@ -56,7 +56,7 @@ export class FormTextInput extends React.Component<IProps> {
             placeholder={label}
             clearButtonMode="while-editing"
             underlineColorAndroid="transparent"
-            ref={r => (this.input = r)}
+            textInputRef={r => (this.input = r)}
             placeholderTextColor={colors.GREY}
             returnKeyType="next"
             onChangeText={text => {

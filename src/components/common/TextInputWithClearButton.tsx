@@ -1,10 +1,11 @@
 import React from 'react'
-import {View, TextInput, Image, TouchableOpacity} from 'react-native'
+import {View, Image, TouchableOpacity} from 'react-native'
+import RTextInput from './RTextInput'
 
 const OwnTextInput = ({onChangeText, value, ...props}) => {
   return (
     <View style={{flexDirection: 'row', marginEnd: 20}}>
-      <TextInput {...props} onChangeText={onChangeText} value={value} clearButtonMode="never" />
+      <RTextInput {...props} onChangeText={onChangeText} value={value} clearButtonMode="never" />
       {!!value && (
         <TouchableOpacity onPress={() => onChangeText('')} style={{marginTop: -3, height: 24}}>
           <Image source={require('../../../images/clearButton.png')} />
