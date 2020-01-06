@@ -9,6 +9,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * react-native-permissions, react-native-background-geolocation
   * bugsnag-react-native, react-native-device-info
   * react-native-contacts, @react-native-community/netinfo (PR #4596)
+  * react-native-config (PR #4598)
+* X or cancel button does not function on friends search (#4579)
 
 # 4.34.2 - 2019 Dec 18
 
