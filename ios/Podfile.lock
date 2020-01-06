@@ -11,7 +11,7 @@ PODS:
   - CocoaLumberjack (3.5.3):
     - CocoaLumberjack/Core (= 3.5.3)
   - CocoaLumberjack/Core (3.5.3)
-  - CodePush (5.7.0):
+  - CodePush (6.0.0):
     - Base64 (~> 1.1)
     - JWT (~> 3.0.0-beta.7)
     - React
@@ -679,7 +679,7 @@ SPEC CHECKSUMS:
   BugsnagReactNative: 34f9500e304c2667ce7a3e76037d91e41eca2ffe
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   CocoaLumberjack: 2f44e60eb91c176d471fdba43b9e3eae6a721947
-  CodePush: d2e54ad42df82a8db65b2d23d8191b950ba945e1
+  CodePush: 58d8b6595f46057ca1f49c55fb6860ad7fd38ce3
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
