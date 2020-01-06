@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {View, Image, Text, TextInput, StyleSheet, TouchableOpacity} from 'react-native'
+import {View, Image, StyleSheet, TouchableOpacity} from 'react-native'
 import {inject} from 'mobx-react'
 import {observer} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
@@ -7,6 +7,7 @@ import {k, width} from './Global'
 import {colors} from '../constants'
 import {INavStore} from '../store/NavStore'
 import {IAuthStore} from 'src/store/AuthStore'
+import {RTextInput, RText} from './common'
 
 type Props = {
   navStore?: INavStore
@@ -14,7 +15,12 @@ type Props = {
   authStore: IAuthStore
 }
 
-const TestRegister = inject('wocky', 'analytics', 'navStore', 'authStore')(
+const TestRegister = inject(
+  'wocky',
+  'analytics',
+  'navStore',
+  'authStore'
+)(
   observer(({navStore, name, authStore}: Props) => {
     const [text, setText] = useState('')
 
@@ -30,7 +36,7 @@ const TestRegister = inject('wocky', 'analytics', 'navStore', 'authStore')(
     return (
       <View style={{flex: 1, alignItems: 'center', paddingTop: 83 * k}}>
         <Image source={require('../../images/logoMark.png')} />
-        <Text
+        <RText
           style={{
             paddingTop: 15 * k,
             fontFamily: 'Roboto-Light',
@@ -39,8 +45,8 @@ const TestRegister = inject('wocky', 'analytics', 'navStore', 'authStore')(
           }}
         >
           STAGING
-        </Text>
-        <Text
+        </RText>
+        <RText
           style={{
             padding: 10 * k,
             paddingTop: 15 * k,
@@ -52,7 +58,7 @@ const TestRegister = inject('wocky', 'analytics', 'navStore', 'authStore')(
           }}
         >
           Enter your test phone number
-        </Text>
+        </RText>
         <View
           style={{
             height: 0.5 * k,
@@ -68,15 +74,15 @@ const TestRegister = inject('wocky', 'analytics', 'navStore', 'authStore')(
             padding: 10 * k,
           }}
         >
-          <Text
+          <RText
             style={{
               fontFamily: 'Roboto-Regular',
               fontSize: 16 * k,
             }}
           >
             +1555
-          </Text>
-          <TextInput
+          </RText>
+          <RTextInput
             autoFocus
             maxLength={7}
             keyboardType="phone-pad"
@@ -105,7 +111,7 @@ const TestRegister = inject('wocky', 'analytics', 'navStore', 'authStore')(
           style={styles.buttonStyle}
           testID="bypassRegisterButton"
         >
-          <Text style={styles.textStyle}>Next</Text>
+          <RText style={styles.textStyle}>Next</RText>
         </TouchableOpacity>
       </View>
     )

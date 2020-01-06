@@ -1,5 +1,6 @@
 import React from 'react'
-import {Text, ImageSourcePropType, TextStyle, ViewStyle, ImageBackground} from 'react-native'
+import {ImageSourcePropType, TextStyle, ViewStyle, ImageBackground} from 'react-native'
+import RText from '../common/RText'
 
 type Props = {
   style?: TextStyle
@@ -25,7 +26,7 @@ const ProfileBadge = ({style, background, diameter = 30, text, outerStyle}: Prop
     ]}
     source={background}
   >
-    <Text style={[{color: 'white', paddingLeft: 2}, style]}>{text}</Text>
+    <RText style={[{color: 'white', paddingLeft: 2}, style]}>{text}</RText>
   </ImageBackground>
 )
 

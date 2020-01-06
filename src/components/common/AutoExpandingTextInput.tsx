@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
-import {TextInput, TextInputProps} from 'react-native'
+import {TextInputProps} from 'react-native'
+import RTextInput from './RTextInput'
 
 interface IProps extends TextInputProps {}
 
@@ -7,7 +8,7 @@ const AutoExpandingTextInput = (props: IProps) => {
   const [height, setHeight] = useState(0)
 
   return (
-    <TextInput
+    <RTextInput
       {...props}
       multiline
       onContentSizeChange={({nativeEvent}) => setHeight(nativeEvent.contentSize.height)}

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import {StyleSheet, View, TextInput, Platform} from 'react-native'
-import RText from '../common/RText'
+import {StyleSheet, View, Platform} from 'react-native'
+import {RText, RTextInput} from '../common'
 import {k, width, minHeight} from '../Global'
 import {colors} from '../../constants'
 import {IBot} from 'wocky-client'
@@ -24,7 +24,7 @@ const EditNote = observer((props: Props) => {
 
   return bot ? (
     <View style={{position: 'absolute', bottom: 0}}>
-      <TextInput
+      <RTextInput
         style={[
           styles.textStyle,
           {

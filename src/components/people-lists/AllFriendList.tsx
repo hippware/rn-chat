@@ -1,10 +1,11 @@
 import React from 'react'
-import {View, StyleSheet, FlatList, TextInput, Image} from 'react-native'
+import {View, StyleSheet, FlatList, Image} from 'react-native'
 import {width} from '../Global'
 import {colors} from '../../constants'
 import {useHomeStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
 import ActiveLocationSharer from '../Home/ActiveLocationSharer'
+import {RTextInput} from '../common'
 
 type Props = {
   isActive: boolean
@@ -38,7 +39,7 @@ const FriendList = observer(({isActive}: Props) => {
         }}
       >
         <Image source={searchIcon} style={{marginRight: 10}} />
-        <TextInput
+        <RTextInput
           style={{
             flex: 1,
             fontSize: 14,

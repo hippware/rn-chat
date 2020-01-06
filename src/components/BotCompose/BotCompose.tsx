@@ -1,15 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import {
-  StyleSheet,
-  Keyboard,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  Alert,
-  Platform,
-} from 'react-native'
-import {RText, Spinner, withKeyboardHOC} from '../common'
+import {StyleSheet, Keyboard, View, TouchableOpacity, Image, Alert, Platform} from 'react-native'
+import {RText, RTextInput, Spinner, withKeyboardHOC} from '../common'
 import {colors} from '../../constants'
 import {k, height, minHeight} from '../Global'
 import {IWocky, IBot} from 'wocky-client'
@@ -178,10 +169,10 @@ const BotCompose = inject(
           </View>
         ) : (
           <View style={styles.container}>
-            <TextInput
+            <RTextInput
               style={styles.textStyle}
               placeholder="Name this place"
-              ref={r => (botTitle = r)}
+              textInputRef={r => (botTitle = r)}
               onChangeText={t => {
                 setTextReacts(false)
                 setText(t)

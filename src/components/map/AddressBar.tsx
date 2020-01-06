@@ -1,10 +1,10 @@
 import React, {useRef, useState} from 'react'
-import {View, Image, TextInput, StyleSheet, FlatList, TouchableOpacity} from 'react-native'
+import {View, Image, StyleSheet, TextInput, FlatList, TouchableOpacity} from 'react-native'
 import {inject} from 'mobx-react'
 import {k, minHeight} from '../Global'
 import {colors} from '../../constants'
 import UseCurrentLocation from './UseCurrentLocation'
-import {RText, Separator} from '../common'
+import {RText, RTextInput, Separator} from '../common'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
@@ -32,7 +32,11 @@ const getSuggestions = _.debounce(
   {maxWait: 600}
 )
 
-const AddressBar = inject('geocodingStore', 'analytics', 'homeStore')(
+const AddressBar = inject(
+  'geocodingStore',
+  'analytics',
+  'homeStore'
+)(
   observer(({geocodingStore, analytics, homeStore, bot, isActive}: Props) => {
     const input = useRef<TextInput>(null)
     const [text, setText] = useState('')
@@ -133,7 +137,7 @@ const AddressBar = inject('geocodingStore', 'analytics', 'homeStore')(
         <View style={[searchEnabled && text.trim() !== '' && {flex: 1}]}>
           <View style={styles.searchContainer}>
             {searchToggleBtn()}
-            <TextInput
+            <RTextInput
               autoFocus={searchEnabled}
               style={styles.textInput}
               autoCorrect={false}
@@ -151,7 +155,7 @@ const AddressBar = inject('geocodingStore', 'analytics', 'homeStore')(
               value={text}
               onFocus={() => setSearchEnabled(true)}
               returnKeyType="search"
-              ref={input}
+              textInputRef={input}
               selectionColor={colors.COVER_BLUE}
             />
           </View>

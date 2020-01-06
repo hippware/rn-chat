@@ -1,13 +1,13 @@
 import React, {useEffect, useState, useRef} from 'react'
 import MapView from 'react-native-maps'
-import {StyleSheet, Text, Image, View, Animated} from 'react-native'
+import {StyleSheet, Image, View, Animated} from 'react-native'
 import {inject} from 'mobx-react'
 import {observer} from 'mobx-react'
 import {autorun} from 'mobx'
 import {IWocky, ILocation} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 import {IHomeStore, INIT_DELTA} from '../../store/HomeStore'
-import {Spinner} from '../common'
+import {Spinner, RText} from '../common'
 import mapStyle from '../map/mapStyle'
 import UberMarker from './UberMarker'
 import {Actions} from 'react-native-router-flux'
@@ -188,7 +188,7 @@ const MapHome = inject(
         {areaTooLarge && (
           <View style={[styles.areaTooLargeView, {bottom: fullScreenMode ? 40 : 160 * k}]}>
             <Image source={require('../../../images/areaTooLarge.png')} />
-            <Text style={styles.areaTooLargeText}>Zoom In To See Locations</Text>
+            <RText style={styles.areaTooLargeText}>Zoom In To See Locations</RText>
           </View>
         )}
       </Animated.View>
