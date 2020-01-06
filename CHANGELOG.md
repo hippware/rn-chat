@@ -7,6 +7,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Update: apollo-client (PR #4574)
   * @babel/plugin-proposal-object-rest-spread (PR #4590)
   * handlebars (PR #4593)
+  * react-native-permissions, react-native-background-geolocation
+    * bugsnag-react-native, react-native-device-info
+    * react-native-contacts, @react-native-community/netinfo (PR #4596)
 
 # 4.34.2 - 2019 Dec 18
 
