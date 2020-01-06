@@ -155,7 +155,7 @@ const AddressBar = inject(
               value={text}
               onFocus={() => setSearchEnabled(true)}
               returnKeyType="search"
-              textInputRef={input}
+              ref={input}
               selectionColor={colors.COVER_BLUE}
             />
           </View>

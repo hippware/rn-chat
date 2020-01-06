@@ -62,7 +62,7 @@ const Report = inject('reportStore')(
             placeholder={placeholder}
             maxLength={1000}
             editable={!reportStore.submitting}
-            textInputRef={text}
+            ref={text}
           />
         </View>
       </View>

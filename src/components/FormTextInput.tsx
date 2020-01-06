@@ -56,7 +56,7 @@ export class FormTextInput extends React.Component<IProps> {
             placeholder={label}
             clearButtonMode="while-editing"
             underlineColorAndroid="transparent"
-            textInputRef={r => (this.input = r)}
+            ref={r => (this.input = r)}
             placeholderTextColor={colors.GREY}
             returnKeyType="next"
             onChangeText={text => {
