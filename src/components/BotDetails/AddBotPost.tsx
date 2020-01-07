@@ -121,7 +121,7 @@ const AddBotPost = inject(
             />
           </TouchableOpacity>
           <RTextInput
-            textInputRef={textInput}
+            ref={textInput}
             onChangeText={setText}
             style={[styles.textInput, styles.textInputDay, {height: 'auto'}]}
             placeholder="Add a comment"

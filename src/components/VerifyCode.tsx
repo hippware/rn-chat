@@ -143,7 +143,7 @@ const VerifyCode = inject('firebaseStore')(
           autoFocus
           autoCorrect={false}
           keyboardType="numeric"
-          textInputRef={input}
+          ref={input}
           maxLength={6}
           caretHidden
         />

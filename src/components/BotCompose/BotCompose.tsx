@@ -172,7 +172,7 @@ const BotCompose = inject(
             <RTextInput
               style={styles.textStyle}
               placeholder="Name this place"
-              textInputRef={r => (botTitle = r)}
+              ref={r => (botTitle = r)}
               onChangeText={t => {
                 setTextReacts(false)
                 setText(t)
