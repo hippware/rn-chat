@@ -10,7 +10,13 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * bugsnag-react-native, react-native-device-info
   * react-native-contacts, @react-native-community/netinfo (PR #4596)
   * react-native-config (PR #4598)
+  * yarn (PR #4602), @babel/preset-typescript (PR #4603)
+  * @types/react-native (PR #4604), @babel/core (PR #4605)
+  * typescript (PR #4606), @types/jest (PR #4608)
+  * @types/react (PR #4609), @babel/node (PR #4611), mobx (PR #4612)
 * X or cancel button does not function on friends search (#4579)
+* Bypass iOS and android OS level text size settings (#3916)
+  * Using own custom components (PR #4613)
 
 # 4.34.2 - 2019 Dec 18
 
