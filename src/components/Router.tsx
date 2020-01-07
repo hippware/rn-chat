@@ -90,6 +90,7 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
         }
       }, {delay: 200})
       
+      
     }, [])
 
     const onDeepLink = async ({action, params}) => {
@@ -110,7 +111,11 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
                 wocky!.notifications.setMode(2)
                 Actions.notifications()
               } else {
-                Actions[action](params)
+                if (action === 'botDetails' && params.params === 'visitors'){
+                  Actions.visitors({botId: params.botId})
+                } else {
+                  Actions[action](params)
+                }
               }
               analytics.track('deeplink_success', {action, params})
             } catch (err) {
@@ -137,7 +142,11 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
   
 
     const uriPrefix = Platform.select({ios: settings.uriPrefix, android: settings.uriPrefix.toLowerCase()})
-
+    // testing for deep links
+    // setTimeout(()=>      {
+    //   onDeepLink({action: 'botDetails', params: {botId: '7474a836-0c11-42f8-8cc0-5fd6108abcc0', params: 'visitors'}})
+    //   }, 500)
+    
     return (
       <Router backAndroidHandler={onBackPress} onStateChange={() => navStore!.setScene(Actions.currentScene, Actions.currentParams)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={onDeepLink}>
         <Tabs hideNavBar hideTabBar>

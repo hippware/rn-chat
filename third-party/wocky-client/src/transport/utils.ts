@@ -384,11 +384,10 @@ export function convertBot({
   }
 }
 
-export function convertNotification(edge: any): IEventData | null {
+export function convertNotification(edge: any): IEventData | {deletedId: string} | null {
   let bot: IBotData
-  // TODO handle delete notifications
   if (edge.node.__typename === 'NotificationDeleted') {
-    return null
+    return {deletedId: edge.node.deletedId}
   }
   const {
     node: {
