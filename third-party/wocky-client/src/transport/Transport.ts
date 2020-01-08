@@ -10,6 +10,8 @@ import {IProfilePartial} from '../model/Profile'
 import {ILocationSnapshot, IBotPost} from '..'
 import {IBot, IBotIn} from '../model/Bot'
 import {ILocation} from '../model/Location'
+import {FriendShareTypeEnum, IFriendShareConfig} from '../model/FriendShare'
+
 const introspectionQueryResultData = require('./fragmentTypes.json')
 const TIMEOUT = 10000
 import {
@@ -689,6 +691,24 @@ export class Transport {
   }
 
   async friendInvite(userId: string): Promise<void> {
+    return this.voidMutation({
+      mutation: gql`
+        mutation friendInvite($input: FriendInviteInput!) {
+          friendInvite(input: $input) {
+            ${VOID_PROPS}            
+          }
+        }
+      `,
+      variables: {input: {userId}},
+    })
+  }
+
+  async friendShareUpdate(
+    userId: string,
+    location: ILocation,
+    shareType: FriendShareTypeEnum,
+    shareConfig: IFriendShareConfig
+  ): Promise<void> {
     return this.voidMutation({
       mutation: gql`
         mutation friendInvite($input: FriendInviteInput!) {
