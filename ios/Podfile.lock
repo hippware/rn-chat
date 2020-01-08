@@ -407,7 +407,7 @@ PODS:
     - ReactCommon/jscallinvoker (= 0.61.5)
   - RNBackgroundFetch (2.7.1):
     - React
-  - RNBackgroundGeolocation (3.3.2):
+  - RNBackgroundGeolocation (3.4.3):
     - CocoaLumberjack (~> 3.5.1)
     - React
   - RNCAsyncStorage (1.6.3):
@@ -503,7 +503,7 @@ DEPENDENCIES:
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
-  - RNBackgroundGeolocation (from `../node_modules/react-native-background-geolocation`)
+  - RNBackgroundGeolocation (from `../node_modules/react-native-background-geolocation-android`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios/RNCPushNotificationIOS.podspec`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
@@ -645,7 +645,7 @@ EXTERNAL SOURCES:
   RNBackgroundFetch:
     :path: "../node_modules/react-native-background-fetch"
   RNBackgroundGeolocation:
-    :path: "../node_modules/react-native-background-geolocation"
+    :path: "../node_modules/react-native-background-geolocation-android"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
   RNCPushNotificationIOS:
@@ -748,7 +748,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
   RNBackgroundFetch: 8d8d66b47eafcb9e772b2eb95057939038b3ef95
-  RNBackgroundGeolocation: 9a7b62b67e56cb64f3426f83db6bc324c0c86d6d
+  RNBackgroundGeolocation: 42d37b9c47d18b904a941334fe58f96eee6e0813
   RNCAsyncStorage: 3c304d1adfaea02ec732ac218801cb13897aa8c0
   RNCPushNotificationIOS: 83ec11fe19d4ea9e32cc339d8e7d2cc3c88f543e
   RNDeviceInfo: 6f20764111df002b4484f90cbe0a861be29bcc6c
