@@ -14,9 +14,14 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * @types/react-native (PR #4604), @babel/core (PR #4605)
   * typescript (PR #4606), @types/jest (PR #4608)
   * @types/react (PR #4609), @babel/node (PR #4611), mobx (PR #4612)
+  * libphonenumber-js (PR #4619)
+  * react-native-permissions, react-native-localize
+  * bugsnag-react-native, react-native-gesture-handler
+  * @react-native-community/netinfo, react-native-mixpanel (PR #4624)
 * X or cancel button does not function on friends search (#4579)
 * Bypass iOS and android OS level text size settings (#3916)
   * Using own custom components (PR #4613)
+  * Use ref forwarding for RTextInput (PR #4615)
 
 # 4.34.2 - 2019 Dec 18
 
