@@ -111,11 +111,10 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
                 wocky!.notifications.setMode(2)
                 Actions.notifications()
               } else {
+                Actions[action](params)
                 if (action === 'botDetails' && params.params === 'visitors'){
                   Actions.visitors({botId: params.botId})
-                } else {
-                  Actions[action](params)
-                }
+                } 
               }
               analytics.track('deeplink_success', {action, params})
             } catch (err) {
