@@ -5,9 +5,10 @@ SplashScreen.hide()
 
 import {storiesOf} from '@storybook/react-native'
 import {YellowBox} from 'react-native'
-import GestureBottomSheetStory from './bottomSheet/GestureBottomSheetStory'
-import * as MyGestureSheetStory from './bottomSheet/MyGestureSheetStory'
-import MyGestureSheetStoryFunctional from './bottomSheet/MyGestureSheetStoryFunctional'
+// import GestureBottomSheetStory from './bottomSheet/GestureBottomSheetStory'
+// import * as MyGestureSheetStory from './bottomSheet/MyGestureSheetStory'
+// import MyGestureSheetStoryFunctional from './bottomSheet/MyGestureSheetStoryFunctional'
+import SwitchStory from './SwitchStory'
 
 YellowBox.ignoreWarnings([
   // I belive these are coming from either react-native-reanimated or react-native-gesture-handler
@@ -55,10 +56,12 @@ YellowBox.ignoreWarnings([
 //   </View>
 // ))
 
-storiesOf('My Gesture Bottom Sheet', module)
-  .add('with flatlist', () => <MyGestureSheetStory.BottomPopupWithList />)
-  .add('with small content', () => <MyGestureSheetStory.BottomPopupWithSmallContent />)
-  .add('with large content', () => <MyGestureSheetStory.BottomPopupWithLargeContent />)
-  .add('Functional', () => <MyGestureSheetStoryFunctional />)
+storiesOf('Switch', module).add('default', () => <SwitchStory />)
 
-storiesOf('GestureHandler Bottom Sheet', module).add('Default', () => <GestureBottomSheetStory />)
+// storiesOf('My Gesture Bottom Sheet', module)
+//   .add('with flatlist', () => <MyGestureSheetStory.BottomPopupWithList />)
+//   .add('with small content', () => <MyGestureSheetStory.BottomPopupWithSmallContent />)
+//   .add('with large content', () => <MyGestureSheetStory.BottomPopupWithLargeContent />)
+//   .add('Functional', () => <MyGestureSheetStoryFunctional />)
+
+// storiesOf('GestureHandler Bottom Sheet', module).add('Default', () => <GestureBottomSheetStory />)
