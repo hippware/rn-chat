@@ -4,6 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.34.3 - 2020 Jan 8
+
+(Native changes)
+
 * Add connectivity and RNBGL http logging.
 * Update: react-native-background-geolocation 3.3.2 to react-native-background-geolocation-android#992e3d53 (3.4.3)
 * Location uploading gets 'stuck' (#4595)
