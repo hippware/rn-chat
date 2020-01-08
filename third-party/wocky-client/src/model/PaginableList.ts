@@ -1,4 +1,4 @@
-import {types, flow, isAlive, IType} from 'mobx-state-tree'
+import {types, flow, isAlive, IType, getSnapshot} from 'mobx-state-tree'
 import {LoadWithDataParams} from '../transport/types'
 
 export function createPaginable<T>(type: IType<any, any, T>, name: string) {
@@ -17,8 +17,11 @@ export function createPaginable<T>(type: IType<any, any, T>, name: string) {
       remove: (id: string) => {
         const index = self.result.findIndex((el: any) => el.id === id)
         if (index !== -1) {
+          const deleted = getSnapshot(self.result[index])
           self.result.splice(index, 1)
+          return deleted
         }
+        return null
       },
     }))
     .actions(self => ({
