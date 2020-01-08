@@ -111,7 +111,7 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
                 wocky!.notifications.setMode(2)
                 Actions.notifications()
               } else {
-                Actions[action](params)
+                Actions[action]({...params, fromDeeplink: true})
                 if (action === 'botDetails' && params.params === 'visitors'){
                   Actions.visitors({botId: params.botId})
                 } 
@@ -145,7 +145,7 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
     // setTimeout(()=>      {
     //   onDeepLink({action: 'botDetails', params: {preview: false, botId: '7474a836-0c11-42f8-8cc0-5fd6108abcc0'//, params: 'visitors'
     // }})
-    //   }, 500)
+    //   }, 1500)
     
     return (
       <Router backAndroidHandler={onBackPress} onStateChange={() => navStore!.setScene(Actions.currentScene, Actions.currentParams)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={onDeepLink}>

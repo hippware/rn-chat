@@ -26,6 +26,7 @@ type Props = {
   navigation: any
   isActive: boolean
   preview?: boolean
+  fromDeeplink?: boolean
 }
 
 const BotDetails = inject(
@@ -39,17 +40,26 @@ const BotDetails = inject(
 
     const [bot, setBot] = useState<IBot | undefined>(undefined)
     const list = useRef(null)
-    const {wocky, analytics, botId, homeStore, isNew, notificationStore, preview = false} = props
+    const {
+      wocky,
+      analytics,
+      botId,
+      homeStore,
+      isNew,
+      notificationStore,
+      preview = false,
+      fromDeeplink,
+    } = props
 
     useEffect(() => {
       let tempBot = wocky!.bots.exists(botId)
       if (!tempBot) {
-        if (preview) {
-          Actions.popTo('home') // bot is deleted, redirect user to own profile
-          return
-        } else {
+        if (fromDeeplink) {
           // bot could be not loaded yet, create empty one
           tempBot = wocky!.getBot({id: botId})
+        } else {
+          Actions.popTo('home') // bot is deleted, redirect user to own profile
+          return
         }
       }
       setBot(tempBot)
