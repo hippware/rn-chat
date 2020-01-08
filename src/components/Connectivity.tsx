@@ -12,7 +12,7 @@ import {IAuthStore} from 'src/store/AuthStore'
 import _ from 'lodash'
 import NotificationStore from 'src/store/NotificationStore'
 import {bugsnagNotify} from 'src/utils/bugsnagConfig'
-import BackgroundGeolocation from 'react-native-background-geolocation'
+import BackgroundGeolocation from 'react-native-background-geolocation-android'
 
 type Props = {
   wocky?: IWocky
