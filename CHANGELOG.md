@@ -14,7 +14,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * @types/react-native (PR #4604), @babel/core (PR #4605)
   * typescript (PR #4606), @types/jest (PR #4608)
   * @types/react (PR #4609), @babel/node (PR #4611), mobx (PR #4612)
-  * libphonenumber-js (PR #4619)
+  * libphonenumber-js (PR #4619), husky (PR #4622)
   * react-native-permissions, react-native-localize
   * bugsnag-react-native, react-native-gesture-handler
   * @react-native-community/netinfo, react-native-mixpanel (PR #4624)
@@ -22,6 +22,15 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Bypass iOS and android OS level text size settings (#3916)
   * Using own custom components (PR #4613)
   * Use ref forwarding for RTextInput (PR #4615)
+* [dev] Convert Switch.tsx to hooks (#4467)
+
+# 4.34.3 - 2020 Jan 8
+
+(Native changes)
+
+* Add connectivity and RNBGL http logging.
+* Update: react-native-background-geolocation 3.3.2 to react-native-background-geolocation-android#992e3d53 (3.4.3)
+* Location uploading gets 'stuck' (#4595)
 
 # 4.34.2 - 2019 Dec 18
 
