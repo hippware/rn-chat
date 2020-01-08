@@ -42,10 +42,15 @@ const BotDetails = inject(
     const {wocky, analytics, botId, homeStore, isNew, notificationStore, preview = false} = props
 
     useEffect(() => {
-      const tempBot = wocky!.bots.exists(botId)
+      let tempBot = wocky!.bots.exists(botId)
       if (!tempBot) {
-        Actions.popTo('home') // bot is deleted, redirect user to own profile
-        return
+        if (preview) {
+          Actions.popTo('home') // bot is deleted, redirect user to own profile
+          return
+        } else {
+          // bot could be not loaded yet, create empty one
+          tempBot = wocky!.getBot({id: botId})
+        }
       }
       setBot(tempBot)
 
@@ -54,7 +59,7 @@ const BotDetails = inject(
 
       homeStore.select(tempBot.id)
       wocky!.loadBot(botId).then(() => {
-        homeStore.setFocusedLocation(tempBot.location)
+        homeStore.setFocusedLocation(tempBot!.location)
 
         viewTimeout = setTimeout(() => {
           if (tempBot && isAlive(tempBot))

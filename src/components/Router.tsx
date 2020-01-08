@@ -143,7 +143,8 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
     const uriPrefix = Platform.select({ios: settings.uriPrefix, android: settings.uriPrefix.toLowerCase()})
     // testing for deep links
     // setTimeout(()=>      {
-    //   onDeepLink({action: 'botDetails', params: {botId: '7474a836-0c11-42f8-8cc0-5fd6108abcc0', params: 'visitors'}})
+    //   onDeepLink({action: 'botDetails', params: {preview: false, botId: '7474a836-0c11-42f8-8cc0-5fd6108abcc0'//, params: 'visitors'
+    // }})
     //   }, 500)
     
     return (
