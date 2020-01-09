@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef, useReducer, forwardRef} from 'react'
-import {Animated, StyleSheet, View, FlatList, FlatListProps, Image, Keyboard} from 'react-native'
+import {Animated, StyleSheet, View, FlatListProps, Image, Keyboard} from 'react-native'
 import {
   PanGestureHandler,
   NativeViewGestureHandler,
@@ -14,8 +14,6 @@ import NavBarHeader, {NavConfig, FULL_SCREEN_POS} from '../custom-navigators/Nav
 import {keyboardShowListenerName, keyboardHideListenerName} from './withKeyboardHOC'
 import {useHomeStore} from '../../utils/injectors'
 import {observer} from 'mobx-react'
-
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
 type Props = {
   listProps?: FlatListProps<any>
@@ -282,7 +280,7 @@ const BottomPopupListNew = forwardRef(
                   waitFor={masterdrawer}
                   simultaneousHandlers={drawer}
                 >
-                  <AnimatedFlatList
+                  <Animated.FlatList
                     style={[{flex: 1}]}
                     bounces={false}
                     data={[]}
