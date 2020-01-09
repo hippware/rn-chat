@@ -9,6 +9,7 @@ import {YellowBox} from 'react-native'
 // import * as MyGestureSheetStory from './bottomSheet/MyGestureSheetStory'
 // import MyGestureSheetStoryFunctional from './bottomSheet/MyGestureSheetStoryFunctional'
 import SwitchStory from './SwitchStory'
+import * as MyGestureSheetStory from './bottomSheet/MyGestureSheetStory'
 
 YellowBox.ignoreWarnings([
   // I belive these are coming from either react-native-reanimated or react-native-gesture-handler
@@ -57,6 +58,13 @@ YellowBox.ignoreWarnings([
 // ))
 
 storiesOf('Switch', module).add('default', () => <SwitchStory />)
+
+storiesOf('My Gesture Bottom Sheet', module).add('with flatlist', () => (
+  <MyGestureSheetStory.BottomPopupWithList />
+))
+// .add('with small content', () => <MyGestureSheetStory.BottomPopupWithSmallContent />)
+// .add('with large content', () => <MyGestureSheetStory.BottomPopupWithLargeContent />)
+// .add('Functional', () => <MyGestureSheetStoryFunctional />)
 
 // storiesOf('My Gesture Bottom Sheet', module)
 //   .add('with flatlist', () => <MyGestureSheetStory.BottomPopupWithList />)
