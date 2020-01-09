@@ -29,6 +29,9 @@ type Props = {
 
 type ScrollState = {lastSnap: number; preview: boolean}
 
+// This component adapted from an example in the rn-gesture-handler repo
+// https://github.com/software-mansion/react-native-gesture-handler/blob/HEAD@%7B2019-12-03T01:41:00Z%7D/Example/bottomSheet/index.js
+
 const BottomPopupListNew = forwardRef(
   (
     {
@@ -233,7 +236,8 @@ const BottomPopupListNew = forwardRef(
     })
 
     return (
-      // todo: what does this wrapping gesture handler do? Taking it away does make the gesture handling wonky, but not sure why
+      // Explanation for mysterious TapGestureHandler:
+      // https://github.com/software-mansion/react-native-gesture-handler/commit/b03630764f4c2bee48b373210aac81b32c681a1b#diff-af93ada864421974f49080fb0de5f308
       <TapGestureHandler
         maxDurationMs={100000}
         ref={masterdrawer}
