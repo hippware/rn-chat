@@ -43,7 +43,7 @@ const LiveLocationShare = inject(
           }}
         >
           <RText size={15} color="white">
-            Next
+            Share Live Location
           </RText>
         </BottomButton>
       </Screen>
