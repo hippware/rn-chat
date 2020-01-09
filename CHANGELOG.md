@@ -19,6 +19,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * react-native-permissions, react-native-localize
   * bugsnag-react-native, react-native-gesture-handler
   * @react-native-community/netinfo, react-native-mixpanel (PR #4624)
+  * @babel/runtime (PR #4627), apollo-cache-inmemory (PR #4630)
+  * ts-jest (PR #4632)
 * X or cancel button does not function on friends search (#4579)
 * Bypass iOS and android OS level text size settings (#3916)
   * Using own custom components (PR #4613)
