@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.35.0 - 2020 Jan 9
+
 * Update: apollo-client (PR #4574), handlebars (PR #4593)
   * @babel/plugin-proposal-object-rest-spread (PR #4590)
   * react-native-permissions, react-native-background-geolocation
