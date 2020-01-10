@@ -41,7 +41,25 @@ const CHOICES = [
   {text: '2 days', value: 48 * HOUR},
   {text: '3 days', value: 72 * HOUR},
 ]
-const UNTIL_OFF = Date.now() + 24 * HOUR * 365
+
+export const UNTIL_OFF = Date.now() + 24 * HOUR * 365
+
+export const share = async (option, duration, wocky, selection, location) => {
+  const expireAt = new Date(option ? UNTIL_OFF : Date.now() + CHOICES[duration].value)
+  // disable invisible mode
+  if (wocky!.profile!.hidden.enabled) {
+    await wocky!.profile!.hide(false, undefined)
+  }
+  // TODO modify server-side API to pass array of usr_ids ?
+  for (const el of selection.selected) {
+    await el.shareLocation(expireAt)
+  }
+  // send location
+  if (location) {
+    await wocky!.setLocation(location!)
+  }
+  Actions.popTo('home')
+}
 
 const LiveLocationCompose = inject(
   'wocky',
@@ -65,23 +83,6 @@ const LiveLocationCompose = inject(
         <View>{children}</View>
       </TouchableOpacity>
     )
-
-    const share = async () => {
-      const expireAt = new Date(option ? UNTIL_OFF : Date.now() + CHOICES[duration].value)
-      // disable invisible mode
-      if (wocky!.profile!.hidden.enabled) {
-        await wocky!.profile!.hide(false, undefined)
-      }
-      // TODO modify server-side API to pass array of usr_ids ?
-      for (const el of selection.selected) {
-        await el.shareLocation(expireAt)
-      }
-      // send location
-      if (locationStore!.location) {
-        await wocky!.setLocation(locationStore!.location!)
-      }
-      Actions.popTo('home')
-    }
 
     const selected = selection.selected.length
 
@@ -185,25 +186,25 @@ const LiveLocationCompose = inject(
             </Checkbox>
           </View>
         </View>
-        <TouchableOpacity style={{width: '100%', height: 50 * minHeight}} onPress={share}>
-          <LinearGradient
-            start={{x: 0, y: 0.5}}
-            end={{x: 1, y: 0.5}}
-            colors={['rgb(242,68,191)', 'rgb(254,110,98)', 'rgb(254,92,108)']}
-            style={{
-              flex: 1,
-              width: '100%',
-              height: '100%',
-              paddingVertical: 15 * minHeight,
-              alignItems: 'center',
-            }}
-          >
-            <RText color="white" size={15}>
-              Share Live Location
-              {option ? '' : ' For ' + CHOICES[duration].text}
-            </RText>
-          </LinearGradient>
-        </TouchableOpacity>
+        {/* <TouchableOpacity style={{width: '100%', height: 50 * minHeight}} onPress={share}> */}
+        <LinearGradient
+          start={{x: 0, y: 0.5}}
+          end={{x: 1, y: 0.5}}
+          colors={['rgb(242,68,191)', 'rgb(254,110,98)', 'rgb(254,92,108)']}
+          style={{
+            flex: 1,
+            width: '100%',
+            height: '100%',
+            paddingVertical: 15 * minHeight,
+            alignItems: 'center',
+          }}
+        >
+          <RText color="white" size={15}>
+            Share Live Location
+            {option ? '' : ' For ' + CHOICES[duration].text}
+          </RText>
+        </LinearGradient>
+        {/* </TouchableOpacity> */}
       </View>
     )
   })
