@@ -124,6 +124,7 @@ export const Profile = types
           if (self.isFriend) {
             // remove from receivedInvitations and add to friends
             self.service.profile.receivedInvitations.remove(self.id)
+            // TODO rewrite invite to use shareType, shareConfig
             self.service.profile.friends.addToTop({
               id: self.id,
               user: self.service.profiles.get(self.id),
@@ -148,6 +149,10 @@ export const Profile = types
         shareLocation: flow(function*(expiresAt: Date) {
           yield self.transport.userLocationShare(self.id, expiresAt)
           self.service.profile.addLocationShare(self, new Date(), expiresAt)
+        }),
+        shareLocationUpdate: flow(function*(shareType = undefined, shareConfig = undefined) {
+          yield self.transport.friendShareUpdate(self.id, self.location, shareType, shareConfig)
+          // self.service.profile.addLocationShare(self, new Date(), expiresAt)
         }),
         cancelShareLocation: flow(function*() {
           yield self.transport.userLocationCancelShare(self.id)

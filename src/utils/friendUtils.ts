@@ -1,6 +1,6 @@
-import {IContact} from 'wocky-client'
+import {IFriend} from 'wocky-client'
 
-const _searchFilter = (p: IContact, searchFilter: string) => {
+const _searchFilter = (p: IFriend, searchFilter: string) => {
   const s = searchFilter && searchFilter.toLowerCase().trim()
   return s && s.length
     ? (p.user.handle && p.user.handle.toLowerCase().startsWith(s)) ||
@@ -11,8 +11,8 @@ const _searchFilter = (p: IContact, searchFilter: string) => {
 
 export const followersSectionIndex = (
   searchFilter: string,
-  followers: IContact[],
-  newFollowers: IContact[] = []
+  followers: IFriend[],
+  newFollowers: IFriend[] = []
 ): object[] => {
   const newFilter = newFollowers.filter(f => _searchFilter(f, searchFilter))
   const followFilter = followers.filter(f => _searchFilter(f, searchFilter)).filter(f => !f.isNew)
@@ -22,7 +22,7 @@ export const followersSectionIndex = (
   return sections
 }
 
-export const followingSectionIndex = (searchFilter: string, following: IContact[]): object[] => {
+export const followingSectionIndex = (searchFilter: string, following: IFriend[]): object[] => {
   const followFilter = following.filter(f => _searchFilter(f, searchFilter))
   return [{key: 'following', data: followFilter}]
 }

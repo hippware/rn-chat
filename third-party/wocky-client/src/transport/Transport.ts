@@ -10,7 +10,7 @@ import {IProfilePartial} from '../model/Profile'
 import {ILocationSnapshot, IBotPost} from '..'
 import {IBot, IBotIn} from '../model/Bot'
 import {ILocation} from '../model/Location'
-import {FriendShareTypeEnum, IFriendShareConfig} from '../model/FriendShare'
+import {FriendShareTypeEnum, IFriendShareConfig} from '../model/Friend'
 
 const introspectionQueryResultData = require('./fragmentTypes.json')
 const TIMEOUT = 10000
@@ -177,6 +177,11 @@ export class Transport {
                   friends(first:100) {
                     edges {
                       node {
+                        shareConfig {
+                          nearbyDistance
+                          notifyCooldown
+                        }
+                        shareType
                         createdAt
                         user {
                           ${PROFILE_PROPS}
@@ -240,11 +245,15 @@ export class Transport {
           user: convertProfile(recipient),
         })
       )
-      result.friends = res.data.user.friends.edges.map(({node: {createdAt, user, name}}) => ({
-        createdAt: iso8601toDate(createdAt).getTime(),
-        name,
-        user: convertProfile(user),
-      }))
+      result.friends = res.data.user.friends.edges.map(
+        ({node: {createdAt, user, name, shareType, shareConfig}}) => ({
+          createdAt: iso8601toDate(createdAt).getTime(),
+          name,
+          shareType,
+          shareConfig,
+          user: convertProfile(user),
+        })
+      )
       result.blocked = res.data.user.blocks.edges.map(({node: {createdAt, user}}) => ({
         createdAt: iso8601toDate(createdAt).getTime(),
         user: convertProfile(user),
@@ -705,19 +714,36 @@ export class Transport {
 
   async friendShareUpdate(
     userId: string,
-    location: ILocation,
-    shareType: FriendShareTypeEnum,
-    shareConfig: IFriendShareConfig
+    location: ILocation | null = null,
+    shareType: FriendShareTypeEnum = FriendShareTypeEnum.DISABLED,
+    shareConfig: IFriendShareConfig = {nearbyCooldown: 100, nearbyDistance: 500}
   ): Promise<void> {
     return this.voidMutation({
       mutation: gql`
-        mutation friendInvite($input: FriendInviteInput!) {
-          friendInvite(input: $input) {
-            ${VOID_PROPS}            
+        mutation friendShareUpdate($input: FriendShareUpdateInput!) {
+          friendShareUpdate(input: $input) {
+            messages {
+              code
+              field
+              message
+            }
+            successful
+            result {
+              user {
+                id
+                handle
+              }
+              createdAt
+              shareConfig {
+                nearbyDistance
+                notifyCooldown
+              }
+              shareType
+            }
           }
         }
       `,
-      variables: {input: {userId}},
+      variables: {input: {userId, location, shareType, shareConfig}},
     })
   }
 
