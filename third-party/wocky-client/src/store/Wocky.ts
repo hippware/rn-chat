@@ -332,6 +332,14 @@ export const Wocky = types
 
         if (!data) return
 
+        if (data.deletedId) {
+          const deletedEvent: any = self.notifications.remove(data.deletedId)
+          if (deletedEvent && deletedEvent.bot) {
+            self.deleteBot(deletedEvent.bot)
+          }
+          return
+        }
+
         try {
           // need to deep clone here to prevent mobx error "[mobx] Dynamic observable objects cannot be frozen"
           data = _.cloneDeep(data)

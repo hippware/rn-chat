@@ -50,61 +50,66 @@ export const BOT_POST_LIST_PROPS = `
 `
 
 export const NOTIFICATIONS_PROPS = `
-  ... on Notification {
-    id
-    createdAt
-    data {
-      __typename
-      ... on LocationShareNearbyStartNotification {
-        user {
-          ${PROFILE_PROPS}
+  ... on NotificationUpdate {
+    ... on NotificationDeleted {
+      deletedId: id
+    }
+    ... on Notification {
+      id
+      createdAt
+      data {
+        __typename
+        ... on LocationShareNearbyStartNotification {
+          user {
+            ${PROFILE_PROPS}
+          }
         }
-      }
-      ... on LocationShareEndNotification {
-        user {
-          ${PROFILE_PROPS}
+        ... on LocationShareEndNotification {
+          user {
+            ${PROFILE_PROPS}
+          }
         }
-      }
-      ... on LocationShareNotification {
-        expiresAt
-        user {
-          ${PROFILE_PROPS}
+        ... on LocationShareNotification {
+          expiresAt
+          user {
+            ${PROFILE_PROPS}
+          }
         }
-      }
-      ... on UserInvitationNotification {
-        user {
-          ${PROFILE_PROPS}
+        ... on UserInvitationNotification {
+          user {
+            ${PROFILE_PROPS}
+          }
         }
-      }
-      ... on BotInvitationNotification {
-        bot {${BOT_PROPS}}
-        invitation {
+        ... on BotInvitationNotification {
+          bot {${BOT_PROPS}}
+          invitation {
+            accepted
+            id
+          }
+          user {${PROFILE_PROPS}}
+        }
+        ... on BotInvitationResponseNotification {
           accepted
-          id
+          invitation {
+            id
+            accepted
+          }
+          bot {
+            ${BOT_PROPS}
+          }
+          user {${PROFILE_PROPS}}
         }
-        user {${PROFILE_PROPS}}
-      }
-      ... on BotInvitationResponseNotification {
-        accepted
-        invitation {
-          id
-          accepted
+        ... on BotItemNotification {
+          bot {${BOT_PROPS}}
+          botItem {
+            ${BOT_POST_PROPS}
+          }
         }
-        bot {
-          ${BOT_PROPS}
+        ... on GeofenceEventNotification {
+          bot {${BOT_PROPS}}
+          user {${PROFILE_PROPS}}
+          event
         }
-        user {${PROFILE_PROPS}}
-      }
-      ... on BotItemNotification {
-        bot {${BOT_PROPS}}
-        botItem {
-          ${BOT_POST_PROPS}
-        }
-      }
-      ... on GeofenceEventNotification {
-        bot {${BOT_PROPS}}
-        user {${PROFILE_PROPS}}
-        event
       }
     }
   }

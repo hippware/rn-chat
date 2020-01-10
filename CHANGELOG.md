@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.35.0 - 2020 Jan 9
+
 * Update: apollo-client (PR #4574), handlebars (PR #4593)
   * @babel/plugin-proposal-object-rest-spread (PR #4590)
   * react-native-permissions, react-native-background-geolocation
@@ -13,10 +15,29 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * yarn (PR #4602), @babel/preset-typescript (PR #4603)
   * @types/react-native (PR #4604), @babel/core (PR #4605)
   * typescript (PR #4606), @types/jest (PR #4608)
-  * @types/react (PR #4609), @babel/node (PR #4611), mobx (PR #4612)
+  * @types/react (PR #4609), react-native-code-push (PR #4610)
+  * @babel/node (PR #4611), mobx (PR #4612)
+  * libphonenumber-js (PR #4619), husky (PR #4622)
+  * react-native-permissions, react-native-localize
+  * bugsnag-react-native, react-native-gesture-handler
+  * @react-native-community/netinfo, react-native-mixpanel (PR #4624)
+  * @babel/runtime (PR #4627), apollo-cache-inmemory (PR #4630)
+  * ts-jest (PR #4632)
 * X or cancel button does not function on friends search (#4579)
 * Bypass iOS and android OS level text size settings (#3916)
   * Using own custom components (PR #4613)
+  * Use ref forwarding for RTextInput (PR #4615)
+* [dev] Convert Switch.tsx to hooks (#4467)
+* Remove deleted location pins for followers (#4474)
+* Back caret doesn't work after deep linking to Who's Here (#4587)
+
+# 4.34.3 - 2020 Jan 8
+
+(Native changes)
+
+* Add connectivity and RNBGL http logging.
+* Update: react-native-background-geolocation 3.3.2 to react-native-background-geolocation-android#992e3d53 (3.4.3)
+* Location uploading gets 'stuck' (#4595)
 
 # 4.34.2 - 2019 Dec 18
 

@@ -17,6 +17,9 @@ export function createFactory<T>(type: IType<any, any, T>) {
       delete: (id: string) => {
         self.storage.delete(id)
       },
+      exists: (id: string) => {
+        return self.storage.get(id)
+      },
       get: (id: string, data?: {[key: string]: any}) => {
         // ensure that nothing inside data is observable (othwerise throws MST exception)
         data = _.cloneDeep(data)
