@@ -11,7 +11,7 @@ import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
 import {actionLogger, Transport, Wocky} from 'wocky-client'
 import analytics from '../utils/analytics'
-import {bugsnagIdentify} from '../utils/bugsnagConfig'
+import {bugsnagIdentify, bugsnagNotify} from '../utils/bugsnagConfig'
 import FirebaseStore from './FirebaseStore'
 import AuthStore from './AuthStore'
 import fileService from './fileService'
@@ -46,6 +46,7 @@ export type IEnv = {
   firebase: Firebase
   fileService: any
   deviceInfo: TRDeviceInfo
+  bugsnagNotify: (e: Error, name?: string, extra?: {[name: string]: any}) => void
 }
 
 const cleanState = {
@@ -170,6 +171,7 @@ export async function createStore() {
     firebase,
     fileService,
     deviceInfo,
+    bugsnagNotify,
   }
 
   const mstStore = Store.create(
