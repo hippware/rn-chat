@@ -152,7 +152,12 @@ export const Profile = types
         }),
         shareLocationUpdate: flow(function*(shareType = undefined, shareConfig = undefined) {
           yield self.transport.friendShareUpdate(self.id, self.location, shareType, shareConfig)
-          // self.service.profile.addLocationShare(self, new Date(), expiresAt)
+          self.service.profile.friends.addToTop({
+            id: self.id,
+            user: self.service.profiles.get(self.id),
+            shareType,
+            shareConfig,
+          })
         }),
         cancelShareLocation: flow(function*() {
           yield self.transport.userLocationCancelShare(self.id)

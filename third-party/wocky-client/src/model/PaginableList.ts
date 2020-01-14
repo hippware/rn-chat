@@ -69,6 +69,9 @@ export function createPaginable<T>(type: IType<any, any, T>, name: string) {
           exists: (id: string): boolean => {
             return self.result.find((el: any) => isAlive(el) && el.id === id) !== undefined
           },
+          get: (id: string): T | undefined => {
+            return self.result.find((el: any) => isAlive(el) && el.id === id)
+          },
           refresh: () => {
             self.result.clear()
             self.cursor = null
