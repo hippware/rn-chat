@@ -3,7 +3,13 @@ import {Profile, IProfile} from './Profile'
 import {createUpdatable} from './Updatable'
 import {createUploadable} from './Uploadable'
 import {InvitationPaginableList, Invitation} from './Invitation'
-import {FriendPaginableList, Friend, FriendShareTypeEnum, IFriendShareConfig} from './Friend'
+import {
+  FriendPaginableList,
+  Friend,
+  FriendShareTypeEnum,
+  IFriendShareConfig,
+  DefaultFriendShareConfig,
+} from './Friend'
 import {BlockedUserPaginableList, BlockedUser} from './BlockedUser'
 import {LocationSharePaginableList, LocationShare} from './LocationShare'
 import ClientData from './ClientData'
@@ -92,7 +98,7 @@ export const OwnProfile = types
           createdAt,
           user: profile.id,
           shareType,
-          shareConfig,
+          shareConfig: shareConfig || DefaultFriendShareConfig,
         })
       )
       self.receivedInvitations.remove(profile.id)
