@@ -4,6 +4,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Update: @babel/plugin-transform-flow-strip-types (PR #4641)
+  * @storybook/react-native (PR #4643), ts-node (PR #4645)
+  * @babel/runtime (PR #4646), mobx-react (PR #4650)
+  * @babel/core (PR #4651), @babel/plugin-proposal-decorators (PR #4653)
+* Skip live location duration selection screen (#4639)
+
 # 4.35.0 - 2020 Jan 9
 
 * Update: apollo-client (PR #4574), handlebars (PR #4593)

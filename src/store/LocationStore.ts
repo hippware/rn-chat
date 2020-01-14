@@ -439,7 +439,8 @@ function onHttp(response) {
     if (response.status === 401 || response.status === 403) {
       BackgroundGeolocation.stop()
       BackgroundGeolocation.stopSchedule()
-      BackgroundGeolocation.logger.error(`${prefix} BackgroundGeolocation.stop() due to error`)
+      bugsnagNotify(new Error('BackgroundGeolocation.stop() due to forbidden'), 'location_store_onhttp_4xx', {response})
+      BackgroundGeolocation.logger.error(`${prefix} BackgroundGeolocation.stop() due to forbidden`)
     }
 
     analytics.track('location_bg_error', {error: response})

@@ -36,6 +36,12 @@ export const Wocky = types
   )
   .named(SERVICE_NAME)
   .actions(self => ({
+    bugsnagNotify: (e: Error, name?: string, extra?: {[name: string]: any}): void => {
+      const env = getEnv(self)
+      if (env.bugsnagNotify) {
+        env.bugsnagNotify(e, name, extra)
+      }
+    },
     loadProfile: flow(function*(id: string) {
       yield waitFor(() => self.connected)
       const isOwn = id === self.username
@@ -488,6 +494,8 @@ export const Wocky = types
               profile.setLocation(
                 createLocation({...location, createdAt: iso8601toDate(location.capturedAt)})
               )
+            } else {
+              self.bugsnagNotify(new Error('Unable to setLocation due to profile not found'), 'wocky_sharedLocation_profile_not_found', {id, location})
             }
           }
         ),
