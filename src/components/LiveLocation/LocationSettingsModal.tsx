@@ -4,6 +4,7 @@ import {RText, Separator, Avatar, GradientButton} from '../common'
 import ModalContainer from '../modals/ModalContainer'
 import {IProfile} from '../../../third-party/wocky-client/src'
 import {DARK_PURPLE, PINK, PINKISH_GREY} from '../../constants/colors'
+import {Actions} from 'react-native-router-flux'
 
 type Props = {
   type: 'SEND_REQUEST' | 'ACCEPT_REQUEST' | 'ACCEPT_REJECT_REQUEST'
@@ -18,7 +19,7 @@ const LocationSettingsModal = (props: Props) => {
   const {profile} = props
   const [selection, setSelection] = useState<SelectionType>(null)
   return (
-    <ModalContainer>
+    <ModalContainer onPress={Actions.pop}>
       <View
         style={{
           width: '80%',
