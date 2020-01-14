@@ -35,6 +35,12 @@ export const Wocky = types
   )
   .named(SERVICE_NAME)
   .actions(self => ({
+    bugsnagNotify: (e: Error, name?: string, extra?: {[name: string]: any}): void => {
+      const env = getEnv(self)
+      if (env.bugsnagNotify) {
+        env.bugsnagNotify(e, name, extra)
+      }
+    },
     loadProfile: flow(function*(id: string) {
       yield waitFor(() => self.connected)
       const isOwn = id === self.username
