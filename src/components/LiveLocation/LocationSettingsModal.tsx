@@ -1,19 +1,22 @@
 import React, {useState} from 'react'
-import {View, TouchableOpacity, Image} from 'react-native'
+import {View, TouchableOpacity, Image, StyleSheet} from 'react-native'
 import {RText, Separator, Avatar, GradientButton} from '../common'
 import ModalContainer from '../modals/ModalContainer'
 import {IProfile} from '../../../third-party/wocky-client/src'
-import {DARK_PURPLE, PINK} from '../../constants/colors'
+import {DARK_PURPLE, PINK, PINKISH_GREY} from '../../constants/colors'
 
 type Props = {
   type: 'SEND_REQUEST' | 'ACCEPT_REQUEST' | 'ACCEPT_REJECT_REQUEST'
-  user: IProfile
+  profile: IProfile
 }
+
+type SelectionType = 'always' | 'nearby' | null
 
 const buttonHeight = 50
 
-export default ({type, user}: Props) => {
-  const [selection, setSelection] = useState<'always' | 'nearby' | null>(null)
+const LocationSettingsModal = (props: Props) => {
+  const {profile} = props
+  const [selection, setSelection] = useState<SelectionType>(null)
   return (
     <ModalContainer>
       <View
@@ -30,10 +33,9 @@ export default ({type, user}: Props) => {
         <RText size={15} color={DARK_PURPLE} weight="Medium">
           Friend Request
         </RText>
-        {/* <RText>Avatar</RText> */}
-        <Avatar profile={user} size={50} borderColor={PINK} hideDot style={{marginTop: 15}} />
+        <Avatar profile={profile} size={50} borderColor={PINK} hideDot style={{marginTop: 15}} />
         <RText size={20} color={PINK} style={{marginTop: 2}} weight="Bold">
-          {user.handle}
+          {profile.handle}
         </RText>
         <Separator style={{width: '100%', marginTop: 25, marginBottom: 20}} />
         <RText size={16} color={DARK_PURPLE} weight="Medium" style={{marginBottom: 25}}>
@@ -49,29 +51,13 @@ export default ({type, user}: Props) => {
           onPress={() => setSelection('nearby')}
           selected={selection === 'nearby'}
         />
-        {/* todo: differentiate buttons based on type */}
-        <GradientButton
-          // isDisabled={!selected}
-          onPress={() => {
-            // todo
-          }}
-          style={{
-            height: buttonHeight,
-            width: '100%',
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-          }}
-        >
-          <RText size={15} color="white">
-            Accept Friend Request
-          </RText>
-        </GradientButton>
+        <BottomButtons {...props} selection={selection} />
       </View>
     </ModalContainer>
   )
 }
+
+export default LocationSettingsModal
 
 const on = require('../../../images/radioSelected.png')
 const off = require('../../../images/radioUnselected.png')
@@ -87,3 +73,60 @@ const RadioButton = ({text, selected, onPress}) => (
     </RText>
   </View>
 )
+
+const BottomButtons = ({type, selection}: Props & {selection: SelectionType}) => {
+  if (type === 'ACCEPT_REJECT_REQUEST') {
+    return (
+      <View style={[{flexDirection: 'row'}, styles.bottom]}>
+        <TouchableOpacity
+          onPress={() => {
+            // todo
+          }}
+          style={[
+            styles.button,
+            {backgroundColor: PINKISH_GREY, alignItems: 'center', justifyContent: 'center'},
+          ]}
+        >
+          <RText size={15} color="white">
+            Reject
+          </RText>
+        </TouchableOpacity>
+        <GradientButton
+          onPress={() => {
+            // todo
+          }}
+          style={styles.button}
+        >
+          <RText size={15} color="white">
+            Accept
+          </RText>
+        </GradientButton>
+      </View>
+    )
+  } else {
+    // todo: accept/send friend request action
+    return (
+      <GradientButton
+        onPress={type === 'ACCEPT_REQUEST' ? () => null : () => null}
+        style={[styles.bottom, styles.button]}
+      >
+        <RText size={15} color="white">
+          {type === 'ACCEPT_REQUEST' ? 'Accept Friend Request' : 'Send Friend Request'}
+        </RText>
+      </GradientButton>
+    )
+  }
+}
+
+const styles = StyleSheet.create({
+  bottom: {
+    position: 'absolute',
+    bottom: -1,
+    left: 0,
+    right: 0,
+  },
+  button: {
+    height: buttonHeight,
+    flex: 1,
+  },
+})

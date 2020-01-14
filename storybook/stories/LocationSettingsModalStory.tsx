@@ -12,4 +12,6 @@ const profile = {
   },
 }
 
-export default () => <LocationSettingsModal type="ACCEPT_REJECT_REQUEST" user={profile as any} />
+export default () => <LocationSettingsModal type="ACCEPT_REJECT_REQUEST" profile={profile as any} />
+// export default () => <LocationSettingsModal type="ACCEPT_REQUEST" user={profile as any} />
+// export default () => <LocationSettingsModal type="SEND_REQUEST" user={profile as any} />
