@@ -14,6 +14,7 @@ import _ from 'lodash'
 import {RequestType} from '../model/PaginableList'
 import {ILocation, ILocationSnapshot, createLocation} from '../model/Location'
 import {log} from '../logger'
+import {DefaultFriendShareConfig, FriendShareTypeEnum} from '../model/Friend'
 
 export const Wocky = types
   .compose(
@@ -295,7 +296,12 @@ export const Wocky = types
         const profile = self.profiles.get(user.id, user)
         if (relationship === 'FRIEND') {
           profile.setFriend(true)
-          self.profile!.addFriend(profile, createdAt)
+          self.profile!.addFriend(
+            profile,
+            createdAt,
+            FriendShareTypeEnum.DISABLED,
+            DefaultFriendShareConfig
+          )
         }
         if (relationship === 'NONE') {
           profile.setFriend(false)

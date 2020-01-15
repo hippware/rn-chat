@@ -3,7 +3,13 @@ import {Profile, IProfile} from './Profile'
 import {createUpdatable} from './Updatable'
 import {createUploadable} from './Uploadable'
 import {InvitationPaginableList, Invitation} from './Invitation'
-import {ContactPaginableList, Contact} from './Contact'
+import {
+  FriendPaginableList,
+  Friend,
+  FriendShareTypeEnum,
+  IFriendShareConfig,
+  DefaultFriendShareConfig,
+} from './Friend'
 import {BlockedUserPaginableList, BlockedUser} from './BlockedUser'
 import {LocationSharePaginableList, LocationShare} from './LocationShare'
 import ClientData from './ClientData'
@@ -21,7 +27,7 @@ export const OwnProfile = types
       phoneNumber: types.maybeNull(types.string),
       sentInvitations: types.optional(InvitationPaginableList, {}),
       receivedInvitations: types.optional(InvitationPaginableList, {}),
-      friends: types.optional(ContactPaginableList, {}),
+      friends: types.optional(FriendPaginableList, {}),
       blocked: types.optional(BlockedUserPaginableList, {}),
       locationShares: types.optional(LocationSharePaginableList, {}),
       locationSharers: types.optional(LocationSharePaginableList, {}),
@@ -80,12 +86,19 @@ export const OwnProfile = types
     },
   }))
   .actions(self => ({
-    addFriend: (profile: IProfile, createdAt: Date) => {
+    addFriend: (
+      profile: IProfile,
+      createdAt: Date,
+      shareType: FriendShareTypeEnum,
+      shareConfig: IFriendShareConfig
+    ) => {
       self.friends.add(
-        Contact.create({
+        Friend.create({
           id: profile.id,
           createdAt,
           user: profile.id,
+          shareType,
+          shareConfig: shareConfig || DefaultFriendShareConfig,
         })
       )
       self.receivedInvitations.remove(profile.id)
@@ -223,8 +236,8 @@ export const OwnProfile = types
       sentInvitations.forEach(({createdAt, user}) =>
         self.sendInvitation(self.service.profiles.get(user.id, user), createdAt)
       )
-      friends.forEach(({createdAt, user, name}) =>
-        self.addFriend(self.service.profiles.get(user.id, user), createdAt)
+      friends.forEach(({createdAt, user, shareType, shareConfig, name}) =>
+        self.addFriend(self.service.profiles.get(user.id, user), createdAt, shareType, shareConfig)
       )
       blocked.forEach(({createdAt, user}) => {
         user.isBlocked = true
