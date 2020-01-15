@@ -8,7 +8,12 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * @storybook/react-native (PR #4643), ts-node (PR #4645)
   * @babel/runtime (PR #4646), mobx-react (PR #4650)
   * @babel/core (PR #4651), @babel/plugin-proposal-decorators (PR #4653)
+  * react-native-country-picker-modal
+  * @react-native-community/async-storage
+  * @react-native-community/push-notification-ios
+  * react-native-device-info (PR #4666)
 * Skip live location duration selection screen (#4639)
+* Post some errors to bugsnag to help debug location tracking (PR #4665)
 
 # 4.35.0 - 2020 Jan 9
 
