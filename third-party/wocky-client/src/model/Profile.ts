@@ -118,7 +118,7 @@ export const Profile = types
             self.statusUpdatedAt = data.statusUpdatedAt
           }
         },
-        invite: flow(function*() {
+        invite: flow(function*(shareType = undefined) {
           yield waitFor(() => self.connected)
           self.receivedInvite()
           if (self.isFriend) {
@@ -128,6 +128,7 @@ export const Profile = types
             self.service.profile.friends.addToTop({
               id: self.id,
               user: self.service.profiles.get(self.id),
+              shareType,
             })
           } else {
             self.service.profile.sentInvitations.addToTop({
@@ -136,7 +137,7 @@ export const Profile = types
               sender: self.service.profiles.get(self.service.username),
             })
           }
-          yield self.transport.friendInvite(self.id)
+          yield self.transport.friendInvite(self.id, shareType)
         }),
         unfriend: flow(function*() {
           yield waitFor(() => self.connected)
@@ -150,6 +151,7 @@ export const Profile = types
           yield self.transport.userLocationShare(self.id, expiresAt)
           self.service.profile.addLocationShare(self, new Date(), expiresAt)
         }),
+        // cannot define shareType typing because of circular dependency between Profile and Friend
         shareLocationUpdate: flow(function*(shareType = undefined, shareConfig = undefined) {
           yield self.transport.friendShareUpdate(self.id, self.location, shareType, shareConfig)
           self.service.profile.friends.addToTop({

@@ -700,7 +700,10 @@ export class Transport {
     return {method, headers: {header: headers}, url: uploadUrl, reference_url: referenceUrl, file}
   }
 
-  async friendInvite(userId: string): Promise<void> {
+  async friendInvite(
+    userId: string,
+    shareType: FriendShareTypeEnum = FriendShareTypeEnum.DISABLED
+  ): Promise<void> {
     return this.voidMutation({
       mutation: gql`
         mutation friendInvite($input: FriendInviteInput!) {
@@ -709,7 +712,7 @@ export class Transport {
           }
         }
       `,
-      variables: {input: {userId}},
+      variables: {input: {userId, shareType}},
     })
   }
 
@@ -1483,7 +1486,7 @@ export class Transport {
       : `wss://${this.host}/graphql`
 
     // uncomment to see all graphql messages!
-    process.env.WOCKY_VERBOSE = '1'
+    // process.env.WOCKY_VERBOSE = '1'
 
     const socket = new PhoenixSocket(socketEndpoint, {
       reconnectAfterMs: () => 100000000, // disable auto-reconnect
