@@ -50,6 +50,7 @@ import LiveLocationShare from './LiveLocation/LiveLocationShare'
 import  {IHomeStore} from 'src/store/HomeStore';
 import MapOptions from './MapOptions'
 import {IPermissionStore} from 'src/store/PermissionStore'
+import LocationSettingsModal from './LiveLocation/LocationSettingsModal'
 
 export const iconClose = require('../../images/iconClose.png')
 
@@ -213,6 +214,7 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
             <Scene key="sharePresencePrimer" component={SharePresencePrimer} />
             <Scene key="invisibleExpirationSelector" component={InvisibleExpirationSelector} />
             <Scene key="geoHeaderPrimer" component={GeoHeaderPrimer} />
+            <Scene key="locationSettingsModal" component={LocationSettingsModal} />
           </Lightbox>
         </Tabs>
       </Router>

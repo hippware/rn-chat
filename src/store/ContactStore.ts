@@ -57,6 +57,11 @@ export class MyContact {
     return parts.join(' ').trim()
   }
 
+  @computed
+  get displayNameSingle(): string {
+    return this.displayName.split(' ')[0]
+  }
+
   @action
   updateWithBulkData(bulkData: BulkData) {
     // short circuit if we already have a profile
