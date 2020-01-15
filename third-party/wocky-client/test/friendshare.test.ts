@@ -83,7 +83,7 @@ describe('Friend Share', () => {
 
     // check nearby
     const config = {
-      nearbyCooldown: 200,
+      notifyCooldown: 200,
       nearbyDistance: 1000,
     }
     aliceBobProfile = await alice.loadProfile(bob.username!)

@@ -10,7 +10,7 @@ import {IProfilePartial} from '../model/Profile'
 import {ILocationSnapshot, IBotPost} from '..'
 import {IBot, IBotIn} from '../model/Bot'
 import {ILocation} from '../model/Location'
-import {FriendShareTypeEnum, IFriendShareConfig} from '../model/Friend'
+import {FriendShareTypeEnum, IFriendShareConfig, DefaultFriendShareConfig} from '../model/Friend'
 
 const introspectionQueryResultData = require('./fragmentTypes.json')
 const TIMEOUT = 10000
@@ -245,6 +245,7 @@ export class Transport {
           user: convertProfile(recipient),
         })
       )
+      console.log('FRIENDS: ', JSON.stringify(res.data.user.friends.edges))
       result.friends = res.data.user.friends.edges.map(
         ({node: {createdAt, user, name, shareType, shareConfig}}) => ({
           createdAt: iso8601toDate(createdAt).getTime(),
@@ -716,7 +717,7 @@ export class Transport {
     userId: string,
     location: ILocation | null = null,
     shareType: FriendShareTypeEnum = FriendShareTypeEnum.DISABLED,
-    shareConfig: IFriendShareConfig = {nearbyCooldown: 100, nearbyDistance: 500}
+    shareConfig: IFriendShareConfig = DefaultFriendShareConfig
   ): Promise<void> {
     return this.voidMutation({
       mutation: gql`
