@@ -65,7 +65,7 @@
     "react-native-android-open-settings": "^1.3.0",
     "react-native-animated-linear-gradient": "^1.2.0",
     "react-native-background-fetch": "^2.7.0",
-    "react-native-background-geolocation": "^3.4.2",
+    "react-native-background-geolocation-android": "git+https://42af07bf147313e5c1053b3e23ebbc4da0075767:@github.com/hippware/react-native-background-geolocation-android#992e3d53",
     "react-native-blur": "^3.2.2",
     "react-native-code-push": "^6.0.0",
     "react-native-config": "^0.12.0",
