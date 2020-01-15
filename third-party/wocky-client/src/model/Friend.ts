@@ -11,11 +11,11 @@ export enum FriendShareTypeEnum {
 export const FriendShareType = types.enumeration([...Object.values(FriendShareTypeEnum)])
 
 export const FriendShareConfig = types.model({
-  notifyCooldown: types.integer,
+  nearbyCooldown: types.integer,
   nearbyDistance: types.integer,
 })
 
-export const DefaultFriendShareConfig = {notifyCooldown: 100, nearbyDistance: 500}
+export const DefaultFriendShareConfig = {nearbyCooldown: 100, nearbyDistance: 500}
 
 export interface IFriendShareConfig extends SnapshotIn<typeof FriendShareConfig> {}
 

@@ -179,7 +179,7 @@ export class Transport {
                       node {
                         shareConfig {
                           nearbyDistance
-                          notifyCooldown
+                          nearbyCooldown
                         }
                         shareType
                         createdAt
@@ -740,7 +740,7 @@ export class Transport {
               createdAt
               shareConfig {
                 nearbyDistance
-                notifyCooldown
+                nearbyCooldown
               }
               shareType
             }
