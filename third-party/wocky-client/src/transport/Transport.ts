@@ -245,7 +245,6 @@ export class Transport {
           user: convertProfile(recipient),
         })
       )
-      console.log('FRIENDS: ', JSON.stringify(res.data.user.friends.edges))
       result.friends = res.data.user.friends.edges.map(
         ({node: {createdAt, user, name, shareType, shareConfig}}) => ({
           createdAt: iso8601toDate(createdAt).getTime(),
