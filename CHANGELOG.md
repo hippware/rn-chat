@@ -12,8 +12,12 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * @react-native-community/async-storage
   * @react-native-community/push-notification-ios
   * react-native-device-info (PR #4666)
+  * react-native-background-geolocation (to -android) (PR #4647)
+  * react-native-emoji-selector (PR #4670)
 * Skip live location duration selection screen (#4639)
 * Post some errors to bugsnag to help debug location tracking (PR #4665)
+* Location uploading gets 'stuck' (#4595)
+* Avatar tapped from "See All" section does not function (#4655)
 
 # 4.35.0 - 2020 Jan 9
 
