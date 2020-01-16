@@ -1148,6 +1148,7 @@ export class Transport {
     return results ? results.map(r => ({...r, user: r.user ? convertProfile(r.user) : null})) : []
   }
 
+  // todo: this is now deprecated. Replace with `userInviteSend`. https://github.com/hippware/rn-chat/issues/4412#issue-521865870
   async friendSmsInvite(phoneNumber: string): Promise<void> {
     return this.voidMutation({
       mutation: gql`
