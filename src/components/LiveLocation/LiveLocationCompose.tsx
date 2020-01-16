@@ -44,7 +44,7 @@ const CHOICES = [
 
 export const UNTIL_OFF = Date.now() + 24 * HOUR * 365
 
-export const share = async (option, duration, wocky, selection, location) => {
+export const share = async (option, duration, wocky, selection, location, pop: boolean = true) => {
   const expireAt = new Date(option ? UNTIL_OFF : Date.now() + CHOICES[duration].value)
   // disable invisible mode
   if (wocky!.profile!.hidden.enabled) {
@@ -52,13 +52,16 @@ export const share = async (option, duration, wocky, selection, location) => {
   }
   // TODO modify server-side API to pass array of usr_ids ?
   for (const el of selection.selected) {
-    await el.shareLocation(expireAt)
+    // todo: await in a for loop is an anti-pattern. Need to run as Promise.all to wait until all succeed.
+    /* await */ el.shareLocation(expireAt)
   }
   // send location
   if (location) {
     await wocky!.setLocation(location!)
   }
-  Actions.popTo('home')
+  if (pop) {
+    Actions.popTo('home')
+  }
 }
 
 const LiveLocationCompose = inject(
