@@ -6,7 +6,7 @@ import {
   timestamp,
   waitFor,
 } from './support/testuser'
-import {IWocky} from '../src'
+import {IWocky, FriendShareTypeEnum} from '../src'
 import {UserActivityType} from '../src/transport/types'
 
 describe('Live Locations', () => {
@@ -51,7 +51,7 @@ describe('Live Locations', () => {
     const date = new Date()
     date.setSeconds(date.getSeconds() + 10)
     // share location
-    await bobAlicesProfile.shareLocation(date)
+    await bobAlicesProfile.shareLocationUpdate(FriendShareTypeEnum.ALWAYS)
   })
 
   it('update location', async () => {
@@ -92,7 +92,7 @@ describe('Live Locations', () => {
   it('cancel share and verify', async () => {
     timestamp()
     const bobAlicesProfile = await bob.loadProfile(alice.username!)
-    await bobAlicesProfile.cancelShareLocation()
+    await bobAlicesProfile.shareLocationUpdate(FriendShareTypeEnum.DISABLED)
     const alicesBobProfile = await alice.loadProfile(bob.username!)
     // wait for the cancel share to take effect
     await sleep(2000)

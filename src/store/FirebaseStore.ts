@@ -272,7 +272,7 @@ const FirebaseStore = types
     // TODO: use rn-firebase for dynamic link generation when it's less broken
     const getFriendInviteLink = flow(function*() {
       const apiKey = 'AIzaSyCt7Lb8cjTHNWLuvSZEXFDKef54x4Es3N8'
-      let code = yield wocky.userInviteMakeCode()
+      let code = '1234' // TODO fix with new API, because old method is deprecated yield wocky.userInviteMakeCode()
       code = encodeURIComponent(code) // need this for maintaining valid URL
 
       // https://firebase.google.com/docs/reference/dynamic-links/link-shortener

@@ -88,14 +88,12 @@ export const OwnProfile = types
   .actions(self => ({
     addFriend: (
       profile: IProfile,
-      createdAt: Date,
       shareType: FriendShareTypeEnum,
       shareConfig: IFriendShareConfig
     ) => {
       self.friends.add(
         Friend.create({
           id: profile.id,
-          createdAt,
           user: profile.id,
           shareType,
           shareConfig: shareConfig || DefaultFriendShareConfig,
@@ -149,11 +147,6 @@ export const OwnProfile = types
       )
       profile.receivedInvite()
     },
-    cancelAllLocationShares: flow(function*() {
-      yield self.transport.userLocationCancelAllShares()
-      self.locationShares.list.forEach(share => share.sharedWith.setReceivesLocationShare(false))
-      self.locationShares.refresh()
-    }),
   }))
   .actions(self => {
     const timers: any[] = []
@@ -236,8 +229,8 @@ export const OwnProfile = types
       sentInvitations.forEach(({createdAt, user}) =>
         self.sendInvitation(self.service.profiles.get(user.id, user), createdAt)
       )
-      friends.forEach(({createdAt, user, shareType, shareConfig, name}) =>
-        self.addFriend(self.service.profiles.get(user.id, user), createdAt, shareType, shareConfig)
+      friends.forEach(({user, shareType, shareConfig}) =>
+        self.addFriend(self.service.profiles.get(user.id, user), shareType, shareConfig)
       )
       blocked.forEach(({createdAt, user}) => {
         user.isBlocked = true
