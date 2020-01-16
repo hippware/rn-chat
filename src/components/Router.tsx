@@ -188,9 +188,9 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
                     <Scene key="profileDetails" path="user/:item" component={ProfileDetailNew} hasPreview />
                     <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetailsNew} hasPreview />
                     <Scene key="notifications" path="invitations/:params*" component={NotificationsNew} backButton shiftMap />
+                    <Scene key="allFriends" component={AllFriendList} title="Friends" backButton />
                   </Lightbox>
                   <Scene key="chat" path="conversation/:item" component={ChatScreen} />
-                  <Scene key="allFriends" component={AllFriendList} title="Friends" />
                   <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
                   <Scene key="liveLocationSelectFriends" component={LiveLocationShare} title="Select Friends" />
                   <Scene key="myAccount" component={MyAccount} editMode back />
