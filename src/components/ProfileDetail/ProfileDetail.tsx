@@ -8,7 +8,7 @@ import {View, StyleSheet, TouchableOpacity, Image} from 'react-native'
 import ConnectButton from './ConnectButton'
 import ProfileAvatar from '../ProfileAvatar'
 import {avatarScale} from '../Global'
-import BlockReport from './BlockReport'
+import ProfileActionSheet from './ProfileActionSheet'
 import {useWocky, useHomeStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
@@ -54,7 +54,7 @@ const Default = observer(({profile}: {profile: IProfile}) => (
     }}
     testID="profileDetail"
   >
-    <BlockReport profile={profile} />
+    <ProfileActionSheet profile={profile} />
     <ProfileAvatar
       size={74}
       style={{borderWidth: 0}}

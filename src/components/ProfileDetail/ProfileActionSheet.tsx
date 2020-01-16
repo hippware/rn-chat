@@ -8,7 +8,7 @@ type Props = {
   profile: any
 }
 
-const BlockReport = observer(({profile}: Props) => {
+const ProfileActionSheet = observer(({profile}: Props) => {
   const actionSheet = useRef<ActionSheet>(null)
 
   const onTap = (index: number) => {
@@ -62,4 +62,4 @@ const BlockReport = observer(({profile}: Props) => {
   } else return null
 })
 
-export default BlockReport
+export default ProfileActionSheet
