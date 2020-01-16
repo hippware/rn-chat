@@ -1,7 +1,18 @@
 diff --git a/node_modules/react-native-emoji-selector/index.js b/node_modules/react-native-emoji-selector/index.js
-index a8fc5b5..8b6e22e 100644
+index a8fc5b5..ec6e5bc 100644
 --- a/node_modules/react-native-emoji-selector/index.js
 +++ b/node_modules/react-native-emoji-selector/index.js
+@@ -9,9 +9,9 @@ import {
+   Platform,
+   Dimensions,
+   ActivityIndicator,
+-  AsyncStorage,
+   FlatList,
+ } from 'react-native';
++import AsyncStorage from '@react-native-community/async-storage'
+ import emoji from 'emoji-datasource';
+ import 'string.fromcodepoint';
+ 
 @@ -314,7 +314,7 @@ export default class EmojiSelector extends Component {
            {showSearchBar && Searchbar}
            {isReady ? (
