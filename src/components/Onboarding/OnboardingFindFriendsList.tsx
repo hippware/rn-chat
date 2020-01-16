@@ -8,6 +8,7 @@ import {inject} from 'mobx-react'
 import ContactStore, {MyContact} from 'src/store/ContactStore'
 import PersonRow from '../people-lists/PersonRow'
 import {colors} from 'src/constants'
+import {Actions} from 'react-native-router-flux'
 
 type Props = {
   onPress: () => void
@@ -64,6 +65,7 @@ const OnboardingFindFriendsList = inject('contactStore')(
             data={contactStore!.sortedContacts.slice()}
             renderItem={({item}) => <Friend contact={item} />}
             keyExtractor={item => item.contact.recordID}
+            showsVerticalScrollIndicator={false}
           />
         )}
       </View>
@@ -114,7 +116,19 @@ const ToggleButton = inject('contactStore')(
     const {relationship, smsSent} = contact
 
     let text: string = 'INVITE'
-    let onPress = smsSent ? () => null : () => contactStore!.inviteContact(contact)
+    let onPress = smsSent
+      ? () => null
+      : () =>
+          Actions.locationSettingsModal({
+            type: 'SEND_REQUEST',
+            profile: contact.profile,
+            displayName: contact.displayNameSingle,
+            onOkPress: () => {
+              // todo: should we await this result? The UI will reflect the change when invite has passed/failed whether or not we specifically await the result here
+              contactStore!.inviteContact(contact)
+              Actions.pop()
+            },
+          })
     let isPink: boolean = false
 
     if (relationship === 'NONE') {
