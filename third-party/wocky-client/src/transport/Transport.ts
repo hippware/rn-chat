@@ -364,51 +364,6 @@ export class Transport {
     })
   }
 
-  async userLocationShare(userId: string, expiresAt: Date): Promise<void> {
-    return this.voidMutation({
-      mutation: gql`
-        mutation userLocationLiveShare(
-          $userId: String!
-          $expiresAt: DateTime!
-        ) {
-          userLocationLiveShare(
-            input: {expiresAt: $expiresAt, sharedWithId: $userId}
-          ) {
-            ${VOID_PROPS}
-          }
-        }
-      `,
-      variables: {userId, expiresAt},
-    })
-  }
-  async userLocationCancelShare(userId: string): Promise<void> {
-    return this.voidMutation({
-      mutation: gql`
-        mutation userLocationCancelShare(
-          $userId: String!
-        ) {
-          userLocationCancelShare(
-            input: {sharedWithId: $userId}
-          ) {
-            ${VOID_PROPS}
-          }
-        }
-      `,
-      variables: {userId},
-    })
-  }
-  async userLocationCancelAllShares() {
-    return this.voidMutation({
-      mutation: gql`
-        mutation userLocationCancelAllShares {
-          userLocationCancelAllShares {
-            ${VOID_PROPS}
-          }
-        }
-      `,
-    })
-  }
-
   async notificationDelete(id: string): Promise<void> {
     return this.voidMutation({
       mutation: gql`
@@ -1097,31 +1052,17 @@ export class Transport {
     return res.data.users.map(u => convertProfile(u))
   }
 
-  async userInviteMakeCode(): Promise<string> {
-    const res = await this.client!.mutate({
-      mutation: gql`
-        mutation userInviteMakeCode {
-          userInviteMakeCode {
-            result
-            successful
-          }
-        }
-      `,
-    })
-    return (res.data as any).userInviteMakeCode.result
-  }
-
-  async userInviteRedeemCode(code: string): Promise<void> {
+  async userInviteRedeemCode(code: string, shareType?: FriendShareTypeEnum): Promise<void> {
     await waitFor(() => this.connected)
     return this.voidMutation({
       mutation: gql`
-        mutation userInviteRedeemCode($code: UserInviteRedeemCodeInput!) {
-          userInviteRedeemCode(input: $code) {
+        mutation userInviteRedeemCode($input: UserInviteRedeemCodeInput!) {
+          userInviteRedeemCode(input: $input) {
             ${VOID_PROPS}
           }
         }
       `,
-      variables: {code: {code}},
+      variables: {input: {code, shareType}},
     })
   }
 
@@ -1148,21 +1089,16 @@ export class Transport {
     return results ? results.map(r => ({...r, user: r.user ? convertProfile(r.user) : null})) : []
   }
 
-  // todo: this is now deprecated. Replace with `userInviteSend`. https://github.com/hippware/rn-chat/issues/4412#issue-521865870
-  async friendSmsInvite(phoneNumber: string): Promise<void> {
+  async userInviteSend(phoneNumber: string, shareType: FriendShareTypeEnum): Promise<void> {
     return this.voidMutation({
       mutation: gql`
-        mutation friendBulkInvite(
-          $phoneNumbers: [String!]
-        ) {
-          friendBulkInvite(
-            input: {phoneNumbers: $phoneNumbers}
-          ) {
+        mutation userInviteSend($input: UserInviteSendInput!) {
+          userInviteSend(input: $input) {
             ${VOID_PROPS}
           }
         }
       `,
-      variables: {phoneNumbers: [phoneNumber]},
+      variables: {input: {phoneNumber, shareType}},
     })
   }
 
@@ -1278,7 +1214,6 @@ export class Transport {
       query: gql`
         subscription subscribeContacts {
           contacts {
-            createdAt
             relationship
             user {
               id
@@ -1301,7 +1236,6 @@ export class Transport {
         this.rosterItem = {
           user: convertProfile({...user, _accessedAt: createdAt}),
           relationship,
-          createdAt: iso8601toDate(createdAt).getTime(),
         }
       }),
     })

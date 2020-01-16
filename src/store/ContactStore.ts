@@ -1,5 +1,5 @@
 import {observable, action, computed} from 'mobx'
-import {IWocky, IProfile} from 'wocky-client'
+import {IWocky, IProfile, FriendShareTypeEnum} from 'wocky-client'
 import RNContacts, {Contact, PhoneNumber} from 'react-native-contacts'
 import {log} from 'src/utils/logger'
 import {PermissionsAndroid, Platform} from 'react-native'
@@ -197,7 +197,8 @@ class ContactStore {
 
   async inviteContact(contact: MyContact) {
     if (!contact.phoneNumber) return
-    await this.wocky!.friendSmsInvite(contact.phoneNumber!.number)
+    // TODO replace with real shareType
+    await this.wocky!.friendInvite(contact.phoneNumber!.number, FriendShareTypeEnum.DISABLED)
     contact.smsSent = true
   }
 }

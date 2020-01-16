@@ -147,10 +147,6 @@ export const Profile = types
           self.setFriend(false)
           yield self.transport.friendDelete(self.id)
         }),
-        shareLocation: flow(function*(expiresAt: Date) {
-          yield self.transport.userLocationShare(self.id, expiresAt)
-          self.service.profile.addLocationShare(self, new Date(), expiresAt)
-        }),
         // cannot define shareType typing because of circular dependency between Profile and Friend
         shareLocationUpdate: flow(function*(shareType = undefined, shareConfig = undefined) {
           yield self.transport.friendShareUpdate(self.id, self.location, shareType, shareConfig)
@@ -160,10 +156,6 @@ export const Profile = types
             shareType,
             shareConfig,
           })
-        }),
-        cancelShareLocation: flow(function*() {
-          yield self.transport.userLocationCancelShare(self.id)
-          self.service.profile.removeLocationShare(self)
         }),
         block: flow(function*() {
           yield self.transport.block(self.id)
