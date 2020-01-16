@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.36.0 - 2020 Jan 16
+
 * Update: @babel/plugin-transform-flow-strip-types (PR #4641)
   * @storybook/react-native (PR #4643), ts-node (PR #4645)
   * @babel/runtime (PR #4646), mobx-react (PR #4650)
