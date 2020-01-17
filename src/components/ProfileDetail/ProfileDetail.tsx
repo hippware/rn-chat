@@ -12,6 +12,7 @@ import ProfileActionSheet from './ProfileActionSheet'
 import {useWocky, useHomeStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
+import LocationSwitchPanel from './LocationSwitchPanel'
 
 type Props = {
   item: string
@@ -70,7 +71,11 @@ const Default = observer(({profile}: {profile: IProfile}) => (
       @{profile.handle}
     </RText>
     <InfoPills profile={profile} />
-    <ConnectButton profile={profile!} myProfile={profile!} />
+    {profile.isFriend ? (
+      <LocationSwitchPanel />
+    ) : (
+      <ConnectButton profile={profile!} myProfile={profile!} />
+    )}
   </View>
 ))
 
