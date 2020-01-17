@@ -120,7 +120,8 @@ const EventLocationShareCard = observer(
               text="SHARING LOCATION"
               style={{width: 160, height: 29, borderRadius: 4, marginVertical: 4}}
               textStyle={{fontSize: 12, color: 'white'}}
-              onPress={() => Actions.liveLocationCompose({profile: sharedWith})}
+              // onPress={() => Actions.liveLocationCompose({profile: sharedWith})}
+              onPress={() => sharedWith.cancelShareLocation()}
             />
           ) : (
             <Button
