@@ -4,7 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.36.1 - 2020 Jan 17
+
 * Skip live location duration screen from the notification screen (#4672)
+  * HOTFIX: cancel location share on notification press. (#4672)
 
 # 4.36.0 - 2020 Jan 16
 
