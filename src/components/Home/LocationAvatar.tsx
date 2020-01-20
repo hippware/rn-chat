@@ -1,6 +1,6 @@
 import React from 'react'
-import {View, Image, Text, ImageBackground} from 'react-native'
-import {Avatar} from '../common'
+import {View, Image, ImageBackground} from 'react-native'
+import {Avatar, RText} from '../common'
 import {observer} from 'mobx-react'
 import {IProfile} from 'wocky-client'
 
@@ -39,7 +39,7 @@ const Badge = ({style, background, text}) => {
       }}
     >
       <Image source={background} style={{position: 'absolute'}} resizeMode="contain" />
-      <Text style={[{textAlign: 'center', bottom: 3, color: 'white'}, style]}>{text}</Text>
+      <RText style={[{textAlign: 'center', bottom: 3, color: 'white'}, style]}>{text}</RText>
     </View>
   )
 }

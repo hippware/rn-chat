@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {View, Text, StyleSheet, ActivityIndicator, Platform} from 'react-native'
+import {View, StyleSheet, ActivityIndicator, Platform} from 'react-native'
 import moment from 'moment'
 import {useLocalStore, observer} from 'mobx-react'
 import {isAlive} from 'mobx-state-tree'
@@ -69,7 +69,7 @@ export const ChatView = observer(({chat}: {chat: IChat}) => {
   function renderDate(message: IMessage, index: number) {
     const diffMessage = getPreviousMessage(index)
     if (!diffMessage) {
-      return <Text style={styles.date as any}>{message.dateAsString}</Text>
+      return <RText style={styles.date as any}>{message.dateAsString}</RText>
     } else if (diffMessage.date) {
       const diff = moment(message.date).diff(diffMessage.date, 'minutes')
       if (diff > 5) {

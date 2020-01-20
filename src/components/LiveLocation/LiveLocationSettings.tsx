@@ -116,7 +116,7 @@ const ProfileLocationShare = observer(
             {`@${sharedWith.handle}`}
           </RText>
         }
-        displayName={forDuration}
+        // displayName={forDuration}
         style={{marginHorizontal: 45}}
       >
         <TouchableOpacity

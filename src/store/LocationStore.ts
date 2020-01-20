@@ -1,7 +1,7 @@
 import {types, getEnv, flow, getParent, getRoot} from 'mobx-state-tree'
 import {autorun, IReactionDisposer} from 'mobx'
 import {AppState} from 'react-native'
-import BackgroundGeolocation from 'react-native-background-geolocation'
+import BackgroundGeolocation from 'react-native-background-geolocation-android'
 import DeviceInfo from 'react-native-device-info'
 import {settings} from '../globals'
 import {Location, createLocation, IWocky} from 'wocky-client'
@@ -316,6 +316,7 @@ const LocationStore = types
       BackgroundGeolocation.onMotionChange(onMotionChange)
       BackgroundGeolocation.onActivityChange(onActivityChange)
       BackgroundGeolocation.onProviderChange(onProviderChange)
+      BackgroundGeolocation.onConnectivityChange(onConnectivityChange)
 
       yield self.configure()
       const config = yield BackgroundGeolocation.ready({reset: false})
@@ -423,6 +424,7 @@ const setUploadRate = (() => {
 function onHttp(response) {
   log(prefix, 'on http', response)
   if (response.status >= 200 && response.status < 300) {
+    BackgroundGeolocation.logger.info(`${prefix} onHttp success: ${JSON.stringify(response)}`)
     // analytics.track('location_bg_success', {location: self.location})
 
     let data: any = false
@@ -439,9 +441,11 @@ function onHttp(response) {
     if (response.status === 401 || response.status === 403) {
       BackgroundGeolocation.stop()
       BackgroundGeolocation.stopSchedule()
-      BackgroundGeolocation.logger.error(`${prefix} BackgroundGeolocation.stop() due to error`)
+      bugsnagNotify(new Error('BackgroundGeolocation.stop() due to forbidden'), 'location_store_onhttp_4xx', {response})
+      BackgroundGeolocation.logger.error(`${prefix} BackgroundGeolocation.stop() due to forbidden`)
     }
 
+    BackgroundGeolocation.logger.error(`${prefix} onHttp error: ${JSON.stringify(response)}`)
     analytics.track('location_bg_error', {error: response})
   }
 }
@@ -462,6 +466,10 @@ function onProviderChange(provider) {
   if (singleton) {
     singleton.setAlwaysOn(provider.status === BackgroundGeolocation.AUTHORIZATION_STATUS_ALWAYS)
   }
+}
+
+function onConnectivityChange(event) {
+  BackgroundGeolocation.logger.info(`${prefix} onConnectivityChange(${JSON.stringify(event)})`)
 }
 
 async function HeadlessTask(event) {
@@ -488,6 +496,8 @@ async function HeadlessTask(event) {
       return onActivityChange(event.params)
     case 'providerchange':
       return onProviderChange(event.params)
+    case 'connectivitychange':
+      return onConnectivityChange(event.params)
   }
 }
 BackgroundGeolocation.registerHeadlessTask(HeadlessTask)

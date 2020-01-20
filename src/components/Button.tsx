@@ -1,6 +1,7 @@
 import React from 'react'
-import {StyleSheet, TouchableOpacity, Text} from 'react-native'
+import {StyleSheet, TouchableOpacity} from 'react-native'
 import {k} from './Global'
+import RText from './common/RText'
 import {colors} from '../constants'
 
 type Props = {
@@ -17,7 +18,7 @@ export default (props: Props) => (
     style={[styles.style, styles.buttonStyle, props.style, props.buttonStyle]}
     onPress={props.onPress}
   >
-    <Text style={props.textStyle}>{props.children}</Text>
+    <RText style={props.textStyle}>{props.children}</RText>
   </TouchableOpacity>
 )
 

@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import {inject} from 'mobx-react'
 import {observer} from 'mobx-react'
-import {Spinner, RText} from '../common'
+import {Spinner, RText, RTextInput} from '../common'
 import {colors} from '../../constants'
 import {showImagePicker, PickerImage} from '../ImagePicker'
 import {k, minHeight} from '../Global'
@@ -120,7 +120,7 @@ const AddBotPost = inject(
               }
             />
           </TouchableOpacity>
-          <TextInput
+          <RTextInput
             ref={textInput}
             onChangeText={setText}
             style={[styles.textInput, styles.textInputDay, {height: 'auto'}]}

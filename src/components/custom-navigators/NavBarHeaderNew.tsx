@@ -25,7 +25,7 @@ const NavBarHeader = ({scrollY, config, enabled}: Props) => {
   const {backButtonImage, navBarButtonColor} = navBarStyle
 
   const opacity = scrollY!.interpolate({
-    inputRange: [FULL_SCREEN_POS, 100],
+    inputRange: [FADE_NAV_BAR_HEADER_HEIGHT + 50, FADE_NAV_BAR_HEADER_HEIGHT + 51],
     outputRange: [1, 0],
     extrapolate: 'clamp',
   })

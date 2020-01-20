@@ -21,7 +21,7 @@ const ActiveGeofenceBot = observer(({bot, outerStyle, innerStyle}: IProps) => {
   const {track} = useAnalytics()
   function goToBot(): void {
     select(bot.id)
-    Actions.botDetails({botId: bot.id})
+    Actions.botDetails({botId: bot.id, preview: false})
     track(analyticsGeoWidgetTap)
   }
 

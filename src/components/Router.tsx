@@ -44,7 +44,7 @@ import {navBarStyle} from './styles'
 import IconStore from '../store/IconStore'
 import OnboardingSwiper from './Onboarding/OnboardingSwiper'
 import {IAuthStore} from 'src/store/AuthStore'
-import LiveLocationCompose from './LiveLocation/LiveLocationCompose'
+// import LiveLocationCompose from './LiveLocation/LiveLocationCompose'
 import LiveLocationSettings from './LiveLocation/LiveLocationSettings'
 import LiveLocationShare from './LiveLocation/LiveLocationShare'
 import  {IHomeStore} from 'src/store/HomeStore';
@@ -87,12 +87,9 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
       autorun(() => {
         if (navStore!.scene === 'home') {
           Actions.profileDetails({item: wocky!.profile!.id, preview: true})
-          // Actions.botDetails({botId: '6067f6d9-8f72-482b-8703-55f6039cad2a', preview: true})
-          // Actions.botEdit({botId: '6067f6d9-8f72-482b-8703-55f6039cad2a'})
-          // Actions.friends()
-          // Actions.friendSearch()
         }
       }, {delay: 200})
+      
       
     }, [])
 
@@ -114,7 +111,10 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
                 wocky!.notifications.setMode(2)
                 Actions.notifications()
               } else {
-                Actions[action](params)
+                Actions[action]({...params, fromDeeplink: true})
+                if (action === 'botDetails' && params.params === 'visitors'){
+                  Actions.visitors({botId: params.botId})
+                } 
               }
               analytics.track('deeplink_success', {action, params})
             } catch (err) {
@@ -141,7 +141,12 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
   
 
     const uriPrefix = Platform.select({ios: settings.uriPrefix, android: settings.uriPrefix.toLowerCase()})
-
+    // testing for deep links
+    // setTimeout(()=>      {
+    //   onDeepLink({action: 'botDetails', params: {preview: false, botId: '7474a836-0c11-42f8-8cc0-5fd6108abcc0'//, params: 'visitors'
+    // }})
+    //   }, 1500)
+    
     return (
       <Router backAndroidHandler={onBackPress} onStateChange={() => navStore!.setScene(Actions.currentScene, Actions.currentParams)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={onDeepLink}>
         <Tabs hideNavBar hideTabBar>
@@ -175,7 +180,7 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
                     <Scene key="friends" component={peopleLists.FriendList} shiftMap backButton />
                     <Scene key="friendSearch" component={FriendSearch} shiftMap backButton/>
                     <Scene key="visitors" component={VisitorList} shiftMap backButton />
-                    <Scene key="liveLocationCompose" component={LiveLocationCompose} shiftMap backButton />
+                    {/* <Scene key="liveLocationCompose" component={LiveLocationCompose} shiftMap backButton /> */}
                     <Scene key="liveLocationSettings" component={LiveLocationSettings} shiftMap backButton />
                     <Scene key="chats" component={ChatListScreen} title="Messages" shiftMap backButton />
                     <Scene key="mapOptions" component={MapOptions} shiftMap backButton />
@@ -183,9 +188,9 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
                     <Scene key="profileDetails" path="user/:item" component={ProfileDetailNew} hasPreview />
                     <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetailsNew} hasPreview />
                     <Scene key="notifications" path="invitations/:params*" component={NotificationsNew} backButton shiftMap />
+                    <Scene key="allFriends" component={AllFriendList} title="Friends" backButton />
                   </Lightbox>
                   <Scene key="chat" path="conversation/:item" component={ChatScreen} />
-                  <Scene key="allFriends" component={AllFriendList} title="Friends" />
                   <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
                   <Scene key="liveLocationSelectFriends" component={LiveLocationShare} title="Select Friends" />
                   <Scene key="myAccount" component={MyAccount} editMode back />

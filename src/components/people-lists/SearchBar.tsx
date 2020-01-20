@@ -1,12 +1,6 @@
 import React from 'react'
-import {
-  Image,
-  StyleSheet,
-  View,
-  TextInput,
-  ImageSourcePropType,
-  TextInputProperties,
-} from 'react-native'
+import {Image, StyleSheet, View, ImageSourcePropType, TextInputProperties} from 'react-native'
+import RTextInput from '../common/RTextInput'
 
 interface IProps extends TextInputProperties {
   image?: ImageSourcePropType
@@ -19,7 +13,7 @@ const SearchBar = ({style, image, ...rest}: IProps) => (
       style={{margin: 5, height: 13}}
       resizeMode="contain"
     />
-    <TextInput
+    <RTextInput
       style={[styles.text, style]}
       placeholderTextColor="rgb(140,140,140)"
       returnKeyType="search"

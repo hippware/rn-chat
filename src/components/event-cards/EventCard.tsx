@@ -10,6 +10,8 @@ import {IEventLocationShare} from 'third-party/wocky-client/src/model/EventLocat
 import {RText, GradientButton} from '../common'
 import {TouchableOpacity} from 'react-native'
 import {colors} from 'src/constants'
+import {share, UNTIL_OFF} from '../LiveLocation/LiveLocationCompose'
+import {useLocationStore, useWocky} from '../../utils/injectors'
 
 const EventBotInviteCard = observer(
   ({
@@ -29,7 +31,7 @@ const EventBotInviteCard = observer(
           : 'invited you to follow'
       }
       line2={bot.title}
-      onPress={() => Actions.botDetails({botId: bot.id})}
+      onPress={() => Actions.botDetails({botId: bot.id, preview: false})}
     />
   )
 )
@@ -46,7 +48,7 @@ export const EventBotPostCard = observer(
         timestamp={relativeDateAsString}
         action="commented on"
         line2={bot.title}
-        onPress={() => Actions.botDetails({botId: bot.id})}
+        onPress={() => Actions.botDetails({botId: bot.id, preview: false})}
       />
     )
   }
@@ -60,7 +62,7 @@ const EventBotGeofenceCard = observer(
       timestamp={relativeDateAsString}
       action={isEnter ? 'is at' : 'left'}
       line2={bot.title}
-      onPress={() => Actions.botDetails({botId: bot.id})}
+      onPress={() => Actions.botDetails({botId: bot.id, preview: false})}
     />
   )
 )
@@ -101,32 +103,48 @@ const Button = ({
 )
 
 const EventLocationShareCard = observer(
-  ({item: {sharedWith, relativeDateAsString}}: {item: IEventLocationShare}) => (
-    <EventCardTemplate
-      profile={sharedWith}
-      iconType="share"
-      timestamp={relativeDateAsString}
-      action={'is sharing location with you'}
-    >
-      {sharedWith.sharesLocation ? (
-        sharedWith.receivesLocationShare ? (
-          <GradientButton
-            text="SHARING LOCATION"
-            style={{width: 160, height: 29, borderRadius: 4, marginVertical: 4}}
-            textStyle={{fontSize: 12, color: 'white'}}
-            onPress={() => Actions.liveLocationCompose({profile: sharedWith})}
-          />
+  ({item: {sharedWith, relativeDateAsString}}: {item: IEventLocationShare}) => {
+    const locationStore = useLocationStore()
+    const wocky = useWocky()
+
+    return (
+      <EventCardTemplate
+        profile={sharedWith}
+        iconType="share"
+        timestamp={relativeDateAsString}
+        action={'is sharing location with you'}
+      >
+        {sharedWith.sharesLocation ? (
+          sharedWith.receivesLocationShare ? (
+            <GradientButton
+              text="SHARING LOCATION"
+              style={{width: 160, height: 29, borderRadius: 4, marginVertical: 4}}
+              textStyle={{fontSize: 12, color: 'white'}}
+              // onPress={() => Actions.liveLocationCompose({profile: sharedWith})}
+              onPress={() => sharedWith.cancelShareLocation()}
+            />
+          ) : (
+            <Button
+              text="SHARE YOUR LOCATION"
+              // onPress={() => Actions.liveLocationCompose({profile: sharedWith})}
+              onPress={() =>
+                share(
+                  UNTIL_OFF,
+                  null,
+                  wocky,
+                  {selected: [sharedWith]},
+                  locationStore!.location,
+                  false
+                )
+              }
+            />
+          )
         ) : (
-          <Button
-            text="SHARE YOUR LOCATION"
-            onPress={() => Actions.liveLocationCompose({profile: sharedWith})}
-          />
-        )
-      ) : (
-        undefined
-      )}
-    </EventCardTemplate>
-  )
+          undefined
+        )}
+      </EventCardTemplate>
+    )
+  }
 )
 
 const eventCardMap: {[key: string]: any} = {

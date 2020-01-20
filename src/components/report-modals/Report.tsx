@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useRef} from 'react'
-import {Alert, StyleSheet, View, TextInput, Keyboard} from 'react-native'
+import {Alert, StyleSheet, TextInput, View, Keyboard} from 'react-native'
 import {inject} from 'mobx-react'
 import {observer} from 'mobx-react'
 import {k} from '../Global'
 import {colors} from '../../constants'
-import {RText} from '../common'
+import {RText, RTextInput} from '../common'
 import {Actions} from 'react-native-router-flux'
 
 type Props = {
@@ -49,7 +49,7 @@ const Report = inject('reportStore')(
           </RText>
         </View>
         <View style={[styles.row, {flex: 1, paddingBottom: 5}]}>
-          <TextInput
+          <RTextInput
             style={{
               flex: 1,
               fontSize: 15,

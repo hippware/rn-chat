@@ -2,7 +2,6 @@ import React from 'react'
 import {
   View,
   Image,
-  Text,
   TouchableOpacity,
   StyleSheet,
   ViewStyle,
@@ -18,6 +17,7 @@ import {IProfile, IOwnProfile} from 'wocky-client'
 import PresenceDot from './PresenceDot'
 import LazyImage from './LazyImage'
 import {toJS} from 'mobx'
+import RText from './RText'
 
 type Props = {
   profile?: IProfile
@@ -51,7 +51,7 @@ const Avatar = observer(
     noScale = false,
     inactive = false,
   }: Props) => {
-    if ((!profile || (isStateTreeNode(profile) && !isAlive(profile))) && (!image && !displayName)) {
+    if ((!profile || (isStateTreeNode(profile) && !isAlive(profile))) && !image && !displayName) {
       return null
     }
     const showMask =
@@ -74,7 +74,9 @@ const Avatar = observer(
     return (
       <Clazz
         style={{justifyContent: 'flex-end'}}
-        onPress={() => (profile ? Actions.profileDetails({item: profile.id}) : null)}
+        onPress={() =>
+          profile ? Actions.profileDetails({item: profile.id, preview: false}) : null
+        }
       >
         <View style={[style, {height: scaledSize, width: scaledSize}]}>
           {(!!profile && !!profile.avatar) || image ? (
@@ -143,7 +145,7 @@ const AvatarLetterPlaceholder = ({
         {showMask ? (
           <Mask size={size * 0.65} />
         ) : (
-          <Text
+          <RText
             style={[
               styles.title,
               {
@@ -155,7 +157,7 @@ const AvatarLetterPlaceholder = ({
             ]}
           >
             {isYou ? 'YOU' : letter.toUpperCase()}
-          </Text>
+          </RText>
         )}
       </View>
     </LinearGradient>

@@ -1,6 +1,6 @@
 import React from 'react'
 import {Text, TextProps} from 'react-native'
-import {colors} from '../../constants'
+import {colors, MAX_FONT_SIZE_MULTIPLIER} from '../../constants'
 
 interface IProps extends TextProps {
   size?: number
@@ -15,7 +15,11 @@ const RText = (props: IProps) => {
   const fontFamily = weight ? `Roboto-${weight}` : 'Roboto-Regular'
   const fontSize = size || 12
   return (
-    <Text style={[{color: pink ? colors.PINK : color, fontSize, fontFamily}, style]} {...rest}>
+    <Text
+      maxFontSizeMultiplier={MAX_FONT_SIZE_MULTIPLIER}
+      style={[{color: pink ? colors.PINK : color, fontSize, fontFamily}, style]}
+      {...rest}
+    >
       {children}
     </Text>
   )

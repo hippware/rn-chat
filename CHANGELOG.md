@@ -4,6 +4,70 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.36.1 - 2020 Jan 17
+
+* Skip live location duration screen from the notification screen (#4672)
+  * HOTFIX: cancel location share on notification press. (#4672)
+
+# 4.36.0 - 2020 Jan 16
+
+* Update: @babel/plugin-transform-flow-strip-types (PR #4641)
+  * @storybook/react-native (PR #4643), ts-node (PR #4645)
+  * @babel/runtime (PR #4646), mobx-react (PR #4650)
+  * @babel/core (PR #4651), @babel/plugin-proposal-decorators (PR #4653)
+  * react-native-country-picker-modal
+  * @react-native-community/async-storage
+  * @react-native-community/push-notification-ios
+  * react-native-device-info (PR #4666)
+  * react-native-background-geolocation (to -android) (PR #4647)
+  * react-native-emoji-selector (PR #4670)
+* Skip live location duration selection screen (#4639)
+* Post some errors to bugsnag to help debug location tracking (PR #4665)
+* Location uploading gets 'stuck' (#4595)
+* Avatar tapped from "See All" section does not function (#4655)
+
+# 4.35.0 - 2020 Jan 9
+
+* Update: apollo-client (PR #4574), handlebars (PR #4593)
+  * @babel/plugin-proposal-object-rest-spread (PR #4590)
+  * react-native-permissions, react-native-background-geolocation
+  * bugsnag-react-native, react-native-device-info
+  * react-native-contacts, @react-native-community/netinfo (PR #4596)
+  * react-native-config (PR #4598)
+  * yarn (PR #4602), @babel/preset-typescript (PR #4603)
+  * @types/react-native (PR #4604), @babel/core (PR #4605)
+  * typescript (PR #4606), @types/jest (PR #4608)
+  * @types/react (PR #4609), react-native-code-push (PR #4610)
+  * @babel/node (PR #4611), mobx (PR #4612)
+  * libphonenumber-js (PR #4619), husky (PR #4622)
+  * react-native-permissions, react-native-localize
+  * bugsnag-react-native, react-native-gesture-handler
+  * @react-native-community/netinfo, react-native-mixpanel (PR #4624)
+  * @babel/runtime (PR #4627), apollo-cache-inmemory (PR #4630)
+  * ts-jest (PR #4632)
+* X or cancel button does not function on friends search (#4579)
+* Bypass iOS and android OS level text size settings (#3916)
+  * Using own custom components (PR #4613)
+  * Use ref forwarding for RTextInput (PR #4615)
+* [dev] Convert Switch.tsx to hooks (#4467)
+* Remove deleted location pins for followers (#4474)
+* Back caret doesn't work after deep linking to Who's Here (#4587)
+
+# 4.34.3 - 2020 Jan 8
+
+(Native changes)
+
+* Add connectivity and RNBGL http logging.
+* Update: react-native-background-geolocation 3.3.2 to react-native-background-geolocation-android#992e3d53 (3.4.3)
+* Location uploading gets 'stuck' (#4595)
+
+# 4.34.2 - 2019 Dec 18
+
+* Flashing screen (#4581)
+* Missing the back caret on user profile screens (#4580)
+* Updates: Location pin not visible when user taps on notification (#4582)
+* Prevent intermediate faded header (Part of #4579)
+
 # 4.34.1 - 2019 Dec 17
 
 * Alignment of location profile card is off when user leaves (#4555)

@@ -16,7 +16,9 @@ import {observer} from 'mobx-react'
 import {useFirebaseStore} from 'src/utils/injectors'
 
 const countryMap = {}
-getAllCountries(FlagType.FLAT).forEach(country => (countryMap[country.cca2] = country))
+getAllCountries(FlagType.FLAT).then((countries) => {
+  countries.forEach(country => (countryMap[country.cca2] = country))
+})
 
 const CarrierInfo = NativeModules.RNCarrierInfo
 

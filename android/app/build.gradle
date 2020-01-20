@@ -94,7 +94,7 @@ project.ext.envConfigFiles = [
 
 apply from: "../../node_modules/react-native/react.gradle"
 apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
-apply from: "../../node_modules/react-native-background-geolocation/android/app.gradle"
+apply from: "../../node_modules/react-native-background-geolocation-android/android/app.gradle"
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 /**
@@ -309,7 +309,7 @@ dependencies {
   implementation project(':react-native-localize')
   implementation project(':react-native-gesture-handler')
   implementation 'androidx.multidex:multidex:2.0.1'
-  implementation project(':react-native-background-geolocation')
+  implementation project(':react-native-background-geolocation-android')
   implementation project(':bugsnag-react-native')
   implementation project(':react-native-push-notification')
   implementation project(':react-native-linear-gradient')

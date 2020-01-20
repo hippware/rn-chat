@@ -1,5 +1,5 @@
 <resources>
-    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">aKbSrov0EFd-mvtC31iYca_W0EtFS1jJ7ITUE</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">aKbSrov0EFd-mvtC31iYca_W0EtFS1jJ7ITUE</string>
     <string name="app_name">tinyrobot</string>
     <string name="facebook_app_id">444249822867475</string>
 </resources>

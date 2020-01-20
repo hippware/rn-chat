@@ -1,17 +1,17 @@
 PODS:
   - Base64 (1.1.2)
   - boost-for-react-native (1.63.0)
-  - BugsnagReactNative (2.23.2):
-    - BugsnagReactNative/Core (= 2.23.2)
+  - BugsnagReactNative (2.23.4):
+    - BugsnagReactNative/Core (= 2.23.4)
     - React
-  - BugsnagReactNative/Core (2.23.2):
+  - BugsnagReactNative/Core (2.23.4):
     - React
   - BVLinearGradient (2.5.6):
     - React
   - CocoaLumberjack (3.5.3):
     - CocoaLumberjack/Core (= 3.5.3)
   - CocoaLumberjack/Core (3.5.3)
-  - CodePush (5.7.0):
+  - CodePush (6.0.0):
     - Base64 (~> 1.1)
     - JWT (~> 3.0.0-beta.7)
     - React
@@ -157,19 +157,19 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
-  - Permission-Camera (2.0.5):
+  - Permission-Camera (2.0.9):
     - RNPermissions
-  - Permission-Contacts (2.0.5):
+  - Permission-Contacts (2.0.9):
     - RNPermissions
-  - Permission-LocationAlways (2.0.5):
+  - Permission-LocationAlways (2.0.9):
     - RNPermissions
-  - Permission-LocationWhenInUse (2.0.5):
+  - Permission-LocationWhenInUse (2.0.9):
     - RNPermissions
-  - Permission-Motion (2.0.5):
+  - Permission-Motion (2.0.9):
     - RNPermissions
-  - Permission-Notifications (2.0.5):
+  - Permission-Notifications (2.0.9):
     - RNPermissions
-  - Permission-PhotoLibrary (2.0.5):
+  - Permission-PhotoLibrary (2.0.9):
     - RNPermissions
   - QBImagePickerController (3.4.0)
   - RCTRequired (0.61.5)
@@ -337,9 +337,9 @@ PODS:
   - React-jsinspector (0.61.5)
   - react-native-blur (0.8.0):
     - React
-  - react-native-config (0.11.7):
+  - react-native-config (0.12.0):
     - React
-  - react-native-contacts (5.0.4):
+  - react-native-contacts (5.0.6):
     - React
   - react-native-fbsdk (1.1.1):
     - React
@@ -363,10 +363,10 @@ PODS:
     - React
   - react-native-maps (0.26.1):
     - React
-  - react-native-mixpanel (1.1.10):
+  - react-native-mixpanel (1.1.14):
     - Mixpanel (~> 3.5.0)
     - React
-  - react-native-netinfo (4.6.1):
+  - react-native-netinfo (5.3.2):
     - React
   - react-native-splash-screen (3.2.0):
     - React
@@ -407,14 +407,14 @@ PODS:
     - ReactCommon/jscallinvoker (= 0.61.5)
   - RNBackgroundFetch (2.7.1):
     - React
-  - RNBackgroundGeolocation (3.3.2):
+  - RNBackgroundGeolocation (3.4.3):
     - CocoaLumberjack (~> 3.5.1)
     - React
-  - RNCAsyncStorage (1.6.3):
+  - RNCAsyncStorage (1.7.1):
     - React
-  - RNCPushNotificationIOS (1.0.3):
+  - RNCPushNotificationIOS (1.0.5):
     - React
-  - RNDeviceInfo (5.3.1):
+  - RNDeviceInfo (5.4.1):
     - React
   - RNFirebase (5.5.6):
     - Firebase/Core
@@ -427,16 +427,16 @@ PODS:
     - React
   - RNFS (2.14.1):
     - React
-  - RNGestureHandler (1.5.2):
+  - RNGestureHandler (1.5.3):
     - React
   - RNImageCropPicker (0.26.1):
     - QBImagePickerController
     - React-Core
     - React-RCTImage
     - RSKImageCropper
-  - RNLocalize (1.3.1):
+  - RNLocalize (1.3.2):
     - React
-  - RNPermissions (2.0.5):
+  - RNPermissions (2.0.9):
     - React
   - RNPureJwt (2.1.1):
     - JWT (= 3.0.0-beta.11)
@@ -503,7 +503,7 @@ DEPENDENCIES:
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
-  - RNBackgroundGeolocation (from `../node_modules/react-native-background-geolocation`)
+  - RNBackgroundGeolocation (from `../node_modules/react-native-background-geolocation-android`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios/RNCPushNotificationIOS.podspec`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
@@ -645,7 +645,7 @@ EXTERNAL SOURCES:
   RNBackgroundFetch:
     :path: "../node_modules/react-native-background-fetch"
   RNBackgroundGeolocation:
-    :path: "../node_modules/react-native-background-geolocation"
+    :path: "../node_modules/react-native-background-geolocation-android"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
   RNCPushNotificationIOS:
@@ -676,10 +676,10 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
-  BugsnagReactNative: 0a24a1dd2cac88862d67b938f809bec8274130a9
+  BugsnagReactNative: bfa11ce45f7ee311962ecda93f190b6ea74329fe
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   CocoaLumberjack: 2f44e60eb91c176d471fdba43b9e3eae6a721947
-  CodePush: d2e54ad42df82a8db65b2d23d8191b950ba945e1
+  CodePush: 58d8b6595f46057ca1f49c55fb6860ad7fd38ce3
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
@@ -710,13 +710,13 @@ SPEC CHECKSUMS:
   JWT: 05028b9624591bba9681bb57df2c5f95fa258bad
   Mixpanel: 399997670f5452de026449f9e9ecd52eccbb9ff7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
-  Permission-Camera: 7e1b0512b1a6e439e84be004a7edd33d4e94b3fd
-  Permission-Contacts: f74a222974480b3b19c08ae9d83738eb8ddf2646
-  Permission-LocationAlways: 836ee1347e106fdce1012ed2c5fbe81ca1da4f3f
-  Permission-LocationWhenInUse: 93b1987786b9674d4683cbeaee9a3e584ddf7791
-  Permission-Motion: 290dd97055c581f7861f16a395cd1b063b881bc3
-  Permission-Notifications: 172e3ac9b8a915f0797af17891c93fe5caea6b40
-  Permission-PhotoLibrary: d6d09cca5d0de1fda1958175106234773a566893
+  Permission-Camera: 8fe4753b02396489b11c5089e4f57bab7fe1ef42
+  Permission-Contacts: 73d99eab3d1a397a2cd196ee12541548b9a7b9bc
+  Permission-LocationAlways: 8ecde136071ff169dc9f3607641dc40ae3ad7c02
+  Permission-LocationWhenInUse: 9133db2ae6ce48da6ca513ec44a24ccce613fe4f
+  Permission-Motion: 1f956a97407910e84f41f683f777ea910606d2f2
+  Permission-Notifications: 1e03f5c43612ac4f9cdcaf6504695fc4e15f33d9
+  Permission-PhotoLibrary: 42d41b53adefcfa94f42fb628f143d97136120bd
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   RCTRequired: b153add4da6e7dbc44aebf93f3cf4fcae392ddf1
   RCTTypeSafety: 9aa1b91d7f9310fc6eadc3cf95126ffe818af320
@@ -728,14 +728,14 @@ SPEC CHECKSUMS:
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
   react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
-  react-native-config: 55548054279d92e0e4566ea15a8b9b81028ec342
-  react-native-contacts: 7d0b7ccd5f00df82ceca035935fc9d6e63af5aec
+  react-native-config: f2c2ae45625a068c35681a16b9bfb1ca58b0adc7
+  react-native-contacts: 9c89131a1f63af0618d54af5ca1cd88b06d41a05
   react-native-fbsdk: b94a83971c496a35803f38b921aec6d637ba07b5
   react-native-geolocation: a7b94614afbd5fd8350e0233a2025c8228fc8041
   react-native-google-maps: 2e2e697dab576abd5809d78cd74e775865b62bf7
   react-native-maps: 6e499eee4eabf422ba8b6f94e993cc768bf35153
-  react-native-mixpanel: 513dc597c9ed239bdee91d16bdc7b9325fdcb779
-  react-native-netinfo: a59d8426a8484f739fe3a95dd6ad5af1435db05f
+  react-native-mixpanel: 37a6602a70bc6ff835d506b6d0274b75edcec4da
+  react-native-netinfo: 817823a90f13ced48413875c0820df04c3aae28d
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
   React-RCTAnimation: 791a87558389c80908ed06cc5dfc5e7920dfa360
@@ -748,16 +748,16 @@ SPEC CHECKSUMS:
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
   RNBackgroundFetch: 8d8d66b47eafcb9e772b2eb95057939038b3ef95
-  RNBackgroundGeolocation: 9a7b62b67e56cb64f3426f83db6bc324c0c86d6d
-  RNCAsyncStorage: 3c304d1adfaea02ec732ac218801cb13897aa8c0
-  RNCPushNotificationIOS: 83ec11fe19d4ea9e32cc339d8e7d2cc3c88f543e
-  RNDeviceInfo: 6f20764111df002b4484f90cbe0a861be29bcc6c
+  RNBackgroundGeolocation: 42d37b9c47d18b904a941334fe58f96eee6e0813
+  RNCAsyncStorage: 44395cb9c7c1523104c2b499eb426ef7aff82bca
+  RNCPushNotificationIOS: 4a5c5d92ce51227f8c3409b0b7542382c0b5f008
+  RNDeviceInfo: 0e40d9a9031252d2525d8b69a4b3fa8689efcea4
   RNFirebase: ac0de8b24c6f91ae9459575491ed6a77327619c6
   RNFS: a8fbe7060fa49157d819466404794ad9c58e58cf
-  RNGestureHandler: 946a7691e41df61e2c4b1884deab41a4cdc3afff
+  RNGestureHandler: 02905abe54e1f6e59c081a10b4bd689721e17aa6
   RNImageCropPicker: e1d8c3381e5b05a1bdcd13ea57a4f1c020a09cef
-  RNLocalize: 07eb7a91d10021cdf59d80061ebf3adb8a5b5688
-  RNPermissions: c40561e25ae1d4ca4ad987bde1026f9294a89f74
+  RNLocalize: 08eb68476e1f2d8cacd75fa919bf5e219fb03b19
+  RNPermissions: 2f74237e97b08beda01e914301e12524ddddf5b8
   RNPureJwt: b9e795e38e2b6808d3b8934ce413a508e2f76863
   RNReanimated: 6abbbae2e5e72609d85aabd92a982a94566885f1
   RNScreens: 402a99b0a27c0c32f079cec12d3ccbd35e20cd7f
@@ -765,6 +765,6 @@ SPEC CHECKSUMS:
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: 9cbc68a33b35a66c7be75922d1d8338fa12038ad
+PODFILE CHECKSUM: df267757cbb3f25d6376e91b45814edc1363c7db
 
 COCOAPODS: 1.8.4

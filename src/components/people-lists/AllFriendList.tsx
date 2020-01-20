@@ -1,10 +1,13 @@
 import React from 'react'
-import {View, StyleSheet, FlatList, TextInput, Image} from 'react-native'
+import {View, StyleSheet, Image} from 'react-native'
 import {width} from '../Global'
 import {colors} from '../../constants'
 import {useHomeStore} from 'src/utils/injectors'
-import {observer} from 'mobx-react'
+import {observer, Observer} from 'mobx-react'
 import ActiveLocationSharer from '../Home/ActiveLocationSharer'
+import {RText, TextInputWithClearButton} from '../common'
+import BottomPopupListNew from '../common/BottomPopupNew'
+import {Actions} from 'react-native-router-flux'
 
 type Props = {
   isActive: boolean
@@ -17,53 +20,70 @@ const FriendList = observer(({isActive}: Props) => {
   const renderBannerItem = ({item}) => (
     <ActiveLocationSharer profile={item} outerStyle={styles.outer} innerStyle={styles.inner} />
   )
-  const renderHeader = (
-    <View
-      style={{
-        borderColor: colors.LIGHT_GREY,
-        borderBottomWidth: 1,
-        justifyContent: 'center',
-        padding: 5,
-      }}
-    >
-      <View
-        style={{
-          width: '95%',
-          backgroundColor: colors.WHITE2,
-          padding: 5,
-          borderRadius: 5,
-          alignSelf: 'center',
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}
-      >
-        <Image source={searchIcon} style={{marginRight: 10}} />
-        <TextInput
+  const Header = (
+    <Observer>
+      {() => (
+        <View
           style={{
-            flex: 1,
-            fontSize: 14,
+            borderColor: colors.LIGHT_GREY,
+            borderBottomWidth: 1,
+            justifyContent: 'center',
             padding: 5,
-            fontFamily: 'Roboto-Light',
-            color: colors.PURPLE,
+            paddingTop: 25,
           }}
-          autoFocus={isActive}
-          onChangeText={homeStore.setFriendFilter}
-          value={homeStore.friendFilter}
-          returnKeyType="search"
-          clearButtonMode="while-editing"
-          placeholder="Search by name or username"
-          selectionColor={colors.COVER_BLUE}
-        />
-      </View>
-    </View>
+        >
+          <View
+            style={{
+              width: '95%',
+              backgroundColor: colors.WHITE2,
+              padding: 5,
+              borderRadius: 5,
+              alignSelf: 'center',
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            <Image source={searchIcon} style={{marginRight: 10}} />
+            <TextInputWithClearButton
+              style={{
+                flex: 1,
+                fontSize: 14,
+                padding: 5,
+                fontFamily: 'Roboto-Light',
+                color: colors.PURPLE,
+              }}
+              autoFocus={isActive}
+              onChangeText={homeStore.setFriendFilter}
+              value={homeStore.friendFilter}
+              returnKeyType="search"
+              clearButtonMode="while-editing"
+              placeholder="Search by name or username"
+              selectionColor={colors.COVER_BLUE}
+            />
+          </View>
+        </View>
+      )}
+    </Observer>
   )
   return (
-    <FlatList
-      data={homeStore!.filteredFriends}
-      numColumns={4}
-      keyExtractor={item => item.id}
-      renderItem={renderBannerItem}
-      ListHeaderComponent={renderHeader}
+    <BottomPopupListNew
+      allowFullScroll
+      fullViewHeight={500}
+      listProps={{
+        data: homeStore!.filteredFriends,
+        numColumns: 4,
+        keyExtractor: item => item.id,
+        renderItem: renderBannerItem,
+        ListHeaderComponent: Header,
+      }}
+      navBarConfig={{
+        backAction: () => Actions.pop(),
+        title: (
+          <RText size={16} color={colors.DARK_PURPLE}>
+            All Friends
+          </RText>
+        ),
+      }}
     />
   )
 })

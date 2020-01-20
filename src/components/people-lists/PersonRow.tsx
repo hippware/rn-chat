@@ -5,7 +5,7 @@ import {RText} from '../common'
 type Props = {
   imageComponent: any
   handleComponent: any
-  displayName: string
+  displayName?: string
   style?: any
   children?: any
 }
@@ -25,9 +25,11 @@ const PersonRow = ({imageComponent, handleComponent, displayName, style, childre
     <View style={{marginRight: 13}}>{imageComponent}</View>
     <View style={{flex: 1}}>
       {handleComponent}
-      <RText color="#757575" size={16} numberOfLines={1} ellipsizeMode="tail">
-        {displayName}
-      </RText>
+      {!!displayName && (
+        <RText color="#757575" size={16} numberOfLines={1} ellipsizeMode="tail">
+          {displayName}
+        </RText>
+      )}
     </View>
     {children}
   </View>

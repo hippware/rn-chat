@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {StyleSheet, Text, Image, Linking, View, Platform} from 'react-native'
+import {StyleSheet, Image, Linking, View, Platform} from 'react-native'
 import {colors} from '../../constants'
 import {k, s, minHeight} from '../Global'
 import {when} from 'mobx'
@@ -56,17 +56,17 @@ export const LocationWarningIOS = ({onPress}) => (
     ]}
   >
     <BlurView blurType="xlight" blurAmount={10} style={StyleSheet.absoluteFill as any} />
-    <Text style={styles.title}>
-      Tap “<Text style={{fontFamily: 'Roboto-Medium'}}>Always</Text>” to let tinyrobot work
+    <RText style={styles.title}>
+      Tap “<RText style={{fontFamily: 'Roboto-Medium'}}>Always</RText>” to let tinyrobot work
       perfectly.
-    </Text>
+    </RText>
     <Image
       source={require('../../../images/fixLocationPermission.png')}
       style={{width: 224 * minHeight, height: 173 * minHeight, marginVertical: 50 * s}}
     />
-    <Text style={styles.subtext}>
+    <RText style={styles.subtext}>
       With ‘Always’ access you won’t miss out on relevant location notifications.
-    </Text>
+    </RText>
 
     <GradientButton
       isPink
@@ -96,7 +96,9 @@ export const LocationWarningAndroid = ({onPress}) => (
       {'Allow Location\r\nAccess'}
     </RText>
     <Separator backgroundColor="white" style={{width: 200 * k}} />
-    <Text style={styles.subtext2}>We need your location to show you what’s happening nearby!</Text>
+    <RText style={styles.subtext2}>
+      We need your location to show you what’s happening nearby!
+    </RText>
 
     <GradientButton
       isPink

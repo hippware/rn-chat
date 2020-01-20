@@ -26,6 +26,7 @@ type Props = {
   navigation: any
   isActive: boolean
   preview?: boolean
+  fromDeeplink?: boolean
 }
 
 const BotDetails = inject(
@@ -44,35 +45,36 @@ const BotDetails = inject(
       analytics,
       botId,
       homeStore,
-      navigation,
       isNew,
       notificationStore,
       preview = false,
+      fromDeeplink,
     } = props
 
     useEffect(() => {
-      const tempBot = wocky!.getBot({id: botId})
-      setBot(tempBot)
+      let tempBot = wocky!.bots.exists(botId)
       if (!tempBot) {
-        return
+        if (fromDeeplink) {
+          // bot could be not loaded yet, create empty one
+          tempBot = wocky!.getBot({id: botId})
+        } else {
+          Actions.popTo('home') // bot is deleted, redirect user to own profile
+          return
+        }
       }
+      setBot(tempBot)
 
       // send all injected props + bot "up" to static context
       props.navigation.setParams({isNew, bot: tempBot, notificationStore})
 
       homeStore.select(tempBot.id)
-      homeStore.setFocusedLocation(tempBot.location)
       wocky!.loadBot(botId).then(() => {
+        homeStore.setFocusedLocation(tempBot!.location)
+
         viewTimeout = setTimeout(() => {
           if (tempBot && isAlive(tempBot))
             analytics.track('bot_view', {id: tempBot.id, title: tempBot.title})
         }, 7000)
-
-        // deep-linking to visitors
-        if (navigation.state.params.params === 'visitors') {
-          // todo: why doesn't Botdetails pop back down when nav'ing to visitors?
-          Actions.visitors({botId})
-        }
       })
 
       return () => {
