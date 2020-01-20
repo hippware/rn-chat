@@ -65,6 +65,7 @@ storiesOf('Onboarding', module)
 // ))
 
 storiesOf('Location Settings', module)
+  .add('Switch Panel', () => <SwitchPanelStory />)
   .add('Accept/Reject', () => <LocationSettingsModalStory type="ACCEPT_REJECT_REQUEST" />)
   .add('Accept request', () => <LocationSettingsModalStory type="ACCEPT_REQUEST" />)
   .add('Send Request', () => <LocationSettingsModalStory type="SEND_REQUEST" />)

@@ -1,7 +1,7 @@
 import React from 'react'
 import LocationSettingsModal, {
   LocationSettingsType,
-} from '../../src/components/LiveLocation/LocationSettingsModal'
+} from '../../../src/components/LiveLocation/LocationSettingsModal'
 
 const profile = {
   id: 'place_cage_avatar',
