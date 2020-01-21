@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {View} from 'react-native'
 import {RText, Switch} from '../common'
-import {PINK, GREY, WHITE} from '../../constants/colors'
+import {PINK, GREY, WHITE, PINKISH_GREY, DARK_GREY} from '../../constants/colors'
 import SwitchButton from '../SwitchButton'
 import {FriendShareTypeEnum} from 'wocky-client'
 
@@ -12,6 +12,15 @@ export type Props = {
 
 const LocationSwitchPanel = ({onTypeToggle, shareType}: Props) => {
   const {DISABLED, ALWAYS, NEARBY} = FriendShareTypeEnum
+  const [lastType, setLastType] = useState<FriendShareTypeEnum>(
+    shareType === DISABLED ? ALWAYS : shareType
+  )
+
+  useEffect(() => {
+    if (shareType !== DISABLED) {
+      setLastType(shareType)
+    }
+  }, [shareType])
   return (
     <View style={{width: 300}}>
       <View
@@ -28,11 +37,11 @@ const LocationSwitchPanel = ({onTypeToggle, shareType}: Props) => {
           isOn={shareType !== DISABLED}
           onColor={PINK}
           offColor={GREY}
-          onToggle={on => onTypeToggle(on ? ALWAYS : DISABLED)}
+          onToggle={on => onTypeToggle(on ? lastType : DISABLED)}
         />
       </View>
       <SwitchButton
-        value={shareType === NEARBY}
+        value={lastType === NEARBY}
         text1="Always"
         text2="When Nearby"
         switchWidth={300}
@@ -42,14 +51,12 @@ const LocationSwitchPanel = ({onTypeToggle, shareType}: Props) => {
         btnBorderColor={PINK}
         btnBackgroundColor={PINK}
         switchBackgroundColor={WHITE}
-        switchBorderColor={PINK}
+        switchBorderColor={shareType === FriendShareTypeEnum.ALWAYS ? PINKISH_GREY : PINK}
         switchBorderRadius={16}
         activeFontColor={WHITE}
-        fontColor={PINK}
+        fontColor={shareType === FriendShareTypeEnum.ALWAYS ? DARK_GREY : PINK}
         disabled={shareType === FriendShareTypeEnum.DISABLED}
-        onValueChange={value =>
-          onTypeToggle(value ? FriendShareTypeEnum.NEARBY : FriendShareTypeEnum.ALWAYS)
-        }
+        onValueChange={value => onTypeToggle(value ? NEARBY : ALWAYS)}
       >
         {/* {notifications.hasUnreadRequests && <View style={styles.newDot} />} */}
       </SwitchButton>
