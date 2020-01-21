@@ -503,11 +503,14 @@ export const Wocky = types
 
             if (profile) {
 
-              self.debugLog(`WOCKY sharedLocation profile user=${id} loc_id=${location.id} capturedAt=${location.capturedAt} profile=`, profile)
+              self.debugLog(`WOCKY sharedLocation 10 profile user=${id} loc_id=${location.id} capturedAt=${location.capturedAt} profile=`, profile)
 
               profile.setLocation(
                 createLocation({...location, createdAt: iso8601toDate(location.capturedAt)})
               )
+
+              self.debugLog(`WOCKY sharedLocation 90 user=${id} loc_id=${location.id} capturedAt=${location.capturedAt}`)
+
             } else {
 
               self.debugLog(`WOCKY sharedLocation PROFILE NOT FOUND user=${id} loc_id=${location.id} capturedAt=${location.capturedAt}`)
