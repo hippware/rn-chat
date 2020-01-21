@@ -134,8 +134,18 @@ function tryMigrate(parsed): object {
  * Pull store data from the cache (if any) and return a store hydrated with that data
  */
 export async function createStore() {
-  let storeData
+  let mstStore, storeData
   const deviceInfo = await deviceInfoFetch()
+  const transport = new Transport(await DeviceInfo.getUniqueId())
+  const env: IEnv = {
+    transport,
+    auth,
+    firebase,
+    fileService,
+    deviceInfo,
+    bugsnagNotify,
+  }
+  const appInfo = {jsVersion, nativeVersion: deviceInfo.binaryVersion}
   try {
     const data = await AsyncStorage.getItem(STORE_NAME)
     storeData = data && JSON.parse(data)
@@ -158,30 +168,11 @@ export async function createStore() {
       // todo: can we move this out of persistence and into codepushStore?
       storeData = {...getMinimalStoreData(storeData), codePushStore: {pendingUpdate: false}}
     }
+    mstStore = Store.create({...cleanState, ...storeData, appInfo}, env)
   } catch (err) {
     log('hydration error', err, storeData)
-    storeData = getMinimalStoreData(storeData)
+    mstStore = Store.create({...cleanState, ...getMinimalStoreData(storeData), appInfo}, env)
   }
-
-  const transport = new Transport(await DeviceInfo.getUniqueId())
-
-  const env: IEnv = {
-    transport,
-    auth,
-    firebase,
-    fileService,
-    deviceInfo,
-    bugsnagNotify,
-  }
-
-  const mstStore = Store.create(
-    {
-      ...cleanState,
-      ...storeData,
-      appInfo: {jsVersion, nativeVersion: deviceInfo.binaryVersion},
-    },
-    env
-  )
 
   const requestPushPermissions = initializePushNotifications(mstStore.wocky.enablePush)
   addMiddleware(mstStore, actionLogger)
