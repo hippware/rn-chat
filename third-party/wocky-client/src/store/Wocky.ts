@@ -41,6 +41,20 @@ export const Wocky = types
         env.bugsnagNotify(e, name, extra)
       }
     },
+    debugLog: (text: string, extra?: any): void => {
+      const env = getEnv(self)
+      if (env.debugLog) {
+        if (extra) {
+          text = `${text} ${JSON.stringify(extra)}`
+        }
+        env.debugLog.info(text)
+
+        if (__DEV__) {
+          // tslint:disable-next-line
+          console.log(text)
+        }
+      }
+    },
     loadProfile: flow(function*(id: string) {
       yield waitFor(() => self.connected)
       const isOwn = id === self.username

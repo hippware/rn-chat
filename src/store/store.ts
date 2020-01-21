@@ -34,6 +34,7 @@ import {autorun} from 'mobx'
 import {settings} from '../globals'
 import AsyncStorage from '@react-native-community/async-storage'
 import deviceInfoFetch, {TRDeviceInfo} from 'src/utils/deviceInfoFetch'
+import BackgroundGeolocation from 'react-native-background-geolocation-android'
 
 const jsVersion = require('../../package.json').version
 const auth = firebase.auth()
@@ -47,6 +48,7 @@ export type IEnv = {
   fileService: any
   deviceInfo: TRDeviceInfo
   bugsnagNotify: (e: Error, name?: string, extra?: {[name: string]: any}) => void
+  debugLog: any
 }
 
 const cleanState = {
@@ -172,6 +174,7 @@ export async function createStore() {
     fileService,
     deviceInfo,
     bugsnagNotify,
+    debugLog: BackgroundGeolocation.logger,
   }
 
   const mstStore = Store.create(
