@@ -12,12 +12,7 @@ import SwitchButton from './SwitchButton'
 import {PINK, WHITE} from '../constants/colors'
 import {useWocky} from 'src/utils/injectors'
 
-type Props = {
-  isActive: boolean
-  navigation: any
-}
-
-const Notifications = observer(({isActive, navigation}: Props) => {
+const Notifications = observer(() => {
   const wocky = useWocky()
   useEffect(() => {
     wocky.notifications.load().then(() => wocky.notifications.readAll())
@@ -35,7 +30,7 @@ const Notifications = observer(({isActive, navigation}: Props) => {
       renderContent={() => (
         <View style={{flex: 1, paddingTop: 3, alignItems: 'center'}}>
           <SwitchButton
-            value={notifications.mode as 1 | 2 | undefined}
+            value={notifications.mode === 2 ? true : false}
             text1="Updates"
             text2="Requests"
             switchWidth={220}
@@ -49,8 +44,8 @@ const Notifications = observer(({isActive, navigation}: Props) => {
             switchBorderRadius={16}
             activeFontColor={WHITE}
             fontColor={PINK}
-            onValueChange={index => {
-              notifications.setMode(index)
+            onValueChange={value => {
+              notifications.setMode(value ? 2 : 1)
               notifications.load()
             }}
           >

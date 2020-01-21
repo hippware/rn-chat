@@ -37,7 +37,7 @@ const LocationSwitchPanel = ({onTypeToggle, shareType}: Props) => {
         />
       </View>
       <SwitchButton
-        value={shareType === ALWAYS ? 1 : 2}
+        value={shareType === NEARBY}
         text1="Always"
         text2="When Nearby"
         switchWidth={300}
@@ -52,7 +52,7 @@ const LocationSwitchPanel = ({onTypeToggle, shareType}: Props) => {
         activeFontColor={WHITE}
         fontColor={PINK}
         disabled={shareType === 'DISABLED'}
-        onValueChange={index => onTypeToggle(index === 1 ? 'ALWAYS' : 'NEARBY')}
+        onValueChange={value => onTypeToggle(value ? 'NEARBY' : 'ALWAYS')}
       >
         {/* {notifications.hasUnreadRequests && <View style={styles.newDot} />} */}
       </SwitchButton>
