@@ -23,6 +23,7 @@ type Props = {
 }
 
 const switchSpeed = 100
+const translucent = 0.5
 
 const SwitchButton = ({
   value,
@@ -53,78 +54,75 @@ const SwitchButton = ({
   }, [value])
 
   return (
-    <>
-      <TouchableOpacity activeOpacity={1} onPress={() => onValueChange(!value)}>
+    <View style={{opacity: disabled ? translucent : 1}}>
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={() => (disabled ? null : onValueChange(!value))}
+        style={{
+          width: switchWidth,
+          height: switchHeight,
+          borderRadius: !!switchBorderRadius ? switchBorderRadius : switchHeight / 2,
+          borderWidth: 1,
+          borderColor: switchBorderColor || '#d4d4d4',
+          backgroundColor: switchBackgroundColor || '#fff',
+          flexDirection: 'row',
+        }}
+      >
+        <Animated.View style={{transform: [{translateX: offsetX}]}}>
+          <View
+            style={[
+              btnStyle || switchStyles.wayBtnActive,
+              {
+                top: -1,
+                left: -1,
+                width: switchWidth / 2,
+                height: btnHeight,
+                borderRadius: !!switchBorderRadius ? switchBorderRadius : switchHeight / 2,
+                borderColor: btnBorderColor || '#00a4b9',
+                backgroundColor: btnBackgroundColor || '#00bcd4',
+              },
+            ]}
+          />
+        </Animated.View>
+
         <View
           style={[
+            switchStyles.textPos,
             {
-              width: switchWidth,
-              height: switchHeight,
-              borderRadius:
-                switchBorderRadius !== undefined ? switchBorderRadius : switchHeight / 2,
-              borderWidth: 1,
-              borderColor: switchBorderColor || '#d4d4d4',
-              backgroundColor: switchBackgroundColor || '#fff',
-              flexDirection: 'row',
+              width: switchWidth / 2,
+              height: btnHeight || switchHeight - 6,
+              left: 0,
             },
           ]}
         >
-          <Animated.View style={{transform: [{translateX: offsetX}]}}>
-            <View
-              style={[
-                btnStyle || switchStyles.wayBtnActive,
-                {
-                  top: -1,
-                  left: -1,
-                  width: switchWidth / 2,
-                  height: btnHeight,
-                  borderRadius: !!switchBorderRadius ? switchBorderRadius : switchHeight / 2,
-                  borderColor: btnBorderColor || '#00a4b9',
-                  backgroundColor: btnBackgroundColor || '#00bcd4',
-                },
-              ]}
-            />
-          </Animated.View>
-
-          <View
-            style={[
-              switchStyles.textPos,
-              {
-                width: switchWidth / 2,
-                height: btnHeight || switchHeight - 6,
-                left: 0,
-              },
-            ]}
+          <RText
+            size={14}
+            style={!value ? {color: activeFontColor || '#fff'} : {color: fontColor || '#b1b1b1'}}
           >
-            <RText
-              size={14}
-              style={!value ? {color: activeFontColor || '#fff'} : {color: fontColor || '#b1b1b1'}}
-            >
-              {text1}
-            </RText>
-          </View>
+            {text1}
+          </RText>
+        </View>
 
-          <View
-            style={[
-              switchStyles.textPos,
-              {
-                width: switchWidth / 2,
-                height: btnHeight || switchHeight - 6,
-                right: 0,
-              },
-            ]}
+        <View
+          style={[
+            switchStyles.textPos,
+            {
+              width: switchWidth / 2,
+              height: btnHeight || switchHeight - 6,
+              right: 0,
+            },
+          ]}
+        >
+          <RText
+            size={14}
+            style={value ? {color: activeFontColor || '#fff'} : {color: fontColor || '#b1b1b1'}}
           >
-            <RText
-              size={14}
-              style={value ? {color: activeFontColor || '#fff'} : {color: fontColor || '#b1b1b1'}}
-            >
-              {text2}
-            </RText>
-          </View>
+            {text2}
+          </RText>
         </View>
       </TouchableOpacity>
       {children}
-    </>
+    </View>
   )
 }
 
