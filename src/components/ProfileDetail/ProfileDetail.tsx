@@ -36,7 +36,7 @@ const ProfileDetail = observer(({item, preview}: Props) => {
   return (
     <BottomPopupNew
       previewHeight={150}
-      fullViewHeight={340}
+      fullViewHeight={390}
       renderPreview={() => <Preview profile={profile!} />}
       renderContent={() => <Default profile={profile!} />}
       preview={preview}
@@ -72,7 +72,14 @@ const Default = observer(({profile}: {profile: IProfile}) => (
     </RText>
     <InfoPills profile={profile} />
     {profile.isFriend ? (
-      <LocationSwitchPanel />
+      <LocationSwitchPanel
+        onTypeToggle={type => {
+          profile.shareLocationUpdate(type)
+        }}
+        shareType={
+          'ALWAYS' /* todo: how do I access the profile's share type? Currently that information lives on the Friend (parent of Profile) level */
+        }
+      />
     ) : (
       <ConnectButton profile={profile!} myProfile={profile!} />
     )}

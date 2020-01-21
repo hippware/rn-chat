@@ -3,7 +3,6 @@ import {View} from 'react-native'
 import {RText, Switch} from '../common'
 import {PINK, GREY, WHITE} from '../../constants/colors'
 import SwitchButton from '../SwitchButton'
-// import { FriendShareTypeEnum } from '../../../third-party/wocky-client/src'
 import {FriendShareTypeEnum} from 'wocky-client'
 
 export type ShareType = 'ALWAYS' | 'NEARBY' | 'DISABLED'
@@ -16,14 +15,12 @@ export type Props = {
 const LocationSwitchPanel = ({onTypeToggle, shareType}: Props) => {
   const {DISABLED, ALWAYS, NEARBY} = FriendShareTypeEnum
   return (
-    <>
+    <View style={{width: 300}}>
       <View
         style={{
           flexDirection: 'row',
           marginVertical: 15,
           justifyContent: 'space-between',
-          width: '100%',
-          // flex: 1
         }}
       >
         <RText size={16} weight="Medium">
@@ -56,7 +53,7 @@ const LocationSwitchPanel = ({onTypeToggle, shareType}: Props) => {
       >
         {/* {notifications.hasUnreadRequests && <View style={styles.newDot} />} */}
       </SwitchButton>
-    </>
+    </View>
   )
 }
 

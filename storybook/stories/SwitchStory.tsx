@@ -10,7 +10,7 @@ export default () => {
         isOn={on}
         onColor="#FE5C6C"
         offColor="#D3D3D3"
-        size="regular"
+        // size="regular"
         onToggle={isOn => {
           setOn(!on)
         }}
