@@ -498,11 +498,20 @@ export const Wocky = types
           () => self.transport.sharedLocation,
           ({id, location}) => {
             const profile = self.profiles.get(id)
+
+            self.debugLog(`WOCKY sharedLocation 00 user=${id} loc_id=${location.id} capturedAt=${location.capturedAt} location=`, location)
+
             if (profile) {
+
+              self.debugLog(`WOCKY sharedLocation profile user=${id} loc_id=${location.id} capturedAt=${location.capturedAt} profile=`, profile)
+
               profile.setLocation(
                 createLocation({...location, createdAt: iso8601toDate(location.capturedAt)})
               )
             } else {
+
+              self.debugLog(`WOCKY sharedLocation PROFILE NOT FOUND user=${id} loc_id=${location.id} capturedAt=${location.capturedAt}`)
+
               self.bugsnagNotify(new Error('Unable to setLocation due to profile not found'), 'wocky_sharedLocation_profile_not_found', {id, location})
             }
           }

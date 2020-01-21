@@ -1188,7 +1188,12 @@ export class Transport {
           user: {id},
           location,
         } = result.data.sharedLocations
+
+        this.debugLog(`WOCKY TRANSPORT subscribeSharedLocations 00 user=${id} loc_id=${location.id} capturedAt=${location.capturedAt} result.data.sharedLocations=`, result.data.sharedLocations)
+
         this.sharedLocation = {id, location}
+
+        this.debugLog(`WOCKY TRANSPORT subscribeSharedLocations 90 user=${id} loc_id=${location.id} capturedAt=${location.capturedAt}`)
       }),
     })
     this.subscriptions.push(subscription)

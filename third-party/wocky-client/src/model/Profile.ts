@@ -265,6 +265,11 @@ export const Profile = types
         },
         get whenLastLocationSent(): string {
           // console.log('& when', self.location)
+
+          if (self.location) {
+            (getRoot(self) as any).wocky.debugLog(`WOCKY PROFILE whenLastLocationSent user=${self.id} loc_id=${self.location.id} createdAt=${self.location.createdAt} location=`, self.location)
+          }
+
           return self.location ? moment(self.location!.createdAt).fromNow() : 'a while ago'
         },
       },
