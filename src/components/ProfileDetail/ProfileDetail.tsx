@@ -73,12 +73,8 @@ const Default = observer(({profile}: {profile: IProfile}) => (
     <InfoPills profile={profile} />
     {profile.isFriend ? (
       <LocationSwitchPanel
-        onTypeToggle={type => {
-          profile.shareLocationUpdate(type)
-        }}
-        shareType={
-          'ALWAYS' /* todo: how do I access the profile's share type? Currently that information lives on the Friend (parent of Profile) level */
-        }
+        onTypeToggle={profile.shareLocationUpdate}
+        shareType={profile.shareType!}
       />
     ) : (
       <ConnectButton profile={profile!} myProfile={profile!} />

@@ -5,11 +5,9 @@ import {PINK, GREY, WHITE} from '../../constants/colors'
 import SwitchButton from '../SwitchButton'
 import {FriendShareTypeEnum} from 'wocky-client'
 
-export type ShareType = 'ALWAYS' | 'NEARBY' | 'DISABLED'
-
 export type Props = {
-  onTypeToggle: (type: ShareType) => void
-  shareType: ShareType
+  onTypeToggle: (type: FriendShareTypeEnum) => void
+  shareType: FriendShareTypeEnum
 }
 
 const LocationSwitchPanel = ({onTypeToggle, shareType}: Props) => {
@@ -48,8 +46,10 @@ const LocationSwitchPanel = ({onTypeToggle, shareType}: Props) => {
         switchBorderRadius={16}
         activeFontColor={WHITE}
         fontColor={PINK}
-        disabled={shareType === 'DISABLED'}
-        onValueChange={value => onTypeToggle(value ? 'NEARBY' : 'ALWAYS')}
+        disabled={shareType === FriendShareTypeEnum.DISABLED}
+        onValueChange={value =>
+          onTypeToggle(value ? FriendShareTypeEnum.NEARBY : FriendShareTypeEnum.ALWAYS)
+        }
       >
         {/* {notifications.hasUnreadRequests && <View style={styles.newDot} />} */}
       </SwitchButton>

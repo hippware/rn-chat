@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
-import LocationSwitchPanel, {
-  ShareType,
-} from '../../../src/components/ProfileDetail/LocationSwitchPanel'
+import LocationSwitchPanel from '../../../src/components/ProfileDetail/LocationSwitchPanel'
+import {FriendShareTypeEnum} from 'wocky-client'
+
 import {View} from 'react-native'
 
 export default () => {
-  const [shareType, setShareType] = useState<ShareType>('ALWAYS')
+  const [shareType, setShareType] = useState<FriendShareTypeEnum>(FriendShareTypeEnum.ALWAYS)
   return (
     <View
       style={{alignItems: 'center', justifyContent: 'center', width: '70%', alignSelf: 'center'}}

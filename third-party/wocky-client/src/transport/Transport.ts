@@ -6,11 +6,10 @@ import {observable, action} from 'mobx'
 import {create as createAbsintheSocket} from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
-import {IProfilePartial} from '../model/Profile'
+import {IProfilePartial, FriendShareTypeEnum, IFriendShareConfig} from '../model/Profile'
 import {ILocationSnapshot, IBotPost} from '..'
 import {IBot, IBotIn} from '../model/Bot'
 import {ILocation} from '../model/Location'
-import {FriendShareTypeEnum, IFriendShareConfig, DefaultFriendShareConfig} from '../model/Friend'
 
 const introspectionQueryResultData = require('./fragmentTypes.json')
 const TIMEOUT = 10000
@@ -245,15 +244,10 @@ export class Transport {
           user: convertProfile(recipient),
         })
       )
-      result.friends = res.data.user.friends.edges.map(
-        ({node: {createdAt, user, name, shareType, shareConfig}}) => ({
-          createdAt: iso8601toDate(createdAt).getTime(),
-          name,
-          shareType,
-          shareConfig,
-          user: convertProfile(user),
-        })
+      result.friends = res.data.user.friends.edges.map(({node: {user, shareType, shareConfig}}) =>
+        convertProfile({...user, shareType, shareConfig})
       )
+
       result.blocked = res.data.user.blocks.edges.map(({node: {createdAt, user}}) => ({
         createdAt: iso8601toDate(createdAt).getTime(),
         user: convertProfile(user),
@@ -674,7 +668,7 @@ export class Transport {
     userId: string,
     location: ILocation | null = null,
     shareType: FriendShareTypeEnum = FriendShareTypeEnum.DISABLED,
-    shareConfig: IFriendShareConfig = DefaultFriendShareConfig
+    shareConfig?: IFriendShareConfig
   ): Promise<void> {
     return this.voidMutation({
       mutation: gql`
