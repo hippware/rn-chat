@@ -165,7 +165,7 @@ export async function createStore() {
     storeData = getMinimalStoreData(storeData)
   }
 
-  const transport = new Transport(await DeviceInfo.getUniqueId())
+  const transport = new Transport(await DeviceInfo.getUniqueId(), BackgroundGeolocation.logger)
 
   const env: IEnv = {
     transport,
