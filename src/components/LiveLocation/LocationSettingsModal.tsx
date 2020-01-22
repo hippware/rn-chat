@@ -7,17 +7,14 @@ import {DARK_PURPLE, PINK, PINKISH_GREY} from '../../constants/colors'
 import {Actions} from 'react-native-router-flux'
 import {warn} from '../../../third-party/wocky-client/src/logger'
 
-export enum LocationSettingsTypeEnum {
-  SEND_REQUEST = 'SEND_REQUEST',
-  ACCEPT_REQUEST = 'ACCEPT_REQUEST',
-  ACCEPT_REJECT_REQUEST = 'ACCEPT_REJECT_REQUEST',
-}
+type LocationSettingsType = 'SEND_REQUEST' | 'ACCEPT_REQUEST' | 'ACCEPT_REJECT_REQUEST'
 
-type Props = {
-  settingsType: LocationSettingsTypeEnum
+export type Props = {
+  settingsType: LocationSettingsType
   profile?: IProfile
   displayName?: string
-  onOkPress: () => void
+  onOkPress: (selection: SelectionType) => void
+  onCancelPress?: () => void
 }
 
 type SelectionType = 'always' | 'nearby' | null
@@ -97,7 +94,7 @@ const RadioButton = ({text, selected, onPress}) => (
 )
 
 const BottomButtons = ({settingsType, selection}: Props & {selection: SelectionType}) => {
-  if (settingsType === LocationSettingsTypeEnum.ACCEPT_REJECT_REQUEST) {
+  if (settingsType === 'ACCEPT_REJECT_REQUEST') {
     return (
       <View style={[{flexDirection: 'row'}, styles.bottom]}>
         <TouchableOpacity
@@ -129,13 +126,11 @@ const BottomButtons = ({settingsType, selection}: Props & {selection: SelectionT
     // todo: accept/send friend request action
     return (
       <GradientButton
-        onPress={settingsType === LocationSettingsTypeEnum.ACCEPT_REQUEST ? () => null : () => null}
+        onPress={settingsType === 'ACCEPT_REQUEST' ? () => null : () => null}
         style={[styles.bottom, styles.button]}
       >
         <RText size={15} color="white">
-          {settingsType === LocationSettingsTypeEnum.ACCEPT_REQUEST
-            ? 'Accept Friend Request'
-            : 'Send Friend Request'}
+          {settingsType === 'ACCEPT_REQUEST' ? 'Accept Friend Request' : 'Send Friend Request'}
         </RText>
       </GradientButton>
     )

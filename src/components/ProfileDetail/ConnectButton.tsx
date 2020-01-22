@@ -7,7 +7,7 @@ import {colors} from 'src/constants'
 import {RText, Spinner} from '../common'
 import {Actions} from 'react-native-router-flux'
 import {useAnalytics} from 'src/utils/injectors'
-import {LocationSettingsTypeEnum} from '../LiveLocation/LocationSettingsModal'
+import {Props as LocationSettingsProps} from '../LiveLocation/LocationSettingsModal'
 type Props = {
   profile: IProfile
 }
@@ -41,14 +41,14 @@ const ConnectButton = observer(({profile}: Props) => {
       ])
     } else {
       Actions.locationSettingsModal({
-        settingsType: LocationSettingsTypeEnum.SEND_REQUEST,
+        settingsType: 'SEND_REQUEST',
         profile,
         displayName: profile.firstName,
         onOkPress: () => {
           // todo
           Actions.pop()
         },
-      })
+      } as LocationSettingsProps)
       return
       // await profile.invite()
       track('user_follow', (profile as any).toJSON())
