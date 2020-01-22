@@ -77,7 +77,7 @@ const Default = observer(({profile}: {profile: IProfile}) => (
         shareType={profile.shareType!}
       />
     ) : (
-      <ConnectButton profile={profile!} myProfile={profile!} />
+      <ConnectButton profile={profile!} />
     )}
   </View>
 ))

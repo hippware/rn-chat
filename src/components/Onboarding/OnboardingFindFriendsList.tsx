@@ -120,7 +120,7 @@ const ToggleButton = inject('contactStore')(
       ? () => null
       : () =>
           Actions.locationSettingsModal({
-            type: 'SEND_REQUEST',
+            settingsType: 'SEND_REQUEST',
             profile: contact.profile,
             displayName: contact.displayNameSingle,
             onOkPress: () => {

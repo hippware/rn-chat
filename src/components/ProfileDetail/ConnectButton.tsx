@@ -7,15 +7,14 @@ import {colors} from 'src/constants'
 import {RText, Spinner} from '../common'
 import {Actions} from 'react-native-router-flux'
 import {useAnalytics} from 'src/utils/injectors'
-
+import {LocationSettingsTypeEnum} from '../LiveLocation/LocationSettingsModal'
 type Props = {
   profile: IProfile
-  myProfile?: any
 }
 
 const imgFollowing = require('../../../images/button_friends.png')
 
-const ConnectButton = observer(({profile, myProfile}: Props) => {
+const ConnectButton = observer(({profile}: Props) => {
   const [pendingFollowChange, setPendingFollowChange] = useState(false)
   const {track} = useAnalytics()
 
@@ -35,14 +34,24 @@ const ConnectButton = observer(({profile, myProfile}: Props) => {
           onPress: async () => {
             setPendingFollowChange(true)
             await profile.unfriend()
-            track('user_unfollow', myProfile.toJSON())
+            track('user_unfollow', (profile as any).toJSON())
             setPendingFollowChange(false)
           },
         },
       ])
     } else {
-      await profile.invite()
-      track('user_follow', myProfile.toJSON())
+      Actions.locationSettingsModal({
+        settingsType: LocationSettingsTypeEnum.SEND_REQUEST,
+        profile,
+        displayName: profile.firstName,
+        onOkPress: () => {
+          // todo
+          Actions.pop()
+        },
+      })
+      return
+      // await profile.invite()
+      track('user_follow', (profile as any).toJSON())
       setPendingFollowChange(false)
     }
   }

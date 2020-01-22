@@ -6,7 +6,9 @@ SplashScreen.hide()
 import {storiesOf} from '@storybook/react-native'
 import {YellowBox} from 'react-native'
 import SwitchStory from './SwitchStory'
-import LocationSettingsModalStory from './LocationSettings/LocationSettingsModalStory'
+import LocationSettingsModalStory, {
+  LocationSettingsTypeEnum,
+} from './LocationSettings/LocationSettingsModalStory'
 import SwitchPanelStory from './LocationSettings/SwitchPanelStory'
 import OnboardingLocation from '../../src/components/Onboarding/OnboardingLocation'
 import {
@@ -67,11 +69,17 @@ storiesOf('Onboarding', module)
 
 storiesOf('Location Settings', module)
   .add('Switch Panel', () => <SwitchPanelStory />)
-  .add('Accept/Reject', () => <LocationSettingsModalStory type="ACCEPT_REJECT_REQUEST" />)
-  .add('Accept request', () => <LocationSettingsModalStory type="ACCEPT_REQUEST" />)
-  .add('Send Request', () => <LocationSettingsModalStory type="SEND_REQUEST" />)
+  .add('Accept/Reject', () => (
+    <LocationSettingsModalStory type={LocationSettingsTypeEnum.ACCEPT_REJECT_REQUEST} />
+  ))
+  .add('Accept request', () => (
+    <LocationSettingsModalStory type={LocationSettingsTypeEnum.ACCEPT_REQUEST} />
+  ))
+  .add('Send Request', () => (
+    <LocationSettingsModalStory type={LocationSettingsTypeEnum.SEND_REQUEST} />
+  ))
   .add('Send Request w/ contact', () => (
-    <LocationSettingsModalStory type="SEND_REQUEST" withContact />
+    <LocationSettingsModalStory type={LocationSettingsTypeEnum.SEND_REQUEST} withContact />
   ))
 
 storiesOf('Switch', module).add('default', () => <SwitchStory />)

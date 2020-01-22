@@ -1,8 +1,8 @@
 import React from 'react'
 import LocationSettingsModal, {
-  LocationSettingsType,
+  LocationSettingsTypeEnum,
 } from '../../../src/components/LiveLocation/LocationSettingsModal'
-
+export {LocationSettingsTypeEnum}
 const profile = {
   id: 'place_cage_avatar',
   handle: 'nic_cage',
@@ -14,9 +14,9 @@ const profile = {
   },
 }
 
-export default ({type, withContact}: {type: LocationSettingsType; withContact?: boolean}) => (
+export default ({type, withContact}: {type: LocationSettingsTypeEnum; withContact?: boolean}) => (
   <LocationSettingsModal
-    type={type}
+    settingsType={type}
     profile={withContact ? undefined : (profile as any)}
     displayName={withContact ? 'contact' : undefined}
     onOkPress={() => null}
