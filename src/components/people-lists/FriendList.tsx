@@ -57,8 +57,8 @@ const FriendList = observer(({isActive}: Props) => {
       }}
       listProps={{
         ListHeaderComponent: profile ? renderHeader() : undefined,
-        renderItem: ({item}) => <FriendCard profile={item.user} />,
-        keyExtractor: ({user}) => user.id,
+        renderItem: ({item}) => <FriendCard profile={item} />,
+        keyExtractor: ({id}) => id,
         data: profile ? profile!.friends.list.slice() : [],
         keyboardShouldPersistTaps: 'handled',
       }}

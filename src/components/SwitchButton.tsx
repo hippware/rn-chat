@@ -19,7 +19,7 @@ type Props = {
   btnBorderColor?: string
   btnBackgroundColor?: string
   btnStyle: any
-  children: any
+  children?: any
 }
 
 const switchSpeed = 100
