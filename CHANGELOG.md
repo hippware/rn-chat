@@ -4,6 +4,13 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Update: typescript (PR #4676), metro-react-native-babel-preset (PR #4677)
+  * @babel/preset-typescript (PR #4679), @babel/core (PR #4680)
+  * @babel/node (PR #4682), @types/jest (PR #4684)
+  * @babel/plugin-proposal-object-rest-spread (PR #4685)
+  * libphonenumber-js (PR #4687), @babel/runtime (PR #4688)
+  * @babel/plugin-proposal-decorators (PR #4689)
+
 # 4.36.1 - 2020 Jan 17
 
 * Skip live location duration screen from the notification screen (#4672)
