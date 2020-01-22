@@ -30,7 +30,7 @@ const LocationGeofenceWarning = observer(() => {
   }
 
   return (
-    <ModalContainer>
+    <ModalContainer innerStyle={{backgroundColor: 'transparent', alignItems: 'center'}}>
       <Image
         source={footprint}
         style={{width: 60, height: 60, marginVertical: 25 * k}}

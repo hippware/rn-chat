@@ -23,6 +23,7 @@ const buttonHeight = 50
 
 const LocationSettingsModal = (props: Props) => {
   const {profile, displayName} = props
+  console.log('& modal', props)
 
   if (!profile && !displayName) {
     warn('Either profile or displayName must be provided')
@@ -30,48 +31,44 @@ const LocationSettingsModal = (props: Props) => {
 
   const [selection, setSelection] = useState<SelectionType>(null)
   return (
-    <ModalContainer onPress={Actions.pop}>
-      <View
-        style={{
-          width: '80%',
-          backgroundColor: 'white',
-          alignItems: 'center',
-          borderRadius: 15,
-          paddingTop: 20,
-          paddingBottom: buttonHeight + 15,
-          overflow: 'hidden',
-        }}
-      >
-        <RText size={15} color={DARK_PURPLE} weight="Medium">
-          Friend Request
-        </RText>
-        <Avatar
-          profile={profile}
-          displayName={displayName}
-          size={50}
-          borderColor={PINK}
-          hideDot
-          style={{marginTop: 15}}
-        />
-        <RText size={20} color={PINK} style={{marginTop: 2}} weight="Bold">
-          {profile ? profile.handle : displayName!}
-        </RText>
-        <Separator style={{width: '100%', marginTop: 25, marginBottom: 20}} />
-        <RText size={16} color={DARK_PURPLE} weight="Medium" style={{marginBottom: 25}}>
-          Share My Location
-        </RText>
-        <RadioButton
-          text="Always Share Location"
-          onPress={() => setSelection('always')}
-          selected={selection === 'always'}
-        />
-        <RadioButton
-          text="Only When I'm Nearby"
-          onPress={() => setSelection('nearby')}
-          selected={selection === 'nearby'}
-        />
-        <BottomButtons {...props} selection={selection} />
-      </View>
+    <ModalContainer
+      onPress={Actions.pop}
+      innerStyle={{
+        alignItems: 'center',
+        borderRadius: 15,
+        paddingTop: 20,
+        paddingBottom: buttonHeight + 15,
+      }}
+    >
+      <RText size={15} color={DARK_PURPLE} weight="Medium">
+        Friend Request
+      </RText>
+      <Avatar
+        profile={profile}
+        displayName={displayName}
+        size={50}
+        borderColor={PINK}
+        hideDot
+        style={{marginTop: 15}}
+      />
+      <RText size={20} color={PINK} style={{marginTop: 2}} weight="Bold">
+        {profile ? profile.handle : displayName!}
+      </RText>
+      <Separator style={{width: '100%', marginTop: 25, marginBottom: 20}} />
+      <RText size={16} color={DARK_PURPLE} weight="Medium" style={{marginBottom: 25}}>
+        Share My Location
+      </RText>
+      <RadioButton
+        text="Always Share Location"
+        onPress={() => setSelection('always')}
+        selected={selection === 'always'}
+      />
+      <RadioButton
+        text="Only When I'm Nearby"
+        onPress={() => setSelection('nearby')}
+        selected={selection === 'nearby'}
+      />
+      <BottomButtons {...props} selection={selection} />
     </ModalContainer>
   )
 }
@@ -93,14 +90,17 @@ const RadioButton = ({text, selected, onPress}) => (
   </View>
 )
 
-const BottomButtons = ({settingsType, selection}: Props & {selection: SelectionType}) => {
+const BottomButtons = ({
+  settingsType,
+  selection,
+  onOkPress,
+  onCancelPress = Actions.pop,
+}: Props & {selection: SelectionType}) => {
   if (settingsType === 'ACCEPT_REJECT_REQUEST') {
     return (
       <View style={[{flexDirection: 'row'}, styles.bottom]}>
         <TouchableOpacity
-          onPress={() => {
-            // todo
-          }}
+          onPress={onCancelPress}
           style={[
             styles.button,
             {backgroundColor: PINKISH_GREY, alignItems: 'center', justifyContent: 'center'},
@@ -112,7 +112,7 @@ const BottomButtons = ({settingsType, selection}: Props & {selection: SelectionT
         </TouchableOpacity>
         <GradientButton
           onPress={() => {
-            // todo
+            onOkPress(selection)
           }}
           style={styles.button}
         >
@@ -123,12 +123,8 @@ const BottomButtons = ({settingsType, selection}: Props & {selection: SelectionT
       </View>
     )
   } else {
-    // todo: accept/send friend request action
     return (
-      <GradientButton
-        onPress={settingsType === 'ACCEPT_REQUEST' ? () => null : () => null}
-        style={[styles.bottom, styles.button]}
-      >
+      <GradientButton onPress={() => onOkPress(selection)} style={[styles.bottom, styles.button]}>
         <RText size={15} color="white">
           {settingsType === 'ACCEPT_REQUEST' ? 'Accept Friend Request' : 'Send Friend Request'}
         </RText>
