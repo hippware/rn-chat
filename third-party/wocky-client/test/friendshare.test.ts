@@ -1,5 +1,5 @@
 import {createUser, fillAndSaveProfile, dumpProfile, waitFor} from './support/testuser'
-import {IWocky, FriendShareTypeEnum, DefaultFriendShareConfig} from '../src'
+import {IWocky, FriendShareTypeEnum} from '../src'
 import {UserActivityType} from '../src/transport/types'
 
 describe('Friend Share', () => {
@@ -47,7 +47,6 @@ describe('Friend Share', () => {
 
     let friend = alice.profile!.friends.get(bob.profile!.id)
     expect(friend).toBeDefined()
-    expect(friend!.shareConfig).toEqual(DefaultFriendShareConfig)
     expect(friend!.shareType).toEqual(FriendShareTypeEnum.DISABLED)
     await aliceBobProfile.shareLocationUpdate(FriendShareTypeEnum.ALWAYS)
 

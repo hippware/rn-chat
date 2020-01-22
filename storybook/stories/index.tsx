@@ -6,7 +6,8 @@ SplashScreen.hide()
 import {storiesOf} from '@storybook/react-native'
 import {YellowBox} from 'react-native'
 import SwitchStory from './SwitchStory'
-import LocationSettingsModalStory from './LocationSettingsModalStory'
+import LocationSettingsModalStory from './LocationSettings/LocationSettingsModalStory'
+import SwitchPanelStory from './LocationSettings/SwitchPanelStory'
 import OnboardingLocation from '../../src/components/Onboarding/OnboardingLocation'
 import {
   LocationWarningIOS,
@@ -65,6 +66,7 @@ storiesOf('Onboarding', module)
 // ))
 
 storiesOf('Location Settings', module)
+  .add('Switch Panel', () => <SwitchPanelStory />)
   .add('Accept/Reject', () => <LocationSettingsModalStory type="ACCEPT_REJECT_REQUEST" />)
   .add('Accept request', () => <LocationSettingsModalStory type="ACCEPT_REQUEST" />)
   .add('Send Request', () => <LocationSettingsModalStory type="SEND_REQUEST" />)

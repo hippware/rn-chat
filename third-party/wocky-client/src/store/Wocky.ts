@@ -1,7 +1,7 @@
 import {types, getParent, getEnv, flow, Instance} from 'mobx-state-tree'
 import {reaction, IReactionDisposer, autorun} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
-import {IProfile, IProfilePartial} from '../model/Profile'
+import {IProfile, IProfilePartial, FriendShareTypeEnum} from '../model/Profile'
 import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
 import Timer from './Timer'
@@ -14,7 +14,6 @@ import _ from 'lodash'
 import {RequestType} from '../model/PaginableList'
 import {ILocation, ILocationSnapshot, createLocation} from '../model/Location'
 import {log} from '../logger'
-import {DefaultFriendShareConfig, FriendShareTypeEnum} from '../model/Friend'
 
 export const Wocky = types
   .compose(
@@ -288,7 +287,7 @@ export const Wocky = types
         const profile = self.profiles.get(user.id, user)
         if (relationship === 'FRIEND') {
           profile.setFriend(true)
-          self.profile!.addFriend(profile, FriendShareTypeEnum.DISABLED, DefaultFriendShareConfig)
+          self.profile!.addFriend(profile)
         }
         if (relationship === 'NONE') {
           profile.setFriend(false)

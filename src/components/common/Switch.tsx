@@ -6,9 +6,9 @@ type Props = {
   label?: string
   onColor: string
   offColor: string
-  size: string
+  size?: 'large'
   labelStyle?: any
-  onToggle: (toggle: boolean) => void
+  onToggle: (on: boolean) => void
   icon?: any
 }
 
