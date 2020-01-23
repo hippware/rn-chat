@@ -7,7 +7,7 @@ import {IEventBotPostData} from '../model/EventBotPost'
 import {IEventFriendInviteData} from '../model/EventFriendInvite'
 import {IBotData} from '../model/Bot'
 import {IProfilePartial} from '../model/Profile'
-import {ILocation} from '../model/Location'
+import {ILocationSnapshot} from '../model/Location'
 import {IMessageIn} from '../model/Message'
 import {IEventLocationShareEndData} from '../model/EventLocationShareEnd'
 import {IEventLocationShareData} from '../model/EventLocationShare'
@@ -488,7 +488,10 @@ export function assert(condition, message) {
   }
 }
 
-export function convertLocation({longitude, latitude, accuracy}: ILocation, device: string) {
+export function convertLocation(
+  {longitude, latitude, accuracy}: ILocationSnapshot,
+  device: string
+) {
   return {
     device,
     lon: longitude,

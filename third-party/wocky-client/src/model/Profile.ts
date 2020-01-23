@@ -53,6 +53,7 @@ export const Profile = types
       receivesLocationShare: false, // pseudo-calculated property for correct FlatList rendering
       roles: types.optional(types.array(types.string), []),
       shareType: types.maybe(FriendShareType),
+      ownShareType: types.maybe(FriendShareType),
       shareConfig: types.maybe(FriendShareConfig),
       subscribedBots: types.optional(
         types.late((): IAnyModelType => BotPaginableList),
@@ -160,10 +161,11 @@ export const Profile = types
           self.service.profile.friends.remove(self.id)
           self.service.profile.receivedInvitations.remove(self.id)
           self.service.profile.sentInvitations.remove(self.id)
+          self.hasSentInvite = false
+          self.hasReceivedInvite = false
           self.setFriend(false)
           yield self.transport.friendDelete(self.id)
         }),
-        // cannot define shareType typing because of circular dependency between Profile and Friend
         shareLocationUpdate: flow(function*(
           shareType?: FriendShareTypeEnum,
           shareConfig?: IFriendShareConfig

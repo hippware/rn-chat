@@ -337,24 +337,20 @@ export class Transport {
   }
 
   async setLocation(params: ILocationSnapshot): Promise<void> {
+    const input = convertLocation(params, this.resource)
     return this.voidMutation({
       mutation: gql`
         mutation userLocationUpdate(
-          $latitude: Float!
-          $longitude: Float!
-          $accuracy: Float!
-          $device: String!
-          $activity: String
-          $activityConfidence: Int
+          $input: UserLocationUpdateInput!
         ) {
           userLocationUpdate(
-            input: {accuracy: $accuracy, lat: $latitude, lon: $longitude, activity: $activity, activityConfidence: $activityConfidence, device: $device}
+            input: $input
           ) {
             ${VOID_PROPS}
           }
         }
       `,
-      variables: {...params, device: this.resource},
+      variables: {input},
     })
   }
 
@@ -666,7 +662,7 @@ export class Transport {
 
   async friendShareUpdate(
     userId: string,
-    location: ILocation | null = null,
+    location: ILocationSnapshot | null = null,
     shareType: FriendShareTypeEnum = FriendShareTypeEnum.DISABLED,
     shareConfig?: IFriendShareConfig
   ): Promise<void> {
@@ -695,7 +691,14 @@ export class Transport {
           }
         }
       `,
-      variables: {input: {userId, location, shareType, shareConfig}},
+      variables: {
+        input: {
+          userId,
+          location: !!location && convertLocation(location, this.resource),
+          shareType,
+          shareConfig,
+        },
+      },
     })
   }
 
@@ -1197,6 +1200,7 @@ export class Transport {
       },
     }).subscribe({
       next: action((result: any) => {
+        // console.log('NOTIFICATION: ', JSON.stringify(result.data.notifications))
         this.notification = convertNotification({node: result.data.notifications})
       }),
     })
@@ -1209,6 +1213,7 @@ export class Transport {
         subscription subscribeContacts {
           contacts {
             relationship
+            shareType
             user {
               id
               roles
@@ -1226,9 +1231,10 @@ export class Transport {
       `,
     }).subscribe({
       next: action((result: any) => {
-        const {user, relationship, createdAt} = result.data.contacts
+        const {user, relationship, shareType} = result.data.contacts
+        // console.log('ROSTER ITEM: ', JSON.stringify(result.data.contacts))
         this.rosterItem = {
-          user: convertProfile({...user, _accessedAt: createdAt}),
+          user: convertProfile({...user, ownShareType: shareType}),
           relationship,
         }
       }),
