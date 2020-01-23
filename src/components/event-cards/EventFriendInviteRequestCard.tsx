@@ -1,13 +1,14 @@
 import React from 'react'
 import EventCardTemplate from './EventCardTemplate'
 import {IEventFriendInvite, IProfile} from 'wocky-client'
-import {StyleSheet, Image, View, TouchableOpacity} from 'react-native'
-import alert from '../../utils/alert'
+import {StyleSheet, Image, View, TouchableOpacity, Alert} from 'react-native'
 import {observer} from 'mobx-react'
 import {RText} from '../common'
 import {colors} from '../../constants'
 import GradientButton from '../common/GradientButton'
 import {useAnalytics} from 'src/utils/injectors'
+import {Props as LocationSettingsProps} from '../LiveLocation/LocationSettingsModal'
+import {Actions} from 'react-native-router-flux'
 
 type Props = {
   item: IEventFriendInvite
@@ -34,17 +35,35 @@ const ConnectButton = observer(({item}: ConnectProps) => {
   const analytics = useAnalytics()
   const profile = item.user
   const {isFriend} = profile
+
+  const onFriendAccept = () => {
+    Actions.locationSettingsModal({
+      settingsType: 'ACCEPT_REQUEST',
+      profile,
+      displayName: profile.firstName,
+      onOkPress: shareType => {
+        profile.invite(shareType).then(() => {
+          analytics.track('user_follow', (profile as any).toJSON())
+        })
+        Actions.pop()
+      },
+    } as LocationSettingsProps)
+  }
+
   return isFriend ? (
     <GradientButton
       style={[styles.button, isFriend ? styles.friend : styles.notFriend]}
       isPink={isFriend}
       offColor="white"
-      onPress={async () => {
-        if (isFriend) {
-          await unfriend(profile)
-        } else {
-          await invite(item, analytics)
-        }
+      onPress={() => {
+        Alert.alert('', `Are you sure you want to unfriend @${profile.handle}?`, [
+          {text: 'Cancel', style: 'cancel'},
+          {
+            text: 'Unfriend',
+            style: 'destructive',
+            onPress: () => profile.unfriend(),
+          },
+        ])
       }}
     >
       <RText size={10.5} weight="Medium" color={isFriend ? 'white' : colors.PINK}>
@@ -53,42 +72,15 @@ const ConnectButton = observer(({item}: ConnectProps) => {
     </GradientButton>
   ) : (
     <View style={{flexDirection: 'row'}}>
-      <TouchableOpacity onPress={() => invite(item, analytics)}>
+      <TouchableOpacity onPress={onFriendAccept}>
         <Image style={{marginRight: 5}} source={require('../../../images/friendAccept.png')} />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => decline(item)}>
+      <TouchableOpacity onPress={item.remove}>
         <Image source={require('../../../images/friendDecline.png')} />
       </TouchableOpacity>
     </View>
   )
 })
-
-const invite = async (item: IEventFriendInvite, analytics: any) => {
-  const profile = item.user
-  await profile.invite()
-  await item.removeAfterDelay(2) // remove the item after 2 sec
-  analytics.track('user_follow', (profile as any).toJSON())
-}
-
-const decline = async (item: IEventFriendInvite) => {
-  await item.remove()
-}
-
-const unfriend = async (profile: IProfile) => {
-  return new Promise(resolve => {
-    alert(null, `Are you sure you want to unfriend @${profile.handle}?`, [
-      {text: 'Cancel', style: 'cancel'},
-      {
-        text: 'Unfriend',
-        style: 'destructive',
-        onPress: async () => {
-          await profile.unfriend()
-          resolve()
-        },
-      },
-    ])
-  })
-}
 
 const styles = StyleSheet.create({
   button: {
