@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "APPCENTER environment variables:"
-set | grep '^APPCENTER'
+set | grep -e '^APPCENTER' -e '^BUGSNAG'
 
 if [ -z ${APPCENTER_XCODE_SCHEME+x} ]
 then
@@ -23,13 +23,15 @@ else
   # echo 'Detox test'
   # yarn detox test --configuration ios.sim.release
 
-  if [ "$APPCENTER_BRANCH" == "deploy-stage" ] || [ "$APPCENTER_BRANCH" == "production" ]; then
+  if [ -n "$BUGSNAG_UPLOAD_DSYMS" ]
+  then
     echo Running bugsnagDSYMUpload.sh $APPCENTER_SOURCE_DIRECTORY $APPCENTER_OUTPUT_DIRECTORY/../symbols
     /usr/bin/env bash scripts/bugsnagDSYMUpload.sh $APPCENTER_SOURCE_DIRECTORY $APPCENTER_OUTPUT_DIRECTORY/../symbols
   fi
 fi
 
-if [ "$APPCENTER_BRANCH" == "deploy-stage" ]
+if [ -n "$BUGSNAG_UPLOAD_SOURCEMAPS" ]
 then
+  echo 'Running yarn bugsnag'
   yarn bugsnag
 fi
