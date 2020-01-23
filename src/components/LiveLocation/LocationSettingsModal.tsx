@@ -2,34 +2,33 @@ import React, {useState} from 'react'
 import {View, TouchableOpacity, Image, StyleSheet} from 'react-native'
 import {RText, Separator, Avatar, GradientButton} from '../common'
 import ModalContainer from '../modals/ModalContainer'
-import {IProfile} from '../../../third-party/wocky-client/src'
+import {IProfile, FriendShareTypeEnum} from '../../../third-party/wocky-client/src'
 import {DARK_PURPLE, PINK, PINKISH_GREY} from '../../constants/colors'
 import {Actions} from 'react-native-router-flux'
 import {warn} from '../../../third-party/wocky-client/src/logger'
 
-type LocationSettingsType = 'SEND_REQUEST' | 'ACCEPT_REQUEST' | 'ACCEPT_REJECT_REQUEST'
+export type LocationSettingsType = 'SEND_REQUEST' | 'ACCEPT_REQUEST' | 'ACCEPT_REJECT_REQUEST'
 
 export type Props = {
   settingsType: LocationSettingsType
   profile?: IProfile
   displayName?: string
-  onOkPress: (selection: SelectionType) => void
+  onOkPress: (shareType: FriendShareTypeEnum) => void
   onCancelPress?: () => void
 }
 
-type SelectionType = 'always' | 'nearby' | null
-
 const buttonHeight = 50
+
+const {ALWAYS, NEARBY} = FriendShareTypeEnum
 
 const LocationSettingsModal = (props: Props) => {
   const {profile, displayName} = props
-  console.log('& modal', props)
 
   if (!profile && !displayName) {
     warn('Either profile or displayName must be provided')
   }
 
-  const [selection, setSelection] = useState<SelectionType>(null)
+  const [selection, setSelection] = useState<FriendShareTypeEnum | null>(null)
   return (
     <ModalContainer
       onPress={Actions.pop}
@@ -60,13 +59,13 @@ const LocationSettingsModal = (props: Props) => {
       </RText>
       <RadioButton
         text="Always Share Location"
-        onPress={() => setSelection('always')}
-        selected={selection === 'always'}
+        onPress={() => setSelection(ALWAYS)}
+        selected={selection === ALWAYS}
       />
       <RadioButton
         text="Only When I'm Nearby"
-        onPress={() => setSelection('nearby')}
-        selected={selection === 'nearby'}
+        onPress={() => setSelection(NEARBY)}
+        selected={selection === 'NEARBY'}
       />
       <BottomButtons {...props} selection={selection} />
     </ModalContainer>
@@ -95,7 +94,12 @@ const BottomButtons = ({
   selection,
   onOkPress,
   onCancelPress = Actions.pop,
-}: Props & {selection: SelectionType}) => {
+}: Props & {selection: FriendShareTypeEnum | null}) => {
+  const okPress = () => {
+    if (selection) {
+      onOkPress(selection)
+    }
+  }
   if (settingsType === 'ACCEPT_REJECT_REQUEST') {
     return (
       <View style={[{flexDirection: 'row'}, styles.bottom]}>
@@ -110,12 +114,7 @@ const BottomButtons = ({
             Reject
           </RText>
         </TouchableOpacity>
-        <GradientButton
-          onPress={() => {
-            onOkPress(selection)
-          }}
-          style={styles.button}
-        >
+        <GradientButton onPress={okPress} style={styles.button}>
           <RText size={15} color="white">
             Accept
           </RText>
@@ -124,7 +123,7 @@ const BottomButtons = ({
     )
   } else {
     return (
-      <GradientButton onPress={() => onOkPress(selection)} style={[styles.bottom, styles.button]}>
+      <GradientButton onPress={okPress} style={[styles.bottom, styles.button]}>
         <RText size={15} color="white">
           {settingsType === 'ACCEPT_REQUEST' ? 'Accept Friend Request' : 'Send Friend Request'}
         </RText>

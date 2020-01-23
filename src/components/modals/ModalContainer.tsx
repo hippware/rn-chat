@@ -12,7 +12,7 @@ type Props = {
 const ModalContainer = ({children, onPress, style, innerStyle}: Props) => (
   <View style={[styles.container, style]}>
     <TouchableWithoutFeedback onPress={onPress}>
-      <View style={[styles.container, style]}></View>
+      <View style={[styles.container, style]} />
     </TouchableWithoutFeedback>
     <View style={[styles.inner, innerStyle]}>{children}</View>
   </View>
