@@ -195,10 +195,9 @@ class ContactStore {
     })
   }
 
-  async inviteContact(contact: MyContact) {
+  async inviteContact(contact: MyContact, shareType: FriendShareTypeEnum) {
     if (!contact.phoneNumber) return
-    // TODO replace with real shareType
-    await this.wocky!.friendInvite(contact.phoneNumber!.number, FriendShareTypeEnum.DISABLED)
+    await this.wocky!.friendInvite(contact.phoneNumber!.number, shareType)
     contact.smsSent = true
   }
 }

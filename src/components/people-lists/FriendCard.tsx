@@ -6,9 +6,10 @@ import ProfileItem from './ProfileItem'
 import {Actions} from 'react-native-router-flux'
 import {observer} from 'mobx-react'
 import {k} from '../Global'
+import {IProfile} from 'wocky-client'
 
 type Props = {
-  profile: any
+  profile: IProfile
   children?: any
   onPress?: () => void
 }

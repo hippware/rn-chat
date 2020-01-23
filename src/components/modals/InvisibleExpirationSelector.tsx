@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, StyleSheet, Image, TouchableOpacity} from 'react-native'
+import {StyleSheet, Image, TouchableOpacity} from 'react-native'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {RText} from '../common'
@@ -31,25 +31,23 @@ const InvisibleExpirationSelector = observer(() => {
   }
 
   return (
-    <ModalContainer onPress={dismiss}>
-      <View style={styles.inner} pointerEvents="box-none">
-        <Image
-          source={require('../../../images/invisibleIcon.png')}
-          style={{width: 52, height: 52, marginBottom: 25 * k}}
-          resizeMode="contain"
-        />
-        <RText style={styles.text} weight="Light" size={15} color={colors.DARK_GREY}>
-          {'Are you sure you want to go '}
-          <RText size={15} style={styles.bold}>
-            {'invisible'}
-          </RText>
-          {'?\r\nYou will stop seeing visits to your favorite locations.'}
+    <ModalContainer onPress={dismiss} innerStyle={styles.inner}>
+      <Image
+        source={require('../../../images/invisibleIcon.png')}
+        style={{width: 52, height: 52, marginBottom: 25 * k}}
+        resizeMode="contain"
+      />
+      <RText style={styles.text} weight="Light" size={15} color={colors.DARK_GREY}>
+        {'Are you sure you want to go '}
+        <RText size={15} style={styles.bold}>
+          {'invisible'}
         </RText>
-        <ExpireButton onPress={expire(3)} text="3 hours" />
-        <ExpireButton onPress={expire(24)} text="24 hours" />
-        <ExpireButton onPress={expire()} text="Stay Invisible" />
-        <ExpireButton onPress={dismiss} style={{borderWidth: 0}} text="Cancel" />
-      </View>
+        {'?\r\nYou will stop seeing visits to your favorite locations.'}
+      </RText>
+      <ExpireButton onPress={expire(3)} text="3 hours" />
+      <ExpireButton onPress={expire(24)} text="24 hours" />
+      <ExpireButton onPress={expire()} text="Stay Invisible" />
+      <ExpireButton onPress={dismiss} style={{borderWidth: 0}} text="Cancel" />
     </ModalContainer>
   )
 })
@@ -64,7 +62,6 @@ const ExpireButton = ({onPress, text, style}: ButtonProps) => (
 
 const styles = StyleSheet.create({
   inner: {
-    backgroundColor: 'white',
     padding: 25 * k,
     alignItems: 'center',
     borderRadius: 4,

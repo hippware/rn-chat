@@ -9,6 +9,7 @@ import ContactStore, {MyContact} from 'src/store/ContactStore'
 import PersonRow from '../people-lists/PersonRow'
 import {colors} from 'src/constants'
 import {Actions} from 'react-native-router-flux'
+import {Props as LocationSettingsProps} from '../LiveLocation/LocationSettingsModal'
 
 type Props = {
   onPress: () => void
@@ -120,15 +121,14 @@ const ToggleButton = inject('contactStore')(
       ? () => null
       : () =>
           Actions.locationSettingsModal({
-            type: 'SEND_REQUEST',
+            settingsType: 'SEND_REQUEST',
             profile: contact.profile,
             displayName: contact.displayNameSingle,
-            onOkPress: () => {
-              // todo: should we await this result? The UI will reflect the change when invite has passed/failed whether or not we specifically await the result here
-              contactStore!.inviteContact(contact)
+            onOkPress: shareType => {
+              contactStore!.inviteContact(contact, shareType)
               Actions.pop()
             },
-          })
+          } as LocationSettingsProps)
     let isPink: boolean = false
 
     if (relationship === 'NONE') {

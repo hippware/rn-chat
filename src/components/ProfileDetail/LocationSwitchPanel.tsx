@@ -51,15 +51,13 @@ const LocationSwitchPanel = ({onTypeToggle, shareType}: Props) => {
         btnBorderColor={PINK}
         btnBackgroundColor={PINK}
         switchBackgroundColor={WHITE}
-        switchBorderColor={shareType === FriendShareTypeEnum.ALWAYS ? PINKISH_GREY : PINK}
+        switchBorderColor={shareType === ALWAYS ? PINKISH_GREY : PINK}
         switchBorderRadius={16}
         activeFontColor={WHITE}
-        fontColor={shareType === FriendShareTypeEnum.ALWAYS ? DARK_GREY : PINK}
-        disabled={shareType === FriendShareTypeEnum.DISABLED}
+        fontColor={shareType === ALWAYS ? DARK_GREY : PINK}
+        disabled={shareType === DISABLED}
         onValueChange={value => onTypeToggle(value ? NEARBY : ALWAYS)}
-      >
-        {/* {notifications.hasUnreadRequests && <View style={styles.newDot} />} */}
-      </SwitchButton>
+      />
     </View>
   )
 }
