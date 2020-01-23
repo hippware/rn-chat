@@ -44,15 +44,15 @@ const ConnectButton = observer(({profile}: Props) => {
         settingsType: 'SEND_REQUEST',
         profile,
         displayName: profile.firstName,
-        onOkPress: () => {
-          // todo
+        onOkPress: shareType => {
+          setPendingFollowChange(true)
+          profile.invite(shareType).then(() => {
+            track('user_follow', (profile as any).toJSON())
+            setPendingFollowChange(false)
+          })
           Actions.pop()
         },
       } as LocationSettingsProps)
-      return
-      // await profile.invite()
-      track('user_follow', (profile as any).toJSON())
-      setPendingFollowChange(false)
     }
   }
 
