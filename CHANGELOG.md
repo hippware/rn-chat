@@ -10,6 +10,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * @babel/plugin-proposal-object-rest-spread (PR #4685)
   * libphonenumber-js (PR #4687), @babel/runtime (PR #4688)
   * @babel/plugin-proposal-decorators (PR #4689)
+* AppCenter: Do post-build actions based on env vars. (PR #4694)
+* `react-native unlink` x5 (PR #4695)
 
 # 4.36.1 - 2020 Jan 17
 
