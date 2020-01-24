@@ -489,7 +489,7 @@ export function assert(condition, message) {
 }
 
 export function convertLocation(
-  {longitude, latitude, accuracy}: ILocationSnapshot,
+  {longitude, latitude, accuracy, activity, activityConfidence}: ILocationSnapshot,
   device: string
 ) {
   return {
@@ -497,6 +497,8 @@ export function convertLocation(
     lon: longitude,
     lat: latitude,
     accuracy,
+    activity,
+    activityConfidence,
   }
 }
 
