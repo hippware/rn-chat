@@ -49,7 +49,7 @@ import LiveLocationShare from './LiveLocation/LiveLocationShare'
 import  {IHomeStore} from 'src/store/HomeStore';
 import MapOptions from './MapOptions'
 import {IPermissionStore} from 'src/store/PermissionStore'
-import LocationSettingsModal from './LiveLocation/LocationSettingsModal'
+import LocationSettingsModal, {Props as LocationSettingsProps} from './LiveLocation/LocationSettingsModal'
 
 export const iconClose = require('../../images/iconClose.png')
 
@@ -93,6 +93,22 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
       
     }, [])
 
+    const showFriendRequestModal = async (params: any) => {
+      const profile: IProfile = await wocky!.loadProfile(params.params)
+      Actions.locationSettingsModal({
+        settingsType: 'ACCEPT_REJECT_REQUEST',
+        profile,
+        displayName: profile.handle,
+        onOkPress: shareType => {
+          profile.invite(shareType).then(() => {
+            analytics.track('user_follow', (profile as any).toJSON())
+          })
+          Actions.pop()
+        },
+        onCancelPress: Actions.pop
+      } as LocationSettingsProps)
+    }
+
     const onDeepLink = async ({action, params}) => {
       analytics.track('deeplink', {action, params})
       if (Actions[action]) {
@@ -108,8 +124,9 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
                 const user = await wocky!.getProfile(params.userId) as IProfile
                 when(() => !!(user && user.location), () => homeStore!.followUserOnMap(user))
               } else if (action === 'notifications') {
-                wocky!.notifications.setMode(2)
-                Actions.notifications()
+                // friend request
+                // todo: would it be worth switching to a more semantic URL than notifications/?params=123
+                showFriendRequestModal(params)
               } else {
                 Actions[action]({...params, fromDeeplink: true})
                 if (action === 'botDetails' && params.params === 'visitors'){
