@@ -1,8 +1,10 @@
 import {computed, observable, when, action} from 'mobx'
 import {colors} from '../constants'
+import {IProfile} from 'wocky-client'
 
 type NotificationObj = {
   message: string
+  profile?: IProfile
   openLater?: boolean
   autoCloseTimeout?: number
   onClosed?: () => void
@@ -17,19 +19,35 @@ const CLOSED = 4
 
 export default class Notification {
   message: string = ''
+  profile?: IProfile
   @observable lifeCycleIndex: number
   color: string
 
   constructor(n: NotificationObj) {
     this.message = n.message
+    this.profile = n.profile
     this.color = n.color || colors.PINK
     this.lifeCycleIndex = n.openLater ? WAITING : OPENING
     if (n.autoCloseTimeout) {
       setTimeout(this.close, n.autoCloseTimeout)
     }
 
-    when(() => this.isOpening, () => setTimeout(action(() => (this.lifeCycleIndex = OPEN)), 1000))
-    when(() => this.isClosing, () => setTimeout(action(() => (this.lifeCycleIndex = CLOSED)), 1000))
+    when(
+      () => this.isOpening,
+      () =>
+        setTimeout(
+          action(() => (this.lifeCycleIndex = OPEN)),
+          1000
+        )
+    )
+    when(
+      () => this.isClosing,
+      () =>
+        setTimeout(
+          action(() => (this.lifeCycleIndex = CLOSED)),
+          1000
+        )
+    )
     when(() => this.isClosed, n.onClosed || (() => {})) // tslint:disable-line
   }
 
