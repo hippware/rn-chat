@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react'
-import {Animated, StyleSheet} from 'react-native'
+import {Animated, StyleSheet, View} from 'react-native'
 import {inject} from 'mobx-react'
 import {autorun} from 'mobx'
 import {k} from './Global'
-import {RText} from './common'
+import {RText, Avatar} from './common'
 import {colors} from '../constants'
 import NotificationStore from 'src/store/NotificationStore'
 import {observer} from 'mobx-react'
@@ -55,6 +55,11 @@ const NotificationBanner = inject('notificationStore')(
           },
         ]}
       >
+        {current.profile && (
+          <View style={{padding: 10}}>
+            <Avatar profile={current.profile} size={44} hideDot borderWidth={0} />
+          </View>
+        )}
         <RText
           size={15}
           color={colors.addAlpha(colors.WHITE, 0.75)}
@@ -74,6 +79,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -height,
     justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
     backgroundColor: colors.PINK,
     right: 0,
     left: 0,
