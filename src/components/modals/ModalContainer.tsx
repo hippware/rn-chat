@@ -5,13 +5,17 @@ type Props = {
   onPress?: any
   children: any
   style?: ViewStyle
+  innerStyle?: ViewStyle
 }
 
 // translucent black background
-const ModalContainer = ({children, onPress, style}: Props) => (
-  <TouchableWithoutFeedback onPress={onPress}>
-    <View style={[styles.container, style]}>{children}</View>
-  </TouchableWithoutFeedback>
+const ModalContainer = ({children, onPress, style, innerStyle}: Props) => (
+  <View style={[styles.container, style]}>
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View style={[styles.container, style]} />
+    </TouchableWithoutFeedback>
+    <View style={[styles.inner, innerStyle]}>{children}</View>
+  </View>
 )
 
 export default ModalContainer
@@ -19,11 +23,7 @@ export default ModalContainer
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'rgba(0,0,0,0.3)',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    ...StyleSheet.absoluteFillObject,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: '6%',
@@ -34,5 +34,10 @@ const styles = StyleSheet.create({
     },
     shadowRadius: 15,
     shadowOpacity: 1,
+  },
+  inner: {
+    width: '80%',
+    backgroundColor: 'white',
+    overflow: 'hidden',
   },
 })

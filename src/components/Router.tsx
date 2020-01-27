@@ -12,7 +12,7 @@ import Launch from './Launch'
 import SignUp from './SignUp'
 import Home from './Home/Home'
 import MyAccount from './MyAccount'
-import ProfileDetailNew from './ProfileDetail/ProfileDetailNew'
+import ProfileDetailNew from './ProfileDetail/ProfileDetail'
 import ChatListScreen from './Chats/ChatListScreen'
 import ChatScreen from './Chats/ChatScreen'
 import BotDetailsNew from './BotDetails/BotDetailsNew'
@@ -44,12 +44,12 @@ import {navBarStyle} from './styles'
 import IconStore from '../store/IconStore'
 import OnboardingSwiper from './Onboarding/OnboardingSwiper'
 import {IAuthStore} from 'src/store/AuthStore'
-// import LiveLocationCompose from './LiveLocation/LiveLocationCompose'
-import LiveLocationSettings from './LiveLocation/LiveLocationSettings'
+import LiveLocationCompose from './LiveLocation/LiveLocationCompose'
 import LiveLocationShare from './LiveLocation/LiveLocationShare'
 import  {IHomeStore} from 'src/store/HomeStore';
 import MapOptions from './MapOptions'
 import {IPermissionStore} from 'src/store/PermissionStore'
+import LocationSettingsModal from './LiveLocation/LocationSettingsModal'
 
 export const iconClose = require('../../images/iconClose.png')
 
@@ -180,8 +180,7 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
                     <Scene key="friends" component={peopleLists.FriendList} shiftMap backButton />
                     <Scene key="friendSearch" component={FriendSearch} shiftMap backButton/>
                     <Scene key="visitors" component={VisitorList} shiftMap backButton />
-                    {/* <Scene key="liveLocationCompose" component={LiveLocationCompose} shiftMap backButton /> */}
-                    <Scene key="liveLocationSettings" component={LiveLocationSettings} shiftMap backButton />
+                    <Scene key="liveLocationCompose" component={LiveLocationCompose} shiftMap backButton />
                     <Scene key="chats" component={ChatListScreen} title="Messages" shiftMap backButton />
                     <Scene key="mapOptions" component={MapOptions} shiftMap backButton />
                     <Scene key="bottomMenu" component={BottomMenu} backButton hasPreview shiftMap />
@@ -213,6 +212,7 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
             <Scene key="sharePresencePrimer" component={SharePresencePrimer} />
             <Scene key="invisibleExpirationSelector" component={InvisibleExpirationSelector} />
             <Scene key="geoHeaderPrimer" component={GeoHeaderPrimer} />
+            <Scene key="locationSettingsModal" component={LocationSettingsModal} />
           </Lightbox>
         </Tabs>
       </Router>

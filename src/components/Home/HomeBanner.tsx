@@ -61,7 +61,12 @@ const SeeAllFriends = () => {
   )
 }
 
-const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
+const HomeBanner = inject(
+  'wocky',
+  'analytics',
+  'homeStore',
+  'navStore'
+)(
   observer(({enabled, wocky, navStore, homeStore, analytics}: Props) => {
     const [yOffset] = useState(new Animated.Value(0))
 

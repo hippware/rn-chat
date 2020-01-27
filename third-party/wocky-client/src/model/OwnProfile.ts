@@ -1,9 +1,8 @@
 import {types, getSnapshot, flow, Instance, getRoot} from 'mobx-state-tree'
-import {Profile, IProfile} from './Profile'
+import {Profile, IProfile, ProfilePaginableList, FriendShareTypeEnum} from './Profile'
 import {createUpdatable} from './Updatable'
 import {createUploadable} from './Uploadable'
 import {InvitationPaginableList, Invitation} from './Invitation'
-import {ContactPaginableList, Contact} from './Contact'
 import {BlockedUserPaginableList, BlockedUser} from './BlockedUser'
 import {LocationSharePaginableList, LocationShare} from './LocationShare'
 import ClientData from './ClientData'
@@ -21,7 +20,7 @@ export const OwnProfile = types
       phoneNumber: types.maybeNull(types.string),
       sentInvitations: types.optional(InvitationPaginableList, {}),
       receivedInvitations: types.optional(InvitationPaginableList, {}),
-      friends: types.optional(ContactPaginableList, {}),
+      friends: types.optional(ProfilePaginableList, {}),
       blocked: types.optional(BlockedUserPaginableList, {}),
       locationShares: types.optional(LocationSharePaginableList, {}),
       locationSharers: types.optional(LocationSharePaginableList, {}),
@@ -46,7 +45,6 @@ export const OwnProfile = types
     },
     get sortedFriends(): IProfile[] {
       return self.friends.list
-        .map(contact => contact.user)
         .filter(x => x.handle)
         .slice()
         .sort((a, b) => {
@@ -57,17 +55,15 @@ export const OwnProfile = types
       function compare(a: boolean, b: boolean) {
         return b === a ? 0 : b ? 1 : -1
       }
-      return self.friends.list
-        .map(({user}) => user)
-        .sort((a: IProfile, b: IProfile) => {
-          return (
-            compare(!!a.unreadCount, !!b.unreadCount) ||
-            (!!a.unreadCount && b.unreadTime - a.unreadTime) ||
-            compare(a.sharesLocation, b.sharesLocation) ||
-            (a.sharesLocation && a.distance - b.distance) ||
-            a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
-          )
-        })
+      return self.friends.list.sort((a: IProfile, b: IProfile) => {
+        return (
+          compare(!!a.unreadCount, !!b.unreadCount) ||
+          (!!a.unreadCount && b.unreadTime - a.unreadTime) ||
+          compare(a.sharesLocation, b.sharesLocation) ||
+          (a.sharesLocation && a.distance - b.distance) ||
+          a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
+        )
+      })
     },
     get sortedBlocked(): IProfile[] {
       return self.blocked.list
@@ -80,14 +76,9 @@ export const OwnProfile = types
     },
   }))
   .actions(self => ({
-    addFriend: (profile: IProfile, createdAt: Date) => {
-      self.friends.add(
-        Contact.create({
-          id: profile.id,
-          createdAt,
-          user: profile.id,
-        })
-      )
+    addFriend: (profile: IProfile) => {
+      self.friends.add(profile)
+      self.shareType = FriendShareTypeEnum.DISABLED // TODO pass it as parameter to addFriend?
       self.receivedInvitations.remove(profile.id)
       self.sentInvitations.remove(profile.id)
       profile.setFriend(true)
@@ -136,11 +127,6 @@ export const OwnProfile = types
       )
       profile.receivedInvite()
     },
-    cancelAllLocationShares: flow(function*() {
-      yield self.transport.userLocationCancelAllShares()
-      self.locationShares.list.forEach(share => share.sharedWith.setReceivesLocationShare(false))
-      self.locationShares.refresh()
-    }),
   }))
   .actions(self => {
     const timers: any[] = []
@@ -223,9 +209,7 @@ export const OwnProfile = types
       sentInvitations.forEach(({createdAt, user}) =>
         self.sendInvitation(self.service.profiles.get(user.id, user), createdAt)
       )
-      friends.forEach(({createdAt, user, name}) =>
-        self.addFriend(self.service.profiles.get(user.id, user), createdAt)
-      )
+      friends.forEach(profile => self.addFriend(self.service.profiles.get(profile.id, profile)))
       blocked.forEach(({createdAt, user}) => {
         user.isBlocked = true
         self.addBlocked(self.service.profiles.get(user.id, user), createdAt)

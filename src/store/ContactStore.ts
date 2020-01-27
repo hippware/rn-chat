@@ -1,5 +1,5 @@
 import {observable, action, computed} from 'mobx'
-import {IWocky, IProfile} from 'wocky-client'
+import {IWocky, IProfile, FriendShareTypeEnum} from 'wocky-client'
 import RNContacts, {Contact, PhoneNumber} from 'react-native-contacts'
 import {log} from 'src/utils/logger'
 import {PermissionsAndroid, Platform} from 'react-native'
@@ -55,6 +55,11 @@ export class MyContact {
     if (this.contact.givenName) parts.push(this.contact.givenName)
     if (this.contact.familyName) parts.push(this.contact.familyName)
     return parts.join(' ').trim()
+  }
+
+  @computed
+  get displayNameSingle(): string {
+    return this.displayName.split(' ')[0]
   }
 
   @action
@@ -190,9 +195,9 @@ class ContactStore {
     })
   }
 
-  async inviteContact(contact: MyContact) {
+  async inviteContact(contact: MyContact, shareType: FriendShareTypeEnum) {
     if (!contact.phoneNumber) return
-    await this.wocky!.friendSmsInvite(contact.phoneNumber!.number)
+    await this.wocky!.friendInvite(contact.phoneNumber!.number, shareType)
     contact.smsSent = true
   }
 }

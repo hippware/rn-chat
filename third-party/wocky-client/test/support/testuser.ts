@@ -106,7 +106,7 @@ export async function fillAndSaveProfile(user: IWocky, firstName: string, lastNa
     firstName,
     lastName,
     // @hippware.com is useful for debugging
-    email: handle + (process.env.WOCKY_VERBOSE ? '@hippware.com' : '@example.com'),
+    email: handle + '@hippware.com',
   })
   await user.profile!.save()
 }

@@ -1,7 +1,7 @@
 import {types, getParent, getEnv, flow, Instance} from 'mobx-state-tree'
 import {reaction, IReactionDisposer, autorun} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
-import {IProfile, IProfilePartial} from '../model/Profile'
+import {IProfile, IProfilePartial, FriendShareTypeEnum} from '../model/Profile'
 import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
 import Timer from './Timer'
@@ -283,19 +283,11 @@ export const Wocky = types
           }
         }
       }),
-      _onRosterItem({
-        user,
-        relationship,
-        createdAt,
-      }: {
-        user: IProfile
-        relationship: string
-        createdAt: Date
-      }) {
+      _onRosterItem({user, relationship}: {user: IProfile; relationship: string}) {
         const profile = self.profiles.get(user.id, user)
         if (relationship === 'FRIEND') {
           profile.setFriend(true)
-          self.profile!.addFriend(profile, createdAt)
+          self.profile!.addFriend(profile)
         }
         if (relationship === 'NONE') {
           profile.setFriend(false)
@@ -413,11 +405,8 @@ export const Wocky = types
       //   self.notifications.list.map(n => n.id)
       // )
     }),
-    userInviteMakeCode(): Promise<string> {
-      return self.transport.userInviteMakeCode()
-    },
-    userInviteRedeemCode(code: string): Promise<void> {
-      return self.transport.userInviteRedeemCode(code)
+    userInviteRedeemCode(code: string, shareType?: FriendShareTypeEnum): Promise<void> {
+      return self.transport.userInviteRedeemCode(code, shareType)
     },
     userBulkLookup: flow(function*(phoneNumbers: string[]) {
       yield waitFor(() => self.connected)
@@ -435,8 +424,8 @@ export const Wocky = types
 
       return data
     }) as (phoneNumbers: string[]) => Promise<any[]>,
-    friendSmsInvite: (phoneNumber: string): Promise<void> => {
-      return self.transport.friendSmsInvite(phoneNumber)
+    friendInvite: (phoneNumber: string, shareType: FriendShareTypeEnum): Promise<void> => {
+      return self.transport.userInviteSend(phoneNumber, shareType)
     },
     triggerSilentPush(userId: string): Promise<void> {
       return self.transport.triggerSilentPush(userId)
@@ -489,7 +478,11 @@ export const Wocky = types
                 createLocation({...location, createdAt: iso8601toDate(location.capturedAt)})
               )
             } else {
-              self.bugsnagNotify(new Error('Unable to setLocation due to profile not found'), 'wocky_sharedLocation_profile_not_found', {id, location})
+              self.bugsnagNotify(
+                new Error('Unable to setLocation due to profile not found'),
+                'wocky_sharedLocation_profile_not_found',
+                {id, location}
+              )
             }
           }
         ),

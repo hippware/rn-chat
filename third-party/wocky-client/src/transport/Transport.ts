@@ -6,10 +6,11 @@ import {observable, action} from 'mobx'
 import {create as createAbsintheSocket} from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
-import {IProfilePartial} from '../model/Profile'
+import {IProfilePartial, FriendShareTypeEnum, IFriendShareConfig} from '../model/Profile'
 import {ILocationSnapshot, IBotPost} from '..'
 import {IBot, IBotIn} from '../model/Bot'
 import {ILocation} from '../model/Location'
+
 const introspectionQueryResultData = require('./fragmentTypes.json')
 const TIMEOUT = 10000
 import {
@@ -175,6 +176,11 @@ export class Transport {
                   friends(first:100) {
                     edges {
                       node {
+                        shareConfig {
+                          nearbyDistance
+                          nearbyCooldown
+                        }
+                        shareType
                         createdAt
                         user {
                           ${PROFILE_PROPS}
@@ -238,11 +244,10 @@ export class Transport {
           user: convertProfile(recipient),
         })
       )
-      result.friends = res.data.user.friends.edges.map(({node: {createdAt, user, name}}) => ({
-        createdAt: iso8601toDate(createdAt).getTime(),
-        name,
-        user: convertProfile(user),
-      }))
+      result.friends = res.data.user.friends.edges.map(({node: {user, shareType, shareConfig}}) =>
+        convertProfile({...user, shareType, shareConfig})
+      )
+
       result.blocked = res.data.user.blocks.edges.map(({node: {createdAt, user}}) => ({
         createdAt: iso8601toDate(createdAt).getTime(),
         user: convertProfile(user),
@@ -350,51 +355,6 @@ export class Transport {
         }
       `,
       variables: {...params, device: this.resource},
-    })
-  }
-
-  async userLocationShare(userId: string, expiresAt: Date): Promise<void> {
-    return this.voidMutation({
-      mutation: gql`
-        mutation userLocationLiveShare(
-          $userId: String!
-          $expiresAt: DateTime!
-        ) {
-          userLocationLiveShare(
-            input: {expiresAt: $expiresAt, sharedWithId: $userId}
-          ) {
-            ${VOID_PROPS}
-          }
-        }
-      `,
-      variables: {userId, expiresAt},
-    })
-  }
-  async userLocationCancelShare(userId: string): Promise<void> {
-    return this.voidMutation({
-      mutation: gql`
-        mutation userLocationCancelShare(
-          $userId: String!
-        ) {
-          userLocationCancelShare(
-            input: {sharedWithId: $userId}
-          ) {
-            ${VOID_PROPS}
-          }
-        }
-      `,
-      variables: {userId},
-    })
-  }
-  async userLocationCancelAllShares() {
-    return this.voidMutation({
-      mutation: gql`
-        mutation userLocationCancelAllShares {
-          userLocationCancelAllShares {
-            ${VOID_PROPS}
-          }
-        }
-      `,
     })
   }
 
@@ -688,7 +648,10 @@ export class Transport {
     return {method, headers: {header: headers}, url: uploadUrl, reference_url: referenceUrl, file}
   }
 
-  async friendInvite(userId: string): Promise<void> {
+  async friendInvite(
+    userId: string,
+    shareType: FriendShareTypeEnum = FriendShareTypeEnum.DISABLED
+  ): Promise<void> {
     return this.voidMutation({
       mutation: gql`
         mutation friendInvite($input: FriendInviteInput!) {
@@ -697,7 +660,42 @@ export class Transport {
           }
         }
       `,
-      variables: {input: {userId}},
+      variables: {input: {userId, shareType}},
+    })
+  }
+
+  async friendShareUpdate(
+    userId: string,
+    location: ILocation | null = null,
+    shareType: FriendShareTypeEnum = FriendShareTypeEnum.DISABLED,
+    shareConfig?: IFriendShareConfig
+  ): Promise<void> {
+    return this.voidMutation({
+      mutation: gql`
+        mutation friendShareUpdate($input: FriendShareUpdateInput!) {
+          friendShareUpdate(input: $input) {
+            messages {
+              code
+              field
+              message
+            }
+            successful
+            result {
+              user {
+                id
+                handle
+              }
+              createdAt
+              shareConfig {
+                nearbyDistance
+                nearbyCooldown
+              }
+              shareType
+            }
+          }
+        }
+      `,
+      variables: {input: {userId, location, shareType, shareConfig}},
     })
   }
 
@@ -1048,31 +1046,17 @@ export class Transport {
     return res.data.users.map(u => convertProfile(u))
   }
 
-  async userInviteMakeCode(): Promise<string> {
-    const res = await this.client!.mutate({
-      mutation: gql`
-        mutation userInviteMakeCode {
-          userInviteMakeCode {
-            result
-            successful
-          }
-        }
-      `,
-    })
-    return (res.data as any).userInviteMakeCode.result
-  }
-
-  async userInviteRedeemCode(code: string): Promise<void> {
+  async userInviteRedeemCode(code: string, shareType?: FriendShareTypeEnum): Promise<void> {
     await waitFor(() => this.connected)
     return this.voidMutation({
       mutation: gql`
-        mutation userInviteRedeemCode($code: UserInviteRedeemCodeInput!) {
-          userInviteRedeemCode(input: $code) {
+        mutation userInviteRedeemCode($input: UserInviteRedeemCodeInput!) {
+          userInviteRedeemCode(input: $input) {
             ${VOID_PROPS}
           }
         }
       `,
-      variables: {code: {code}},
+      variables: {input: {code, shareType}},
     })
   }
 
@@ -1099,20 +1083,16 @@ export class Transport {
     return results ? results.map(r => ({...r, user: r.user ? convertProfile(r.user) : null})) : []
   }
 
-  async friendSmsInvite(phoneNumber: string): Promise<void> {
+  async userInviteSend(phoneNumber: string, shareType: FriendShareTypeEnum): Promise<void> {
     return this.voidMutation({
       mutation: gql`
-        mutation friendBulkInvite(
-          $phoneNumbers: [String!]
-        ) {
-          friendBulkInvite(
-            input: {phoneNumbers: $phoneNumbers}
-          ) {
+        mutation userInviteSend($input: UserInviteSendInput!) {
+          userInviteSend(input: $input) {
             ${VOID_PROPS}
           }
         }
       `,
-      variables: {phoneNumbers: [phoneNumber]},
+      variables: {input: {phoneNumber, shareType}},
     })
   }
 
@@ -1228,7 +1208,6 @@ export class Transport {
       query: gql`
         subscription subscribeContacts {
           contacts {
-            createdAt
             relationship
             user {
               id
@@ -1251,7 +1230,6 @@ export class Transport {
         this.rosterItem = {
           user: convertProfile({...user, _accessedAt: createdAt}),
           relationship,
-          createdAt: iso8601toDate(createdAt).getTime(),
         }
       }),
     })

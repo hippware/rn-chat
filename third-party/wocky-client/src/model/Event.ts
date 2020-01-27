@@ -21,11 +21,6 @@ export const Event = types
       yield self.transport.notificationDelete(self.id)
       parent.remove(self.id)
     }),
-    removeAfterDelay: flow(function*(seconds: number) {
-      const parent: any = getParent(getParent(self))
-      yield self.transport.notificationDelete(self.id)
-      setTimeout(() => parent.remove(self.id), seconds * 1000)
-    }),
     process: () => {
       // do nothing
     },

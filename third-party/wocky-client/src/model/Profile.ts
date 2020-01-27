@@ -12,6 +12,24 @@ import {Address} from './Address'
 import {when} from 'mobx'
 import _ from 'lodash'
 
+export enum FriendShareTypeEnum {
+  ALWAYS = 'ALWAYS',
+  DISABLED = 'DISABLED',
+  NEARBY = 'NEARBY',
+}
+
+export const FriendShareType = types.enumeration([...Object.values(FriendShareTypeEnum)])
+
+export const FriendShareConfig = types.model({
+  nearbyCooldown: types.integer,
+  nearbyDistance: types.integer,
+})
+
+// probably we don't need it for now
+// export const DefaultFriendShareConfig = {nearbyCooldown: 100, nearbyDistance: 500}
+
+export interface IFriendShareConfig extends SnapshotIn<typeof FriendShareConfig> {}
+
 export const Profile = types
   .compose(
     Base,
@@ -34,6 +52,8 @@ export const Profile = types
       sharesLocation: false, // pseudo-calculated property for correct FlatList rendering
       receivesLocationShare: false, // pseudo-calculated property for correct FlatList rendering
       roles: types.optional(types.array(types.string), []),
+      shareType: types.maybe(FriendShareType),
+      shareConfig: types.maybe(FriendShareConfig),
       subscribedBots: types.optional(
         types.late((): IAnyModelType => BotPaginableList),
         {}
@@ -118,16 +138,13 @@ export const Profile = types
             self.statusUpdatedAt = data.statusUpdatedAt
           }
         },
-        invite: flow(function*() {
+        invite: flow(function*(shareType: FriendShareTypeEnum = FriendShareTypeEnum.DISABLED) {
           yield waitFor(() => self.connected)
           self.receivedInvite()
           if (self.isFriend) {
             // remove from receivedInvitations and add to friends
             self.service.profile.receivedInvitations.remove(self.id)
-            self.service.profile.friends.addToTop({
-              id: self.id,
-              user: self.service.profiles.get(self.id),
-            })
+            self.service.profile.friends.addToTop(self)
           } else {
             self.service.profile.sentInvitations.addToTop({
               id: self.id,
@@ -135,7 +152,8 @@ export const Profile = types
               sender: self.service.profiles.get(self.service.username),
             })
           }
-          yield self.transport.friendInvite(self.id)
+          self.shareType = shareType
+          yield self.transport.friendInvite(self.id, shareType)
         }),
         unfriend: flow(function*() {
           yield waitFor(() => self.connected)
@@ -145,13 +163,14 @@ export const Profile = types
           self.setFriend(false)
           yield self.transport.friendDelete(self.id)
         }),
-        shareLocation: flow(function*(expiresAt: Date) {
-          yield self.transport.userLocationShare(self.id, expiresAt)
-          self.service.profile.addLocationShare(self, new Date(), expiresAt)
-        }),
-        cancelShareLocation: flow(function*() {
-          yield self.transport.userLocationCancelShare(self.id)
-          self.service.profile.removeLocationShare(self)
+        // cannot define shareType typing because of circular dependency between Profile and Friend
+        shareLocationUpdate: flow(function*(
+          shareType?: FriendShareTypeEnum,
+          shareConfig?: IFriendShareConfig
+        ) {
+          yield self.transport.friendShareUpdate(self.id, self.location, shareType, shareConfig)
+          self.shareType = shareType
+          self.shareConfig = shareConfig
         }),
         block: flow(function*() {
           yield self.transport.block(self.id)
