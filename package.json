@@ -107,7 +107,7 @@
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.8.3",
     "@jest/reporters": "^24.8.0",
-    "@storybook/react-native": "^5.3.1",
+    "@storybook/react-native": "^5.3.9",
     "@types/detox": "^12.8.2",
     "@types/jest": "^24.9.0",
     "@types/lodash": "^4.14.149",
