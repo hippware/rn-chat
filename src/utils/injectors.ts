@@ -32,7 +32,7 @@ type AllStores = {
 
 const getStores = (): AllStores => React.useContext(MobXProviderContext)
 
-export function useWocky() {
+export function useWocky(): IWocky {
   const {wocky} = getStores()
   return useObserver(() => wocky)
 }
