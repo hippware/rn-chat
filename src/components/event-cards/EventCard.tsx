@@ -1,7 +1,13 @@
 import React from 'react'
 // import EventBotShareCard from './EventBotShareCard'
 import {getType} from 'mobx-state-tree'
-import {IEvent, IEventBotInvite, IEventBotPost, IEventBotGeofence} from 'wocky-client'
+import {
+  IEvent,
+  IEventBotInvite,
+  IEventBotPost,
+  IEventBotGeofence,
+  FriendShareTypeEnum,
+} from 'wocky-client'
 import EventFriendInviteRequestCard from './EventFriendInviteRequestCard'
 import {observer} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
@@ -120,8 +126,7 @@ const EventLocationShareCard = observer(
               text="SHARING LOCATION"
               style={{width: 160, height: 29, borderRadius: 4, marginVertical: 4}}
               textStyle={{fontSize: 12, color: 'white'}}
-              // onPress={() => Actions.liveLocationCompose({profile: sharedWith})}
-              onPress={() => sharedWith.cancelShareLocation()}
+              onPress={() => sharedWith.shareLocationUpdate(FriendShareTypeEnum.DISABLED)}
             />
           ) : (
             <Button
