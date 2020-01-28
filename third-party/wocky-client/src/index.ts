@@ -17,6 +17,7 @@ export {
   IEventFriendInvite,
   IEventFriendInviteData,
 } from './model/EventFriendInvite'
+export {EventLocationShare, IEventLocationShareData} from './model/EventLocationShare'
 export {EventBotInvite, IEventBotInvite} from './model/EventBotInvite'
 export {File, IFile, FileRef} from './model/File'
 export {IFileService} from './transport/FileService'

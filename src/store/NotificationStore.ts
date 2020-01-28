@@ -1,12 +1,15 @@
 import {computed, observable, reaction, action} from 'mobx'
 import {IObservableArray} from 'mobx'
 import {colors} from '../constants'
-import {IWocky} from 'wocky-client'
+import {getType} from 'mobx-state-tree'
+import {IWocky, EventLocationShare} from 'wocky-client'
 import Notification from './Notification'
+import {IEventLocationShare} from 'third-party/wocky-client/src/model/EventLocationShare'
 
 export class NotificationStore {
   @observable stack: IObservableArray<Notification> = observable([])
   disposer?: () => void
+  disposer2?: () => void
   started: boolean = false
   wocky: IWocky
   offlineNotification?: Notification
@@ -21,7 +24,21 @@ export class NotificationStore {
     if (this.started) return
     this.finish()
     this.started = true
+    const self = this
 
+    // observer & show 'friendship' notification
+    this.disposer2 = reaction(
+      () => this.wocky.notification,
+      () => {
+        if (getType(self.wocky.notification!).name === EventLocationShare.name) {
+          const profile = (self.wocky.notification as IEventLocationShare)!.sharedWith
+          self.flash(`${profile.handle} and you are sharing location.`, {
+            autoCloseTimeout: 3000,
+            profile,
+          })
+        }
+      }
+    )
     // initial check after timeout. Delay = debounce.
     this.timeout = setTimeout(() => {
       this.disposer = reaction(
@@ -54,6 +71,7 @@ export class NotificationStore {
   @action
   finish = () => {
     if (this.disposer) this.disposer()
+    if (this.disposer2) this.disposer2()
     if (this.timeout) {
       clearTimeout(this.timeout)
       this.timeout = undefined
@@ -90,8 +108,8 @@ export class NotificationStore {
     return notification
   }
 
-  flash = (message: string): Notification => {
-    return this.show(message, {autoCloseTimeout: 2000})
+  flash = (message: string, options = {}): Notification => {
+    return this.show(message, {autoCloseTimeout: 2000, ...options})
   }
 }
 

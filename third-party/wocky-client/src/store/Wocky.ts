@@ -9,7 +9,7 @@ import {IBot, BotPaginableList} from '../model/Bot'
 import {BotPost, IBotPost} from '../model/BotPost'
 import {Chats} from '../model/Chats'
 import {iso8601toDate, processMap, waitFor} from '../transport/utils'
-import {EventList, createEvent} from '../model/EventList'
+import {EventList, createEvent, EventEntity, IEventEntity} from '../model/EventList'
 import _ from 'lodash'
 import {RequestType} from '../model/PaginableList'
 import {ILocation, ILocationSnapshot, createLocation} from '../model/Location'
@@ -31,8 +31,14 @@ export const Wocky = types
       chats: types.optional(Chats, {}),
       localBots: types.optional(BotPaginableList, {}),
       timer: types.optional(Timer, {}),
+      notification: types.maybe(types.reference(EventEntity)), // allow the app to observe new notifications
     })
   )
+  .postProcessSnapshot(snapshot => {
+    const res: any = {...snapshot}
+    delete res.notification
+    return res
+  })
   .named(SERVICE_NAME)
   .actions(self => ({
     bugsnagNotify: (e: Error, name?: string, extra?: {[name: string]: any}): void => {
@@ -294,8 +300,13 @@ export const Wocky = types
           self.profile!.friends.remove(user.id)
         }
       },
+      setNotification(event: IEventEntity | undefined) {
+        if (event) {
+          self.notification = event
+        }
+      },
       // _onNotification: flow(function*(data: any) {
-      _onNotification(data: any, pastEvent: boolean = false) {
+      _onNotification(data: any, pastEvent: boolean = false): IEventEntity | undefined {
         // if (!version) {
         //   throw new Error('No version for notification:' + JSON.stringify(data))
         // }
@@ -340,6 +351,7 @@ export const Wocky = types
           if (!pastEvent) {
             item.process()
           }
+          return item
         } catch (e) {
           log('ONNOTIFICATION ERROR: ' + e.message)
         }
@@ -398,7 +410,10 @@ export const Wocky = types
         // there are potentially more new notifications so purge the old ones (to ensure paging works as expected)
         self.notifications.refresh()
       }
-      list.reverse().forEach(e => self._onNotification(e, true))
+      list.reverse().forEach(e => {
+        self._onNotification(e, true)
+      })
+
       self.notifications.cursor = self.notifications.last && self.notifications.last.id
       // console.log(
       //   '& notifications list after initial load',
@@ -493,7 +508,8 @@ export const Wocky = types
         reaction(
           () => self.transport.notification,
           data => {
-            self._onNotification(data)
+            const event = self._onNotification(data)
+            self.setNotification(event)
           }
         ),
         reaction(() => self.transport.rosterItem, self._onRosterItem),

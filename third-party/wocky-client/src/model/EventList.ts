@@ -64,10 +64,7 @@ export function createEvent(params: any, service: any): IEventEntity {
 }
 
 export const EventList = types
-  .compose(
-    Base,
-    createPaginable<IEventEntity>(EventEntity, 'EventList')
-  )
+  .compose(Base, createPaginable<IEventEntity>(EventEntity, 'EventList'))
   .postProcessSnapshot(snapshot => {
     if (snapshot.result.length > 20) {
       const result = snapshot.result.slice(0, 20)
