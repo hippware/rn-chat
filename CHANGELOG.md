@@ -12,6 +12,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * @babel/plugin-proposal-decorators (PR #4689)
 * AppCenter: Do post-build actions based on env vars. (PR #4694)
 * `react-native unlink` x5 (PR #4695)
+* API changes for new sharing model (#4412, PR #4636)
+* Add friend -> location sharing request modal (#4658, PR #4663, PR #4693)
+* Add invite API, remove obsolete methods and UI (PR #4671)
+* Profile detail: Enable location sharing settings (#4657)
+* After accepting friend request select sharing level (#4660)
 
 # 4.36.1 - 2020 Jan 17
 
