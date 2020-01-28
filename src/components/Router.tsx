@@ -34,7 +34,6 @@ import LocationGeofenceWarning from './modals/LocationGeofenceWarning'
 import LocationWarning from './modals/LocationWarning'
 import SharePresencePrimer from './modals/SharePresencePrimer'
 import InvisibleExpirationSelector from './modals/InvisibleExpirationSelector'
-import GeoHeaderPrimer from './modals/GeoHeaderPrimer'
 import CreationHeader from './Home/CreationHeader'
 import BotCompose, {backAction} from './BotCompose/BotCompose'
 import EditNote from './BotCompose/EditNote'
@@ -211,7 +210,6 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
             <Scene key="geofenceWarning" component={LocationGeofenceWarning} />
             <Scene key="sharePresencePrimer" component={SharePresencePrimer} />
             <Scene key="invisibleExpirationSelector" component={InvisibleExpirationSelector} />
-            <Scene key="geoHeaderPrimer" component={GeoHeaderPrimer} />
             <Scene key="locationSettingsModal" component={LocationSettingsModal} />
           </Lightbox>
         </Tabs>
