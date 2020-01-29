@@ -12,7 +12,7 @@ type Channel = {
   keyAndroid: string
 }
 
-const keyProp = Platform.select({android: 'keyAndroid', ios: 'keyIOS'})
+const keyProp = Platform.select({android: 'keyAndroid', ios: 'keyIOS'})!
 
 const CodePushStore = types
   .model('CodePushStore', {

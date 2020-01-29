@@ -33,7 +33,7 @@ export async function checkLocation() {
 
 export async function checkLocationWhenInUse() {
   const res: any = await ch(
-    Platform.select({ios: IOS.LOCATION_WHEN_IN_USE, android: ANDROID.ACCESS_FINE_LOCATION})
+    Platform.select({ios: IOS.LOCATION_WHEN_IN_USE, android: ANDROID.ACCESS_FINE_LOCATION})!
   )
   return [GRANTED, UNAVAILABLE].includes(res)
 }
