@@ -10,7 +10,7 @@ import {
 import {PreviewButton} from '../BottomSceneStatic'
 import {height} from '../Global'
 import {Actions} from 'react-native-router-flux'
-import NavBarHeader, {NavConfig, FULL_SCREEN_POS} from '../custom-navigators/NavBarHeaderNew'
+import NavBarHeader, {NavConfig, FULL_SCREEN_POS} from '../custom-navigators/NavBarHeader'
 import {keyboardShowListenerName, keyboardHideListenerName} from './withKeyboardHOC'
 import {useHomeStore} from '../../utils/injectors'
 import {observer} from 'mobx-react'
