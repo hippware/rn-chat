@@ -116,7 +116,7 @@
     "@types/react-native": "^0.61.5",
     "@types/react-test-renderer": "^16.9.1",
     "appcenter-cli": "^2.3.3",
-    "babel-jest": "^24.9.0",
+    "babel-jest": "^25.1.0",
     "bugsnag-sourcemaps": "^1.2.2",
     "husky": "^4.0.0",
     "jest": "^24.9.0",
