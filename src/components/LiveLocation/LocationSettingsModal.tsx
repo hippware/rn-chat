@@ -79,11 +79,17 @@ const off = require('../../../images/radioUnselected.png')
 const radioSize = 22
 
 const RadioButton = ({text, selected, onPress}) => (
-  <View style={{flexDirection: 'row', width: '75%', marginBottom: 25}}>
-    <TouchableOpacity onPress={onPress} style={{marginRight: 15}}>
+  <View
+    style={{
+      flexDirection: 'row',
+      width: 190,
+      marginBottom: 25,
+    }}
+  >
+    <TouchableOpacity onPress={onPress}>
       <Image source={selected ? on : off} style={{height: radioSize, width: radioSize}} />
     </TouchableOpacity>
-    <RText size={15} color={DARK_PURPLE}>
+    <RText size={15} color={DARK_PURPLE} style={{marginLeft: 10}}>
       {text}
     </RText>
   </View>
