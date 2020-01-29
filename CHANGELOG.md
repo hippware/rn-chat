@@ -6,10 +6,13 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Update: typescript (PR #4676), metro-react-native-babel-preset (PR #4677)
   * @babel/preset-typescript (PR #4679), @babel/core (PR #4680)
-  * @babel/node (PR #4682), @types/jest (PR #4684)
+  * @babel/node (PR #4682), react-native-reanimated (PR #4683)
+  * @types/jest (PR #4684)
   * @babel/plugin-proposal-object-rest-spread (PR #4685)
   * libphonenumber-js (PR #4687), @babel/runtime (PR #4688)
   * @babel/plugin-proposal-decorators (PR #4689)
+  * @types/react (PR #4699), mobx (PR #4700), phoenix (PR #4701)
+  * @storybook/react-native (PR #4702), @types/react-native (PR #4711)
 * AppCenter: Do post-build actions based on env vars. (PR #4694)
 * `react-native unlink` x5 (PR #4695)
 * API changes for new sharing model (#4412, PR #4636)
@@ -17,6 +20,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Add invite API, remove obsolete methods and UI (PR #4671)
 * Profile detail: Enable location sharing settings (#4657)
 * After accepting friend request select sharing level (#4660)
+* Deep link on friend request (#4659)
+* Invite button should invite new users (#4697)
+* "Sharing location" toast message (#4661)
 
 # 4.36.1 - 2020 Jan 17
 
