@@ -13,6 +13,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * @babel/plugin-proposal-decorators (PR #4689)
   * @types/react (PR #4699), mobx (PR #4700), phoenix (PR #4701)
   * @storybook/react-native (PR #4702), @types/react-native (PR #4711)
+  * react-native-image-crop-picker (PR #4713)
 * AppCenter: Do post-build actions based on env vars. (PR #4694)
 * `react-native unlink` x5 (PR #4695)
 * API changes for new sharing model (#4412, PR #4636)
@@ -23,6 +24,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Deep link on friend request (#4659)
 * Invite button should invite new users (#4697)
 * "Sharing location" toast message (#4661)
+* Modal cleanup (PR #4707)
+* [dev] Tidy up 'New' components (#4668)
 
 # 4.36.1 - 2020 Jan 17
 
