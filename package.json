@@ -118,7 +118,7 @@
     "appcenter-cli": "^2.3.3",
     "babel-jest": "^25.1.0",
     "bugsnag-sourcemaps": "^1.2.2",
-    "husky": "^4.0.0",
+    "husky": "^4.2.1",
     "jest": "^24.9.0",
     "jetifier": "^1.6.5",
     "jsrsasign": "^8.0.12",
