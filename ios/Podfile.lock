@@ -415,11 +415,11 @@ PODS:
     - React
   - RNDeviceInfo (5.4.1):
     - React
-  - RNFirebase (5.5.6):
+  - RNFirebase (5.6.0):
     - Firebase/Core
     - React
-    - RNFirebase/Crashlytics (= 5.5.6)
-  - RNFirebase/Crashlytics (5.5.6):
+    - RNFirebase/Crashlytics (= 5.6.0)
+  - RNFirebase/Crashlytics (5.6.0):
     - Crashlytics
     - Fabric
     - Firebase/Core
@@ -751,7 +751,7 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: 44395cb9c7c1523104c2b499eb426ef7aff82bca
   RNCPushNotificationIOS: 4a5c5d92ce51227f8c3409b0b7542382c0b5f008
   RNDeviceInfo: 0e40d9a9031252d2525d8b69a4b3fa8689efcea4
-  RNFirebase: ac0de8b24c6f91ae9459575491ed6a77327619c6
+  RNFirebase: 37daa9a346d070f9f6ee1f3b4aaf4c8e3b1d5d1c
   RNFS: a8fbe7060fa49157d819466404794ad9c58e58cf
   RNGestureHandler: 02905abe54e1f6e59c081a10b4bd689721e17aa6
   RNImageCropPicker: cf129d17e042ce3e96fb9ada967c28f21f977c82

@@ -7,6 +7,7 @@ buildscript {
         targetSdkVersion = 28
         googlePlayServicesLocationVersion = "17.0.0"
         supportLibVersion = "1.0.2" 
+        supportV4Version = "1.0.0"
     }
     repositories {
         google()
@@ -18,8 +19,8 @@ buildscript {
           mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:3.4.2")
-        classpath 'com.google.gms:google-services:4.2.0'  // Google Services plugin
+        classpath("com.android.tools.build:gradle:3.5.3")
+        classpath 'com.google.gms:google-services:4.3.3'  // Google Services plugin
         classpath 'io.fabric.tools:gradle:1.31.0'
 
         // NOTE: Do not place your application dependencies here; they belong
