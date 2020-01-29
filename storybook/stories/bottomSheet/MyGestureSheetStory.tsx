@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react'
 import {StyleSheet, Text, View} from 'react-native'
 import {LoremIpsum} from './GestureBottomSheetStory'
-import BottomPopupNew from '../../../src/components/common/BottomPopupNew'
+import BottomPopupNew from '../../../src/components/common/BottomPopup'
 import MapView from 'react-native-maps'
 
 const Wrapper = ({children}) => (

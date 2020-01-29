@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {TouchableOpacity, Image, Animated, ImageBackground} from 'react-native'
 import {navBarStyle} from '../styles'
-import {FADE_NAV_BAR_HEADER_HEIGHT} from './NavBarHeaderNew'
+import {FADE_NAV_BAR_HEADER_HEIGHT} from './NavBarHeader'
 import {useHomeStore, useNavStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
