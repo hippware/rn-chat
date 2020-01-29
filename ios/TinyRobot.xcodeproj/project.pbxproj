@@ -63,6 +63,7 @@
 		87C414B620E66A1A0044AF0A /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87C414B320E66A190044AF0A /* AppCenter-Config.plist */; };
 		87C414B720E66A1A0044AF0A /* tinyrobotStaging-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87C414B420E66A1A0044AF0A /* tinyrobotStaging-Info.plist */; };
 		A209EBAE998C0817ADCE8325 /* libPods-tinyrobot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC1632892499F05338C8E16 /* libPods-tinyrobot.a */; };
+		B666320D23DAC13500ED6EF0 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B666320C23DAC13500ED6EF0 /* RNBackgroundFetch+AppDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +120,7 @@
 		87C414B320E66A190044AF0A /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AppCenter-Config.plist"; sourceTree = "<group>"; };
 		87C414B420E66A1A0044AF0A /* tinyrobotStaging-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "tinyrobotStaging-Info.plist"; sourceTree = "<group>"; };
 		8DC8670C553D4D9C89ECE7CC /* libODJsonWebToken.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libODJsonWebToken.a; sourceTree = "<group>"; };
+		B666320C23DAC13500ED6EF0 /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
 		BBC1632892499F05338C8E16 /* libPods-tinyrobot.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tinyrobot.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D566D496818469DD8AB46D55 /* Pods-tinyrobot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tinyrobot.debug.xcconfig"; path = "Pods/Target Support Files/Pods-tinyrobot/Pods-tinyrobot.debug.xcconfig"; sourceTree = "<group>"; };
 		DCDA564826954DAC982E2628 /* libAppCenterReactNative.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAppCenterReactNative.a; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 		13B07FAE1A68108700A75B9A /* tinyrobot */ = {
 			isa = PBXGroup;
 			children = (
+				B666320C23DAC13500ED6EF0 /* RNBackgroundFetch+AppDelegate.m */,
 				39EF672520EEA9CF001C7D08 /* tinyrobot.entitlements */,
 				87C412C120E637870044AF0A /* Images.xcassets */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -646,6 +649,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B666320D23DAC13500ED6EF0 /* RNBackgroundFetch+AppDelegate.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
