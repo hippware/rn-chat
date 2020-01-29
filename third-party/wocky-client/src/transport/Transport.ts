@@ -181,7 +181,6 @@ export class Transport {
                           nearbyCooldown
                         }
                         shareType
-                        createdAt
                         user {
                           ${PROFILE_PROPS}
                         }
