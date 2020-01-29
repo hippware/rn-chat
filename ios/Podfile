@@ -46,8 +46,6 @@ def testing_pods
   pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications.podspec"
   pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary.podspec"
 
-  pod 'RSKImageCropper'
-  pod 'QBImagePickerController'
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Firebase/DynamicLinks'
