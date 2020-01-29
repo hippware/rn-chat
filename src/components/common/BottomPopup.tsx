@@ -31,7 +31,7 @@ type Props = {
 
 type ScrollState = {lastSnap: number; preview: boolean}
 
-const BottomPopupListNew = forwardRef(
+const BottomPopupList = forwardRef(
   (
     {
       listProps,
@@ -316,7 +316,7 @@ const BottomPopupListNew = forwardRef(
   }
 )
 
-export default BottomPopupListNew
+export default BottomPopupList
 
 const WhiteListBackground = () => (
   <View
