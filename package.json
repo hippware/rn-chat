@@ -103,7 +103,7 @@
     "@babel/node": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
-    "@babel/plugin-transform-flow-strip-types": "^7.8.0",
+    "@babel/plugin-transform-flow-strip-types": "^7.8.3",
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.8.3",
     "@jest/reporters": "^24.8.0",
