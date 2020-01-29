@@ -1,7 +1,8 @@
 import {types, getEnv, flow, getParent, getRoot} from 'mobx-state-tree'
 import {autorun, IReactionDisposer} from 'mobx'
-import {AppState} from 'react-native'
+import {AppState, Platform} from 'react-native'
 import BackgroundGeolocation from 'react-native-background-geolocation-android'
+import BackgroundFetch from 'react-native-background-fetch'
 import DeviceInfo from 'react-native-device-info'
 import {settings} from '../globals'
 import {Location, createLocation, IWocky} from 'wocky-client'
@@ -311,6 +312,29 @@ const LocationStore = types
       BackgroundGeolocation.logger.info(`${prefix} didMount`)
 
       singleton = self as any
+
+      if (Platform.OS === 'ios') {
+        BackgroundFetch.status(status => {
+          log(prefix, `BackgroundFetch status=${status}`)
+          BackgroundGeolocation.logger.info(`${prefix} BackgroundFetch status=${status}`)
+        })
+
+        BackgroundFetch.configure(
+          {
+            minimumFetchInterval: 15,
+          },
+          () => {
+            log(prefix, `BackgroundFetch callback`)
+            BackgroundGeolocation.logger.info(`${prefix} BackgroundFetch callback`)
+            BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_NEW_DATA)
+          },
+          _error => {
+            log(prefix, `BackgroundFetch failed to start`)
+            BackgroundGeolocation.logger.info(`${prefix} BackgroundFetch failed to start`)
+          }
+        )
+      }
+
       BackgroundGeolocation.onLocation(onLocation, onLocationError)
       BackgroundGeolocation.onHttp(onHttp)
       BackgroundGeolocation.onMotionChange(onMotionChange)
@@ -441,7 +465,11 @@ function onHttp(response) {
     if (response.status === 401 || response.status === 403) {
       BackgroundGeolocation.stop()
       BackgroundGeolocation.stopSchedule()
-      bugsnagNotify(new Error('BackgroundGeolocation.stop() due to forbidden'), 'location_store_onhttp_4xx', {response})
+      bugsnagNotify(
+        new Error('BackgroundGeolocation.stop() due to forbidden'),
+        'location_store_onhttp_4xx',
+        {response}
+      )
       BackgroundGeolocation.logger.error(`${prefix} BackgroundGeolocation.stop() due to forbidden`)
     }
 
