@@ -33,7 +33,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Modal cleanup (PR #4707)
 * [dev] Tidy up 'New' components (#4668)
 * Try out background fetch (PR #4714)
-* Some code cleanup, handle shareType param for subscriptions (PR #4696)
+* Some code cleanup, handle shareType param (PR #4696, PR #4726)
 
 # 4.36.1 - 2020 Jan 17
 
