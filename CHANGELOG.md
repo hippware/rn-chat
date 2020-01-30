@@ -14,6 +14,12 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * @types/react (PR #4699), mobx (PR #4700), phoenix (PR #4701)
   * @storybook/react-native (PR #4702), @types/react-native (PR #4711)
   * react-native-image-crop-picker (PR #4713)
+  * react-native-localize (PR #4715), tslint-react (PR #4716)
+  * babel-jest (PR #4717), @types/jest (PR #4718), husky (PR #4719)
+  * graphql (PR #4720), @babel/plugin-transform-flow-strip-types (PR #4721)
+  * mobx (PR #4722), @react-native-community/netinfo (PR #4690)
+  * native updates (PR #4723), react-native-firebase (PR #4725)
+
 * AppCenter: Do post-build actions based on env vars. (PR #4694)
 * `react-native unlink` x5 (PR #4695)
 * API changes for new sharing model (#4412, PR #4636)
@@ -26,6 +32,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * "Sharing location" toast message (#4661)
 * Modal cleanup (PR #4707)
 * [dev] Tidy up 'New' components (#4668)
+* Try out background fetch (PR #4714)
+* Some code cleanup, handle shareType param for subscriptions (PR #4696)
 
 # 4.36.1 - 2020 Jan 17
 
