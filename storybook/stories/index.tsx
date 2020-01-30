@@ -18,6 +18,7 @@ import OnboardingNotifications from '../../src/components/Onboarding/OnboardingN
 import OnboardingFindFriends from '../../src/components/Onboarding/OnboardingFindFriends'
 import MockFindFriends from './FindFriendsList/MockFindFriends'
 import SignUpStory from './SignUpStory'
+import NotificationBannerStory from './NotificationBannerStory'
 
 YellowBox.ignoreWarnings([
   // I belive these are coming from either react-native-reanimated or react-native-gesture-handler
@@ -38,6 +39,10 @@ function emptyFn() {
 //   .add('Friend Search', () => <MockFriendSearch />)
 
 // storiesOf('MapOptions', module).add('MapOptions', () => <MapOptions />)
+
+storiesOf('NotificationBanner', module).add('Notification with Avatar', () => (
+  <NotificationBannerStory />
+))
 
 storiesOf('Onboarding', module)
   .add('1 - Location', () => <OnboardingLocation onPress={emptyFn} />)
