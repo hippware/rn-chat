@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.37.0 - 2020 Jan 30
+
 * Update: typescript (PR #4676), metro-react-native-babel-preset (PR #4677)
   * @babel/preset-typescript (PR #4679), @babel/core (PR #4680)
   * @babel/node (PR #4682), react-native-reanimated (PR #4683)
