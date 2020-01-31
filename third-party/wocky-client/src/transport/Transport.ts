@@ -198,28 +198,6 @@ export class Transport {
                       }
                     }
                   }
-                  locationShares (first: 100) {
-                    edges {
-                      node {
-                        sharedWith {
-                          ${PROFILE_PROPS}
-                        }
-                        createdAt
-                        expiresAt
-                      }
-                    }
-                  }
-                  locationSharers (first: 100) {
-                    edges {
-                      node {
-                        user {
-                          ${PROFILE_PROPS}
-                        }
-                        createdAt
-                        expiresAt
-                      }
-                    }
-                  }
                 }`
                   : ''
               }
@@ -252,20 +230,6 @@ export class Transport {
         createdAt: iso8601toDate(createdAt).getTime(),
         user: convertProfile(user),
       }))
-      result.locationShares = res.data.user.locationShares.edges.map(
-        ({node: {createdAt, expiresAt, sharedWith}}) => ({
-          createdAt: iso8601toDate(createdAt).getTime(),
-          expiresAt: iso8601toDate(expiresAt).getTime(),
-          sharedWith: convertProfile(sharedWith),
-        })
-      )
-      result.locationSharers = res.data.user.locationSharers.edges.map(
-        ({node: {createdAt, expiresAt, user}}) => ({
-          createdAt: iso8601toDate(createdAt).getTime(),
-          expiresAt: iso8601toDate(expiresAt).getTime(),
-          sharedWith: convertProfile(user), // use user to get who is sharer
-        })
-      )
     }
     return result
   }
