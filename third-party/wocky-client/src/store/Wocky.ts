@@ -302,6 +302,7 @@ export const Wocky = types
       },
       setNotification(event: IEventEntity | undefined) {
         if (event) {
+          self.notification = undefined // remove previous event to avoid InvalidReferenceError error
           self.notification = event
         }
       },
