@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {IProfile} from 'wocky-client'
 import {isAlive} from 'mobx-state-tree'
-import {BottomPopupNew} from '../common'
+import {BottomPopupNew, Separator} from '../common'
 import {RText, Pill, BubbleBadge} from '../common'
 import {colors} from 'src/constants'
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native'
@@ -36,7 +36,7 @@ const ProfileDetail = observer(({item, preview}: Props) => {
   return (
     <BottomPopupNew
       previewHeight={150}
-      fullViewHeight={390}
+      fullViewHeight={430}
       renderPreview={() => <Preview profile={profile!} />}
       renderContent={() => <Default profile={profile!} />}
       preview={preview}
@@ -68,14 +68,19 @@ const Default = observer(({profile}: {profile: IProfile}) => (
     />
 
     <RText color={colors.PINK} weight="Bold" size={20} style={styles.displayName} numberOfLines={1}>
-      @{profile.handle}
+      {profile.handle}
     </RText>
     <InfoPills profile={profile} />
     {profile.isFriend ? (
-      <LocationSwitchPanel
-        onTypeToggle={profile.shareLocationUpdate}
-        shareType={profile.shareType!}
-      />
+      <>
+        <Separator
+          style={{width: '90%', backgroundColor: 'rgb(224,224,224)', marginVertical: 20}}
+        />
+        <LocationSwitchPanel
+          onTypeToggle={profile.shareLocationUpdate}
+          shareType={profile.shareType!}
+        />
+      </>
     ) : (
       <ConnectButton profile={profile!} />
     )}
