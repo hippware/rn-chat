@@ -31,8 +31,6 @@ export default {
       loaded: true,
       updateError: '',
       sortedFriends: [],
-      locationSharers: {list: []},
-      locationShares: {list: []},
     } as any,
     connected: true,
     loadProfile: jest.fn(),

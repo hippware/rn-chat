@@ -1,7 +1,8 @@
 /* tslint:disable:max-classes-per-file */
 import {types, applySnapshot, getRoot, Instance} from 'mobx-state-tree'
-import {IBot, IProfile, Location, ILocation} from 'wocky-client'
+import {IBot, IProfile, Location, ILocation, IWocky, FriendShareTypeEnum} from 'wocky-client'
 import {autorun} from 'mobx'
+import {INavStore} from './NavStore'
 
 export const DEFAULT_DELTA = 0.00522
 export const TRANS_DELTA = DEFAULT_DELTA + 0.005
@@ -84,7 +85,7 @@ const HomeStore = types
     friendFilter: '',
   }))
   .views(self => {
-    const {navStore, wocky} = getRoot(self)
+    const {navStore, wocky}: {navStore: INavStore; wocky: IWocky} = getRoot(self)
     return {
       get creationMode() {
         return (
@@ -109,9 +110,11 @@ const HomeStore = types
       get cards() {
         const sharers =
           wocky && wocky.profile
-            ? wocky.profile!.locationSharers.list.map(
-                ({sharedWith}) => new LocationSharerCard(sharedWith)
-              )
+            ? wocky
+                .profile!.friends.list.filter(
+                  profile => profile.ownShareType === FriendShareTypeEnum.ALWAYS
+                )
+                .map(profile => new LocationSharerCard(profile))
             : []
         const localBots = wocky.localBots.list.map(bot => new BotCard(bot))
         return [new YouCard(), ...sharers, ...localBots]

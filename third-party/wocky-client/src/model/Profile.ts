@@ -49,8 +49,6 @@ export const Profile = types
       hasReceivedInvite: false,
       isFriend: false,
       isBlocked: false,
-      sharesLocation: false, // pseudo-calculated property for correct FlatList rendering
-      receivesLocationShare: false, // pseudo-calculated property for correct FlatList rendering
       roles: types.optional(types.array(types.string), []),
       shareType: types.maybe(FriendShareType),
       ownShareType: types.maybe(FriendShareType),
@@ -67,13 +65,17 @@ export const Profile = types
     const res = {...snapshot}
     delete res.status
     delete res.statusUpdatedAt
-    delete res.sharesLocation
-    delete res.receivesLocationShare
     // delete res.location - need to preserve location because now it is passed only via subscriptions
     delete res.subscribedBots
     return res
   })
   .views(self => ({
+    get sharesLocation() {
+      return self.ownShareType === FriendShareTypeEnum.ALWAYS
+    },
+    get receivesLocationShare() {
+      return self.shareType === FriendShareTypeEnum.ALWAYS
+    },
     get location() {
       return self._location
     },
@@ -87,12 +89,6 @@ export const Profile = types
     },
   }))
   .actions(self => ({
-    setSharesLocation(value: boolean) {
-      self.sharesLocation = value
-    },
-    setReceivesLocationShare(value: boolean) {
-      self.receivesLocationShare = value
-    },
     sentInvite: () => {
       self.hasSentInvite = true
       if (self.hasSentInvite && self.hasReceivedInvite) {
