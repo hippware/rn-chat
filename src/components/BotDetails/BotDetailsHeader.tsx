@@ -64,7 +64,6 @@ export const DefaultHeader = inject(
             color={colors.DARK_PURPLE}
             style={{width: '75%', textAlign: 'center', fontFamily: 'Roboto-Medium'}}
             numberOfLines={2}
-            ellipsizeMode="tail"
           >
             {bot.title}
           </RText>
@@ -149,7 +148,7 @@ export const PreviewHeader = observer(({bot}: {bot: IBot}) => {
       ) : (
         <BotIcon size={47} icon={bot.icon} textStyle={{fontSize: 45, textAlign: 'center'}} />
       )}
-      <View style={{marginLeft: 20}}>
+      <View style={{marginLeft: 20, flex: 1}}>
         <RText
           weight="Bold"
           size={20}
