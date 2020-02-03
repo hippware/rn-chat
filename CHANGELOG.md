@@ -4,6 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Profile detail: Enable location sharing settings (#4657)
+* "Sharing location" toast message (#4661)
+* [dev] Replace locationSharers/Shares with currentUser.friends (#4728)
+* [dev] avoid InvalidReferenceError during wocky.setNotification (#4735)
+
 # 4.37.0 - 2020 Jan 30
 
 * Update: typescript (PR #4676), metro-react-native-babel-preset (PR #4677)
