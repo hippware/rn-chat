@@ -50,7 +50,7 @@ import MapOptions from './MapOptions'
 import {IPermissionStore} from 'src/store/PermissionStore'
 import LocationSettingsModal, {Props as LocationSettingsProps} from './LiveLocation/LocationSettingsModal'
 
-export const iconClose = require('../../images/iconClose.png')
+const iconClose = require('../../images/iconClose.png')
 
 type Props = {
   wocky?: IWocky

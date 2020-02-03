@@ -4,11 +4,11 @@ import {IBot, IProfile, Location, ILocation, IWocky, FriendShareTypeEnum} from '
 import {autorun} from 'mobx'
 import {INavStore} from './NavStore'
 
-export const DEFAULT_DELTA = 0.00522
-export const TRANS_DELTA = DEFAULT_DELTA + 0.005
+const DEFAULT_DELTA = 0.00522
+const TRANS_DELTA = DEFAULT_DELTA + 0.005
 export const INIT_DELTA = 0.04
 
-export class Card {
+class Card {
   get id(): string {
     return this.name
   }
@@ -41,11 +41,6 @@ export class BotCard extends Card {
   }
 }
 
-export class TutorialCard extends Card {
-  get name() {
-    return 'TutorialCard'
-  }
-}
 export class YouCard extends Card {
   get name() {
     return 'YouCard'
@@ -69,7 +64,6 @@ export class LocationSharerCard extends Card {
 }
 
 const MapOptions = types.enumeration(['auto', 'satellite', 'street'])
-export type MapOptionsType = typeof MapOptions.Type
 
 const HomeStore = types
   .model('HomeStore', {
