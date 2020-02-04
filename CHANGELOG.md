@@ -8,6 +8,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * "Sharing location" toast message (#4661)
 * [dev] Replace locationSharers/Shares with currentUser.friends (#4728)
 * [dev] avoid InvalidReferenceError during wocky.setNotification (#4735)
+* Truncate long location title (#4731)
+* Remove gap above Get Started button (#4654)
 
 # 4.37.0 - 2020 Jan 30
 
