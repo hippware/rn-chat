@@ -19,14 +19,7 @@ export const minHeight = height - 667 < 0 ? 1 : 1 + ((height - 667) * 1.2) / 667
 // scales avatar based on screensize (different ratios for smaller screens vs larger screens)
 export const avatarScale = height - 667 < 0 ? 1 : 1 + ((height - 667) * 0.8) / 667
 // scales font based on screensize (different ratios for smaller screens vs larger screens)
-export const fontScale = height - 667 < 0 ? 1 : 1 + ((height - 667) * 0.3) / 667
-
-export const defaultCover = [
-  require('../../images/defaultCover0.png'),
-  require('../../images/defaultCover1.png'),
-  require('../../images/defaultCover2.png'),
-  require('../../images/defaultCover3.png'),
-]
+// export const fontScale = height - 667 < 0 ? 1 : 1 + ((height - 667) * 0.3) / 667
 
 export const isIphoneX = Platform.OS === 'ios' && (height === 812 || width === 812)
 export const isIphone = Platform.OS === 'ios'

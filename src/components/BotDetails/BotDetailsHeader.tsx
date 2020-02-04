@@ -28,9 +28,6 @@ type Props = {
 const shareIcon = require('../../../images/shareIcon.png')
 const followIcon = require('../../../images/shoesPink.png')
 
-const BotDetailsHeader = (props: Props) =>
-  props.preview ? <PreviewHeader bot={props.bot} /> : <DefaultHeader {...props} />
-
 export const DefaultHeader = inject(
   'notificationStore',
   'analytics',
@@ -276,8 +273,6 @@ const BotUnavailable = () => (
     </TouchableOpacity>
   </View>
 )
-
-export default BotDetailsHeader
 
 const styles = StyleSheet.create({
   rowContainer: {
