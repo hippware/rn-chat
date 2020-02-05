@@ -10,6 +10,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [dev] avoid InvalidReferenceError during wocky.setNotification (#4735)
 * Truncate long location title (#4731)
 * Remove gap above Get Started button (#4654)
+* Sharing Location button causes App Crash (#4730)
+* Cleanup. remove unused exports (PR #4742)
+* Wording change on user invites (#4729)
 
 # 4.37.0 - 2020 Jan 30
 
