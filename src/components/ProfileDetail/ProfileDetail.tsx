@@ -155,7 +155,7 @@ const InfoPills = observer(({profile}: {profile: IProfile}) =>
       <Pill>{profile.addressData.locationShort}</Pill>
       {!profile.isOwn && <Pill>{profile.whenLastLocationSent}</Pill>}
     </View>
-  ) : (
+  ) : profile.isOwn ? null : (
     <Pill solidColor="rgb(155,155,155)">Not Sharing Location</Pill>
   )
 )
