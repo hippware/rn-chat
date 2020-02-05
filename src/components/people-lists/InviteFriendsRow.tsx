@@ -20,11 +20,9 @@ const icon = require('../../../images/followers.png')
 
 const InviteFriendsRow = observer(({style, subtext, botTitle}: Props) => {
   const wocky = useWocky()
-  const message = botTitle
-    ? `Hey, @${wocky.profile!.handle} invited you to check out "${botTitle}" on tinyrobot!`
-    : `Hey! Check out my favorite places in the world on tinyrobot! Add me as @${
-        wocky.profile!.handle
-      }.`
+  const message =
+    botTitle &&
+    `Hey, @${wocky.profile!.handle} invited you to check out "${botTitle}" on tinyrobot!`
   return (
     <ShareActivitySheet
       message={message}
