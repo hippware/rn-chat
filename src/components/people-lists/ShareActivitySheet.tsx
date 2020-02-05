@@ -1,6 +1,6 @@
 import React from 'react'
 import {TouchableOpacity, Share, Platform} from 'react-native'
-import {useFirebaseStore, useWocky, useAnalytics} from '../../utils/injectors'
+import {useFirebaseStore, useAnalytics} from '../../utils/injectors'
 
 type Props = {
   style?: any
@@ -10,22 +10,18 @@ type Props = {
 
 const ShareActivitySheet = ({children, style, message}: Props) => {
   const firebaseStore = useFirebaseStore()
-  const wocky = useWocky()
   const analytics = useAnalytics()
 
   const share = async () => {
     const m =
-      message ||
-      `Hey! Check out my favorite places in the world on tinyrobot! Add me as @${
-        wocky.profile!.handle
-      }.`
+      message || 'Hello, I would like to share my location with you on a new app called tinyrobot!'
     analytics!.track('invite_friends')
     const url = await firebaseStore!.getFriendInviteLink()
 
     // https://facebook.github.io/react-native/docs/share
     const {action, activityType} = await (Share as any).share(
       {
-        message: `${m} Download the app at${Platform.OS === 'android' ? ` ${url}` : ''}`,
+        message: `${m} Please download the app here:${Platform.OS === 'android' ? ` ${url}` : ''}`,
         // title: 'title',
         url,
       },
