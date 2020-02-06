@@ -48,6 +48,7 @@ import  {IHomeStore} from 'src/store/HomeStore';
 import MapOptions from './MapOptions'
 import {IPermissionStore} from 'src/store/PermissionStore'
 import LocationSettingsModal, {Props as LocationSettingsProps} from './LiveLocation/LocationSettingsModal'
+import { IFirebaseStore } from '../store/FirebaseStore'
 
 const iconClose = require('../../images/iconClose.png')
 
@@ -60,10 +61,11 @@ type Props = {
   authStore?: IAuthStore
   permissionStore?: IPermissionStore
   analytics?: any
+  firebaseStore?: IFirebaseStore
 }
 
-const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'iconStore', 'analytics', 'homeStore', 'navStore', 'authStore')(
-  observer(({wocky, permissionStore, locationStore, navStore, homeStore, iconStore, authStore, analytics}: Props) => {
+const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'iconStore', 'analytics', 'homeStore', 'navStore', 'authStore', 'firebaseStore')(
+  observer(({wocky, permissionStore, locationStore, navStore, homeStore, iconStore, authStore, analytics, firebaseStore}: Props) => {
     useEffect(() => {
       reaction(() => navStore!.scene, () => Keyboard.dismiss())
 
@@ -87,8 +89,6 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
           Actions.profileDetails({item: wocky!.profile!.id, preview: true})
         }
       }, {delay: 200})
-      
-      
     }, [])
 
     const showFriendRequestModal = async (params: any) => {
@@ -153,6 +153,23 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
       }
       return true
     }
+
+    const showSharingModal = async () => {
+      // todo: how can we know which profile sent the request that led to the firebase link click-through?
+      // const profile: IProfile = await wocky!.loadProfile(params.params)
+      Actions.locationSettingsModal({
+        settingsType: 'ACCEPT_REJECT_REQUEST',
+        // profile,
+        // displayName: profile.handle,
+        onOkPress: shareType => {
+          // profile.invite(shareType).then(() => {
+          //   analytics.track('user_follow', (profile as any).toJSON())
+          // })
+          Actions.pop()
+        },
+        onCancelPress: Actions.pop
+      } as LocationSettingsProps)
+    }
   
 
     const uriPrefix = Platform.select({ios: settings.uriPrefix, android: settings.uriPrefix.toLowerCase()})
@@ -170,7 +187,13 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
             <Scene key="connect" on={authStore!.login} success="checkHandle" failure="preConnection" />
             <Scene key="checkProfile" on={() => wocky!.profile} success="checkHandle" failure="connect" />
             <Scene key="checkHandle" on={() => wocky!.profile!.handle} success="checkOnboarded" failure="signUp" />
-            <Scene key="checkOnboarded" on={() => permissionStore!.onboarded} success="logged" failure="onboarding" />
+            {/* <Scene key="checkOnboarded" on={() => permissionStore!.onboarded} success="logged" failure="onboarding" /> */}
+            <Scene key="checkOnboarded" on={() => permissionStore!.onboarded} success={() => {
+              Actions.logged()
+              if (firebaseStore!.inviteCode) {
+                showSharingModal()
+              }
+            }} failure="onboarding" />
             <Scene key="logout" on={authStore!.logout} success="preConnection" />
           </Lightbox>
           <Lightbox>
