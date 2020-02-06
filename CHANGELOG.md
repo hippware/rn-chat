@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.38.0 - 2020 Feb 6
+
 * Profile detail: Enable location sharing settings (#4657)
 * "Sharing location" toast message (#4661)
 * [dev] Replace locationSharers/Shares with currentUser.friends (#4728)
@@ -14,6 +16,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Cleanup. remove unused exports (PR #4742)
 * Wording change on user invites (#4729)
 * [Optimization] User's own location card adjustments (#4549)
+* Sending user invites should include share choice UI (#4749)
+* [dev] Trial iOS background fetch (#4746)
 
 # 4.37.0 - 2020 Jan 30
 
