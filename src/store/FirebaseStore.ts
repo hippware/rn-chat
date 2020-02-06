@@ -73,7 +73,7 @@ const FirebaseStore = types
     let unsubscribe: any
     let disposer
 
-    function onFirebaseDynamicLink(url: string) {
+    function onFirebaseDynamicLink(url: string | null) {
       if (url) {
         const index = url.indexOf(codeUrlString)
         if (index > -1) {
@@ -84,6 +84,16 @@ const FirebaseStore = types
       }
     }
 
+    const redeemCode = flow(function*() {
+      try {
+        yield wocky.userInviteRedeemCode(self.inviteCode!)
+        analytics.track('invite_code_redeem', {code: self.inviteCode})
+      } catch (err) {
+        analytics.track('invite_code_redeem_fail', {code: self.inviteCode, error: err})
+      }
+      self.setInviteCode(undefined)
+    })
+
     function afterAttach() {
       auth.onAuthStateChanged(processFirebaseAuthChange)
       wocky = (getParent(self) as any).wocky // wocky could be null for HMR (?)
@@ -93,23 +103,7 @@ const FirebaseStore = types
       firebase
         .links()
         .getInitialLink()
-        .then((url: string | null) => {
-          if (url) onFirebaseDynamicLink(url)
-        })
-
-      // listen for Dynamic Link invite codes and redeem once user is logged in
-      when(
-        () => !!self.inviteCode && !!wocky.profile && !!wocky.profile.handle && !!self.inviteCode,
-        async () => {
-          try {
-            await wocky.userInviteRedeemCode(self.inviteCode!)
-            analytics.track('invite_code_redeem', {code: self.inviteCode})
-          } catch (err) {
-            analytics.track('invite_code_redeem_fail', {code: self.inviteCode, error: err})
-          }
-          self.setInviteCode(undefined)
-        }
-      )
+        .then(onFirebaseDynamicLink)
     }
 
     function beforeDestroy() {
@@ -314,6 +308,7 @@ const FirebaseStore = types
       confirmCode,
       resendCode,
       getFriendInviteLink,
+      redeemCode,
     }
   })
 
