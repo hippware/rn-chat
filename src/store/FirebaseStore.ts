@@ -269,7 +269,7 @@ const FirebaseStore = types
       when(() => !!self.token, self.registerWithToken)
     }
 
-    // TODO: use rn-firebase for dynamic link generation when it's less broken
+    // TODO: wocky will eventually generate this link on the server...remove this function when that is ready.
     const getFriendInviteLink = flow(function*() {
       const apiKey = 'AIzaSyCt7Lb8cjTHNWLuvSZEXFDKef54x4Es3N8'
       let code = '1234' // TODO fix with new API, because old method is deprecated yield wocky.userInviteMakeCode()

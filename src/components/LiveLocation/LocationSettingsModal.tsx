@@ -5,7 +5,6 @@ import ModalContainer from '../modals/ModalContainer'
 import {IProfile, FriendShareTypeEnum} from '../../../third-party/wocky-client/src'
 import {DARK_PURPLE, PINK, PINKISH_GREY} from '../../constants/colors'
 import {Actions} from 'react-native-router-flux'
-import {warn} from '../../../third-party/wocky-client/src/logger'
 
 export type LocationSettingsType = 'SEND_REQUEST' | 'ACCEPT_REQUEST' | 'ACCEPT_REJECT_REQUEST'
 
@@ -24,10 +23,6 @@ const {ALWAYS, NEARBY} = FriendShareTypeEnum
 const LocationSettingsModal = (props: Props) => {
   const {profile, displayName} = props
 
-  if (!profile && !displayName) {
-    warn('Either profile or displayName must be provided')
-  }
-
   const [selection, setSelection] = useState<FriendShareTypeEnum | null>(null)
   return (
     <ModalContainer
@@ -42,17 +37,21 @@ const LocationSettingsModal = (props: Props) => {
       <RText size={15} color={DARK_PURPLE} weight="Medium">
         Friend Request
       </RText>
-      <Avatar
-        profile={profile}
-        displayName={displayName}
-        size={50}
-        borderColor={PINK}
-        hideDot
-        style={{marginTop: 15}}
-      />
-      <RText size={20} color={PINK} style={{marginTop: 2}} weight="Bold">
-        {profile ? profile.handle : displayName!}
-      </RText>
+      {(profile || displayName) && (
+        <>
+          <Avatar
+            profile={profile}
+            displayName={displayName}
+            size={50}
+            borderColor={PINK}
+            hideDot
+            style={{marginTop: 15}}
+          />
+          <RText size={20} color={PINK} style={{marginTop: 2}} weight="Bold">
+            {profile ? profile.handle : displayName!}
+          </RText>
+        </>
+      )}
       <Separator style={{width: '100%', marginTop: 25, marginBottom: 20}} />
       <RText size={16} color={DARK_PURPLE} weight="Medium" style={{marginBottom: 25}}>
         Share My Location
