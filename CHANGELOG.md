@@ -13,6 +13,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Sharing Location button causes App Crash (#4730)
 * Cleanup. remove unused exports (PR #4742)
 * Wording change on user invites (#4729)
+* [Optimization] User's own location card adjustments (#4549)
 
 # 4.37.0 - 2020 Jan 30
 
