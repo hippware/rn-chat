@@ -9,7 +9,7 @@ import {Location, ILocationSnapshot} from './Location'
 import {UserActivityType} from '../transport/types'
 import moment from 'moment'
 import {Address} from './Address'
-import {when} from 'mobx'
+import {when, reaction, IReactionDisposer} from 'mobx'
 import _ from 'lodash'
 
 export const Profile = types
@@ -265,8 +265,35 @@ export const Profile = types
         },
         get whenLastLocationSent(): string {
           // console.log('& when', self.location)
+
+          if (self.location) {
+            (getRoot(self) as any).wocky.debugLog(`WOCKY PROFILE whenLastLocationSent user=${self.id} loc_id=${self.location.id} createdAt=${self.location.createdAt} result='${moment(self.location!.createdAt).fromNow()}' location=`, self.location)
+          }
+
           return self.location ? moment(self.location!.createdAt).fromNow() : 'a while ago'
         },
+      },
+    }
+  })
+  .actions(self => {
+    let reactions: IReactionDisposer[] = []
+
+    return {
+      afterCreate() {
+        reactions = []
+        reactions.push(
+          reaction(() => self.location, () => {
+            if (self.location) {
+              (getRoot(self) as any).wocky.debugLog(`WOCKY PROFILE location reaction user=${self.id} loc_id=${self.location.id} createdAt=${self.location.createdAt} location=`, self.location)
+            }
+          }, {
+            name: 'Log assignments to self.location',
+          })
+        )
+      },
+      beforeDestroy() {
+        reactions.forEach(disposer => disposer())
+        reactions = []
       },
     }
   })

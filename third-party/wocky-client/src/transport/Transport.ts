@@ -55,6 +55,7 @@ export class Transport {
   token?: string
   host?: string
   onCloseCallback?: () => void
+  debugLogger?: any
 
   @observable connected: boolean = false
   @observable connecting: boolean = false
@@ -65,9 +66,24 @@ export class Transport {
   @observable rosterItem: any
   @observable botVisitor: any
 
-  constructor(resource: string) {
+  constructor(resource: string, debugLogger?: any) {
     this.resource = resource
     this.instance = Transport.instances++
+    this.debugLogger = debugLogger
+  }
+
+  debugLog(text: string, extra?: any) {
+    if (this.debugLogger) {
+      if (extra) {
+        text = `${text} ${JSON.stringify(extra)}`
+      }
+      this.debugLogger.info(text)
+
+      if (__DEV__) {
+        // tslint:disable-next-line
+        console.log(text)
+      }
+    }
   }
 
   @action
@@ -1172,7 +1188,12 @@ export class Transport {
           user: {id},
           location,
         } = result.data.sharedLocations
+
+        this.debugLog(`WOCKY TRANSPORT subscribeSharedLocations 00 user=${id} loc_id=${location.id} capturedAt=${location.capturedAt} result.data.sharedLocations=`, result.data.sharedLocations)
+
         this.sharedLocation = {id, location}
+
+        this.debugLog(`WOCKY TRANSPORT subscribeSharedLocations 90 user=${id} loc_id=${location.id} capturedAt=${location.capturedAt}`)
       }),
     })
     this.subscriptions.push(subscription)

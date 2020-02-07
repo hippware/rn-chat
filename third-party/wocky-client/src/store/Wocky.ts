@@ -41,6 +41,20 @@ export const Wocky = types
         env.bugsnagNotify(e, name, extra)
       }
     },
+    debugLog: (text: string, extra?: any): void => {
+      const env = getEnv(self)
+      if (env.debugLog) {
+        if (extra) {
+          text = `${text} ${JSON.stringify(extra)}`
+        }
+        env.debugLog.info(text)
+
+        if (__DEV__) {
+          // tslint:disable-next-line
+          console.log(text)
+        }
+      }
+    },
     loadProfile: flow(function*(id: string) {
       yield waitFor(() => self.connected)
       const isOwn = id === self.username
@@ -484,11 +498,23 @@ export const Wocky = types
           () => self.transport.sharedLocation,
           ({id, location}) => {
             const profile = self.profiles.get(id)
+
+            self.debugLog(`WOCKY sharedLocation 00 user=${id} loc_id=${location.id} capturedAt=${location.capturedAt} location=`, location)
+
             if (profile) {
+
+              self.debugLog(`WOCKY sharedLocation 10 profile user=${id} loc_id=${location.id} capturedAt=${location.capturedAt} profile=`, profile)
+
               profile.setLocation(
                 createLocation({...location, createdAt: iso8601toDate(location.capturedAt)})
               )
+
+              self.debugLog(`WOCKY sharedLocation 90 user=${id} loc_id=${location.id} capturedAt=${location.capturedAt}`)
+
             } else {
+
+              self.debugLog(`WOCKY sharedLocation PROFILE NOT FOUND user=${id} loc_id=${location.id} capturedAt=${location.capturedAt}`)
+
               self.bugsnagNotify(new Error('Unable to setLocation due to profile not found'), 'wocky_sharedLocation_profile_not_found', {id, location})
             }
           }
