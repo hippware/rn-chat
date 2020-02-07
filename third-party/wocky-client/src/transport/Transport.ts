@@ -175,6 +175,10 @@ export class Transport {
                   }
                   friends(first:100) {
                     edges {
+                      shareTypes {
+                        from
+                        to
+                      }
                       node {
                         shareConfig {
                           nearbyDistance
@@ -222,8 +226,14 @@ export class Transport {
           user: convertProfile(recipient),
         })
       )
-      result.friends = res.data.user.friends.edges.map(({node: {user, shareType, shareConfig}}) =>
-        convertProfile({...user, shareType, shareConfig})
+      result.friends = res.data.user.friends.edges.map(
+        ({shareTypes: {from, to}, node: {user, shareConfig}}) =>
+          convertProfile({
+            ...user,
+            ownShareType: from,
+            shareType: to,
+            shareConfig,
+          })
       )
 
       result.blocked = res.data.user.blocks.edges.map(({node: {createdAt, user}}) => ({
