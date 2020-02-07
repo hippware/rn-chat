@@ -282,7 +282,14 @@ export const Profile = types
         },
         get whenLastLocationSent(): string {
           // console.log('& when', self.location)
-          return self.location ? moment(self.location!.createdAt).fromNow() : 'a while ago'
+          const now: Date = (getRoot(self) as any).wocky.timer.minute
+          const date = self.location!.createdAt
+          const secondsSinceLastUpdate = moment(now).diff(date, 'seconds')
+          return self.location
+            ? secondsSinceLastUpdate < 60
+              ? 'less than a minute ago'
+              : moment(date).from(now)
+            : 'a while ago'
         },
       },
     }
