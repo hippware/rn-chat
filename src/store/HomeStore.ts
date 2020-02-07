@@ -1,6 +1,6 @@
 /* tslint:disable:max-classes-per-file */
 import {types, applySnapshot, getRoot, Instance} from 'mobx-state-tree'
-import {IBot, IProfile, Location, ILocation, IWocky, FriendShareTypeEnum} from 'wocky-client'
+import {IBot, IProfile, Location, ILocation, IWocky} from 'wocky-client'
 import {autorun} from 'mobx'
 import {INavStore} from './NavStore'
 
@@ -105,9 +105,7 @@ const HomeStore = types
         const sharers =
           wocky && wocky.profile
             ? wocky
-                .profile!.friends.list.filter(
-                  profile => profile.ownShareType === FriendShareTypeEnum.ALWAYS
-                )
+                .profile!.friends.list.filter(profile => profile.sharesLocation)
                 .map(profile => new LocationSharerCard(profile))
             : []
         const localBots = wocky.localBots.list.map(bot => new BotCard(bot))
