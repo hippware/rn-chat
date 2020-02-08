@@ -4,6 +4,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* [dev] fill from/to shareType from new location sharing API (#4757)
+* 'Time ago' should update on card while user is on a phone call (#4744)
+
 # 4.38.0 - 2020 Feb 6
 
 * Profile detail: Enable location sharing settings (#4657)
