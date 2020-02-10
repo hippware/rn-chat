@@ -50,7 +50,7 @@
     "libphonenumber-js": "^1.7.31",
     "lodash": "^4.17.13",
     "mobx": "^5.15.4",
-    "mobx-react": "^6.1.5",
+    "mobx-react": "^6.1.7",
     "mobx-state-tree": "^3.15.0",
     "moment": "^2.24.0",
     "mst-middlewares": "3.10.2",
