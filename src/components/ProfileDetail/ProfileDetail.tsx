@@ -13,6 +13,7 @@ import {useWocky, useHomeStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
 import LocationSwitchPanel from './LocationSwitchPanel'
+import {useAppState} from 'react-native-hooks'
 
 type Props = {
   item: string
@@ -24,10 +25,17 @@ const ProfileDetail = observer(({item, preview}: Props) => {
 
   const {loadProfile} = useWocky()
   const {fullScreenMode} = useHomeStore()
+  const currentAppState = useAppState()
 
   useEffect(() => {
     loadProfile(item).then(p => setProfile(p))
   }, [item])
+
+  useEffect(() => {
+    if (profile && currentAppState === 'active') {
+      profile.asyncFetchRoughLocation()
+    }
+  }, [profile, currentAppState])
 
   if (fullScreenMode || !profile || !isAlive(profile)) {
     return null
@@ -88,10 +96,6 @@ const Default = observer(({profile}: {profile: IProfile}) => (
 ))
 
 const Preview = observer(({profile}: {profile: IProfile}) => {
-  useEffect(() => {
-    profile.asyncFetchRoughLocation()
-  }, [])
-
   return (
     <View
       style={{
