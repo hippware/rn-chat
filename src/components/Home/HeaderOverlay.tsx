@@ -1,6 +1,6 @@
 import React from 'react'
 import {StyleSheet, View, Platform} from 'react-native'
-import {BlurView} from 'react-native-blur'
+import {BlurView} from '@react-native-community/blur'
 import {k} from '../Global'
 import {TRANSLUCENT_WHITE} from 'src/constants/colors'
 

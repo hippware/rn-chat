@@ -1,1 +1,1 @@
-../../../../../node_modules/react-native-blur/ios/VibrancyViewManager.h
+../../../../../node_modules/@react-native-community/blur/ios/VibrancyViewManager.h

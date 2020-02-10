@@ -37,6 +37,7 @@
   "dependencies": {
     "@absinthe/socket-apollo-link": "^0.2.0",
     "@react-native-community/async-storage": "^1.7.1",
+    "@react-native-community/blur": "^3.4.1",
     "@react-native-community/netinfo": "^5.3.3",
     "@react-native-community/push-notification-ios": "^1.0.5",
     "apollo-cache-inmemory": "^1.6.5",
@@ -66,7 +67,6 @@
     "react-native-animated-linear-gradient": "^1.2.0",
     "react-native-background-fetch": "^2.7.1",
     "react-native-background-geolocation-android": "git+https://42af07bf147313e5c1053b3e23ebbc4da0075767:@github.com/hippware/react-native-background-geolocation-android#992e3d53",
-    "react-native-blur": "^3.2.2",
     "react-native-code-push": "^6.0.0",
     "react-native-config": "^0.12.0",
     "react-native-contacts": "^5.0.6",

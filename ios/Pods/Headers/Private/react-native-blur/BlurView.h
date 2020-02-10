@@ -1,1 +1,1 @@
-../../../../../node_modules/react-native-blur/ios/BlurView.h
+../../../../../node_modules/@react-native-community/blur/ios/BlurView.h
