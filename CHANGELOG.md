@@ -6,6 +6,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * [dev] fill from/to shareType from new location sharing API (#4757)
 * 'Time ago' should update on card while user is on a phone call (#4744)
+* Card does not update when coming from background (#4740)
+* Update: react-native-blur to @react-native-community/blur (PR #4761)
 
 # 4.38.0 - 2020 Feb 6
 
