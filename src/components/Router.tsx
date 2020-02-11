@@ -49,6 +49,7 @@ import MapOptions from './MapOptions'
 import {IPermissionStore} from 'src/store/PermissionStore'
 import LocationSettingsModal, {Props as LocationSettingsProps} from './LiveLocation/LocationSettingsModal'
 import { IFirebaseStore } from '../store/FirebaseStore'
+import {ContactInviteListWithLoad} from './people-lists/ContactInviteList'
 
 const iconClose = require('../../images/iconClose.png')
 
@@ -225,6 +226,7 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
                     <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetailsNew} hasPreview />
                     <Scene key="notifications" path="invitations/:params*" component={NotificationsNew} backButton shiftMap />
                     <Scene key="allFriends" component={AllFriendList} title="Friends" backButton />
+                    <Scene key="shareWithContacts" component={ContactInviteListWithLoad} backButton shiftMap />
                   </Lightbox>
                   <Scene key="chat" path="conversation/:item" component={ChatScreen} />
                   <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />

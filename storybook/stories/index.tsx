@@ -16,7 +16,7 @@ import {
 import OnboardingAccelerometer from '../../src/components/Onboarding/OnboardingAccelerometer'
 import OnboardingNotifications from '../../src/components/Onboarding/OnboardingNotifications'
 import OnboardingFindFriends from '../../src/components/Onboarding/OnboardingFindFriends'
-import MockFindFriends from './FindFriendsList/MockFindFriends'
+import {MockFindFriendsList} from './FindFriendsList/MockFindFriends'
 import SignUpStory from './SignUpStory'
 import NotificationBannerStory from './NotificationBannerStory'
 
@@ -40,6 +40,10 @@ function emptyFn() {
 
 // storiesOf('MapOptions', module).add('MapOptions', () => <MapOptions />)
 
+storiesOf('Find Friends From Contacts', module).add('default', () => (
+  <MockFindFriendsList onboarding={false} />
+))
+
 storiesOf('NotificationBanner', module).add('Notification with Avatar', () => (
   <NotificationBannerStory />
 ))
@@ -51,7 +55,7 @@ storiesOf('Onboarding', module)
   .add('2 - Accelerometer', () => <OnboardingAccelerometer onPress={emptyFn} />)
   .add('3 - Notifications', () => <OnboardingNotifications onPress={emptyFn} />)
   .add('4 - FindFriends', () => <OnboardingFindFriends onPress={emptyFn} onSkip={emptyFn} />)
-  .add('5 - FindFriendsList', () => <MockFindFriends />)
+  .add('5 - FindFriendsList', () => <MockFindFriendsList onboarding />)
   .add('6 - SignUp', () => <SignUpStory />)
 
 // // storiesOf('ImagePicker', module).add('1 - Default', () => <ImagePickerStory />)

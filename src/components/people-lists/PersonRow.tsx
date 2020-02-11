@@ -18,6 +18,7 @@ const PersonRow = ({imageComponent, handleComponent, displayName, style, childre
         flexDirection: 'row',
         alignItems: 'center',
         marginVertical: 10,
+        paddingHorizontal: 10,
       },
       style,
     ]}

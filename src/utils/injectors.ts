@@ -11,6 +11,7 @@ import {ICodePushStore} from 'src/store/CodePushStore'
 import {IPermissionStore} from 'src/store/PermissionStore'
 import {NotificationStore} from 'src/store/NotificationStore'
 import {IAppInfo} from 'src/store/AppInfo'
+import ContactStore from '../store/ContactStore'
 
 // https://mobx-react.js.org/recipes-migration
 
@@ -28,6 +29,7 @@ type AllStores = {
   permissionStore: IPermissionStore
   notificationStore: NotificationStore
   appInfo: IAppInfo
+  contactStore: ContactStore
 }
 
 const getStores = (): AllStores => React.useContext(MobXProviderContext)
@@ -95,4 +97,9 @@ export function useNotificationsStore() {
 export function useAppInfo() {
   const {appInfo} = getStores()
   return useObserver(() => appInfo)
+}
+
+export function useContactStore() {
+  const {contactStore} = getStores()
+  return useObserver(() => contactStore)
 }

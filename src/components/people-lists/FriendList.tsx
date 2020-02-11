@@ -7,7 +7,6 @@ import {Actions} from 'react-native-router-flux'
 import {placeholderStyle} from '../styles'
 import {useWocky} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
-import ShareActivitySheet from './ShareActivitySheet'
 
 const searchIcon = require('../../../images/search.png')
 
@@ -74,7 +73,7 @@ const icon = require('../../../images/followers.png')
 
 const InviteFriendsHeader = () => {
   return (
-    <ShareActivitySheet style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => Actions.shareWithContacts()}>
       <Image source={icon} style={{height: 37, width: 37}} resizeMode="contain" />
       <View style={{marginLeft: 13}}>
         <RText size={16} weight="Medium" color={colors.PINK}>
@@ -84,7 +83,7 @@ const InviteFriendsHeader = () => {
           {'To discover their favorite places!'}
         </RText>
       </View>
-    </ShareActivitySheet>
+    </TouchableOpacity>
   )
 }
 

@@ -59,8 +59,7 @@
   },
   {
     "jobTitle": "",
-    "thumbnailPath":
-      "/Users/kirkham/Library/Developer/CoreSimulator/Devices/EA9519F3-B7A4-46B5-A9BA-60017FEE8A94/data/Containers/Data/Application/B171D4C6-103A-4EF4-A993-9D92E91C1113/Library/Caches/rncontacts_410FE041-5C4E-48DA-B4DE-04C15EA3DBAC.png",
+    "thumbnailPath": "https://www.fillmurray.com/300/300",
     "recordID": "410FE041-5C4E-48DA-B4DE-04C15EA3DBAC",
     "note": "College roommate",
     "postalAddresses": [
@@ -190,5 +189,65 @@
     "hasThumbnail": false,
     "urlAddresses": [],
     "familyName": "Stevington"
+  },
+  {
+    "jobTitle": "",
+    "thumbnailPath": "",
+    "recordID": "F778AEB1-135D-4851-8969-BCBA4F48C1ED:ABPerson1",
+    "note": "",
+    "postalAddresses": [],
+    "emailAddresses": [],
+    "phoneNumbers": [{"label": "iPhone", "number": "(123) 456-7890"}],
+    "company": "",
+    "givenName": "Brownie",
+    "middleName": "",
+    "hasThumbnail": false,
+    "urlAddresses": [],
+    "familyName": "Taco"
+  },
+  {
+    "jobTitle": "",
+    "thumbnailPath": "",
+    "recordID": "F778AEB1-135D-4851-8969-BCBA4F48C1ED:ABPerson2",
+    "note": "",
+    "postalAddresses": [],
+    "emailAddresses": [],
+    "phoneNumbers": [{"label": "iPhone", "number": "(123) 456-7890"}],
+    "company": "",
+    "givenName": "Lucky",
+    "middleName": "",
+    "hasThumbnail": false,
+    "urlAddresses": [],
+    "familyName": "Bartholomew"
+  },
+  {
+    "jobTitle": "",
+    "thumbnailPath": "",
+    "recordID": "F778AEB1-135D-4851-8969-BCBA4F48C1ED:ABPerson3",
+    "note": "",
+    "postalAddresses": [],
+    "emailAddresses": [],
+    "phoneNumbers": [{"label": "iPhone", "number": "(123) 456-7890"}],
+    "company": "",
+    "givenName": "Bart",
+    "middleName": "",
+    "hasThumbnail": false,
+    "urlAddresses": [],
+    "familyName": "Simpson"
+  },
+  {
+    "jobTitle": "",
+    "thumbnailPath": "",
+    "recordID": "F778AEB1-135D-4851-8969-BCBA4F48C1ED:ABPerson4",
+    "note": "",
+    "postalAddresses": [],
+    "emailAddresses": [],
+    "phoneNumbers": [{"label": "iPhone", "number": "(123) 456-7890"}],
+    "company": "",
+    "givenName": "Lisa",
+    "middleName": "",
+    "hasThumbnail": false,
+    "urlAddresses": [],
+    "familyName": "Simpson"
   }
 ]
