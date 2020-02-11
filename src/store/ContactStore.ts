@@ -36,7 +36,7 @@ export class MyContact {
   @observable relationship: UserContactRelationship = null
   @observable smsSent: boolean = false
   contact: Contact
-  phoneNumber?: PhoneNumber
+  @observable phoneNumber?: PhoneNumber
 
   constructor(contact: Contact) {
     this.contact = contact
