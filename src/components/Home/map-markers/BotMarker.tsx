@@ -4,29 +4,21 @@ import Bubble from '../../map/Bubble'
 import {isAlive} from 'mobx-state-tree'
 import {IBot} from 'wocky-client'
 import BotIcon from 'src/components/common/BotIcon'
-import {BotCard} from '../../../store/HomeStore'
 import {colors} from 'src/constants'
 import {useHomeStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
 
 type Props = {
-  card: BotCard
+  bot: IBot
 }
 
-const BotMarker = observer(({card}: Props) => {
+const BotMarker = observer(({bot}: Props) => {
   const {selectedId, detailsMode, select} = useHomeStore()
-  const isSelected = card.id === selectedId
-  let bot: IBot
-  // dirty workaround for #3013 (until we will not found the real case)
-  try {
-    bot = card.bot
-  } catch {
-    return null
-  }
   if (!bot || !isAlive(bot) || !bot.location) {
     return null
   }
+  const isSelected = bot.id === selectedId
   // don't show marker for 'details' mode (when bot details page is shown)
   if (detailsMode && !isSelected) {
     return null
@@ -37,10 +29,10 @@ const BotMarker = observer(({card}: Props) => {
       coordinate={{latitude, longitude}}
       zIndex={isSelected ? 2000 : 1} // selected marker should be on top #2696
       onPress={() => {
-        select(card.id)
-        Actions.botDetails({botId: card.id, preview: true})
+        select(bot.id)
+        Actions.botDetails({botId: bot.id, preview: true})
       }}
-      key={card.bot.id}
+      key={bot.id}
       stopPropagation
     >
       <Bubble
