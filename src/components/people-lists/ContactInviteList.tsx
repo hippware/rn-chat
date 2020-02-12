@@ -161,8 +161,8 @@ export const FindFriendsHeader = ({style}) => (
         style={{width: 60, height: 70, marginTop: 5}}
         source={require('../../../images/iconBot.png')}
       />
-      <RText style={[styles.onboardingH1, {textAlign: 'left', marginLeft: 20, width: 176}]}>
-        Find Friends on tinyrobot!
+      <RText style={[styles.onboardingH1, {textAlign: 'left', marginLeft: 20}]}>
+        {'Find Friends\r\non tinyrobot!'}
       </RText>
     </View>
 
