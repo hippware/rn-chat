@@ -14,6 +14,7 @@ import {observer} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
 import LocationSwitchPanel from './LocationSwitchPanel'
 import {useAppState} from 'react-native-hooks'
+import TimeAgo from '../common/TimeAgo'
 
 type Props = {
   item: string
@@ -157,7 +158,11 @@ const InfoPills = observer(({profile}: {profile: IProfile}) =>
   profile.location ? (
     <View style={{flexDirection: 'row'}}>
       <Pill>{profile.addressData.locationShort}</Pill>
-      {!profile.isOwn && <Pill>{profile.whenLastLocationSent}</Pill>}
+      {!profile.isOwn && (
+        <Pill>
+          <TimeAgo time={profile.location.createdAt} />
+        </Pill>
+      )}
     </View>
   ) : profile.isOwn ? null : (
     <Pill solidColor="rgb(155,155,155)">Not Sharing Location</Pill>
