@@ -8,6 +8,14 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * 'Time ago' should update on card while user is on a phone call (#4744)
 * Card does not update when coming from background (#4740)
 * Update: react-native-blur to @react-native-community/blur (PR #4761)
+  * @babel/core (PR #4763), ts-node (PR #4764)
+  * react-native-fbsdk (PR #4765), libphonenumber-js (PR #4766, PR #4776)
+  * @babel/node (PR #4768), react-native-gesture-handler (PR #4770)
+  * mobx-react (PR #4771)
+* Invite Friends CTAs should open a list of phone contacts (#4754)
+* [dev] Remove bottom card list from HomeStore; Simplify logic (#4748)
+  * Keep selected avatar at the top/in focus (#3800)
+* Find Friends Adjustments (#3783)
 
 # 4.38.0 - 2020 Feb 6
 
