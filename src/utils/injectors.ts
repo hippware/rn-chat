@@ -32,7 +32,7 @@ type AllStores = {
   contactStore: ContactStore
 }
 
-const getStores = (): AllStores => React.useContext(MobXProviderContext)
+const getStores = (): AllStores => React.useContext(MobXProviderContext as any)
 
 export function useWocky(): IWocky {
   const {wocky} = getStores()
