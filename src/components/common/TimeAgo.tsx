@@ -1,49 +1,40 @@
-import React, {Component} from 'react'
-import {Text} from 'react-native'
+import React, {useState, useEffect} from 'react'
 import moment from 'moment'
+import RText, {IRTextProps} from './RText'
 
-type Props = {
+interface IProps extends IRTextProps {
   time: Date
   hideAgo?: boolean
 }
 
-export default class TimeAgo extends Component<Props> {
-  state: {timer: null | number; text: string} = {timer: null, text: ''}
+const TimeAgo = ({time, hideAgo, ...rest}: IProps) => {
+  const [text, setText] = useState<string>(moment(time).fromNow(hideAgo))
+  const [timer, setTimer] = useState<number | null>(null)
 
-  static defaultProps = {
-    hideAgo: false,
-  }
-
-  componentDidMount() {
-    this.createTimer()
-  }
-
-  createTimer = () => {
-    this.setState({
-      // raise timer randomly to avoid typical texts 11s, 21s, etc.
-      timer: setTimeout(() => {
-        this.update()
-      }, 7000 + Math.random() * 7000),
-    })
-  }
-
-  componentWillUnmount() {
-    if (this.state.timer) {
-      clearTimeout(this.state.timer)
+  useEffect(() => {
+    createTimer()
+    return () => {
+      if (timer) {
+        clearTimeout(timer)
+      }
     }
+  }, [])
+
+  const createTimer = () => {
+    const num: any = setTimeout(update, 7000 + Math.random() * 7000)
+    setTimer(num)
   }
 
-  update = () => {
-    const {time, hideAgo} = this.props
-    const text = moment(time).fromNow(hideAgo)
+  const update = () => {
+    const newText = moment(time).fromNow(hideAgo)
     // update state only if text is changed (to avoid frequent re-render)
-    if (text !== this.state.text) {
-      this.setState({text})
+    if (newText !== text) {
+      setText(newText)
     }
-    this.createTimer()
+    createTimer()
   }
 
-  render() {
-    return <Text {...this.props}>{this.state.text}</Text>
-  }
+  return <RText {...rest}>{text}</RText>
 }
+
+export default TimeAgo

@@ -1,5 +1,4 @@
-import {types, Instance, SnapshotIn, getRoot} from 'mobx-state-tree'
-import moment from 'moment'
+import {types, Instance, SnapshotIn} from 'mobx-state-tree'
 import {UserActivityType} from '../transport/types'
 
 export const createLocation = ({
