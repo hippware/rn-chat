@@ -8181,10 +8181,10 @@ react-native-config@^0.12.0:
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-0.12.0.tgz#910e52226b60e0c9f2b648772eea2a93f8701751"
   integrity sha512-lC8QOZCGCXgFh74uWSVGMaChg+Qf2BScWzVd9C4yrFnfxrHSFyIekqOOq/sjE8Uu2ifgxZmSiK1Z8EEi78AmQA==
 
-react-native-contacts@^5.0.6:
-  version "5.0.6"
-  resolved "https://registry.yarnpkg.com/react-native-contacts/-/react-native-contacts-5.0.6.tgz#929aa236eced56ea5662807ce8e9afb4f4bbbfe2"
-  integrity sha512-C0S0/rFxGh8URkxPigeb9ofAa3uzuaz5N++uRZx+p1KLkJItTvWj2eley2n3pA+ziePy4UrjP/W+2yYeUlxSqQ==
+react-native-contacts@^5.0.7:
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/react-native-contacts/-/react-native-contacts-5.0.7.tgz#19b59edd3702ebdc389db266089e5f9370ea7501"
+  integrity sha512-IRMiJCBJ98nK4v/oNueD1hXiqbmUOgncSIdL60NVSygH4ksqn2E2ipGwy81GAYmMk/yRgJgDB47QmOBlYt9Q1g==
 
 react-native-country-picker-modal@^1.10.0:
   version "1.10.0"
@@ -8198,10 +8198,10 @@ react-native-country-picker-modal@^1.10.0:
     prop-types "15.7.2"
     react-async-hook "3.6.1"
 
-react-native-device-info@5.4.1:
-  version "5.4.1"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-5.4.1.tgz#507d2cd4be98813fc0421a35731b471b86ca194d"
-  integrity sha512-eb1fadKkaCy0C6p2gozGQ6vHO+rhQBh1FTN+l7pE23McfI7EKtp6Wy7OCexHvmEe6xsxoHK93cMiCsZuyaTnMA==
+react-native-device-info@5.5.1:
+  version "5.5.1"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-5.5.1.tgz#1b942f0d868161f96305055c296818ba415813dc"
+  integrity sha512-ceaGnxOAULRzVpx03bPjbayuHD5g21CcdmKKvLK5mV72sbguNZbTHNmnH3//Bx9Hfy1XOm6zHhM5Yfb7Glqplw==
 
 react-native-emoji-selector@^0.1.7:
   version "0.1.7"
