@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.39.0 - 2020 Feb 13
+
 * [dev] fill from/to shareType from new location sharing API (#4757)
 * 'Time ago' should update on card while user is on a phone call (#4744)
 * Card does not update when coming from background (#4740)
@@ -12,10 +14,13 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * react-native-fbsdk (PR #4765), libphonenumber-js (PR #4766, PR #4776)
   * @babel/node (PR #4768), react-native-gesture-handler (PR #4770)
   * mobx-react (PR #4771)
+  * react-native-contacts, react-native-device-info (PR #4778)
 * Invite Friends CTAs should open a list of phone contacts (#4754)
 * [dev] Remove bottom card list from HomeStore; Simplify logic (#4748)
   * Keep selected avatar at the top/in focus (#3800)
 * Find Friends Adjustments (#3783)
+* Preparation work for nearby sharing (PR #4781)
+  * "Sharing location" toast message (#4661)
 
 # 4.38.0 - 2020 Feb 6
 
