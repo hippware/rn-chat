@@ -1,6 +1,6 @@
 import {types, Instance} from 'mobx-state-tree'
 import {Event, IEventData} from './Event'
-import {IProfilePartial, Profile} from './Profile'
+import {IProfilePartial, Profile, FriendShareType, FriendShareTypeEnum} from './Profile'
 import {Base} from './Base'
 import {EventRequestTypes} from './EventList'
 
@@ -11,7 +11,8 @@ export const EventLocationShare = types
     Event,
     types.model({
       sharedWith: types.reference(Profile),
-      expiresAt: types.Date,
+      shareType: types.maybe(FriendShareType),
+      ownShareType: types.maybe(FriendShareType),
     })
   )
   .views(() => ({
@@ -21,7 +22,11 @@ export const EventLocationShare = types
   }))
   .actions(self => ({
     process: () => {
-      self.service.profile.addLocationSharer(self.sharedWith, self.date, self.expiresAt)
+      self.sharedWith.shareType = self.shareType
+      self.sharedWith.ownShareType = self.ownShareType
+      self.sharedWith.sharesLocation = self.ownShareType === FriendShareTypeEnum.ALWAYS
+      // TODO process it with another Befriend notification
+      self.service.profile.addFriend(self.sharedWith)
     },
   }))
   .named('EventLocationShare')
@@ -30,5 +35,6 @@ export interface IEventLocationShare extends Instance<typeof EventLocationShare>
 
 export interface IEventLocationShareData extends IEventData {
   sharedWith: IProfilePartial
-  expiresAt: Date
+  shareType: FriendShareTypeEnum
+  ownShareType: FriendShareTypeEnum
 }

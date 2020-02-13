@@ -20,7 +20,7 @@ export const EventLocationShareEnd = types
   }))
   .actions(self => ({
     process: () => {
-      self.service.profile.removeLocationSharer(self.sharedEndWith)
+      self.sharedEndWith.sharesLocation = false
     },
   }))
   .named('EventLocationShareEnd')
