@@ -24,7 +24,7 @@ export const EventLocationShare = types
     process: () => {
       self.sharedWith.shareType = self.shareType
       self.sharedWith.ownShareType = self.ownShareType
-      self.sharedWith.sharesLocation = self.ownShareType === FriendShareTypeEnum.ALWAYS
+      self.sharedWith.setSharesLocation(self.ownShareType === FriendShareTypeEnum.ALWAYS)
       // TODO process it with another Befriend notification
       self.service.profile.addFriend(self.sharedWith)
     },
