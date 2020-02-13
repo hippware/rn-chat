@@ -70,9 +70,12 @@ export const NOTIFICATIONS_PROPS = `
           }
         }
         ... on LocationShareNotification {
-          expiresAt
           user {
             ${PROFILE_PROPS}
+          }
+          shareTypes {
+            from
+            to
           }
         }
         ... on UserInvitationNotification {

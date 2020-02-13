@@ -47,6 +47,7 @@ export const Profile = types
       botsSize: 0,
       hasSentInvite: false,
       hasReceivedInvite: false,
+      sharesLocation: false,
       isFriend: false,
       isBlocked: false,
       roles: types.optional(types.array(types.string), []),
@@ -70,9 +71,6 @@ export const Profile = types
     return res
   })
   .views(self => ({
-    get sharesLocation() {
-      return self.ownShareType === FriendShareTypeEnum.ALWAYS
-    },
     get receivesLocationShare() {
       return self.shareType === FriendShareTypeEnum.ALWAYS
     },
@@ -89,6 +87,9 @@ export const Profile = types
     },
   }))
   .actions(self => ({
+    setSharesLocation: (value: boolean) => {
+      self.sharesLocation = value
+    },
     sentInvite: () => {
       self.hasSentInvite = true
       if (self.hasSentInvite && self.hasReceivedInvite) {
@@ -124,9 +125,16 @@ export const Profile = types
     const superLoad = self.load
     return {
       actions: {
-        load({avatar, ...data}: any) {
+        load({avatar, shareType, ownShareType, ...data}: any) {
           if (avatar) {
             self.avatar = self.service.files.get(avatar.id, avatar)
+          }
+          if (shareType) {
+            self.shareType = shareType
+          }
+          if (ownShareType) {
+            self.ownShareType = ownShareType
+            self.sharesLocation = ownShareType === FriendShareTypeEnum.ALWAYS
           }
           superLoad(data)
 
@@ -317,6 +325,9 @@ export interface IProfilePartial {
   followedSize: number
   status: string
   statusUpdatedAt: Date
+  ownShareType: FriendShareTypeEnum
+  shareType: FriendShareTypeEnum
+  sharesLocation: boolean
   hidden: {
     enabled: boolean
     expires: Date

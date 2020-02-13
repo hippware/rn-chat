@@ -1,5 +1,5 @@
 import {types, getSnapshot, flow, Instance, getRoot} from 'mobx-state-tree'
-import {Profile, IProfile, ProfilePaginableList, FriendShareTypeEnum} from './Profile'
+import {Profile, IProfile, ProfilePaginableList} from './Profile'
 import {createUpdatable} from './Updatable'
 import {createUploadable} from './Uploadable'
 import {InvitationPaginableList, Invitation} from './Invitation'
@@ -67,7 +67,6 @@ export const OwnProfile = types
   .actions(self => ({
     addFriend: (profile: IProfile) => {
       self.friends.add(profile)
-      self.shareType = FriendShareTypeEnum.DISABLED // TODO pass it as parameter to addFriend?
       self.receivedInvitations.remove(profile.id)
       self.sentInvitations.remove(profile.id)
       profile.setFriend(true)

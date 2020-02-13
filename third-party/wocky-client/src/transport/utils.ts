@@ -330,12 +330,21 @@ export function convertImage(image, preserveAspect: boolean = false) {
   }
 }
 
-export function convertProfile({media, bots, presence, ...data}): IProfilePartial {
+export function convertProfile({
+  media,
+  bots,
+  presence,
+  ownShareType,
+  shareType,
+  ...data
+}): IProfilePartial {
   return {
     avatar: convertImage(media),
     status: presence ? presence.status : undefined,
     statusUpdatedAt: presence ? new Date(presence.updatedAt) : undefined,
     botsSize: bots ? bots.totalCount : undefined,
+    ownShareType,
+    shareType,
     ...data,
   } as IProfilePartial
 }
@@ -463,8 +472,9 @@ export function convertNotification(edge: any): IEventData | {deletedId: string}
     case 'LocationShareNotification':
       const locationShareNotification: IEventLocationShareData = {
         time,
-        expiresAt: data.expiresAt ? iso8601toDate(data.expiresAt) : new Date(), // workaround for old notifications with null expiresAt
         sharedWith: convertProfile({...data.user, _accessedAt: time}),
+        shareType: data.shareTypes.to,
+        ownShareType: data.shareTypes.from,
         id,
       }
       return locationShareNotification
