@@ -1,5 +1,4 @@
-import {types, Instance, SnapshotIn, getRoot} from 'mobx-state-tree'
-import moment from 'moment'
+import {types, Instance, SnapshotIn} from 'mobx-state-tree'
 import {UserActivityType} from '../transport/types'
 
 export const createLocation = ({
@@ -40,20 +39,6 @@ export const Location = types
   })
   .volatile(() => ({
     isCurrent: false,
-  }))
-  .views(self => ({
-    get fromNow(): string {
-      const now: Date = (getRoot(self) as any).wocky.timer.minute
-      if (self.createdAt) {
-        let diff = moment(self.createdAt).diff(now)
-
-        // correct for server timestamps ahead of `now`
-        if (diff > 0) diff = 0
-
-        return moment.duration(diff).humanize(true)
-      }
-      return ''
-    },
   }))
   .actions(self => ({
     load: (data: any) => {
