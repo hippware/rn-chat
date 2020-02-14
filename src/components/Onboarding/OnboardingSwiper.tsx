@@ -120,6 +120,7 @@ const OnboardingSwiper = inject(
           </RText>
         )}
         <Swiper
+          showsButtons={showAlmostDone}
           paginationStyle={{top: 8, bottom: undefined}}
           dotColor={colors.GREY}
           activeDotColor={colors.PINK}
