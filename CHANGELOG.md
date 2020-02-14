@@ -4,6 +4,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Fix tests: Don't pass invalid `location:false`. (PR #4784)
+* Find Friends Adjustments (#3783)
+
 # 4.39.0 - 2020 Feb 13
 
 * [dev] fill from/to shareType from new location sharing API (#4757)
