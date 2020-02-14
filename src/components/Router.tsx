@@ -188,7 +188,6 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
             <Scene key="connect" on={authStore!.login} success="checkHandle" failure="preConnection" />
             <Scene key="checkProfile" on={() => wocky!.profile} success="checkHandle" failure="connect" />
             <Scene key="checkHandle" on={() => wocky!.profile!.handle} success="checkOnboarded" failure="signUp" />
-            {/* <Scene key="checkOnboarded" on={() => permissionStore!.onboarded} success="logged" failure="onboarding" /> */}
             <Scene key="checkOnboarded" on={() => permissionStore!.onboarded} success={() => {
               Actions.logged()
               if (firebaseStore!.inviteCode) {
