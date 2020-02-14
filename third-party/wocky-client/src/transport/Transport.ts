@@ -636,7 +636,7 @@ export class Transport {
 
   async friendShareUpdate(
     userId: string,
-    location: ILocationSnapshot | null = null,
+    location?: ILocationSnapshot,
     shareType: FriendShareTypeEnum = FriendShareTypeEnum.DISABLED,
     shareConfig?: IFriendShareConfig
   ): Promise<void> {
@@ -668,7 +668,7 @@ export class Transport {
       variables: {
         input: {
           userId,
-          location: !!location && convertLocation(location, this.resource),
+          location: location ? convertLocation(location, this.resource) : undefined,
           shareType,
           shareConfig,
         },
