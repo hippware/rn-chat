@@ -3,6 +3,7 @@ import {IWocky, IProfile, FriendShareTypeEnum} from 'wocky-client'
 import RNContacts, {Contact, PhoneNumber} from 'react-native-contacts'
 import {log} from 'src/utils/logger'
 import {PermissionsAndroid, Platform} from 'react-native'
+import {parsePhoneNumberFromString} from 'libphonenumber-js'
 
 // todo: revisit these labels with the Android port
 const labelPrecedence = ['main', 'mobile', 'iPhone', 'home', 'work', 'other']
@@ -73,12 +74,19 @@ export class MyContact {
     }
 
     const num = this.contact.phoneNumbers.find(n => n.number === bulkData.phoneNumber)
+    const formatted = parsePhoneNumberFromString(bulkData.e164PhoneNumber)
     if (this.phoneNumber) {
       if (num && isMoreImportant(num, this.phoneNumber)) {
-        this.phoneNumber = num
+        this.phoneNumber = {
+          ...num,
+          number: formatted ? formatted.formatInternational() : bulkData.e164PhoneNumber,
+        }
       }
-    } else {
-      this.phoneNumber = num
+    } else if (num) {
+      this.phoneNumber = {
+        ...num,
+        number: formatted ? formatted.formatInternational() : bulkData.e164PhoneNumber,
+      }
     }
   }
 }
