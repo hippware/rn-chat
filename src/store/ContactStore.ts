@@ -75,10 +75,10 @@ export class MyContact {
     const num = this.contact.phoneNumbers.find(n => n.number === bulkData.phoneNumber)
     if (this.phoneNumber) {
       if (num && isMoreImportant(num, this.phoneNumber)) {
-        this.phoneNumber = num
+        this.phoneNumber = {...num, number: bulkData.phoneNumber}
       }
-    } else {
-      this.phoneNumber = num
+    } else if (num) {
+      this.phoneNumber = {...num, number: bulkData.phoneNumber}
     }
   }
 }
