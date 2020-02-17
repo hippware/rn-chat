@@ -48,7 +48,7 @@
     "bugsnag-react-native": "^2.23.4",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.0",
-    "libphonenumber-js": "^1.7.39",
+    "libphonenumber-js": "^1.7.41",
     "lodash": "^4.17.13",
     "mobx": "^5.15.4",
     "mobx-react": "^6.1.7",

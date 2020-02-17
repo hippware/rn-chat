@@ -6137,10 +6137,10 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-libphonenumber-js@^1.7.39:
-  version "1.7.39"
-  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.7.39.tgz#cd20afa0283b057af921a341135e7c9e682470f4"
-  integrity sha512-GdouRX93lr/DmHZ4/ga0npl/0FyhHuborGA/Cgo//d87taUjXjKJwkGMK7q/5b1GLfwBjSZWB+n5SDvYuIqUnQ==
+libphonenumber-js@^1.7.41:
+  version "1.7.41"
+  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.7.41.tgz#a6af065001773a7c656e57a1ac388ff4b873bba6"
+  integrity sha512-imrgnCqJmfHMLaW3E3l1VlwEEvN91n4m1wtZdfeBPYtz/k3B48089c6jlM3++jNRSHD9GkNTNzDhzbo/X4m8TQ==
   dependencies:
     minimist "^1.2.0"
     xml2js "^0.4.17"
