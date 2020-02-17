@@ -465,10 +465,26 @@ function onHttp(response) {
     if (response.status === 401 || response.status === 403) {
       BackgroundGeolocation.stop()
       BackgroundGeolocation.stopSchedule()
-      bugsnagNotify(
-        new Error('BackgroundGeolocation.stop() due to forbidden'),
-        'location_store_onhttp_4xx',
-        {response}
+
+      BackgroundGeolocation.getState(
+        state => {
+          bugsnagNotify(
+            new Error('BackgroundGeolocation.stop() due to forbidden'),
+            'location_store_onhttp_4xx',
+            {
+              response,
+              headers: state.headers,
+              params: state.params,
+              url: state.url,
+            }
+          )
+        },
+        error => {
+          bugsnagNotify(new Error(error), 'location_store_getState', {
+            response,
+            error,
+          })
+        }
       )
       BackgroundGeolocation.logger.error(`${prefix} BackgroundGeolocation.stop() due to forbidden`)
     }
