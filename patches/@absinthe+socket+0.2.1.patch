@@ -154,6 +154,30 @@ index 705bd03..7821a7e 100644
  }.bind(undefined);
  
  var onTimeout = function onTimeout(absintheSocket, notifier) {
+diff --git a/node_modules/@absinthe/socket/src/create.js b/node_modules/@absinthe/socket/src/create.js
+index 9b51355..c6a2abd 100644
+--- a/node_modules/@absinthe/socket/src/create.js
++++ b/node_modules/@absinthe/socket/src/create.js
+@@ -16,7 +16,19 @@ import {createErrorEvent} from "./notifier/event/eventCreators";
+ 
+ import type {AbsintheSocket} from "./types";
+ 
++import BackgroundGeolocation from 'react-native-background-geolocation-android'
++
+ const onMessage = absintheSocket => (message: Message<>) => {
++
++  const payload = message.payload
++  const text = JSON.stringify(payload)
++  if (payload && text && text.includes('sharedLocations"')) {
++    const text2 = `ABSINTHE create.js onMessage isDataMessage=${withSubscription.isDataMessage(message)} loc_id=${payload.result.data.sharedLocations.location.id} payload=${text}`
++    BackgroundGeolocation.logger.info(text2)
++    if (__DEV__)
++      console.log(text2)
++  }
++
+   if (withSubscription.isDataMessage(message)) {
+     withSubscription.onDataMessage(absintheSocket, message);
+   }
 diff --git a/node_modules/@absinthe/socket/src/pushRequestUsing.js b/node_modules/@absinthe/socket/src/pushRequestUsing.js
 index 9e5f12d..2c38c75 100644
 --- a/node_modules/@absinthe/socket/src/pushRequestUsing.js
@@ -170,3 +194,31 @@ index 9e5f12d..2c38c75 100644
  
  const onTimeout = (absintheSocket, notifier) =>
    notifierNotifyActive(
+diff --git a/node_modules/@absinthe/socket/src/subscription.js b/node_modules/@absinthe/socket/src/subscription.js
+index de44085..97ba78b 100644
+--- a/node_modules/@absinthe/socket/src/subscription.js
++++ b/node_modules/@absinthe/socket/src/subscription.js
+@@ -27,6 +27,8 @@ import {createErrorEvent} from "./notifier/event/eventCreators";
+ import type {AbsintheSocket, NotifierPushHandler} from "./types";
+ import type {Notifier} from "./notifier/types";
+ 
++import BackgroundGeolocation from 'react-native-background-geolocation-android'
++
+ type SubscriptionPayload<Data> = {|
+   result: GqlResponse<Data>,
+   subscriptionId: string
+@@ -140,6 +142,14 @@ const onDataMessage = (
+     payload.subscriptionId
+   );
+ 
++  const text = JSON.stringify(payload)
++  if (payload && text && text.includes('sharedLocations"')) {
++    const text2 = `ABSINTHE subscription.js onDataMessage notifier=${!!notifier} loc_id=${payload.result.data.sharedLocations.location.id}`
++    BackgroundGeolocation.logger.info(text2)
++    if (__DEV__)
++      console.log(text2)
++  }
++
+   if (notifier) {
+     notifierNotifyResultEvent(notifier, payload.result);
+   }
