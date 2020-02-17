@@ -1189,11 +1189,16 @@ export class Transport {
           location,
         } = result.data.sharedLocations
 
-        this.debugLog(`WOCKY TRANSPORT subscribeSharedLocations 00 user=${id} loc_id=${location.id} capturedAt=${location.capturedAt} result.data.sharedLocations=`, result.data.sharedLocations)
+        this.debugLog(
+          `WOCKY TRANSPORT subscribeSharedLocations 00 user=${id} loc_id=${location.id} capturedAt=${location.capturedAt} result.data.sharedLocations=`,
+          result.data.sharedLocations
+        )
 
         this.sharedLocation = {id, location}
 
-        this.debugLog(`WOCKY TRANSPORT subscribeSharedLocations 90 user=${id} loc_id=${location.id} capturedAt=${location.capturedAt}`)
+        this.debugLog(
+          `WOCKY TRANSPORT subscribeSharedLocations 90 user=${id} loc_id=${location.id} capturedAt=${location.capturedAt}`
+        )
       }),
     })
     this.subscriptions.push(subscription)
@@ -1461,30 +1466,38 @@ export class Transport {
 
     const socket = new PhoenixSocket(socketEndpoint, {
       reconnectAfterMs: () => 100000000, // disable auto-reconnect
-      logger: process.env.WOCKY_VERBOSE
-        ? (kind, msg, data) => {
-            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Cyclic_object_value#Examples
-            // const getCircularReplacer = () => {
-            //   const seen = new WeakSet()
-            //   return (key, value) => {
-            //     // if (typeof value === 'object' && value !== null) {
-            //     //   if (seen.has(value)) {
-            //     //     return
-            //     //   }
-            //     //   seen.add(value)
-            //     // }
-            //     return value
-            //   }
-            // }
+      logger:
+        true || process.env.WOCKY_VERBOSE
+          ? (kind, msg, data) => {
+              // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Cyclic_object_value#Examples
+              // const getCircularReplacer = () => {
+              //   const seen = new WeakSet()
+              //   return (key, value) => {
+              //     // if (typeof value === 'object' && value !== null) {
+              //     //   if (seen.has(value)) {
+              //     //     return
+              //     //   }
+              //     //   seen.add(value)
+              //     // }
+              //     return value
+              //   }
+              // }
 
-            // tslint:disable-next-line
+              const text = JSON.stringify(data)
+              if (data && text && text.includes('sharedLocations"')) {
+                this.debugLog(`WOCKY TRANSPORT raw=${text}`)
+              }
+
+              // tslint:disable-next-line
+              /*
             console.log(
               `${new Date().toISOString()} | socket(${
                 this.instance
               }):${kind} | ${msg} | ${JSON.stringify(data)}`
             )
-          }
-        : undefined,
+            */
+            }
+          : undefined,
     })
     socket.onError(err => {
       // console.warn('& graphql Phoenix socket error', err)
