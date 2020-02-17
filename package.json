@@ -51,7 +51,7 @@
     "libphonenumber-js": "^1.7.39",
     "lodash": "^4.17.13",
     "mobx": "^5.15.4",
-    "mobx-react": "^6.1.7",
+    "mobx-react": "^6.1.8",
     "mobx-state-tree": "^3.15.0",
     "moment": "^2.24.0",
     "mst-middlewares": "3.10.2",
