@@ -45,7 +45,7 @@
     "apollo-link": "^1.2.3",
     "assert": "^2.0.0",
     "base-64": "^0.1.0",
-    "bugsnag-react-native": "^2.23.4",
+    "bugsnag-react-native": "^2.23.6",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
     "libphonenumber-js": "^1.7.41",
