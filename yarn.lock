@@ -8154,9 +8154,9 @@ react-native-background-fetch@^2.7.1, react-native-background-fetch@~2.7.1:
     plist "^3.0.1"
     xcode "^2.0.0"
 
-"react-native-background-geolocation-android@git+https://42af07bf147313e5c1053b3e23ebbc4da0075767:@github.com/hippware/react-native-background-geolocation-android#992e3d53":
-  version "3.4.3"
-  resolved "git+https://42af07bf147313e5c1053b3e23ebbc4da0075767:@github.com/hippware/react-native-background-geolocation-android#992e3d53aa21a3528cc14fcbc1f63baa98a48e7b"
+"react-native-background-geolocation-android@git+https://42af07bf147313e5c1053b3e23ebbc4da0075767:@github.com/transistorsoft/react-native-background-geolocation-android#3.5.1":
+  version "3.5.1"
+  resolved "git+https://42af07bf147313e5c1053b3e23ebbc4da0075767:@github.com/transistorsoft/react-native-background-geolocation-android#33c8614cb194eabf19af1b719de0c6ea82eb265e"
   dependencies:
     fast-plist "^0.1.2"
     plist "^2.0.1"
