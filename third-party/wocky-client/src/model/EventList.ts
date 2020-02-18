@@ -13,6 +13,10 @@ import {PaginableLoadType} from '../transport/Transport'
 import {waitFor} from '../transport/utils'
 import {EventLocationShare, EventLocationShareType} from './EventLocationShare'
 import {EventLocationShareEnd} from './EventLocationShareEnd'
+import {
+  EventLocationShareNearbyStart,
+  EventLocationShareNearbyStartType,
+} from './EventLocationShareNearbyStart'
 
 export const EventRequestTypes = [EventFriendInviteType, EventBotInviteType]
 export const EventUpdatesTypes = [
@@ -20,6 +24,7 @@ export const EventUpdatesTypes = [
   EventBotGeofenceType,
   EventBotInviteResponseType,
   EventLocationShareType,
+  EventLocationShareNearbyStartType,
 ]
 
 export const EventEntity = types.union(
@@ -30,6 +35,7 @@ export const EventEntity = types.union(
   EventFriendInvite,
   EventBotInvite,
   EventLocationShare,
+  EventLocationShareNearbyStart,
   EventLocationShareEnd
 )
 export type IEventEntity = typeof EventEntity.Type
@@ -43,6 +49,9 @@ export function createEvent(params: any, service: any): IEventEntity {
   }
   if (params.sharedWith) {
     params.sharedWith = service.profiles.get(params.sharedWith.id, params.sharedWith)
+  }
+  if (params.sharedNearbyWith) {
+    params.sharedNearbyWith = service.profiles.get(params.sharedNearbyWith.id, params.sharedWith)
   }
   if (params.sharedEndWith) {
     params.sharedEndWith = service.profiles.get(params.sharedEndWith.id, params.sharedEndWith)

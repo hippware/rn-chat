@@ -1174,8 +1174,12 @@ export class Transport {
       },
     }).subscribe({
       next: action((result: any) => {
-        // console.log('NOTIFICATION: ', JSON.stringify(result.data.notifications))
         this.notification = convertNotification({node: result.data.notifications})
+        // console.log(
+        //   'NOTIFICATION: ',
+        //   JSON.stringify(result.data.notifications),
+        //   JSON.stringify(this.notification)
+        // )
       }),
     })
     this.subscriptions.push(subscription)

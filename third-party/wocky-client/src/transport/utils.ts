@@ -11,6 +11,7 @@ import {ILocationSnapshot} from '../model/Location'
 import {IMessageIn} from '../model/Message'
 import {IEventLocationShareEndData} from '../model/EventLocationShareEnd'
 import {IEventLocationShareData} from '../model/EventLocationShare'
+import {IEventLocationShareNearbyStartData} from '../model/EventLocationShareNearbyStart'
 import {log} from '../logger'
 
 export async function waitFor(
@@ -478,6 +479,13 @@ export function convertNotification(edge: any): IEventData | {deletedId: string}
         id,
       }
       return locationShareNotification
+    case 'LocationShareNearbyStartNotification':
+      const locationShareNearbyStartNotification: IEventLocationShareNearbyStartData = {
+        time,
+        sharedNearbyWith: convertProfile({...data.user, _accessedAt: time}),
+        id,
+      }
+      return locationShareNearbyStartNotification
     default:
       log('Failed to process notification: ' + JSON.stringify(edge))
       return null
