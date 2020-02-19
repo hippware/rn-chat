@@ -18,13 +18,6 @@ describe('Friend Share', () => {
     activity: 'on_foot' as UserActivityType,
     activityConfidence: 100,
   }
-  const differentLocation2 = {
-    latitude: 11.2,
-    longitude: 11.2,
-    accuracy: 1,
-    activity: 'on_foot' as UserActivityType,
-    activityConfidence: 100,
-  }
 
   // const theLocation = {latitude: 1.1, longitude: 2.1, accuracy: 1}
   // const differentLocation = {longitude: 1.1, latitude: 1.1, accuracy: 1}
@@ -116,9 +109,7 @@ describe('Friend Share', () => {
     await waitFor(() => !!friend!.sharesLocation, 'start sharing location')
     // change location
     await bob.setLocation(differentLocation)
-    // hm, nothin happened, try again another location?
-    await bob.setLocation(differentLocation2)
-    // TODO:   await waitFor(() => !friend!.sharesLocation, 'end sharing location')
+    await waitFor(() => !friend!.sharesLocation, 'end sharing location')
   })
 
   afterAll(async () => {

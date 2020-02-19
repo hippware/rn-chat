@@ -64,6 +64,11 @@ export const NOTIFICATIONS_PROPS = `
             ${PROFILE_PROPS}
           }
         }
+        ... on LocationShareNearbyEndNotification {
+          user {
+            ${PROFILE_PROPS}
+          }
+        }
         ... on LocationShareEndNotification {
           user {
             ${PROFILE_PROPS}
