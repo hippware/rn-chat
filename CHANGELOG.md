@@ -5,12 +5,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Update: @babel/runtime (PR #4787), libphonenumber-js (PR #4789)
- * graphql-tag (PR #4790), @types/react-test-renderer (PR #4794)
- * @types/jest (PR #4800), husky (PR #4802)
- * react-native-background-geolocation-android
- * @react-native-community/netinfo, react-native-code-push
- * bugsnag-react-native, react-native-gesture-handler
- * react-native-geolocation-service, react-native-device-info (PR #4804)
+  * graphql-tag (PR #4790), @types/react-test-renderer (PR #4794)
+  * @types/jest (PR #4800), husky (PR #4802)
+  * react-native-background-geolocation-android
+  * @react-native-community/netinfo, react-native-code-push
+  * bugsnag-react-native, react-native-gesture-handler
+  * react-native-geolocation-service, react-native-device-info (PR #4804)
 * Fix tests: Don't pass invalid `location:false`. (PR #4784)
 * Find Friends Adjustments (#3783, PR #4783, PR #4803)
 * Log some more data to bugsnag for http 4xx errors. (PR #4786)
