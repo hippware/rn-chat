@@ -156,16 +156,15 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
     }
 
     const showSharingModal = async () => {
-      // todo: how can we know which profile sent the request that led to the firebase link click-through?
-      // const profile: IProfile = await wocky!.loadProfile(params.params)
+      const profile = await wocky!.userInviteGetSender(firebaseStore!.inviteCode)
       Actions.locationSettingsModal({
         settingsType: 'ACCEPT_REJECT_REQUEST',
-        // profile,
-        // displayName: profile.handle,
+        profile,
+        displayName: profile!.handle,
         onOkPress: shareType => {
-          // profile.invite(shareType).then(() => {
-          //   analytics.track('user_follow', (profile as any).toJSON())
-          // })
+          profile!.invite(shareType).then(() => {
+            analytics.track('user_follow', (profile as any).toJSON())
+          })
           Actions.pop()
         },
         onCancelPress: Actions.pop

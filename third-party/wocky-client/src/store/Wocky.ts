@@ -395,6 +395,10 @@ export const Wocky = types
         const users: IProfilePartial[] = yield self.transport.searchUsers(text)
         return users.map(profile => self.profiles.get(profile.id, profile))
       }),
+      userInviteGetSender: flow(function*(code) {
+        const potentialProfile = yield self.transport.userInviteGetSender(code)
+        return potentialProfile ? self.profiles.get(potentialProfile.id, potentialProfile) : null
+      }),
     }
   })
   .actions(self => ({

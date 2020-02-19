@@ -1107,6 +1107,28 @@ export class Transport {
     })
   }
 
+  async userInviteGetSender(code: string): Promise<IProfilePartial | null> {
+    const res = await this.client!.query<any>({
+      query: gql`
+        query userInviteGetSender($code: String!) {
+          userInviteGetSender(inviteCode: $code) {
+            user {
+              ${PROFILE_PROPS}
+            }
+            shareType
+          }
+        }
+      `,
+      variables: {code},
+    })
+    const potentialProfile = _.get(res, 'data.userInviteGetSender.user', null)
+    if (potentialProfile) {
+      const shareType = _.get(res, 'data.userInviteGetSender.shareType', null)
+      return {...potentialProfile, ownShareType: shareType}
+    }
+    return null
+  }
+
   /******************************** SUBSCRIPTIONS ********************************/
 
   subscribeSharedLocations() {
