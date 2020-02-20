@@ -11,6 +11,10 @@ type Props = {
   message?: string
 }
 
+/**
+ * NOTE: currently this component is unused. It's been determined that (at least for the time being) we want to share app invitations
+ * to friends/family via ContactInviteList rather than this type of "freestyle" message generation
+ */
 const ShareActivitySheet = ({children, style, message}: Props) => {
   const wocky = useWocky()
   const analytics = useAnalytics()
