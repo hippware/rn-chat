@@ -399,6 +399,7 @@ export const Wocky = types
         const potentialProfile = yield self.transport.userInviteGetSender(code)
         return potentialProfile ? self.profiles.get(potentialProfile.id, potentialProfile) : null
       }),
+      userInviteMakeUrl: self.transport.userInviteMakeUrl,
     }
   })
   .actions(self => ({

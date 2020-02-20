@@ -1129,6 +1129,21 @@ export class Transport {
     return null
   }
 
+  async userInviteMakeUrl(_shareType: FriendShareTypeEnum): Promise<string> {
+    // todo: add the shareType param to the mutation when it's ready on wocky
+    const res = await this.client!.mutate<any>({
+      mutation: gql`
+        mutation userInviteMakeUrl {
+          userInviteMakeUrl {
+            result
+            successful
+          }
+        }
+      `,
+    })
+    return res.data.userInviteMakeUrl.result
+  }
+
   /******************************** SUBSCRIPTIONS ********************************/
 
   subscribeSharedLocations() {

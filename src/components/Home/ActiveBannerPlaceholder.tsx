@@ -1,15 +1,18 @@
 import React from 'react'
-import {View, Image, StyleSheet} from 'react-native'
-import ShareActivitySheet from '../people-lists/ShareActivitySheet'
+import {View, Image, StyleSheet, TouchableOpacity} from 'react-native'
+import {Actions} from 'react-native-router-flux'
 
 const placeholderImg = require('../../../images/InviteBG.png')
 
 const ActiveBannerPlaceholder = () => (
-  <ShareActivitySheet style={{flexDirection: 'row', justifyContent: 'center'}}>
+  <TouchableOpacity
+    onPress={() => Actions.shareWithContacts()}
+    style={{flexDirection: 'row', justifyContent: 'center'}}
+  >
     <View style={[styles.pinContainer, {marginTop: 15}]}>
       <Image source={placeholderImg} />
     </View>
-  </ShareActivitySheet>
+  </TouchableOpacity>
 )
 
 export default ActiveBannerPlaceholder
