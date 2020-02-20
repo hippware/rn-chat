@@ -84,9 +84,9 @@ const FirebaseStore = types
       }
     }
 
-    const redeemCode = flow(function*() {
+    const redeemCode = flow(function*(shareType) {
       try {
-        yield wocky.userInviteRedeemCode(self.inviteCode!)
+        yield wocky.userInviteRedeemCode(self.inviteCode!, shareType)
         analytics.track('invite_code_redeem', {code: self.inviteCode})
       } catch (err) {
         analytics.track('invite_code_redeem_fail', {code: self.inviteCode, error: err})

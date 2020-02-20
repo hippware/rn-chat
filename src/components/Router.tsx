@@ -162,9 +162,7 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
         profile,
         displayName: profile!.handle,
         onOkPress: shareType => {
-          profile!.invite(shareType).then(() => {
-            analytics.track('user_follow', (profile as any).toJSON())
-          })
+          firebaseStore!.redeemCode(shareType)
           Actions.pop()
         },
         onCancelPress: Actions.pop
