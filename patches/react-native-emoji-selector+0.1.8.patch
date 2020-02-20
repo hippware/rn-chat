@@ -1,0 +1,24 @@
+diff --git a/node_modules/react-native-emoji-selector/index.js b/node_modules/react-native-emoji-selector/index.js
+index 4947573..5e4917e 100644
+--- a/node_modules/react-native-emoji-selector/index.js
++++ b/node_modules/react-native-emoji-selector/index.js
+@@ -7,9 +7,9 @@ import {
+   TextInput,
+   Platform,
+   ActivityIndicator,
+-  AsyncStorage,
+   FlatList
+ } from "react-native";
++import AsyncStorage from "@react-native-community/async-storage"
+ import emoji from "emoji-datasource";
+ 
+ export const Categories = {
+@@ -317,7 +317,7 @@ export default class EmojiSelector extends Component {
+           {showSearchBar && Searchbar}
+           {isReady ? (
+             <View style={{ flex: 1 }}>
+-              <View style={styles.container}>
++              <View style={{ flex: 1 }}>
+                 {showSectionTitles && (
+                   <Text style={styles.sectionHeader}>{title}</Text>
+                 )}
