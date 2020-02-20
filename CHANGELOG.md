@@ -16,6 +16,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Log some more data to bugsnag for http 4xx errors. (PR #4786)
 * Choose share type after clicking through invitation link (#4750)
 * [dev] wocky-client API changes for nearby sharing (#4774)
+* Code tidy-up (PR #4812)
 
 # 4.39.0 - 2020 Feb 13
 
