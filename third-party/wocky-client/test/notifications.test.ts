@@ -37,19 +37,31 @@ describe('Notifications (static)', () => {
     const bobAliceProfile = await bob.loadProfile(alice.username!)
     await aliceBobProfile.invite()
     await waitFor(() => bobAliceProfile.hasSentInvite, 'user invitation notification')
-    await bobAliceProfile.invite() // become friends!
   })
 
-  it('gets User Follow notification', async () => {
+  it('gets User follow notification', async () => {
     // alice follows bob
     const alicesBobProfile = await alice.loadProfile(bob.username!)
     await alicesBobProfile.invite()
     // Expected Notification: User follow notification
-    await sleep(1000)
+    // await sleep(1000)
     bob.notifications.setMode(2) // requests tab
-    await bob.notifications.load()
+    await bob.notifications.load({force: true})
+    // first notification is 'UserInvite' notification
     expect(bob.notifications.count).toEqual(1)
     expect(bob.notifications.list[0]).toHaveProperty('user')
+  })
+
+  it('gets User befriend notification', async () => {
+    const bobAliceProfile = await bob.loadProfile(alice.username!)
+    await bobAliceProfile.invite() // become friends!
+    // Expected Notification: User friend notification
+    // await sleep(1000)
+    bob.notifications.setMode(1) // updates tab
+    await bob.notifications.load({force: true})
+    // first notification is 'befriend' notification
+    expect(bob.notifications.count).toEqual(1)
+    expect(bob.notifications.list[0]).toHaveProperty('userBeFriend')
   })
 
   it('gets Location Invite notification', async () => {
@@ -65,8 +77,9 @@ describe('Notifications (static)', () => {
 
     // alice invites bob to the bot (NOTE: this is different from `share`)
     await aliceBot.invite([bob.username!])
-    await sleep(1000)
-    await bob.notifications.load()
+    // await sleep(1000)
+    bob.notifications.setMode(2) // requests tab
+    await bob.notifications.load({force: true})
     expect(bob.notifications.count).toEqual(2)
     const invite: IEventBotInvite = bob.notifications.list[0] as IEventBotInvite
 
@@ -84,9 +97,10 @@ describe('Notifications (static)', () => {
       accuracy: 5,
     } as ILocation)
     dumpBot(bobsAliceBot, 'bobsAliceBot')
-    await sleep(1000)
-    await alice.notifications.load()
-    expect(alice.notifications.count).toEqual(1)
+    // await sleep(1000)
+    await alice.notifications.load({force: true})
+    // befriend and bot invite notifications
+    expect(alice.notifications.count).toEqual(2)
     const acceptance: IEventBotInvite = alice.notifications.list[0] as IEventBotInvite
     expect(acceptance).toHaveProperty('sender')
     expect(acceptance.sender.id).toEqual(bob.username)
@@ -103,7 +117,7 @@ describe('Notifications (static)', () => {
     dumpBot(bobsAliceBot, 'bobsAliceBot')
     await sleep(1000)
     await alice.notifications.load()
-    expect(alice.notifications.count).toEqual(2)
+    expect(alice.notifications.count).toEqual(3)
     expect(alice.notifications.list[0]).toHaveProperty('post')
   })
 
@@ -114,7 +128,7 @@ describe('Notifications (static)', () => {
     // Expected Notification: Geofence Entry
     await sleep(1000)
     await alice.notifications.load({force: true})
-    expect(alice.notifications.count).toEqual(3)
+    expect(alice.notifications.count).toEqual(4)
     const enterNotification = alice.notifications.list[0] as IEventBotGeofence
     expect(enterNotification).toHaveProperty('isEnter')
     expect(enterNotification.isEnter).toBe(true)
@@ -129,7 +143,7 @@ describe('Notifications (static)', () => {
     // Expected Notification: Geofence Exit
     await sleep(1000)
     await alice.notifications.load({force: true})
-    expect(alice.notifications.count).toEqual(4)
+    expect(alice.notifications.count).toEqual(5)
     const exitNotification: IEventBotGeofence = alice.notifications.list[0] as IEventBotGeofence
     expect(exitNotification).toHaveProperty('isEnter')
     expect(exitNotification.isEnter).toBe(false)

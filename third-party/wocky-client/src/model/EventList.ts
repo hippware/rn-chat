@@ -15,6 +15,7 @@ import {EventLocationShare, EventLocationShareType} from './EventLocationShare'
 import {EventLocationShareEnd} from './EventLocationShareEnd'
 import {EventLocationShareNearbyStart} from './EventLocationShareNearbyStart'
 import {EventLocationShareNearbyEnd} from './EventLocationShareNearbyEnd'
+import {EventUserBeFriend, EventUserBeFriendType} from './EventUserBefriend'
 
 export const EventRequestTypes = [EventFriendInviteType, EventBotInviteType]
 export const EventUpdatesTypes = [
@@ -22,6 +23,7 @@ export const EventUpdatesTypes = [
   EventBotGeofenceType,
   EventBotInviteResponseType,
   EventLocationShareType,
+  EventUserBeFriendType,
 ]
 
 export const EventEntity = types.union(
@@ -34,7 +36,8 @@ export const EventEntity = types.union(
   EventLocationShare,
   EventLocationShareNearbyStart,
   EventLocationShareNearbyEnd,
-  EventLocationShareEnd
+  EventLocationShareEnd,
+  EventUserBeFriend
 )
 export type IEventEntity = typeof EventEntity.Type
 
@@ -63,7 +66,9 @@ export function createEvent(params: any, service: any): IEventEntity {
   if (params.sharedEndWith) {
     params.sharedEndWith = service.profiles.get(params.sharedEndWith.id, params.sharedEndWith)
   }
-
+  if (params.userBeFriend) {
+    params.userBeFriend = service.profiles.get(params.userBeFriend.id, params.userBeFriend)
+  }
   if (params.bot) {
     params.bot = service.bots.get(params.bot.id, params.bot)
   }

@@ -70,7 +70,7 @@ describe('Live Locations', () => {
   it('expect live location share notification', async () => {
     timestamp()
     await sleep(2000)
-    expect(alice.notifications.length).toBe(1)
+    expect(alice.notifications.length).toBe(2)
     const notification: any = alice.notifications.list[0]
     expect(notification.sharedWith).toBeTruthy()
     expect(notification.sharedWith.id).toBe(bob.profile!.id)
@@ -99,7 +99,7 @@ describe('Live Locations', () => {
     // update location
     await bob.setLocation(theLocation)
     // wait location to be updated
-    await waitFor(() => alice.notifications.length === 2, 'should be two notifications')
+    await waitFor(() => alice.notifications.length === 3, 'should be three notifications')
     // check that user still has old location (not updated)
     expect(alicesBobProfile.location!.latitude).toBe(differentLocation.latitude)
     expect(alicesBobProfile.location!.longitude).toBe(differentLocation.longitude)
@@ -117,7 +117,7 @@ describe('Live Locations', () => {
     timestamp()
     await alice.logout()
     alice = await createUser(undefined, alicesPhone)
-    await waitFor(() => alice.notifications.length === 2, 'should be two notifications')
+    await waitFor(() => alice.notifications.length === 3, 'should be three notifications')
     const notification: any = alice.notifications.list[0]
     expect(notification.sharedEndWith).toBeTruthy()
     expect(notification.sharedEndWith.id).toBe(bob.profile!.id)

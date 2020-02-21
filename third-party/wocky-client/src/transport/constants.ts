@@ -84,6 +84,12 @@ export const NOTIFICATIONS_PROPS = `
           }
         }
         ... on UserInvitationNotification {
+          shareType
+          user {
+            ${PROFILE_PROPS}
+          }
+        }
+        ... on UserBefriendNotification {
           user {
             ${PROFILE_PROPS}
           }

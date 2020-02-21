@@ -100,8 +100,8 @@ describe('New GraphQL profile tests', () => {
   it('accept invite', async () => {
     expect(user2user1Profile!.isFriend).toBeFalsy()
     await user2user1Profile!.invite() // became friends!
+    await waitFor(() => user2user1Profile!.isFriend, 'user relationship should be friends')
     expect(user2user1Profile!.hasReceivedInvite).toBeFalsy()
-    expect(user2user1Profile!.isFriend).toBeTruthy()
     expect(user2.profile!.friends.length).toBe(1)
     expect(user2.profile!.friends.list[0].id).toBe(user.username)
   })

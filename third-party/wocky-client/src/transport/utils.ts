@@ -13,6 +13,7 @@ import {IEventLocationShareEndData} from '../model/EventLocationShareEnd'
 import {IEventLocationShareData} from '../model/EventLocationShare'
 import {IEventLocationShareNearbyStartData} from '../model/EventLocationShareNearbyStart'
 import {IEventLocationShareNearbyEndData} from '../model/EventLocationShareNearbyEnd'
+import {IEventUserBeFriendData} from '../model/EventUserBefriend'
 import {log} from '../logger'
 
 export async function waitFor(
@@ -418,6 +419,13 @@ export function convertNotification(edge: any): IEventData | {deletedId: string}
       }
       // console.log('& user follow:', friendInviteNotification)
       return friendInviteNotification
+    case 'UserBefriendNotification':
+      const userBefriendNotification: IEventUserBeFriendData = {
+        id,
+        time,
+        userBeFriend: convertProfile({...data.user, _accessedAt: time}),
+      }
+      return userBefriendNotification
     case 'BotItemNotification':
       bot = convertBot({...data.bot, _accessedAt: time})
       const botItemNotification: IEventBotPostData = {

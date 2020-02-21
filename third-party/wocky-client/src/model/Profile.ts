@@ -92,19 +92,9 @@ export const Profile = types
     },
     sentInvite: () => {
       self.hasSentInvite = true
-      if (self.hasSentInvite && self.hasReceivedInvite) {
-        self.isFriend = true
-        self.hasReceivedInvite = false
-        self.hasSentInvite = false
-      }
     },
     receivedInvite: () => {
       self.hasReceivedInvite = true
-      if (self.hasSentInvite && self.hasReceivedInvite) {
-        self.isFriend = true
-        self.hasReceivedInvite = false
-        self.hasSentInvite = false
-      }
     },
     setLocation(location: ILocationSnapshot) {
       self._location = Location.create(location)
