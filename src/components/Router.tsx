@@ -43,7 +43,6 @@ import {navBarStyle} from './styles'
 import IconStore from '../store/IconStore'
 import OnboardingSwiper from './Onboarding/OnboardingSwiper'
 import {IAuthStore} from 'src/store/AuthStore'
-import LiveLocationCompose from './LiveLocation/LiveLocationCompose'
 import  {IHomeStore} from 'src/store/HomeStore';
 import MapOptions from './MapOptions'
 import {IPermissionStore} from 'src/store/PermissionStore'
@@ -214,7 +213,6 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
                     <Scene key="friends" component={peopleLists.FriendList} shiftMap backButton />
                     <Scene key="friendSearch" component={FriendSearch} shiftMap backButton/>
                     <Scene key="visitors" component={VisitorList} shiftMap backButton />
-                    <Scene key="liveLocationCompose" component={LiveLocationCompose} shiftMap backButton />
                     <Scene key="chats" component={ChatListScreen} title="Messages" shiftMap backButton />
                     <Scene key="mapOptions" component={MapOptions} shiftMap backButton />
                     <Scene key="bottomMenu" component={BottomMenu} backButton hasPreview shiftMap />
