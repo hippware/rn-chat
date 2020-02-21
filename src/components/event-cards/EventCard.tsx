@@ -16,8 +16,8 @@ import {IEventLocationShare} from 'third-party/wocky-client/src/model/EventLocat
 import {RText, GradientButton} from '../common'
 import {TouchableOpacity} from 'react-native'
 import {colors} from 'src/constants'
-import {share, UNTIL_OFF} from '../LiveLocation/LiveLocationCompose'
-import {useLocationStore, useWocky} from '../../utils/injectors'
+import {useAnalytics} from '../../utils/injectors'
+import {Props as LocationSettingsProps} from '../LiveLocation/LocationSettingsModal'
 
 const EventBotInviteCard = observer(
   ({
@@ -110,8 +110,7 @@ const Button = ({
 
 const EventLocationShareCard = observer(
   ({item: {sharedWith, relativeDateAsString}}: {item: IEventLocationShare}) => {
-    const locationStore = useLocationStore()
-    const wocky = useWocky()
+    const analytics = useAnalytics()
 
     return (
       <EventCardTemplate
@@ -131,16 +130,18 @@ const EventLocationShareCard = observer(
           ) : (
             <Button
               text="SHARE YOUR LOCATION"
-              // onPress={() => Actions.liveLocationCompose({profile: sharedWith})}
               onPress={() =>
-                share(
-                  UNTIL_OFF,
-                  null,
-                  wocky,
-                  {selected: [sharedWith]},
-                  locationStore!.location,
-                  false
-                )
+                Actions.locationSettingsModal({
+                  settingsType: 'ACCEPT_REQUEST',
+                  profile: sharedWith,
+                  displayName: sharedWith.firstName,
+                  onOkPress: shareType => {
+                    sharedWith.invite(shareType).then(() => {
+                      analytics.track('user_follow', (sharedWith as any).toJSON())
+                    })
+                    Actions.pop()
+                  },
+                } as LocationSettingsProps)
               }
             />
           )
