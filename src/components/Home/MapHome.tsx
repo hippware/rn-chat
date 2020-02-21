@@ -134,6 +134,7 @@ const MapHome = inject(
         </View>
       )
     }
+    if (!wocky!.profile) return null
     const {latitude, longitude} = location
     const profiles: IProfile[] = [
       wocky!.profile!,
