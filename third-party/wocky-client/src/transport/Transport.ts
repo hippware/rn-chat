@@ -370,7 +370,6 @@ export class Transport {
         const {totalCount, edges} = res.data.notifications
 
         const list = convertNotifications(edges)!
-        // console.log('NOTIFICATIONS:', types, JSON.stringify(list))
         return {
           count: totalCount,
           list,

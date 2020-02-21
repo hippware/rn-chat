@@ -18,6 +18,7 @@ import {TouchableOpacity} from 'react-native'
 import {colors} from 'src/constants'
 import {useAnalytics} from '../../utils/injectors'
 import {Props as LocationSettingsProps} from '../LiveLocation/LocationSettingsModal'
+import {IEventUserBefriend} from 'third-party/wocky-client/src/model/EventUserBefriend'
 
 const EventBotInviteCard = observer(
   ({
@@ -153,8 +154,22 @@ const EventLocationShareCard = observer(
   }
 )
 
+const EventBeFriendCard = observer(
+  ({item: {userBeFriend, relativeDateAsString}}: {item: IEventUserBefriend}) => {
+    return (
+      <EventCardTemplate
+        profile={userBeFriend}
+        iconType="connected"
+        timestamp={relativeDateAsString}
+        action={'is now connected'}
+      />
+    )
+  }
+)
+
 const eventCardMap: {[key: string]: any} = {
   EventBotPost: EventBotPostCard,
+  EventUserBefriend: EventBeFriendCard,
   // EventBotShare: EventBotShareCard,
   EventBotGeofence: EventBotGeofenceCard,
   EventFriendInvite: EventFriendInviteRequestCard,
