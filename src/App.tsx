@@ -10,7 +10,7 @@ import ErrorHandler from './components/common/ErrorHandler'
 import {bugsnagNotify} from 'src/utils/bugsnagConfig'
 
 const App = () => {
-  const [store, setStore] = useState()
+  const [store, setStore] = useState<any>(null)
 
   useEffect(() => {
     // This seems to be undocumented event.
