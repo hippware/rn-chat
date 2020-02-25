@@ -135,7 +135,7 @@
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.15.0",
     "tslint-react": "^4.2.0",
-    "typescript": "^3.7",
+    "typescript": "^3.8",
     "websocket": "^1.0.31"
   },
   "detox": {
