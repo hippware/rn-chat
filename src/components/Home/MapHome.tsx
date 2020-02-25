@@ -181,16 +181,38 @@ const MapHome = inject(
           {!creationMode && profiles.map(p => <ProfileMarker key={p.id} profile={p} {...props} />)}
         </MapView>
         {creationMode && <UberMarker />}
-        {areaTooLarge && (
-          <View style={[styles.areaTooLargeView, {bottom: fullScreenMode ? 40 : 160 * k}]}>
-            <Image source={require('../../../images/areaTooLarge.png')} />
-            <RText style={styles.areaTooLargeText}>Zoom In To See Locations</RText>
-          </View>
-        )}
+        <ZoomInNotification areaTooLarge={areaTooLarge} fullScreenMode={fullScreenMode} />
       </Animated.View>
     )
   })
 )
+
+const ZoomInNotification = ({areaTooLarge, fullScreenMode}) => {
+  const [opacity] = useState(new Animated.Value(areaTooLarge ? 1 : 0))
+
+  useEffect(() => {
+    if (areaTooLarge) {
+      opacity.setValue(1)
+      setTimeout(() => {
+        Animated.timing(opacity, {
+          toValue: 0,
+          duration: 500,
+          useNativeDriver: true,
+        }).start()
+      }, 3500)
+    } else {
+      opacity.setValue(0)
+    }
+  }, [areaTooLarge])
+  return (
+    <Animated.View
+      style={[styles.areaTooLargeView, {bottom: fullScreenMode ? 40 : 160 * k, opacity}]}
+    >
+      <Image source={require('../../../images/areaTooLarge.png')} />
+      <RText style={styles.areaTooLargeText}>Zoom In To See Locations</RText>
+    </Animated.View>
+  )
+}
 
 export default MapHome
 
