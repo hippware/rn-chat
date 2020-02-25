@@ -176,7 +176,7 @@ const MapHome = inject(
           pitchEnabled={false}
           {...props}
         >
-          {!creationMode &&
+          {!(creationMode || areaTooLarge) &&
             wocky!.localBots.list.map(b => <BotMarker key={b.id} bot={b} {...props} />)}
           {!creationMode && profiles.map(p => <ProfileMarker key={p.id} profile={p} {...props} />)}
         </MapView>
