@@ -2,7 +2,6 @@ import React from 'react'
 import {TouchableOpacity} from 'react-native'
 import t from 'tcomb-form-native'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
-import {BG_STATE_PROPS} from '../store/LocationStore'
 import Screen from './Screen'
 import _ from 'lodash'
 import {RText} from './common'
@@ -29,9 +28,7 @@ const options = {
 }
 
 const LocationDebug = observer(() => {
-  const {backgroundOptions, setBackgroundConfig, emailLog} = useLocationStore()
-  if (!backgroundOptions) return null
-  const value = _.pick(backgroundOptions, BG_STATE_PROPS)
+  const {configOptions, setBackgroundConfig, emailLog} = useLocationStore()
 
   return (
     <Screen style={{flex: 1, paddingVertical: 20}}>
@@ -39,8 +36,13 @@ const LocationDebug = observer(() => {
         <Form
           type={debuggerSettings}
           options={options}
-          onChange={setBackgroundConfig}
-          value={value}
+          onChange={config => {
+            // Some settings should be ints, not strings
+            config.autoSyncThreshold = parseInt(config.autoSyncThreshold)
+            config.distanceFilter = parseInt(config.distanceFilter)
+            setBackgroundConfig(config)
+          }}
+          value={configOptions}
         />
         <TouchableOpacity
           // Calling emailLog with empty string seems to work
