@@ -1,8 +1,7 @@
-import React from 'react'
-import {TouchableOpacity} from 'react-native'
+import React, {useState} from 'react'
+import {TouchableOpacity, StyleSheet} from 'react-native'
 import t from 'tcomb-form-native'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
-import {BG_STATE_PROPS} from '../store/LocationStore'
 import Screen from './Screen'
 import _ from 'lodash'
 import {RText} from './common'
@@ -15,6 +14,7 @@ const Form = t.form.Form
 const debuggerSettings = t.struct({
   distanceFilter: t.Number,
   autoSyncThreshold: t.Number,
+  uploadUrl: t.maybe(t.String),
 })
 
 const options = {
@@ -25,13 +25,16 @@ const options = {
     autoSyncThreshold: {
       label: 'autoSyncThreshold (maximum batch size)',
     },
+    uploadUrl: {
+      label: 'URL to upload to',
+      autoCapitalize: 'none',
+    },
   },
 }
 
 const LocationDebug = observer(() => {
-  const {backgroundOptions, setBackgroundConfig, emailLog} = useLocationStore()
-  if (!backgroundOptions) return null
-  const value = _.pick(backgroundOptions, BG_STATE_PROPS)
+  const {configOptions, setBackgroundConfig, emailLog, uploadLog} = useLocationStore()
+  const [uploadStatusText, setUploadStatusText] = useState('')
 
   return (
     <Screen style={{flex: 1, paddingVertical: 20}}>
@@ -39,22 +42,48 @@ const LocationDebug = observer(() => {
         <Form
           type={debuggerSettings}
           options={options}
-          onChange={setBackgroundConfig}
-          value={value}
+          onChange={config => {
+            // Some settings should be ints, not strings
+            config.autoSyncThreshold = parseInt(config.autoSyncThreshold)
+            config.distanceFilter = parseInt(config.distanceFilter)
+            setBackgroundConfig(config)
+          }}
+          value={configOptions}
         />
+        <TouchableOpacity
+          onPress={() => {
+            setUploadStatusText('Uploading ...')
+            uploadLog()
+              .then(_unused => {
+                setUploadStatusText('Done')
+              })
+              .catch(error => {
+                setUploadStatusText(`${error ? `${error}` : 'Error'}`)
+              })
+          }}
+          style={styles.button}
+        >
+          <RText size={20} color={colors.WHITE}>
+            Upload log
+          </RText>
+        </TouchableOpacity>
+        {!!uploadStatusText && (
+          <RText
+            size={20}
+            style={{
+              textAlign: 'center',
+              width: 120,
+            }}
+          >
+            {uploadStatusText}
+          </RText>
+        )}
         <TouchableOpacity
           // Calling emailLog with empty string seems to work
           onPress={() => {
             emailLog('')
           }}
-          style={{
-            backgroundColor: colors.PINK,
-            padding: 5,
-            borderRadius: 2,
-            marginTop: 20,
-            width: 120,
-            alignItems: 'center',
-          }}
+          style={styles.button}
         >
           <RText size={20} color={colors.WHITE}>
             Email log
@@ -66,3 +95,14 @@ const LocationDebug = observer(() => {
 })
 
 export default LocationDebug
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: colors.PINK,
+    padding: 5,
+    borderRadius: 2,
+    marginTop: 20,
+    width: 120,
+    alignItems: 'center',
+  },
+})
