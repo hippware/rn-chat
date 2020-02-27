@@ -55,7 +55,6 @@ export class Transport {
   username?: string
   token?: string
   host?: string
-  onCloseCallback?: () => void
 
   @observable connected: boolean = false
   @observable connecting: boolean = false
@@ -69,11 +68,6 @@ export class Transport {
   constructor(resource: string) {
     this.resource = resource
     this.instance = Transport.instances++
-  }
-
-  @action
-  async onClose(f: () => void) {
-    this.onCloseCallback = f
   }
 
   @action
@@ -509,7 +503,6 @@ export class Transport {
   @action
   async disconnect(): Promise<void> {
     this.connected = false
-    this.client = undefined
     this.connecting = false
     this.subscriptions.forEach(subscription => subscription.unsubscribe())
     this.subscriptions = []
@@ -517,10 +510,7 @@ export class Transport {
       await this.socketDisconnect(this.socket)
     }
     this.socket = undefined
-
-    if (this.onCloseCallback) {
-      this.onCloseCallback()
-    }
+    this.client = undefined
   }
 
   async updateProfile(d: any): Promise<void> {

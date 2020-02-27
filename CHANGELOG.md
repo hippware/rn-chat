@@ -4,13 +4,14 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-* Update: @storybook/react-native (PR #4833), tslib (PR #4834),
+* Update: @storybook/react-native (PR #4833), tslib (PR #4834)
+  * typescript (PR #4835)
   * jest and ts-jest (PR #4836), @types/jest (PR #4837)
   * libphonenumber-js (PR #4838), @types/react (PR #4840)
-
 * [dev] Process new UserBefriendNotification (#4780)
 * App crash with logout (#4782)
 * Crash on 'Share Your Location' button (#4753)
+* "Updates" notifications (#4662)
 
 # 4.40.0 - 2020 Feb 20
 
