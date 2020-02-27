@@ -23,6 +23,7 @@ const prefix = 'BGGL'
 const ConfigOptions = types.model('ConfigOptions', {
   autoSyncThreshold: types.maybeNull(types.number),
   distanceFilter: types.maybeNull(types.number),
+  uploadUrl: types.maybeNull(types.string),
 })
 
 export const CONFIG_OPTIONS = Object.keys(ConfigOptions.properties)
@@ -228,6 +229,12 @@ const LocationStore = types
       onLocation(position)
     }
 
+    function uploadLog() {
+      return self.configOptions.uploadUrl
+        ? BackgroundGeolocation.logger.uploadLog(self.configOptions.uploadUrl)
+        : Promise.reject(new Error('No uploadUrl'))
+    }
+
     async function emailLog(email) {
       // emailLog doesn't work in iOS simulator so fetch and dump instead
       if (await DeviceInfo.isEmulator()) {
@@ -244,6 +251,7 @@ const LocationStore = types
       setBackgroundConfig,
       startStandaloneGeolocation,
       stopStandaloneGeolocation,
+      uploadLog,
       emailLog,
     }
   })
