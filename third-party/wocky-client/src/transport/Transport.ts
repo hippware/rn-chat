@@ -2,7 +2,7 @@ import {ApolloClient, MutationOptions} from 'apollo-client'
 import {InMemoryCache, IntrospectionFragmentMatcher} from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
 import {IPagingList, MediaUploadParams} from './types'
-import {observable, action} from 'mobx'
+import {observable, action, runInAction} from 'mobx'
 import {create as createAbsintheSocket} from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
@@ -125,7 +125,7 @@ export class Transport {
       const res = await this.client!.mutate(mutation)
       // console.log('COMPLETE AUTHENTICATE', new Date())
       // set the username based on what's returned in the mutation
-      this.connected = (res.data as any).authenticate !== null
+      runInAction(() => (this.connected = (res.data as any).authenticate !== null))
       if (this.connected) {
         this.username = (res.data as any).authenticate.user.id
       }
@@ -500,6 +500,7 @@ export class Transport {
     // TODO: handle error?
   }
 
+  @action
   async disconnect(): Promise<void> {
     this.connected = false
     this.connecting = false
