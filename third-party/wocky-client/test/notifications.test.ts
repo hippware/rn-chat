@@ -44,7 +44,7 @@ describe('Notifications (static)', () => {
     const alicesBobProfile = await alice.loadProfile(bob.username!)
     await alicesBobProfile.invite()
     // Expected Notification: User follow notification
-    // await sleep(1000)
+    await sleep(1000)
     bob.notifications.setMode(2) // requests tab
     await bob.notifications.load({force: true})
     // first notification is 'UserInvite' notification
@@ -56,7 +56,7 @@ describe('Notifications (static)', () => {
     const bobAliceProfile = await bob.loadProfile(alice.username!)
     await bobAliceProfile.invite() // become friends!
     // Expected Notification: User friend notification
-    // await sleep(1000)
+    await sleep(1000)
     bob.notifications.setMode(1) // updates tab
     await bob.notifications.load({force: true})
     // first notification is 'befriend' notification
@@ -77,7 +77,7 @@ describe('Notifications (static)', () => {
 
     // alice invites bob to the bot (NOTE: this is different from `share`)
     await aliceBot.invite([bob.username!])
-    // await sleep(1000)
+    await sleep(1000)
     bob.notifications.setMode(2) // requests tab
     await bob.notifications.load({force: true})
     expect(bob.notifications.count).toEqual(2)
@@ -97,7 +97,7 @@ describe('Notifications (static)', () => {
       accuracy: 5,
     } as ILocation)
     dumpBot(bobsAliceBot, 'bobsAliceBot')
-    // await sleep(1000)
+    await sleep(1000)
     await alice.notifications.load({force: true})
     // befriend and bot invite notifications
     expect(alice.notifications.count).toEqual(2)
