@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.40.1 - 2020 Feb 27
+
 * Update: @storybook/react-native (PR #4833), tslib (PR #4834)
   * typescript (PR #4835)
   * jest and ts-jest (PR #4836), @types/jest (PR #4837)
@@ -12,6 +14,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * App crash with logout (#4782)
 * Crash on 'Share Your Location' button (#4753)
 * "Updates" notifications (#4662)
+* Remove bots from the map when zoomed out too far (#4842)
+* Fade away "Zoom in to see locations" message after 3-4 seconds (#3771)
+* Code tidy-up (PR #4845, PR #4846)
+* Experimental debugging for RNBGL `uploadLog` (PR #4847)
 
 # 4.40.0 - 2020 Feb 20
 
