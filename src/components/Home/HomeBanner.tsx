@@ -147,7 +147,10 @@ const Buttons = ({mapType, hasUnread}) => (
       onLongPress={() => settings.allowDebugScreen && Actions.debugScreen()}
       testID="bottomMenuButton"
     >
-      <Image source={settingsImg} />
+      <Image
+        source={settingsImg}
+        style={{borderColor: '#3FFC17', borderWidth: settings.isStaging ? 3 : 0, borderRadius: 8}}
+      />
       {!!hasUnread && <View style={styles.newDot} />}
     </TouchableOpacity>
     <TouchableOpacity style={{marginTop: 15}} onPress={() => Actions.attribution()}>
