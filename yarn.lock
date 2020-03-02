@@ -8816,10 +8816,10 @@ react-native-maps@^0.26.1:
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.26.1.tgz#6ec316259b38d259c8974448d894bd7a23101da4"
   integrity sha512-p4VTB8YB5ZmOmDRCUpoHZkm05amZwhIo04AJMBbB9+JAR2PNNfpo0vceoWX0Mag4wnePkdzPomeWMplr/wimTg==
 
-react-native-mixpanel@^1.1.14:
-  version "1.1.14"
-  resolved "https://registry.yarnpkg.com/react-native-mixpanel/-/react-native-mixpanel-1.1.14.tgz#fff26455eeb88ae93c474432130a119de06111d7"
-  integrity sha512-rmAe5GoZIZfxhK0EcAlQun+o1J6fIJsbgzE61LaC8CCKOfkV2sP/TmEpHQJfb2lL25VGDFHtqeed9JFVbAYc6A==
+react-native-mixpanel@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-mixpanel/-/react-native-mixpanel-1.2.0.tgz#17c24151cf2039482cd20decc54ccf0e49ccebc5"
+  integrity sha512-Xy+KEIEVFidWuASBdexZquXTJBb3JCyFM7xSgnIOZt5PRzpARGFrYMDErTUZ1wSPK+KFaf1oylInOoC2DddI/Q==
 
 react-native-permissions@^2.0.9:
   version "2.0.9"
