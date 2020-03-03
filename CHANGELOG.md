@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Make the hamburger/main menu a different colour for Staging (#4830)
+
 # 4.40.1 - 2020 Feb 27
 
 * Update: @storybook/react-native (PR #4833), tslib (PR #4834)
