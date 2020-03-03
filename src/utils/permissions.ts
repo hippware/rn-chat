@@ -38,7 +38,7 @@ export async function checkLocationWhenInUse() {
   return [GRANTED, UNAVAILABLE].includes(res)
 }
 
-export async function checkMotion() {
+export async function checkMotion(): Promise<boolean> {
   const res: any = await ch(permissionNames.motion)
   return [GRANTED, UNAVAILABLE].includes(res)
 }

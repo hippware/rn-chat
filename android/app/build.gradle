@@ -304,7 +304,6 @@ dependencies {
   implementation project(':react-native-pure-jwt')
   implementation project(':react-native-action-sheet')
   implementation project(':react-native-image-crop-picker')
-  implementation project(':react-native-android-open-settings')
   implementation project(':react-native-extra-dimensions-android')
   implementation project(':react-native-localize')
   implementation project(':react-native-gesture-handler')

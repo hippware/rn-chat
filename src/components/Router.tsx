@@ -72,13 +72,17 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
 
       autorun(
         () => {
-          const {onboarded} = permissionStore!
-          const {scene} = navStore!
-          const {alwaysOn} = locationStore!
-          if (onboarded && !alwaysOn) {
-            if (scene !== 'locationWarning'){
-              if (Actions.locationWarning) Actions.locationWarning({afterLocationAlwaysOn: () => Actions.popTo('home')})
-            }
+          if (permissionStore!.onboarded && !locationStore!.alwaysOn && navStore!.scene !== 'locationWarning' && Actions.locationWarning) {
+            Actions.locationWarning({afterLocationAlwaysOn: () => Actions.popTo('home')})
+          }
+        },
+        {delay: 1000}
+      )
+
+      autorun(
+        () => {
+          if (permissionStore!.onboarded && !permissionStore!.allowsAccelerometer && navStore!.scene !== 'motionWarning' && Actions.motionWarning) {
+            Actions.motionWarning()
           }
         },
         {delay: 1000}
