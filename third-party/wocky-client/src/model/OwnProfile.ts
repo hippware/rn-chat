@@ -138,9 +138,6 @@ export const OwnProfile = types
     }
   })
   .actions(self => ({
-    setOnboarded: () => {
-      self.clientData.flip('onboarded')
-    },
     load({
       avatar,
       blocked = [],

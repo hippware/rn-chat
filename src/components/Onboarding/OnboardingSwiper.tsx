@@ -18,6 +18,7 @@ import {log, warn} from '../../utils/logger'
 import {IPermissionStore} from 'src/store/PermissionStore'
 import {observer} from 'mobx-react'
 import {getPermission} from '../../utils/permissions'
+import {useDeviceOnboarded} from '../../utils/useDeviceOnboarded'
 
 type Props = {
   wocky?: IWocky
@@ -34,6 +35,7 @@ const OnboardingSwiper = inject(
     const swiper = useRef<Swiper>(null)
 
     const [showAlmostDone, setShowAlmostDone] = useState(true)
+    const {setOnboarded} = useDeviceOnboarded()
 
     const checkLocationPermissions = async () => {
       const check = await getPermission('location')
@@ -86,7 +88,7 @@ const OnboardingSwiper = inject(
     }
 
     const done = () => {
-      wocky!.profile!.setOnboarded()
+      setOnboarded(true)
       Actions.logged()
     }
 

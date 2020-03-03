@@ -14,6 +14,7 @@ import analytics from '../utils/analytics'
 import {checkLocation} from '../utils/permissions'
 import Geolocation from 'react-native-geolocation-service'
 import {bugsnagNotify} from 'src/utils/bugsnagConfig'
+import {onboarded} from '../utils/useDeviceOnboarded'
 
 const MAX_DATE1 = '2030-01-01-17:00'
 const MAX_DATE2 = '2030-01-01-18:00'
@@ -281,7 +282,7 @@ const LocationStore = types
               wocky.connected &&
               wocky.profile &&
               wocky.profile.hidden &&
-              wocky.profile.clientData.onboarded &&
+              onboarded &&
               self.alwaysOn
             ) {
               try {

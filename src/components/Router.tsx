@@ -50,6 +50,7 @@ import {IPermissionStore} from 'src/store/PermissionStore'
 import LocationSettingsModal, {Props as LocationSettingsProps} from './LiveLocation/LocationSettingsModal'
 import { IFirebaseStore } from '../store/FirebaseStore'
 import {ContactInviteListWithLoad} from './people-lists/ContactInviteList'
+import { useDeviceOnboarded } from '../utils/useDeviceOnboarded'
 
 const iconClose = require('../../images/iconClose.png')
 
@@ -67,12 +68,15 @@ type Props = {
 
 const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'iconStore', 'analytics', 'homeStore', 'navStore', 'authStore', 'firebaseStore')(
   observer(({wocky, permissionStore, locationStore, navStore, homeStore, iconStore, authStore, analytics, firebaseStore}: Props) => {
+
+    const {onboarded} = useDeviceOnboarded()
+
     useEffect(() => {
       reaction(() => navStore!.scene, () => Keyboard.dismiss())
 
       autorun(
         () => {
-          if (permissionStore!.onboarded && !locationStore!.alwaysOn && navStore!.scene !== 'locationWarning' && Actions.locationWarning) {
+          if (onboarded && !locationStore!.alwaysOn && navStore!.scene !== 'locationWarning' && Actions.locationWarning) {
             Actions.locationWarning({afterLocationAlwaysOn: () => Actions.popTo('home')})
           }
         },
@@ -81,7 +85,7 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
 
       autorun(
         () => {
-          if (permissionStore!.onboarded && !permissionStore!.allowsAccelerometer && navStore!.scene !== 'motionWarning' && Actions.motionWarning) {
+          if (onboarded && !permissionStore!.allowsAccelerometer && navStore!.scene !== 'motionWarning' && Actions.motionWarning) {
             Actions.motionWarning()
           }
         },
@@ -189,7 +193,7 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
             <Scene key="connect" on={authStore!.login} success="checkHandle" failure="preConnection" />
             <Scene key="checkProfile" on={() => wocky!.profile} success="checkHandle" failure="connect" />
             <Scene key="checkHandle" on={() => wocky!.profile!.handle} success="checkOnboarded" failure="signUp" />
-            <Scene key="checkOnboarded" on={() => permissionStore!.onboarded} success={() => {
+            <Scene key="checkOnboarded" on={() => onboarded} success={() => {
               Actions.logged()
               if (firebaseStore!.inviteCode) {
                 showSharingModal()
