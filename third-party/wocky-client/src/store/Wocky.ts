@@ -8,7 +8,7 @@ import Timer from './Timer'
 import {IBot, BotPaginableList} from '../model/Bot'
 import {BotPost, IBotPost} from '../model/BotPost'
 import {Chats} from '../model/Chats'
-import {iso8601toDate, processMap} from '../transport/utils'
+import {iso8601toDate, processMap, waitFor} from '../transport/utils'
 import {EventList, createEvent, EventEntity, IEventEntity} from '../model/EventList'
 import _ from 'lodash'
 import {RequestType} from '../model/PaginableList'
@@ -48,6 +48,7 @@ export const Wocky = types
       }
     },
     loadProfile: flow(function*(id: string) {
+      yield waitFor(() => self.connected)
       const isOwn = id === self.username
       const data = yield self.transport.loadProfile(id)
       if (isOwn) {
@@ -150,6 +151,7 @@ export const Wocky = types
   }))
   .actions(self => ({
     loadBot: flow(function*(id: string) {
+      yield waitFor(() => self.connected)
       const bot = self.getBot({id})
       if (!bot.loading) {
         try {
@@ -165,6 +167,7 @@ export const Wocky = types
       return bot
     }) as (id: string) => Promise<IBot>,
     removeBot: flow(function*(id: string) {
+      yield waitFor(() => self.connected)
       yield self.transport.removeBot(id)
       // const events = self.events.list.filter(event => event.bot && event.bot === id)
       // events.forEach(event => self.events.remove(event.id))
@@ -174,16 +177,19 @@ export const Wocky = types
   .actions(self => {
     return {
       createBot: flow(function*() {
+        yield waitFor(() => self.connected)
         const id = yield self.transport.generateId()
         const bot = self.getBot({id, owner: self.username, isSubscribed: true})
         bot.setNew(true)
         return bot
       }),
       _loadGeofenceBots: flow(function*(lastId?: string, max: number = 10) {
+        yield waitFor(() => self.connected)
         const {list, cursor, count} = yield self.transport.loadGeofenceBots()
         return {list: list.map(self.getBot), count, cursor}
       }),
       _loadBotSubscribers: flow(function*(id: string, lastId?: string, max: number = 10) {
+        yield waitFor(() => self.connected)
         const {list, cursor, count} = yield self.transport.loadBotSubscribers(id, lastId, max)
         return {
           list: list.map((profile: any) => self.profiles.get(profile.id, profile)),
@@ -192,6 +198,7 @@ export const Wocky = types
         }
       }),
       _loadBotVisitors: flow(function*(id: string, lastId?: string, max: number = 10) {
+        yield waitFor(() => self.connected)
         const {list, cursor, count} = yield self.transport.loadBotVisitors(id, lastId, max)
         return {
           list: list.map((profile: any) => self.profiles.get(profile.id, profile)),
@@ -200,6 +207,7 @@ export const Wocky = types
         }
       }) as RequestType,
       _loadBotPosts: flow(function*(id: string, before?: string) {
+        yield waitFor(() => self.connected)
         const {list, cursor, count} = yield self.transport.loadBotPosts(id, before)
         return {
           list: list.map((post: any) =>
@@ -210,32 +218,39 @@ export const Wocky = types
         }
       }) as RequestType,
       _loadSubscribedBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
+        yield waitFor(() => self.connected)
         const {list, cursor, count} = yield self.transport.loadSubscribedBots(userId, lastId, max)
         return {list: list.map((bot: any) => self.getBot(bot)), count, cursor}
       }),
       _updateBot: flow(function*(d: any, userLocation: ILocation) {
+        yield waitFor(() => self.connected)
         yield self.transport.updateBot(d, userLocation)
         return {isNew: false}
       }) as (data: any, userLocation: ILocation) => Promise<{isNew: boolean}>,
       _removeBotPost: flow(function*(id: string, postId: string) {
+        yield waitFor(() => self.connected)
         yield self.transport.removeBotPost(id, postId)
       }),
       _inviteBot: flow(function*(botId: string, recepients: string[]) {
         yield self.transport.inviteBot(botId, recepients)
       }),
       _publishBotPost: flow(function*(post: IBotPost) {
+        yield waitFor(() => self.connected)
         let parent: any = getParent(post)
         while (!parent.id) parent = getParent(parent)
         const botId = parent.id
         yield self.transport.publishBotPost(botId, post)
       }),
       _unsubscribeBot: flow(function*(id: string) {
+        yield waitFor(() => self.connected)
         return yield self.transport.unsubscribeBot(id)
       }),
       _acceptBotInvitation: flow(function*(inviteId: string, userLocation: ILocation) {
+        yield waitFor(() => self.connected)
         return yield self.transport.inviteBotReply(inviteId, userLocation)
       }),
       loadLocalBots: flow(function*({latitude, longitude, latitudeDelta, longitudeDelta}: any) {
+        yield waitFor(() => self.connected)
         const arr = yield self.transport.loadLocalBots({
           latitude,
           longitude,
@@ -360,9 +375,11 @@ export const Wocky = types
       //   }
       // },
       enablePush: flow(function*(token: string, platform: 'FCM' | 'APNS') {
+        yield waitFor(() => self.connected)
         yield self.transport.enablePush(token, platform)
       }),
       disablePush: flow(function*() {
+        yield waitFor(() => self.connected)
         yield self.transport.disablePush()
       }),
       setSessionCount: (value: number) => {
@@ -381,6 +398,7 @@ export const Wocky = types
   })
   .actions(self => ({
     _loadNewNotifications: flow(function*() {
+      yield waitFor(() => self.connected)
       const mostRecentNotification = self.notifications.first
       const limit = 20
       const {list} = yield self.transport.loadNotifications({
@@ -406,6 +424,7 @@ export const Wocky = types
       return self.transport.userInviteRedeemCode(code, shareType)
     },
     userBulkLookup: flow(function*(phoneNumbers: string[]) {
+      yield waitFor(() => self.connected)
       const data = yield self.transport.userBulkLookup(phoneNumbers)
       data.forEach(d => {
         if (d.user) {
