@@ -16,7 +16,7 @@ import {observer} from 'mobx-react'
 import {useFirebaseStore} from 'src/utils/injectors'
 
 const countryMap = {}
-getAllCountries(FlagType.FLAT).then((countries) => {
+getAllCountries(FlagType.FLAT).then(countries => {
   countries.forEach(country => (countryMap[country.cca2] = country))
 })
 
@@ -26,7 +26,7 @@ let defaultCountryCode: CountryCode = 'US'
 
 if (CarrierInfo) {
   CarrierInfo.isoCountryCode(result => {
-    if (result && result !== 'nil') {
+    if (result && result !== 'nil' && countryMap[result.toUpperCase()]) {
       defaultCountryCode = result.toUpperCase()
     }
   })
