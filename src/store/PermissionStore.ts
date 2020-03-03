@@ -29,14 +29,19 @@ export const PermissionStore = types
     },
   }))
   .actions(self => ({
+    checkMotionPermissions: (): Promise<boolean> =>
+      checkMotion().then(res => {
+        // NOTE: accelerometer checks always come back as "restricted" on a simulator
+        self.setAllowsAccelerometer(res)
+        return res
+      }),
+  }))
+  .actions(self => ({
     checkAllPermissions: flow(function*() {
       // check all permissions in parallel
-      const checkPromises = [
+      const checkPromises: Array<Promise<any>> = [
         checkLocation().then(res => self.setAllowsLocation(res)),
-        checkMotion().then(res =>
-          // NOTE: accelerometer checks always come back as "restricted" on a simulator
-          self.setAllowsAccelerometer(res)
-        ),
+        self.checkMotionPermissions(),
       ]
       if (Platform.OS === 'ios') {
         checkPromises.push(checkNotifications().then(res => self.setAllowsNotification(res)))
@@ -67,7 +72,7 @@ export const PermissionStore = types
         wocky &&
         wocky.profile &&
         wocky.profile.clientData.onboarded &&
-        self.allowsAccelerometer &&
+        // self.allowsAccelerometer &&
         self.allowsNotification
       )
     },

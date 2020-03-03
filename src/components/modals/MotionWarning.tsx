@@ -6,11 +6,20 @@ import {BlurView} from '@react-native-community/blur'
 import {GradientButton, RText} from '../common'
 import {WHITE, TRANSLUCENT_WHITE} from 'src/constants/colors'
 import {observer} from 'mobx-react'
+import {useAppState} from 'react-native-hooks'
+import {Actions} from 'react-native-router-flux'
+import {usePermissionStore} from '../../utils/injectors'
 
 const MotionWarning = observer(() => {
+  const currentAppState = useAppState()
+  const permissionStore = usePermissionStore()
   useEffect(() => {
-    // todo: listen for motion permissions changes and dismiss when enabled
-  }, [])
+    if (currentAppState === 'active') {
+      permissionStore.checkMotionPermissions().then(p => {
+        if (p) Actions.pop()
+      })
+    }
+  }, [currentAppState])
 
   const settingsName = Platform.OS === 'ios' ? 'Motion & Fitness' : 'Physical Activity'
 
@@ -29,8 +38,7 @@ const MotionWarning = observer(() => {
       <RText style={styles.title}>{`Allow\r\n${settingsName}`}</RText>
 
       <RText style={styles.subtext}>
-        {`Using "${settingsName}" increases battery efficiency by intelligently toggling location
-        tracking while moving.`}
+        {`Using "${settingsName}" increases battery efficiency by intelligently toggling location tracking while moving.`}
       </RText>
 
       <Image
