@@ -46,11 +46,11 @@ import OnboardingSwiper from './Onboarding/OnboardingSwiper'
 import {IAuthStore} from 'src/store/AuthStore'
 import  {IHomeStore} from 'src/store/HomeStore';
 import MapOptions from './MapOptions'
-import {IPermissionStore} from 'src/store/PermissionStore'
 import LocationSettingsModal, {Props as LocationSettingsProps} from './LiveLocation/LocationSettingsModal'
 import { IFirebaseStore } from '../store/FirebaseStore'
 import {ContactInviteListWithLoad} from './people-lists/ContactInviteList'
 import { useDeviceOnboarded } from '../utils/useDeviceOnboarded'
+import { checkAllPermissions, permissions } from '../utils/permissions'
 
 const iconClose = require('../../images/iconClose.png')
 
@@ -61,17 +61,17 @@ type Props = {
   homeStore?: IHomeStore
   iconStore?: IconStore
   authStore?: IAuthStore
-  permissionStore?: IPermissionStore
   analytics?: any
   firebaseStore?: IFirebaseStore
 }
 
-const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'iconStore', 'analytics', 'homeStore', 'navStore', 'authStore', 'firebaseStore')(
-  observer(({wocky, permissionStore, locationStore, navStore, homeStore, iconStore, authStore, analytics, firebaseStore}: Props) => {
+const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics', 'homeStore', 'navStore', 'authStore', 'firebaseStore')(
+  observer(({wocky, locationStore, navStore, homeStore, iconStore, authStore, analytics, firebaseStore}: Props) => {
 
     const {onboarded} = useDeviceOnboarded()
 
     useEffect(() => {
+      checkAllPermissions()
       reaction(() => navStore!.scene, () => Keyboard.dismiss())
 
       autorun(
@@ -85,7 +85,7 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
 
       autorun(
         () => {
-          if (onboarded && !permissionStore!.allowsAccelerometer && navStore!.scene !== 'motionWarning' && Actions.motionWarning) {
+          if (onboarded && !permissions.get('allowsAccelerometer') && navStore!.scene !== 'motionWarning' && Actions.motionWarning) {
             Actions.motionWarning()
           }
         },

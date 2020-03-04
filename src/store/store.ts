@@ -19,7 +19,6 @@ import LocationStore from './LocationStore'
 import SearchStore from './SearchStore'
 import ProfileValidationStore from './ProfileValidationStore'
 import NotificationStore from './NotificationStore'
-import {PermissionStore} from './PermissionStore'
 import CodepushStore from './CodePushStore'
 import HomeStore from './HomeStore'
 import NavStore from './NavStore'
@@ -34,6 +33,7 @@ import {autorun} from 'mobx'
 import {settings} from '../globals'
 import AsyncStorage from '@react-native-community/async-storage'
 import deviceInfoFetch, {TRDeviceInfo} from 'src/utils/deviceInfoFetch'
+import {permissions} from '../utils/permissions'
 
 const jsVersion = require('../../package.json').version
 const auth = firebase.auth()
@@ -59,7 +59,6 @@ const cleanState = {
   navStore: {},
   codePushStore: {},
   geocodingStore: {},
-  permissionStore: {},
   wocky: {host: settings.host},
 }
 
@@ -75,7 +74,6 @@ const Store = types
     codePushStore: CodepushStore,
     navStore: NavStore,
     geocodingStore: GeocodingStore,
-    permissionStore: PermissionStore,
     appInfo: AppInfo,
   })
   .views(self => ({
@@ -185,8 +183,8 @@ export async function createStore() {
   )
   autorun(
     async () => {
-      const {wocky, permissionStore} = mstStore
-      if (wocky.connected && !!wocky.profile && permissionStore.allowsNotification)
+      const {wocky} = mstStore
+      if (wocky.connected && !!wocky.profile && permissions.get('allowsNotification'))
         requestPushPermissions()
     },
     {delay: 1000}

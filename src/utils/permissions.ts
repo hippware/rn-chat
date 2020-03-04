@@ -6,6 +6,7 @@ import {
   RESULTS,
 } from 'react-native-permissions'
 import {Platform} from 'react-native'
+import {observable} from 'mobx'
 
 const {IOS, ANDROID} = PERMISSIONS
 
@@ -61,4 +62,38 @@ export const getPermission = async (permStr: string): Promise<any> => {
 export async function request(type: string) {
   const res = await req(permissionNames[type])
   return res === RESULTS.GRANTED
+}
+
+type PermissionMapType =
+  | 'allowsNotification'
+  | 'allowsAccelerometer'
+  | 'allowsLocation'
+  | 'allowsContacts'
+  | 'loaded'
+
+export const permissions = observable.map<PermissionMapType, boolean>({
+  allowsNotification: false,
+  allowsAccelerometer: false,
+  allowsLocation: false,
+  allowsContacts: false,
+  loaded: false,
+})
+
+export const checkMotionPermissions = async (): Promise<boolean> => {
+  const res = await checkMotion()
+  permissions.set('allowsAccelerometer', res)
+  return res
+}
+
+export const checkAllPermissions = async () => {
+  if (!permissions.get('loaded')) {
+    permissions.set('allowsLocation', await checkLocation())
+    await checkMotionPermissions()
+    if (Platform.OS === 'ios') {
+      permissions.set('allowsNotification', await checkNotifications())
+    }
+    // on Android...
+    else permissions.set('allowsNotification', true)
+  }
+  permissions.set('loaded', true)
 }

@@ -15,23 +15,21 @@ import PushNotification from 'react-native-push-notification'
 import OnboardingFindFriendsList from './OnboardingFindFriendsList'
 import ContactStore from 'src/store/ContactStore'
 import {log, warn} from '../../utils/logger'
-import {IPermissionStore} from 'src/store/PermissionStore'
 import {observer} from 'mobx-react'
 import {getPermission} from '../../utils/permissions'
 import {useDeviceOnboarded} from '../../utils/useDeviceOnboarded'
+import {permissions} from '../../utils/permissions'
 
 type Props = {
   wocky?: IWocky
   contactStore?: ContactStore
-  permissionStore?: IPermissionStore
 }
 
 const OnboardingSwiper = inject(
   'wocky',
-  'contactStore',
-  'permissionStore'
+  'contactStore'
 )(
-  observer(({wocky, contactStore, permissionStore}: Props) => {
+  observer(({wocky, contactStore}: Props) => {
     const swiper = useRef<Swiper>(null)
 
     const [showAlmostDone, setShowAlmostDone] = useState(true)
@@ -93,20 +91,19 @@ const OnboardingSwiper = inject(
     }
 
     const pages: ReactElement[] = []
-    const {allowsLocation, allowsAccelerometer, allowsNotification, loaded} = permissionStore!
 
-    if (!loaded) {
+    if (!permissions.get('loaded')) {
       return null
     }
 
-    if (!allowsLocation) {
+    if (!permissions.get('allowsLocation')) {
       pages.push(<OnboardingLocation key="0" onPress={checkLocationPermissions} />)
     }
-    if (!allowsAccelerometer) {
+    if (!permissions.get('allowsAccelerometer')) {
       pages.push(<OnboardingAccelerometer key="1" onPress={checkAccelerometerPermissions} />)
     }
     if (Platform.OS === 'ios') {
-      if (!allowsNotification) {
+      if (!permissions.get('allowsNotification')) {
         pages.push(<OnboardingNotifications key="2" onPress={checkNotificationPermissions} />)
       }
     }

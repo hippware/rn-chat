@@ -8,14 +8,13 @@ import {WHITE, TRANSLUCENT_WHITE} from 'src/constants/colors'
 import {observer} from 'mobx-react'
 import {useAppState} from 'react-native-hooks'
 import {Actions} from 'react-native-router-flux'
-import {usePermissionStore} from '../../utils/injectors'
+import {checkMotionPermissions} from '../../utils/permissions'
 
 const MotionWarning = observer(() => {
   const currentAppState = useAppState()
-  const permissionStore = usePermissionStore()
   useEffect(() => {
     if (currentAppState === 'active') {
-      permissionStore.checkMotionPermissions().then(p => {
+      checkMotionPermissions().then(p => {
         if (p) Actions.pop()
       })
     }

@@ -8,7 +8,6 @@ import {IFirebaseStore} from 'src/store/FirebaseStore'
 import {ISearchStore} from 'src/store/SearchStore'
 import {INavStore} from 'src/store/NavStore'
 import {ICodePushStore} from 'src/store/CodePushStore'
-import {IPermissionStore} from 'src/store/PermissionStore'
 import {NotificationStore} from 'src/store/NotificationStore'
 import {IAppInfo} from 'src/store/AppInfo'
 import ContactStore from '../store/ContactStore'
@@ -26,7 +25,6 @@ type AllStores = {
   navStore: INavStore
   codePushStore: ICodePushStore
   geocodingStore: any
-  permissionStore: IPermissionStore
   notificationStore: NotificationStore
   appInfo: IAppInfo
   contactStore: ContactStore
@@ -82,11 +80,6 @@ export function useCodepushStore() {
 export function useGeocodingStore() {
   const {geocodingStore} = getStores()
   return geocodingStore
-}
-
-export function usePermissionStore() {
-  const {permissionStore} = getStores()
-  return useObserver(() => permissionStore)
 }
 
 export function useNotificationsStore() {
