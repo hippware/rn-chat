@@ -84,7 +84,7 @@ const EventLocationShareCard = observer(
           profile={sharedWith}
           iconType="share"
           timestamp={relativeDateAsString}
-          action={'and you are sharing location'}
+          action={'is sharing their location with you'}
         />
       )
     } else {
