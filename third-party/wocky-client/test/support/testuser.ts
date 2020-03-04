@@ -58,7 +58,7 @@ export function expectedImage() {
 
 export async function createUser(num?: number, phoneNum?: string): Promise<IWocky> {
   try {
-    const transport = new Transport(SERVER_NAME)
+    const transport = new Transport(SERVER_NAME, console)
     const phoneNumber =
       phoneNum ||
       (num
