@@ -155,4 +155,5 @@ export const USER_LOCATION_PROPS = `
   accuracy
   activity
   activityConfidence
+  id
 `
