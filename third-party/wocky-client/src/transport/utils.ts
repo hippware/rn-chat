@@ -14,7 +14,6 @@ import {IEventLocationShareData} from '../model/EventLocationShare'
 import {IEventLocationShareNearbyStartData} from '../model/EventLocationShareNearbyStart'
 import {IEventLocationShareNearbyEndData} from '../model/EventLocationShareNearbyEnd'
 import {IEventUserBeFriendData} from '../model/EventUserBefriend'
-import {log} from '../logger'
 
 export async function waitFor(
   condition: () => boolean,
@@ -503,7 +502,8 @@ export function convertNotification(edge: any): IEventData | {deletedId: string}
       }
       return locationShareNearbyEndNotification
     default:
-      log('Failed to process notification: ' + JSON.stringify(edge))
+      // tslint:disable-next-line
+      console.log('Failed to process notification: ' + JSON.stringify(edge))
       return null
   }
 }
