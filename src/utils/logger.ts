@@ -1,4 +1,5 @@
 import {bugsnagNotify} from './bugsnagConfig'
+import BackgroundGeolocation from 'react-native-background-geolocation-android'
 
 // tslint:disable:no-console
 export function log(...args) {
@@ -32,6 +33,12 @@ export function modifyConsoleAndGetLogger() {
       console.error = no_op
     }
 
+    ;(console as any).persistLog = (s: string): void => {
+      BackgroundGeolocation.logger.info(s)
+      if (__DEV__) {
+        console.log(s)
+      }
+    }
     ;(console as any).bugsnagNotify = (
       e: Error,
       name?: string,

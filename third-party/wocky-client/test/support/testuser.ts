@@ -16,6 +16,9 @@ const fs = require('fs')
 
 // Polyfill some functions that don't exist in the test/nodejs environment
 function augmentConsole() {
+  ;(console as any).persistLog = (s: string): void => {
+    console.log(s)
+  }
   ;(console as any).bugsnagNotify = (
     e: Error,
     name?: string,
