@@ -8,6 +8,7 @@ export const createLocation = ({
   createdAt,
   activity,
   activityConfidence,
+  id,
 }: {
   lat: number
   lon: number
@@ -15,6 +16,7 @@ export const createLocation = ({
   createdAt: Date
   activity: UserActivityType | 'unknown' | '' | null
   activityConfidence: number | null
+  id?: string
 }) => {
   return Location.create({
     latitude: lat,
@@ -23,6 +25,7 @@ export const createLocation = ({
     createdAt,
     activity: activity && activity.length && activity !== 'unknown' ? activity : undefined,
     activityConfidence: activityConfidence || undefined,
+    id: id || undefined,
   })
 }
 
@@ -36,6 +39,7 @@ export const Location = types
       types.enumeration(['still', 'on_foot', 'walking', 'in_vehicle', 'on_bicycle', 'running'])
     ),
     activityConfidence: types.maybe(types.number),
+    id: types.maybe(types.string),
   })
   .volatile(() => ({
     isCurrent: false,
