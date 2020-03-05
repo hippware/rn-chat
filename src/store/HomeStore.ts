@@ -1,14 +1,12 @@
 /* tslint:disable:max-classes-per-file */
 import {types, applySnapshot, getRoot, Instance} from 'mobx-state-tree'
-import {IProfile, Location, IWocky} from 'wocky-client'
+import {IProfile, Location, IWocky, MapOptionsEnum} from 'wocky-client'
 import {autorun} from 'mobx'
 import {INavStore} from './NavStore'
 
 const DEFAULT_DELTA = 0.00522
 const TRANS_DELTA = DEFAULT_DELTA + 0.005
 export const INIT_DELTA = 0.04
-
-const MapOptions = types.enumeration(['auto', 'satellite', 'street'])
 
 const HomeStore = types
   .model('HomeStore', {
@@ -17,7 +15,6 @@ const HomeStore = types
     mapCenterLocation: types.maybeNull(Location),
     selectedId: types.maybe(types.string),
     followingUser: false,
-    mapOptions: types.optional(MapOptions, 'auto'),
   })
   .volatile(() => ({
     latitudeDelta: INIT_DELTA,
@@ -26,6 +23,9 @@ const HomeStore = types
   .views(self => {
     const {navStore, wocky}: {navStore: INavStore; wocky: IWocky} = getRoot(self)
     return {
+      get mapOptions(): MapOptionsEnum | null {
+        return wocky && wocky.profile ? wocky!.profile!.clientData.mapOptions : null
+      },
       get creationMode() {
         return (
           navStore && ['createBot', 'botCompose', 'botEdit', 'editNote'].includes(navStore.scene)
@@ -52,19 +52,21 @@ const HomeStore = types
         }
         return [wocky.profile, ...wocky.profile!.allFriends]
       },
-      get mapType() {
-        switch (self.mapOptions) {
-          case 'satellite':
-            return 'hybrid'
-          case 'street':
-            return 'standard'
-          case 'auto':
-          default:
-            return self.latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard'
-        }
-      },
     }
   })
+  .views(self => ({
+    get mapType() {
+      switch (self.mapOptions) {
+        case 'satellite':
+          return 'hybrid'
+        case 'street':
+          return 'standard'
+        case 'auto':
+        default:
+          return self.latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard'
+      }
+    },
+  }))
   .actions(self => ({
     setFriendFilter(filter: string) {
       self.friendFilter = filter
@@ -113,9 +115,10 @@ const HomeStore = types
   }))
   .actions(self => {
     let disposer: any = null
+    const {wocky}: {wocky: IWocky} = getRoot(self)
     return {
       setMapOptions(value) {
-        self.mapOptions = value
+        wocky!.profile!.clientData.setMapOptions(value)
       },
       followUserOnMap(user: IProfile) {
         if (user.location) {
@@ -134,10 +137,6 @@ const HomeStore = types
         self.followingUser = false
       },
     }
-  })
-  .postProcessSnapshot((snapshot: any) => {
-    // store mapOptions
-    return {mapOptions: snapshot.mapOptions}
   })
   .views(self => ({
     get filteredFriends() {

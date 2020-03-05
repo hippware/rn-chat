@@ -1,6 +1,14 @@
 import {types, getSnapshot, Instance, applySnapshot} from 'mobx-state-tree'
 import {Base} from './Base'
 
+export enum MapOptionsEnum {
+  AUTO = 'auto',
+  SATELLITE = 'satellite',
+  STREET = 'street',
+}
+
+export const MapOptions = types.enumeration([...Object.values(MapOptionsEnum)])
+
 const Hidden = types
   .model('HiddenType', {
     enabled: false,
@@ -28,11 +36,12 @@ const Hidden = types
     }
   })
 
-const ClientData = types
+export const ClientData = types
   .compose(
     Base,
     types
       .model({
+        mapOptions: types.optional(MapOptions, MapOptionsEnum.AUTO),
         sharePresencePrimed: false,
         guestOnce: false,
         onboarded: false,
@@ -46,9 +55,18 @@ const ClientData = types
   )
   .named('ClientData')
   .actions(self => ({
+    persist() {
+      self.transport.updateProfile({clientData: getSnapshot(self)})
+    },
+  }))
+  .actions(self => ({
+    setMapOptions(value) {
+      self.mapOptions = value
+      self.persist()
+    },
     hide(value: boolean, expires: Date | undefined) {
       self.hidden = Hidden.create({enabled: value, expires})
-      self.transport.updateProfile({clientData: getSnapshot(self)})
+      self.persist()
     },
     load: snapshot => {
       applySnapshot(self, JSON.parse(snapshot))
@@ -58,10 +76,8 @@ const ClientData = types
     },
     flip: (property: 'sharePresencePrimed' | 'guestOnce' | 'onboarded') => {
       self[property] = true
-      self.transport.updateProfile({clientData: getSnapshot(self)})
+      self.persist()
     },
   }))
-
-export default ClientData
 
 export interface IClientData extends Instance<typeof ClientData> {}
