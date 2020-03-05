@@ -4,7 +4,7 @@ import {createUpdatable} from './Updatable'
 import {createUploadable} from './Uploadable'
 import {InvitationPaginableList, Invitation} from './Invitation'
 import {BlockedUserPaginableList, BlockedUser} from './BlockedUser'
-import ClientData from './ClientData'
+import {ClientData} from './ClientData'
 import {reaction, IReactionDisposer} from 'mobx'
 
 export const OwnProfile = types
