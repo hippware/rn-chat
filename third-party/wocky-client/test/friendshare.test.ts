@@ -73,6 +73,7 @@ describe('Friend Share', () => {
     let receivedLocation = {...bobAliceProfile.location!}
     delete receivedLocation.createdAt
     delete receivedLocation.isCurrent
+    delete receivedLocation.id
     expect(receivedLocation).toEqual(theLocation)
     await alice.setLocation(differentLocation)
     await waitFor(
@@ -82,6 +83,7 @@ describe('Friend Share', () => {
     receivedLocation = {...bobAliceProfile.location!}
     delete receivedLocation.createdAt
     delete receivedLocation.isCurrent
+    delete receivedLocation.id
     expect(receivedLocation).toEqual(differentLocation)
 
     aliceBobProfile = await alice.loadProfile(bob.username!)
@@ -105,6 +107,7 @@ describe('Friend Share', () => {
     receivedLocation = {...friend!.location!}
     delete receivedLocation.createdAt
     delete receivedLocation.isCurrent
+    delete receivedLocation.id
     expect(receivedLocation).toEqual(theLocation)
     await waitFor(() => !!friend!.sharesLocation, 'start sharing location')
     // change location
