@@ -11,6 +11,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Speculative fix for: TypeError in Transport.ts:1411 (#4288)
 * src/components/SignIn.tsx:102: undefined is not an object (#4820)
 * Change notification to "... is sharing their location with you" (#4867)
+* [dev] Logging improvements (#4866)
+* Post a bugsnag if graphql subscription not found (ie. #4004) (PR #4874)
 
 # 4.40.1 - 2020 Feb 27
 
