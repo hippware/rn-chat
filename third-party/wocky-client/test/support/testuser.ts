@@ -14,6 +14,18 @@ const SERVER_NAME = 'testing'
 // tslint:disable:no-console
 const fs = require('fs')
 
+// Polyfill some functions that don't exist in the test/nodejs environment
+function augmentConsole() {
+  ;(console as any).bugsnagNotify = (
+    e: Error,
+    name?: string,
+    extra?: {[name: string]: any}
+  ): void => {
+    console.log(`${name}`, e, extra)
+  }
+}
+augmentConsole()
+
 function token(credentials: any) {
   const payload = {
     aud: 'Wocky',
