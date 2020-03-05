@@ -492,12 +492,6 @@ export const Wocky = types
               profile.setLocation(
                 createLocation({...location, createdAt: iso8601toDate(location.capturedAt)})
               )
-            } else {
-              self.bugsnagNotify(
-                new Error('Unable to setLocation due to profile not found'),
-                'wocky_sharedLocation_profile_not_found',
-                {id, location}
-              )
             }
           }
         ),
