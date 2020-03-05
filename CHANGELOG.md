@@ -10,6 +10,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Make the hamburger/main menu a different colour for Staging (#4830)
 * Speculative fix for: TypeError in Transport.ts:1411 (#4288)
 * src/components/SignIn.tsx:102: undefined is not an object (#4820)
+* Change notification to "... is sharing their location with you" (#4867)
 
 # 4.40.1 - 2020 Feb 27
 
