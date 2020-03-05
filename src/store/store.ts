@@ -29,7 +29,7 @@ import GeocodingStore from './GeocodingStore'
 import {AppInfo} from './AppInfo'
 import ContactStore from './ContactStore'
 import reportStore from './ReportStore'
-import {log} from 'src/utils/logger'
+import {log, modifyConsoleAndGetLogger} from 'src/utils/logger'
 import {autorun} from 'mobx'
 import {settings} from '../globals'
 import AsyncStorage from '@react-native-community/async-storage'
@@ -40,12 +40,15 @@ const auth = firebase.auth()
 
 const STORE_NAME = 'MainStore'
 
+const logger = modifyConsoleAndGetLogger()
+
 export type IEnv = {
   transport: Transport
   auth: RNFirebase.auth.Auth
   firebase: Firebase
   fileService: any
   deviceInfo: TRDeviceInfo
+  logger: any
 }
 
 const cleanState = {
@@ -135,13 +138,14 @@ function tryMigrate(parsed): object {
 export async function createStore() {
   let mstStore, storeData
   const deviceInfo = await deviceInfoFetch()
-  const transport = new Transport(await DeviceInfo.getUniqueId())
+  const transport = new Transport(await DeviceInfo.getUniqueId(), logger)
   const env: IEnv = {
     transport,
     auth,
     firebase,
     fileService,
     deviceInfo,
+    logger,
   }
   const appInfo = {jsVersion, nativeVersion: deviceInfo.binaryVersion}
   try {

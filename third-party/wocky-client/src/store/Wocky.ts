@@ -13,7 +13,6 @@ import {EventList, createEvent, EventEntity, IEventEntity} from '../model/EventL
 import _ from 'lodash'
 import {RequestType} from '../model/PaginableList'
 import {ILocation, ILocationSnapshot, createLocation} from '../model/Location'
-import {log} from '../logger'
 
 export const Wocky = types
   .compose(
@@ -63,8 +62,12 @@ export const Wocky = types
     }) as (id: string) => Promise<IProfile>,
   }))
   .extend(self => {
+    const logger = getEnv(self).logger
     return {
       views: {
+        get logger() {
+          return logger
+        },
         get connecting() {
           return self.transport.connecting
         },
@@ -342,7 +345,7 @@ export const Wocky = types
           }
           return item
         } catch (e) {
-          log('ONNOTIFICATION ERROR: ' + e.message)
+          self.logger.log('ONNOTIFICATION ERROR: ' + e.message)
         }
         // }
       },
