@@ -5,7 +5,6 @@ import {settings} from '../globals'
 import {Keyboard, Platform, BackHandler} from 'react-native'
 import {Actions, Router, Scene, Stack, Modal, Lightbox, Tabs} from 'react-native-router-flux'
 import {IWocky, IProfile} from 'wocky-client'
-import {ILocationStore} from '../store/LocationStore'
 import {INavStore} from '../store/NavStore'
 import SelectChatUser from './Chats/SelectChatUser'
 import Launch from './Launch'
@@ -56,7 +55,6 @@ const iconClose = require('../../images/iconClose.png')
 
 type Props = {
   wocky?: IWocky
-  locationStore?: ILocationStore
   navStore?: INavStore
   homeStore?: IHomeStore
   iconStore?: IconStore
@@ -65,8 +63,8 @@ type Props = {
   firebaseStore?: IFirebaseStore
 }
 
-const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics', 'homeStore', 'navStore', 'authStore', 'firebaseStore')(
-  observer(({wocky, locationStore, navStore, homeStore, iconStore, authStore, analytics, firebaseStore}: Props) => {
+const TinyRobotRouter = inject('wocky', 'iconStore', 'analytics', 'homeStore', 'navStore', 'authStore', 'firebaseStore')(
+  observer(({wocky, navStore, homeStore, iconStore, authStore, analytics, firebaseStore}: Props) => {
 
     const {onboarded} = useDeviceOnboarded()
 
@@ -76,20 +74,20 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
 
       autorun(
         () => {
-          if (onboarded && !locationStore!.alwaysOn && navStore!.scene !== 'locationWarning' && Actions.locationWarning) {
+          if (onboarded.get() && !permissions.get('allowsLocation') && navStore!.scene !== 'locationWarning' && Actions.locationWarning) {
             Actions.locationWarning({afterLocationAlwaysOn: () => Actions.popTo('home')})
           }
         },
-        {delay: 1000}
+        {delay: 1000, name: 'autorun - check for location always on permissions'}
       )
 
       autorun(
         () => {
-          if (onboarded && !permissions.get('allowsAccelerometer') && navStore!.scene !== 'motionWarning' && Actions.motionWarning) {
+          if (onboarded.get() && !permissions.get('allowsAccelerometer') && navStore!.scene !== 'motionWarning' && Actions.motionWarning) {
             Actions.motionWarning()
           }
         },
-        {delay: 1000}
+        {delay: 1000, name: 'autorun - check for accelerometer permissions'}
       )
 
       // ensure we always nav to the default card if we pop back to home (add small delay in case of a popTo -> nav)
@@ -193,7 +191,7 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
             <Scene key="connect" on={authStore!.login} success="checkHandle" failure="preConnection" />
             <Scene key="checkProfile" on={() => wocky!.profile} success="checkHandle" failure="connect" />
             <Scene key="checkHandle" on={() => wocky!.profile!.handle} success="checkOnboarded" failure="signUp" />
-            <Scene key="checkOnboarded" on={() => onboarded} success={() => {
+            <Scene key="checkOnboarded" on={() => onboarded.get()} success={() => {
               Actions.logged()
               if (firebaseStore!.inviteCode) {
                 showSharingModal()

@@ -6,7 +6,7 @@ const key = 'TinyRobotOnboarded'
 
 export const onboarded = observable.box<boolean | null>(null)
 
-export const useDeviceOnboarded = (): {onboarded; setOnboarded} => {
+export const useDeviceOnboarded = () => {
   useEffect(() => {
     checkOnboarded()
   }, [])
