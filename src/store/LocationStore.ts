@@ -260,32 +260,26 @@ const LocationStore = types
     const {wocky} = getRoot<any>(self)
     let reactions: IReactionDisposer[] = []
 
-    const init = flow(function*() {
-      const resp1 = yield checkLocation()
+    async function init() {
+      const resp1 = await checkLocation()
       if (resp1) {
         self.setAlwaysOn(true)
       } else {
         self.setAlwaysOn(false)
       }
-    })
+    }
 
-    const start = flow(function*() {
+    function start() {
       if (reactions.length) {
         finish()
       }
-      yield init()
 
       reactions = [
         autorun(
           async () => {
-            if (
-              wocky.connected &&
-              wocky.profile &&
-              wocky.profile.hidden &&
-              onboarded &&
-              self.alwaysOn
-            ) {
+            if (wocky.connected && wocky.profile && wocky.profile.hidden && onboarded.get()) {
               try {
+                await init()
                 await self.refreshCredentials()
                 if (!wocky.profile.hidden.enabled) {
                   await BackgroundGeolocation.start()
@@ -307,7 +301,7 @@ const LocationStore = types
           {name: 'LocationStore: Start RNBGL after connected'}
         ),
       ]
-    })
+    }
 
     function finish() {
       reactions.forEach(disposer => disposer())
