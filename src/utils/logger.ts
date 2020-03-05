@@ -1,3 +1,5 @@
+import {bugsnagNotify} from './bugsnagConfig'
+
 // tslint:disable:no-console
 export function log(...args) {
   if (!__DEV__) return
@@ -30,6 +32,16 @@ export function modifyConsoleAndGetLogger() {
       console.error = no_op
     }
 
+    ;(console as any).bugsnagNotify = (
+      e: Error,
+      name?: string,
+      extra?: {[name: string]: any}
+    ): void => {
+      bugsnagNotify(e, name, extra)
+      if (__DEV__) {
+        console.log(`${name}`, e, extra)
+      }
+    }
     ;(console as any)._modified = true
   }
 
