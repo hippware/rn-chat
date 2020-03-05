@@ -32,7 +32,7 @@ export class NotificationStore {
       () => {
         if (getType(self.wocky.notification!).name === EventLocationShare.name) {
           const profile = (self.wocky.notification as IEventLocationShare)!.sharedWith
-          self.flash(`${profile.handle} and you are sharing location.`, {
+          self.flash(`${profile.handle} is sharing their location with you`, {
             autoCloseTimeout: 3000,
             profile,
           })

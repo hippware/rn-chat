@@ -1,4 +1,4 @@
-import {ApolloClient, MutationOptions} from 'apollo-client'
+import {ApolloClient, MutationOptions, QueryOptions, ApolloQueryResult} from 'apollo-client'
 import {InMemoryCache, IntrospectionFragmentMatcher} from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
 import {IPagingList, MediaUploadParams} from './types'
@@ -40,6 +40,7 @@ import {IBotPostIn} from '../model/BotPost'
 import {OperationDefinitionNode} from 'graphql'
 import {IMessageIn} from '../model/Message'
 import {IEventData} from '../model/Event'
+import {FetchResult} from 'apollo-link'
 
 export type PaginableLoadType<T> = {list: T[]; count: number; cursor?: string}
 export type PaginableLoadPromise<T> = Promise<PaginableLoadType<T>>
@@ -55,6 +56,7 @@ export class Transport {
   username?: string
   token?: string
   host?: string
+  logger?: any
 
   @observable connected: boolean = false
   @observable connecting: boolean = false
@@ -65,14 +67,16 @@ export class Transport {
   @observable rosterItem: any
   @observable botVisitor: any
 
-  constructor(resource: string) {
+  constructor(resource: string, logger: any) {
     this.resource = resource
     this.instance = Transport.instances++
+    this.logger = logger
   }
 
   @action
   async login(token: string, host: string): Promise<boolean> {
     this.host = host
+    this.token = token
     if (this.connected) {
       // Already connected
       return this.connected
@@ -136,10 +140,7 @@ export class Transport {
   }
 
   async loadProfile(id: string): Promise<IProfilePartial | null> {
-    if (!this.client) {
-      return null
-    }
-    const res = await this.client!.query<any>({
+    const res = await this.query({
       query: gql`
           query LoadProfile {
             user(id: "${id}") {
@@ -239,7 +240,7 @@ export class Transport {
   }
 
   async generateId(): Promise<string> {
-    const res = await this.client!.mutate({
+    const res = await this.mutate({
       mutation: gql`
         mutation botCreate {
           botCreate {
@@ -258,7 +259,7 @@ export class Transport {
     return (res.data as any).botCreate!.result.id
   }
   async loadBot(id: string): Promise<any> {
-    const res = await this.client!.query<any>({
+    const res = await this.query({
       query: gql`
         query loadBot($id: String!, $ownUsername: String!){
           bot(id: $id) {
@@ -287,8 +288,8 @@ export class Transport {
     return convertBot(res.data.bot)
   }
 
-  async getLocationUploadToken(): Promise<string> {
-    const res = await this.client!.mutate({
+  async getLocationUploadToken(): Promise<string | null> {
+    const res = await this.mutate({
       mutation: gql`
         mutation userLocationGetToken {
           userLocationGetToken {
@@ -341,11 +342,10 @@ export class Transport {
     afterId?: string
     types: string[] | undefined
   }): PaginableLoadPromise<IEventData> {
-    if (this.client) {
-      const {limit, beforeId, afterId, types} = params
-      // console.log('& gql load', beforeId, afterId, limit)
-      const res = await this.client!.query<any>({
-        query: gql`
+    const {limit, beforeId, afterId, types} = params
+    // console.log('& gql load', beforeId, afterId, limit)
+    const res = await this.query({
+      query: gql`
         query notifications($first: Int, $last: Int, $beforeId: AInt, $afterId: AInt, $ownUsername: String!, $types: [NotificationType]) {
           notifications(first: $first, last: $last, beforeId: $beforeId, afterId: $afterId, types: $types) {
             totalCount
@@ -357,20 +357,20 @@ export class Transport {
           }
         }
       `,
-        variables: {beforeId, afterId, first: limit || 20, ownUsername: this.username, types},
-      })
-      // console.log('& gql res', JSON.stringify(res.data.notifications))
-      if (res.data && res.data.notifications) {
-        const {totalCount, edges} = res.data.notifications
+      variables: {beforeId, afterId, first: limit || 20, ownUsername: this.username, types},
+    })
+    // console.log('& gql res', JSON.stringify(res.data.notifications))
+    if (res.data && res.data.notifications) {
+      const {totalCount, edges} = res.data.notifications
 
-        const list = convertNotifications(edges)!
-        return {
-          count: totalCount,
-          list,
-        }
+      const list = convertNotifications(edges)!
+      return {
+        count: totalCount,
+        list,
       }
+    } else {
+      return {list: [], count: 0}
     }
-    return {count: 0, list: []}
   }
   async loadSubscribedBots(
     userId: string,
@@ -379,11 +379,28 @@ export class Transport {
   ): Promise<IPagingList<any>> {
     return await this.loadBots('SUBSCRIBED_NOT_OWNED', userId, lastId, max)
   }
+  async query(options: QueryOptions<any>): Promise<ApolloQueryResult<any>> {
+    if (!this.client) {
+      if (!this.token) throw new Error('Token is not defined!')
+      if (!this.host) throw new Error('Host is not defined!')
+      await this.login(this.token!, this.host!)
+    }
+    await waitFor(() => this.connected)
+    return this.client!.query(options)
+  }
+  async mutate(options: MutationOptions<any>): Promise<FetchResult> {
+    if (!this.client) {
+      if (!this.token) throw new Error('Token is not defined!')
+      if (!this.host) throw new Error('Host is not defined!')
+      await this.login(this.token!, this.host!)
+    }
+    await waitFor(() => this.connected)
+    return this.client!.mutate(options)
+  }
   async loadGeofenceBots(): PaginableLoadPromise<IBotIn> {
     // load all guest bots
-    if (this.client) {
-      const res = await this.client!.query<any>({
-        query: gql`
+    const res = await this.query({
+      query: gql`
         query getActiveBots($ownUsername: String!) {
           currentUser {
             id
@@ -407,19 +424,16 @@ export class Transport {
           }
         }
       `,
-        variables: {
-          ownUsername: this.username,
-        },
-      })
-      const bots = res.data.currentUser.activeBots
-      const list = bots.edges.filter((e: any) => e.node).map((e: any) => convertBot(e.node))
-      return {
-        list,
-        cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null,
-        count: bots.totalCount,
-      }
-    } else {
-      return {list: [], count: 0}
+      variables: {
+        ownUsername: this.username,
+      },
+    })
+    const bots = res.data.currentUser.activeBots
+    const list = bots.edges.filter((e: any) => e.node).map((e: any) => convertBot(e.node))
+    return {
+      list,
+      cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null,
+      count: bots.totalCount,
     }
   }
 
@@ -437,8 +451,11 @@ export class Transport {
     id: string,
     lastId?: string,
     max: number = 10
-  ): Promise<IPagingList<IBotPostIn>> {
-    const res = await this.client!.query<any>({
+  ): Promise<IPagingList<IBotPostIn> | null> {
+    if (!this.client) {
+      return null
+    }
+    const res = await this.query({
       query: gql`
         query loadBot($id: UUID!, $limit: Int, $cursor: String) {
           bot(id: $id) {
@@ -458,7 +475,7 @@ export class Transport {
     }
   }
   async inviteBot(botId: string, userIds: string[]): Promise<void> {
-    await this.client!.mutate({
+    await this.mutate({
       mutation: gql`
         mutation botInvite($input: BotInviteInput!) {
           botInvite(input: $input) {
@@ -475,7 +492,7 @@ export class Transport {
     {latitude, longitude, accuracy},
     accept: boolean = true
   ) {
-    await this.client!.mutate({
+    await this.mutate({
       mutation: gql`
         mutation botInvitationRespond($input: BotInvitationRespondInput!) {
           botInvitationRespond(input: $input) {
@@ -555,7 +572,7 @@ export class Transport {
 
   async downloadTROS(trosUrl: string): Promise<any> {
     await waitFor(() => this.connected)
-    const res = await this.client!.query<any>({
+    const res = await this.query({
       query: gql`
         query mediaUrls($trosUrl: String!) {
           mediaUrls(timeout: 10000, trosUrl: $trosUrl) {
@@ -578,7 +595,7 @@ export class Transport {
   // This can throw errors (due to connectionCheck())
   async requestUpload({file, size, access}: MediaUploadParams): Promise<any> {
     this.connectionCheck()
-    const res = await this.client!.mutate({
+    const res = await this.mutate({
       mutation: gql`
         mutation mediaUpload($input: MediaUploadParams!) {
           mediaUpload(input: $input) {
@@ -767,7 +784,7 @@ export class Transport {
 
   async loadChatMessages(userId, lastId, max): PaginableLoadPromise<IMessageIn> {
     await waitFor(() => this.connected)
-    const res = await this.client!.query<any>({
+    const res = await this.query({
       query: gql`
           query loadChat($otherUser: UUID, $after: String, $first: Int) {
             currentUser {
@@ -800,7 +817,7 @@ export class Transport {
 
   async loadChats(max: number = 50): Promise<Array<{chatId: string; message: IMessageIn}>> {
     await waitFor(() => this.connected)
-    const res = await this.client!.query<any>({
+    const res = await this.query({
       query: gql`
           query loadChats($max: Int) {
             currentUser {
@@ -976,7 +993,7 @@ export class Transport {
     if (latitudeDelta > 100 || longitudeDelta > 100) {
       return [] as any
     }
-    const res = await this.client!.query<any>({
+    const res = await this.query({
       query: gql`
         query loadLocalBots($pointA: Point!, $pointB: Point!, $ownUsername: String!){
           localBots(pointA: $pointA, pointB: $pointB) {
@@ -1000,7 +1017,7 @@ export class Transport {
   }
 
   async searchUsers(text: string): Promise<IProfilePartial[]> {
-    const res = await this.client!.query<any>({
+    const res = await this.query({
       query: gql`
         query searchUsers($text: String!){
           users(limit: 20, searchTerm: $text) {
@@ -1028,7 +1045,7 @@ export class Transport {
   }
 
   async userBulkLookup(phoneNumbers: string[]): Promise<any[]> {
-    const res = await this.client!.query<any>({
+    const res = await this.query({
       query: gql`
           query userBulkLookup($phoneNumbers: [String]!) {
             userBulkLookup(phoneNumbers: $phoneNumbers) {
@@ -1098,7 +1115,7 @@ export class Transport {
   }
 
   async userInviteGetSender(code: string): Promise<IProfilePartial | null> {
-    const res = await this.client!.query<any>({
+    const res = await this.query({
       query: gql`
         query userInviteGetSender($code: String!) {
           userInviteGetSender(inviteCode: $code) {
@@ -1121,7 +1138,7 @@ export class Transport {
 
   async userInviteMakeUrl(_shareType: FriendShareTypeEnum): Promise<string> {
     // todo: add the shareType param to the mutation when it's ready on wocky
-    const res = await this.client!.mutate<any>({
+    const res = await this.client!.mutate({
       mutation: gql`
         mutation userInviteMakeUrl {
           userInviteMakeUrl {
@@ -1305,7 +1322,7 @@ export class Transport {
   /******************************** END SUBSCRIPTIONS ********************************/
 
   private async loadBots(relationship: string, userId: string, after?: string, max: number = 10) {
-    const res = await this.client!.query<any>({
+    const res = await this.query({
       query: gql`
           query loadBots($max: Int!, $ownUsername: String!, $userId: String!, $after: String, $relationship: String!) {
             user(id: $userId) {
@@ -1341,15 +1358,11 @@ export class Transport {
    * Reduce boilerplate for pass/fail gql mutations.
    */
   private async voidMutation({mutation, variables}: MutationOptions): Promise<void> {
-    if (!this.client || !this.connected) {
-      return
-    }
-
     let name: string = '',
       res: any
     // todo: use the name as defined by the Wocky mutation (not the name given to the wrapper)
     name = (mutation.definitions[0] as OperationDefinitionNode).name!.value
-    res = await this.client!.mutate({mutation, variables})
+    res = await this.mutate({mutation, variables})
     if (res.data && !res.data![name].successful) {
       // console.error('voidMutation error with ', name, JSON.stringify(res.data[name]))
       throw new Error(`GraphQL ${name} error: ${JSON.stringify(res.data![name])}`)
@@ -1363,7 +1376,7 @@ export class Transport {
     lastId?: string,
     max: number = 10
   ): Promise<IPagingList<any>> {
-    const res = await this.client!.query<any>({
+    const res = await this.query({
       query: gql`
         query getBotProfiles($botId: UUID!, $cursor: String, $limit: Int) {
           bot(id: $botId) {
@@ -1445,8 +1458,7 @@ export class Transport {
             //   }
             // }
 
-            // tslint:disable-next-line
-            console.log(
+            this.logger.log(
               `${new Date().toISOString()} | socket(${
                 this.instance
               }):${kind} | ${msg} | ${JSON.stringify(data)}`

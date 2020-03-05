@@ -4,6 +4,14 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Update: phoenix (PR #4855), tslib (PR #4856)
+  * react-test-renderer (PR #4857), @babel/core (PR #4858)
+  * typescript (PR #4859), react-dom (PR #4861)
+* Make the hamburger/main menu a different colour for Staging (#4830)
+* Speculative fix for: TypeError in Transport.ts:1411 (#4288)
+* src/components/SignIn.tsx:102: undefined is not an object (#4820)
+* Change notification to "... is sharing their location with you" (#4867)
+
 # 4.40.1 - 2020 Feb 27
 
 * Update: @storybook/react-native (PR #4833), tslib (PR #4834)
