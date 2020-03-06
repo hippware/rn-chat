@@ -502,7 +502,6 @@ export function convertNotification(edge: any): IEventData | {deletedId: string}
       }
       return locationShareNearbyEndNotification
     default:
-      // tslint:disable-next-line
       console.log('Failed to process notification: ' + JSON.stringify(edge))
       return null
   }

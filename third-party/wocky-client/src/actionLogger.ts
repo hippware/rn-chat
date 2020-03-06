@@ -5,10 +5,8 @@ export function actionLogger(call: IMiddlewareEvent, next: (call: IMiddlewareEve
   if (call.type === 'action' && call.parentId === 0) {
     const base = '[MST] ' + getPath(call.context) + '/' + call.name
     if (call.args.length === 0) {
-      // tslint:disable-next-line
       console.log(base)
     } else {
-      // tslint:disable-next-line
       console.log(base + ' args:', call.args)
     }
   }

@@ -56,7 +56,6 @@ export class Transport {
   username?: string
   token?: string
   host?: string
-  logger?: any
 
   @observable connected: boolean = false
   @observable connecting: boolean = false
@@ -67,10 +66,9 @@ export class Transport {
   @observable rosterItem: any
   @observable botVisitor: any
 
-  constructor(resource: string, logger: any) {
+  constructor(resource: string) {
     this.resource = resource
     this.instance = Transport.instances++
-    this.logger = logger
   }
 
   @action
@@ -1458,7 +1456,7 @@ export class Transport {
             //   }
             // }
 
-            this.logger.log(
+            console.log(
               `${new Date().toISOString()} | socket(${
                 this.instance
               }):${kind} | ${msg} | ${JSON.stringify(data)}`

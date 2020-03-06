@@ -11,7 +11,6 @@ import uuid from 'uuid/v1'
 setLivelynessChecking('error')
 
 const SERVER_NAME = 'testing'
-// tslint:disable:no-console
 const fs = require('fs')
 
 // Polyfill some functions that don't exist in the test/nodejs environment
@@ -73,7 +72,7 @@ export function expectedImage() {
 
 export async function createUser(num?: number, phoneNum?: string): Promise<IWocky> {
   try {
-    const transport = new Transport(SERVER_NAME, console)
+    const transport = new Transport(SERVER_NAME)
     const phoneNumber =
       phoneNum ||
       (num
