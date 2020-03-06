@@ -545,7 +545,7 @@ export class Transport {
       values.clientData = JSON.stringify(values.clientData)
     }
 
-    return this.voidMutation({
+    const res = await this.mutate({
       mutation: gql`
         mutation userUpdate($values: UserParams!) {
           userUpdate(input: {values: $values}) {
@@ -555,6 +555,9 @@ export class Transport {
       `,
       variables: {values},
     })
+    if (!res.data!.userUpdate.successful) {
+      throw {messages: res.data!.userUpdate.messages}
+    }
   }
 
   async remove(): Promise<void> {

@@ -28,7 +28,10 @@ type Props = {
   profileValidationStore?: any
 }
 
-const MyAccount = inject('wocky', 'profileValidationStore')(
+const MyAccount = inject(
+  'wocky',
+  'profileValidationStore'
+)(
   observer(({wocky, profileValidationStore}: Props) => {
     const {profile} = wocky!
 
@@ -211,8 +214,21 @@ const MyAccount = inject('wocky', 'profileValidationStore')(
 })
 
 const submit = async () => {
-  await (MyAccount as any).profileValidationStore.save()
-  Actions.pop()
+  try {
+    await (MyAccount as any).profileValidationStore.save()
+    Actions.pop()
+  } catch (e) {
+    Alert.alert(
+      'Error',
+      e.messages
+        ? e.messages
+            .map(rec =>
+              rec.message.replace('has already been taken', 'Handle has already been taken')
+            )
+            .join('\n')
+        : e.message
+    )
+  }
 }
 
 export default MyAccount
@@ -229,7 +245,10 @@ const LinkButton = ({
   </TouchableOpacity>
 )
 
-const Right = inject('wocky', 'profileValidationStore')(
+const Right = inject(
+  'wocky',
+  'profileValidationStore'
+)(
   observer(({wocky, profileValidationStore}: Props) => {
     const {profile} = wocky!
     const disabled =
