@@ -4,6 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Don't lose map options when upgrading or codepush-ing (#4849)
+
+# 4.40.2 - 2020 Mar 5
+
 * Update: phoenix (PR #4855), tslib (PR #4856)
   * react-test-renderer (PR #4857), @babel/core (PR #4858)
   * typescript (PR #4859), react-dom (PR #4861)
