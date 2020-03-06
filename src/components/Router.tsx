@@ -32,6 +32,7 @@ import BottomMenu from './BottomMenu'
 import DebugScreen from './DebugScreen'
 import LocationGeofenceWarning from './modals/LocationGeofenceWarning'
 import LocationWarning from './modals/LocationWarning'
+import MotionWarning from './modals/MotionWarning'
 import SharePresencePrimer from './modals/SharePresencePrimer'
 import InvisibleExpirationSelector from './modals/InvisibleExpirationSelector'
 import CreationHeader from './Home/CreationHeader'
@@ -71,13 +72,17 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
 
       autorun(
         () => {
-          const {onboarded} = permissionStore!
-          const {scene} = navStore!
-          const {alwaysOn} = locationStore!
-          if (onboarded && !alwaysOn) {
-            if (scene !== 'locationWarning'){
-              if (Actions.locationWarning) Actions.locationWarning({afterLocationAlwaysOn: () => Actions.popTo('home')})
-            }
+          if (permissionStore!.onboarded && !locationStore!.alwaysOn && navStore!.scene !== 'locationWarning' && Actions.locationWarning) {
+            Actions.locationWarning({afterLocationAlwaysOn: () => Actions.popTo('home')})
+          }
+        },
+        {delay: 1000}
+      )
+
+      autorun(
+        () => {
+          if (permissionStore!.onboarded && !permissionStore!.allowsAccelerometer && navStore!.scene !== 'motionWarning' && Actions.motionWarning) {
+            Actions.motionWarning()
           }
         },
         {delay: 1000}
@@ -240,6 +245,7 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
             </Stack>
             <Scene key="reload" hideNavBar type="replace" component={Launch} />
             <Scene key="locationWarning" component={LocationWarning} />
+            <Scene key="motionWarning" component={MotionWarning} />
             <Scene key="geofenceWarning" component={LocationGeofenceWarning} />
             <Scene key="sharePresencePrimer" component={SharePresencePrimer} />
             <Scene key="invisibleExpirationSelector" component={InvisibleExpirationSelector} />

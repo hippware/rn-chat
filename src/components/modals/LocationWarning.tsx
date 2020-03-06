@@ -6,7 +6,6 @@ import {when} from 'mobx'
 import {BlurView} from '@react-native-community/blur'
 import {GradientButton, RText, Separator} from '../common'
 import {WHITE, TRANSLUCENT_WHITE} from 'src/constants/colors'
-import AndroidOpenSettings from 'react-native-android-open-settings'
 import {useLocationStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
 
@@ -29,22 +28,10 @@ const LocationWarning = observer(({afterLocationAlwaysOn}: Props) => {
     return disposer
   }, [])
 
-  const onPress = () => {
-    if (Platform.OS === 'ios') {
-      Linking.openURL('app-settings:{1}')
-    } else {
-      AndroidOpenSettings.appDetailsSettings()
-    }
-  }
-
-  return Platform.OS === 'ios' ? (
-    <LocationWarningIOS onPress={onPress} />
-  ) : (
-    <LocationWarningAndroid onPress={onPress} />
-  )
+  return Platform.OS === 'ios' ? <LocationWarningIOS /> : <LocationWarningAndroid />
 })
 
-export const LocationWarningIOS = ({onPress}) => (
+export const LocationWarningIOS = () => (
   <View
     style={[
       StyleSheet.absoluteFill,
@@ -71,7 +58,7 @@ export const LocationWarningIOS = ({onPress}) => (
     <GradientButton
       isPink
       style={{height: 50, width: '80%', borderRadius: 4, marginBottom: 26 * s, marginTop: 40 * s}}
-      onPress={onPress}
+      onPress={() => Linking.openSettings()}
     >
       <RText color={WHITE} size={18.5}>
         Open Settings
@@ -80,7 +67,7 @@ export const LocationWarningIOS = ({onPress}) => (
   </View>
 )
 
-export const LocationWarningAndroid = ({onPress}) => (
+export const LocationWarningAndroid = () => (
   <View
     style={[
       StyleSheet.absoluteFill,
@@ -103,7 +90,7 @@ export const LocationWarningAndroid = ({onPress}) => (
     <GradientButton
       isPink
       style={{height: 50, width: '80%', borderRadius: 4, marginBottom: 26 * s, marginTop: 40 * s}}
-      onPress={onPress}
+      onPress={() => Linking.openSettings()}
     >
       <RText color={WHITE} size={18.5}>
         Change Settings

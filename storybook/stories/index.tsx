@@ -50,8 +50,8 @@ storiesOf('NotificationBanner', module).add('Notification with Avatar', () => (
 
 storiesOf('Onboarding', module)
   .add('1 - Location', () => <OnboardingLocation onPress={emptyFn} />)
-  .add('1a - Location Warning IOS', () => <LocationWarningIOS onPress={emptyFn} />)
-  .add('1b - Location Warning Android', () => <LocationWarningAndroid onPress={emptyFn} />)
+  .add('1a - Location Warning IOS', () => <LocationWarningIOS />)
+  .add('1b - Location Warning Android', () => <LocationWarningAndroid />)
   .add('2 - Accelerometer', () => <OnboardingAccelerometer onPress={emptyFn} />)
   .add('3 - Notifications', () => <OnboardingNotifications onPress={emptyFn} />)
   .add('4 - FindFriends', () => <OnboardingFindFriends onPress={emptyFn} onSkip={emptyFn} />)
