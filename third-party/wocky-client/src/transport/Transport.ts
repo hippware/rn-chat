@@ -41,6 +41,7 @@ import {OperationDefinitionNode} from 'graphql'
 import {IMessageIn} from '../model/Message'
 import {IEventData} from '../model/Event'
 import {FetchResult} from 'apollo-link'
+import {log} from '../../../../src/utils/logger'
 
 export type PaginableLoadType<T> = {list: T[]; count: number; cursor?: string}
 export type PaginableLoadPromise<T> = Promise<PaginableLoadType<T>>
@@ -56,7 +57,6 @@ export class Transport {
   username?: string
   token?: string
   host?: string
-  logger?: any
 
   @observable connected: boolean = false
   @observable connecting: boolean = false
@@ -67,10 +67,9 @@ export class Transport {
   @observable rosterItem: any
   @observable botVisitor: any
 
-  constructor(resource: string, logger: any) {
+  constructor(resource: string) {
     this.resource = resource
     this.instance = Transport.instances++
-    this.logger = logger
   }
 
   @action
@@ -1461,7 +1460,7 @@ export class Transport {
             //   }
             // }
 
-            this.logger.log(
+            log(
               `${new Date().toISOString()} | socket(${
                 this.instance
               }):${kind} | ${msg} | ${JSON.stringify(data)}`
