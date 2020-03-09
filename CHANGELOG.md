@@ -4,7 +4,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Update: @react-native-community/netinfo
+  * @react-native-community/async-storage
+  * @react-native-community/push-notification-ios (PR #4879)
 * Don't lose map options when upgrading or codepush-ing (#4849)
+* Show warning modal if user disables Motion permissions (#4851)
+* GraphQL userUpdate error: has already been taken (#4821)
 
 # 4.40.2 - 2020 Mar 5
 
