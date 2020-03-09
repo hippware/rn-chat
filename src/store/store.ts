@@ -11,7 +11,7 @@ import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
 import {actionLogger, Transport, Wocky} from 'wocky-client'
 import analytics from '../utils/analytics'
-import {bugsnagIdentify, bugsnagNotify} from '../utils/bugsnagConfig'
+import {bugsnagIdentify} from '../utils/bugsnagConfig'
 import FirebaseStore from './FirebaseStore'
 import AuthStore from './AuthStore'
 import fileService from './fileService'
@@ -29,7 +29,7 @@ import GeocodingStore from './GeocodingStore'
 import {AppInfo} from './AppInfo'
 import ContactStore from './ContactStore'
 import reportStore from './ReportStore'
-import {log} from 'src/utils/logger'
+import {log, modifyConsoleAndGetLogger} from 'src/utils/logger'
 import {autorun} from 'mobx'
 import {settings} from '../globals'
 import AsyncStorage from '@react-native-community/async-storage'
@@ -40,13 +40,15 @@ const auth = firebase.auth()
 
 const STORE_NAME = 'MainStore'
 
+const logger = modifyConsoleAndGetLogger()
+
 export type IEnv = {
   transport: Transport
   auth: RNFirebase.auth.Auth
   firebase: Firebase
   fileService: any
   deviceInfo: TRDeviceInfo
-  bugsnagNotify: (e: Error, name?: string, extra?: {[name: string]: any}) => void
+  logger: any
 }
 
 const cleanState = {
@@ -163,7 +165,7 @@ export async function createStore() {
     storeData = getMinimalStoreData(storeData)
   }
 
-  const transport = new Transport(await DeviceInfo.getUniqueId())
+  const transport = new Transport(await DeviceInfo.getUniqueId(), logger)
 
   const env: IEnv = {
     transport,
@@ -171,7 +173,7 @@ export async function createStore() {
     firebase,
     fileService,
     deviceInfo,
-    bugsnagNotify,
+    logger,
   }
 
   const mstStore = Store.create(

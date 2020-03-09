@@ -36,7 +36,7 @@ const wocky = FakeWockyStore.create(
     activeBots: [],
   },
   {
-    transport: new Transport('mock'),
+    transport: new Transport('mock', console),
   }
 )
 

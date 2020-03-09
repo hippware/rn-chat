@@ -14,6 +14,21 @@ const SERVER_NAME = 'testing'
 // tslint:disable:no-console
 const fs = require('fs')
 
+// Polyfill some functions that don't exist in the test/nodejs environment
+function augmentConsole() {
+  ;(console as any).persistLog = (s: string): void => {
+    console.log(s)
+  }
+  ;(console as any).bugsnagNotify = (
+    e: Error,
+    name?: string,
+    extra?: {[name: string]: any}
+  ): void => {
+    console.log(`${name}`, e, extra)
+  }
+}
+augmentConsole()
+
 function token(credentials: any) {
   const payload = {
     aud: 'Wocky',
@@ -58,7 +73,7 @@ export function expectedImage() {
 
 export async function createUser(num?: number, phoneNum?: string): Promise<IWocky> {
   try {
-    const transport = new Transport(SERVER_NAME)
+    const transport = new Transport(SERVER_NAME, console)
     const phoneNumber =
       phoneNum ||
       (num
