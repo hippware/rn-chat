@@ -16,6 +16,7 @@
 #import "RNFirebaseLinks.h"
 #import "RNSplashScreen.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <TSBackgroundFetch/TSBackgroundFetch.h>
 
 @import GoogleMaps;
 
@@ -102,6 +103,10 @@
 
   [[UITextField appearance] setTintColor:[UIColor lightGrayColor]];
   [self loadBundle:launchOptions initialProps:env];
+
+  // [REQUIRED] Register BackgroundFetch
+  [[TSBackgroundFetch sharedInstance] didFinishLaunching];
+
   return YES;
 }
 

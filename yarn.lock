@@ -8655,22 +8655,22 @@ react-native-animated-linear-gradient@^1.2.0:
     prop-types "^15.6.0"
     rgb2hex "^0.1.0"
 
-react-native-background-fetch@^2.7.1, react-native-background-fetch@~2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.7.1.tgz#1467aed0fd2851edfdf10d3d9ac4ffd0cf069a85"
-  integrity sha512-BNWBVL3kewDJL+B+0gF84iF8viws3AGHwxsWPp+MhWvgb/Su6BPWjgi8u0A9fRYhacozmAcNEPT7E3tah1P8lg==
+react-native-background-fetch@^3.0.3, react-native-background-fetch@~3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-3.0.3.tgz#ec5fa38aaebdbaa7d3f670de8cdaaa277def4db7"
+  integrity sha512-lO0rUvdFjOXAkV9hEIQcbPa0t3I8lwHvKD5kWS9fTIYAtkLSHC8DIVQI353fPaMgyY05toRS3bcT/T2ZM5jBGw==
   dependencies:
     fast-plist "^0.1.2"
     plist "^3.0.1"
     xcode "^2.0.0"
 
-"react-native-background-geolocation-android@git+https://42af07bf147313e5c1053b3e23ebbc4da0075767:@github.com/transistorsoft/react-native-background-geolocation-android#3.5.1":
-  version "3.5.1"
-  resolved "git+https://42af07bf147313e5c1053b3e23ebbc4da0075767:@github.com/transistorsoft/react-native-background-geolocation-android#33c8614cb194eabf19af1b719de0c6ea82eb265e"
+"react-native-background-geolocation-android@git+https://42af07bf147313e5c1053b3e23ebbc4da0075767:@github.com/transistorsoft/react-native-background-geolocation-android#3.6.0":
+  version "3.6.0"
+  resolved "git+https://42af07bf147313e5c1053b3e23ebbc4da0075767:@github.com/transistorsoft/react-native-background-geolocation-android#9e3971eddf10da28e347682a4723c0885a7617be"
   dependencies:
     fast-plist "^0.1.2"
     plist "^2.0.1"
-    react-native-background-fetch "~2.7.1"
+    react-native-background-fetch "~3.0.3"
     xcode "^0.9.1"
 
 react-native-code-push@^6.1.0:
