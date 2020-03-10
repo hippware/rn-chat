@@ -329,10 +329,10 @@ const LocationStore = types
           {
             minimumFetchInterval: 15,
           },
-          () => {
-            log(prefix, `BackgroundFetch callback`)
-            BackgroundGeolocation.logger.info(`${prefix} BackgroundFetch callback`)
-            BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_NEW_DATA)
+          taskId => {
+            log(prefix, `BackgroundFetch callback taskId=${taskId}`)
+            BackgroundGeolocation.logger.info(`${prefix} BackgroundFetch callback taskId=${taskId}`)
+            BackgroundFetch.finish(taskId)
           },
           _error => {
             log(prefix, `BackgroundFetch failed to start`)
