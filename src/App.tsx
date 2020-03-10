@@ -8,14 +8,20 @@ import NotificationBanner from './components/NotificationBanner'
 import Connectivity from './components/Connectivity'
 import ErrorHandler from './components/common/ErrorHandler'
 import {bugsnagNotify} from 'src/utils/bugsnagConfig'
+import DeviceInfo from 'react-native-device-info'
 
 const App = () => {
   const [store, setStore] = useState<any>(null)
 
   useEffect(() => {
     // This seems to be undocumented event.
-    AppState.addEventListener('memoryWarning', () => {
-      const extras = {currentState: AppState.currentState}
+    AppState.addEventListener('memoryWarning', async () => {
+      const extras = {
+        currentState: AppState.currentState,
+        maxMemory: await DeviceInfo.getMaxMemory(),
+        totalMemory: await DeviceInfo.getTotalMemory(),
+        usedMemory: await DeviceInfo.getUsedMemory(),
+      }
       bugsnagNotify(new Error('AppState.memoryWarning fired'), 'memory_warning', extras)
       analytics.track('memory_warning', extras)
     })
