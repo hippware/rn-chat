@@ -14,7 +14,10 @@ type Props = {
 
 const sendActive = require('../../../images/sendActive.png')
 
-const Right = inject('wocky', 'reportStore')(({wocky, reportStore, userId}) => (
+const Right = inject(
+  'wocky',
+  'reportStore'
+)(({wocky, reportStore, userId}: any) => (
   <TouchableOpacity
     onPress={async () => {
       if (reportStore.submitting) return
@@ -27,7 +30,7 @@ const Right = inject('wocky', 'reportStore')(({wocky, reportStore, userId}) => (
     <Image source={sendActive} />
   </TouchableOpacity>
 ))
-export const ReportUserRightButton = ({userId}) => <Right userId={userId} />
+export const ReportUserRightButton = ({userId}: {userId?: string}) => <Right userId={userId!} />
 
 const ReportUser = observer(({userId}: Props) => {
   const [profile, setProfile] = useState<IProfile | null>(null)

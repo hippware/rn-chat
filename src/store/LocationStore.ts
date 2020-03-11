@@ -1,7 +1,8 @@
 import {types, getEnv, flow, getParent, getRoot} from 'mobx-state-tree'
 import {autorun, IReactionDisposer} from 'mobx'
-import {AppState} from 'react-native'
+import {AppState, Platform} from 'react-native'
 import BackgroundGeolocation from 'react-native-background-geolocation-android'
+import BackgroundFetch from 'react-native-background-fetch'
 import DeviceInfo from 'react-native-device-info'
 import {settings} from '../globals'
 import {Location, createLocation, IWocky} from 'wocky-client'
@@ -17,22 +18,22 @@ import {bugsnagNotify} from 'src/utils/bugsnagConfig'
 const MAX_DATE1 = '2030-01-01-17:00'
 const MAX_DATE2 = '2030-01-01-18:00'
 
-export const BG_STATE_PROPS = ['distanceFilter', 'autoSyncThreshold']
-
 const prefix = 'BGGL'
 
-const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOptions', {
+const ConfigOptions = types.model('ConfigOptions', {
   autoSyncThreshold: types.maybeNull(types.number),
   distanceFilter: types.maybeNull(types.number),
+  uploadUrl: types.maybeNull(types.string),
 })
+
+export const CONFIG_OPTIONS = Object.keys(ConfigOptions.properties)
 
 // todo: https://github.com/hippware/rn-chat/issues/3434
 const isMetric = RNLocalize.usesMetricSystem()
 const LocationStore = types
   .model('LocationStore', {
-    // should we persist location?
     location: types.maybeNull(Location),
-    backgroundOptions: types.optional(BackgroundLocationConfigOptions, {}),
+    configOptions: types.optional(ConfigOptions, {}),
   })
   .volatile(() => ({
     alwaysOn: true,
@@ -93,10 +94,11 @@ const LocationStore = types
       BackgroundGeolocation.logger.info(`${prefix} setAlwaysOn(${value})`)
       self.alwaysOn = value
     },
-    updateBackgroundConfigSuccess(state) {
-      const options = _.pick(state, BG_STATE_PROPS)
+    persistConfigOptions(state) {
+      const options = _.pick(state, CONFIG_OPTIONS)
       Object.assign(self, {
-        backgroundOptions: {
+        configOptions: {
+          ...self.configOptions,
           ...options,
         },
       })
@@ -188,9 +190,7 @@ const LocationStore = types
     })
 
     function setBackgroundConfig(config) {
-      // For some reason, these parameters must be ints, not strings
-      config.autoSyncThreshold = parseInt(config.autoSyncThreshold)
-      BackgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)
+      BackgroundGeolocation.setConfig(config, _unused => self.persistConfigOptions(config))
     }
 
     function startStandaloneGeolocation() {
@@ -229,6 +229,12 @@ const LocationStore = types
       onLocation(position)
     }
 
+    function uploadLog() {
+      return self.configOptions.uploadUrl
+        ? BackgroundGeolocation.logger.uploadLog(self.configOptions.uploadUrl)
+        : Promise.reject(new Error('No uploadUrl'))
+    }
+
     async function emailLog(email) {
       // emailLog doesn't work in iOS simulator so fetch and dump instead
       if (await DeviceInfo.isEmulator()) {
@@ -245,6 +251,7 @@ const LocationStore = types
       setBackgroundConfig,
       startStandaloneGeolocation,
       stopStandaloneGeolocation,
+      uploadLog,
       emailLog,
     }
   })
@@ -311,6 +318,29 @@ const LocationStore = types
       BackgroundGeolocation.logger.info(`${prefix} didMount`)
 
       singleton = self as any
+
+      if (Platform.OS === 'ios') {
+        BackgroundFetch.status(status => {
+          log(prefix, `BackgroundFetch status=${status}`)
+          BackgroundGeolocation.logger.info(`${prefix} BackgroundFetch status=${status}`)
+        })
+
+        BackgroundFetch.configure(
+          {
+            minimumFetchInterval: 15,
+          },
+          () => {
+            log(prefix, `BackgroundFetch callback`)
+            BackgroundGeolocation.logger.info(`${prefix} BackgroundFetch callback`)
+            BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_NEW_DATA)
+          },
+          _error => {
+            log(prefix, `BackgroundFetch failed to start`)
+            BackgroundGeolocation.logger.info(`${prefix} BackgroundFetch failed to start`)
+          }
+        )
+      }
+
       BackgroundGeolocation.onLocation(onLocation, onLocationError)
       BackgroundGeolocation.onHttp(onHttp)
       BackgroundGeolocation.onMotionChange(onMotionChange)
@@ -321,7 +351,7 @@ const LocationStore = types
       yield self.configure()
       const config = yield BackgroundGeolocation.ready({reset: false})
       log(prefix, 'Ready: ', config)
-      self.updateBackgroundConfigSuccess(config)
+      self.persistConfigOptions(config)
     })
 
     function willUnmount() {
@@ -410,12 +440,7 @@ const setUploadRate = (() => {
 
       // Update locationStore if available
       if (singleton) {
-        singleton.setState({
-          backgroundOptions: {
-            ...singleton.backgroundOptions,
-            autoSyncThreshold,
-          },
-        })
+        singleton.persistConfigOptions({autoSyncThreshold})
       }
     }
   }
@@ -441,7 +466,27 @@ function onHttp(response) {
     if (response.status === 401 || response.status === 403) {
       BackgroundGeolocation.stop()
       BackgroundGeolocation.stopSchedule()
-      bugsnagNotify(new Error('BackgroundGeolocation.stop() due to forbidden'), 'location_store_onhttp_4xx', {response})
+
+      BackgroundGeolocation.getState(
+        state => {
+          bugsnagNotify(
+            new Error('BackgroundGeolocation.stop() due to forbidden'),
+            'location_store_onhttp_4xx',
+            {
+              response,
+              headers: state.headers,
+              params: state.params,
+              url: state.url,
+            }
+          )
+        },
+        error => {
+          bugsnagNotify(new Error(error), 'location_store_getState', {
+            response,
+            error,
+          })
+        }
+      )
       BackgroundGeolocation.logger.error(`${prefix} BackgroundGeolocation.stop() due to forbidden`)
     }
 

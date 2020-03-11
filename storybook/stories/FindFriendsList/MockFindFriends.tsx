@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import OnboardingFindFriendsList from '../../../src/components/Onboarding/OnboardingFindFriendsList'
 import {Provider} from 'mobx-react'
 import {MyContact} from '../../../src/store/ContactStore'
 import {observable, computed} from 'mobx'
 import {Profile} from 'wocky-client'
+import ContactInviteList from '../../../src/components/people-lists/ContactInviteList'
 
 const contacts: any[] = require('./contacts.json')
 // const contacts: any[] = require('./contactsMiranda2.json')
@@ -95,18 +96,15 @@ class MockStore /* implements ContactStore */ {
 }
 
 const contactStore = new MockStore()
+const homeStore = {}
 
-// tslint:disable-next-line
-export default class MockFindFriends extends React.Component {
-  componentDidMount() {
+export const MockFindFriendsList = ({onboarding}: {onboarding: boolean}) => {
+  useEffect(() => {
     contactStore.loadContacts()
-  }
-
-  render() {
-    return (
-      <Provider contactStore={contactStore}>
-        <OnboardingFindFriendsList onPress={emptyFn} />
-      </Provider>
-    )
-  }
+  }, [])
+  return (
+    <Provider contactStore={contactStore} homeStore={homeStore}>
+      {onboarding ? <OnboardingFindFriendsList onPress={emptyFn} /> : <ContactInviteList />}
+    </Provider>
+  )
 }

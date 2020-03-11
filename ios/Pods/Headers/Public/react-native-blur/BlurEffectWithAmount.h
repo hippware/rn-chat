@@ -1,1 +1,1 @@
-../../../../../node_modules/react-native-blur/ios/BlurEffectWithAmount.h
+../../../../../node_modules/@react-native-community/blur/ios/BlurEffectWithAmount.h

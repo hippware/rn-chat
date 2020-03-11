@@ -7,11 +7,13 @@ import {IEventBotPostData} from '../model/EventBotPost'
 import {IEventFriendInviteData} from '../model/EventFriendInvite'
 import {IBotData} from '../model/Bot'
 import {IProfilePartial} from '../model/Profile'
-import {ILocation} from '../model/Location'
+import {ILocationSnapshot} from '../model/Location'
 import {IMessageIn} from '../model/Message'
 import {IEventLocationShareEndData} from '../model/EventLocationShareEnd'
 import {IEventLocationShareData} from '../model/EventLocationShare'
-import {log} from '../logger'
+import {IEventLocationShareNearbyStartData} from '../model/EventLocationShareNearbyStart'
+import {IEventLocationShareNearbyEndData} from '../model/EventLocationShareNearbyEnd'
+import {IEventUserBeFriendData} from '../model/EventUserBefriend'
 
 export async function waitFor(
   condition: () => boolean,
@@ -330,12 +332,21 @@ export function convertImage(image, preserveAspect: boolean = false) {
   }
 }
 
-export function convertProfile({media, bots, presence, ...data}): IProfilePartial {
+export function convertProfile({
+  media,
+  bots,
+  presence,
+  ownShareType,
+  shareType,
+  ...data
+}): IProfilePartial {
   return {
     avatar: convertImage(media),
     status: presence ? presence.status : undefined,
     statusUpdatedAt: presence ? new Date(presence.updatedAt) : undefined,
     botsSize: bots ? bots.totalCount : undefined,
+    ownShareType,
+    shareType,
     ...data,
   } as IProfilePartial
 }
@@ -407,6 +418,13 @@ export function convertNotification(edge: any): IEventData | {deletedId: string}
       }
       // console.log('& user follow:', friendInviteNotification)
       return friendInviteNotification
+    case 'UserBefriendNotification':
+      const userBefriendNotification: IEventUserBeFriendData = {
+        id,
+        time,
+        userBeFriend: convertProfile({...data.user, _accessedAt: time}),
+      }
+      return userBefriendNotification
     case 'BotItemNotification':
       bot = convertBot({...data.bot, _accessedAt: time})
       const botItemNotification: IEventBotPostData = {
@@ -463,13 +481,29 @@ export function convertNotification(edge: any): IEventData | {deletedId: string}
     case 'LocationShareNotification':
       const locationShareNotification: IEventLocationShareData = {
         time,
-        expiresAt: data.expiresAt ? iso8601toDate(data.expiresAt) : new Date(), // workaround for old notifications with null expiresAt
         sharedWith: convertProfile({...data.user, _accessedAt: time}),
+        shareType: data.shareTypes.to,
+        ownShareType: data.shareTypes.from,
         id,
       }
       return locationShareNotification
+    case 'LocationShareNearbyStartNotification':
+      const locationShareNearbyStartNotification: IEventLocationShareNearbyStartData = {
+        time,
+        sharedNearbyWith: convertProfile({...data.user, _accessedAt: time}),
+        id,
+      }
+      return locationShareNearbyStartNotification
+    case 'LocationShareNearbyEndNotification':
+      const locationShareNearbyEndNotification: IEventLocationShareNearbyEndData = {
+        time,
+        sharedNearbyEndWith: convertProfile({...data.user, _accessedAt: time}),
+        id,
+      }
+      return locationShareNearbyEndNotification
     default:
-      log('Failed to process notification: ' + JSON.stringify(edge))
+      // tslint:disable-next-line
+      console.log('Failed to process notification: ' + JSON.stringify(edge))
       return null
   }
 }
@@ -488,12 +522,17 @@ export function assert(condition, message) {
   }
 }
 
-export function convertLocation({longitude, latitude, accuracy}: ILocation, device: string) {
+export function convertLocation(
+  {longitude, latitude, accuracy, activity, activityConfidence}: ILocationSnapshot,
+  device: string
+) {
   return {
     device,
     lon: longitude,
     lat: latitude,
     accuracy,
+    activity,
+    activityConfidence,
   }
 }
 

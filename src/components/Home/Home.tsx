@@ -6,7 +6,7 @@ import ButtonColumn from './ButtonColumn'
 import HomeBanner from './HomeBanner'
 import {width, height} from '../Global'
 import {useNavStore, useHomeStore} from 'src/utils/injectors'
-import BackButton from '../custom-navigators/BackButtonNew'
+import BackButton from '../custom-navigators/BackButton'
 
 type Props = {
   name: string

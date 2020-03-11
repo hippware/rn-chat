@@ -6,7 +6,7 @@ import {useHomeStore} from 'src/utils/injectors'
 import {observer, Observer} from 'mobx-react'
 import ActiveLocationSharer from '../Home/ActiveLocationSharer'
 import {RText, TextInputWithClearButton} from '../common'
-import BottomPopupListNew from '../common/BottomPopupNew'
+import BottomPopupListNew from '../common/BottomPopup'
 import {Actions} from 'react-native-router-flux'
 
 type Props = {
@@ -15,7 +15,7 @@ type Props = {
 
 const searchIcon = require('../../../images/searchMagnifyingGlass.png')
 
-const FriendList = observer(({isActive}: Props) => {
+const AllFriendList = observer(({isActive}: Props) => {
   const homeStore = useHomeStore()
   const renderBannerItem = ({item}) => (
     <ActiveLocationSharer profile={item} outerStyle={styles.outer} innerStyle={styles.inner} />
@@ -109,4 +109,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default FriendList
+export default AllFriendList

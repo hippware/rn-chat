@@ -1,11 +1,9 @@
 import {types, getSnapshot, flow, Instance, getRoot} from 'mobx-state-tree'
-import {Profile, IProfile} from './Profile'
+import {Profile, IProfile, ProfilePaginableList} from './Profile'
 import {createUpdatable} from './Updatable'
 import {createUploadable} from './Uploadable'
 import {InvitationPaginableList, Invitation} from './Invitation'
-import {ContactPaginableList, Contact} from './Contact'
 import {BlockedUserPaginableList, BlockedUser} from './BlockedUser'
-import {LocationSharePaginableList, LocationShare} from './LocationShare'
 import ClientData from './ClientData'
 import {reaction, IReactionDisposer} from 'mobx'
 
@@ -21,18 +19,11 @@ export const OwnProfile = types
       phoneNumber: types.maybeNull(types.string),
       sentInvitations: types.optional(InvitationPaginableList, {}),
       receivedInvitations: types.optional(InvitationPaginableList, {}),
-      friends: types.optional(ContactPaginableList, {}),
+      friends: types.optional(ProfilePaginableList, {}),
       blocked: types.optional(BlockedUserPaginableList, {}),
-      locationShares: types.optional(LocationSharePaginableList, {}),
-      locationSharers: types.optional(LocationSharePaginableList, {}),
       clientData: types.optional(ClientData, {}),
     })
   )
-  .postProcessSnapshot(snapshot => {
-    const res = {...snapshot}
-    delete res.locationShares
-    return res
-  })
   .views(self => ({
     get hidden() {
       return self.clientData.hidden
@@ -41,12 +32,8 @@ export const OwnProfile = types
       const {locationStore} = getRoot(self)
       return locationStore ? locationStore.location : self._location
     },
-    get isLocationShared() {
-      return self.locationShares.length > 0
-    },
     get sortedFriends(): IProfile[] {
       return self.friends.list
-        .map(contact => contact.user)
         .filter(x => x.handle)
         .slice()
         .sort((a, b) => {
@@ -57,17 +44,15 @@ export const OwnProfile = types
       function compare(a: boolean, b: boolean) {
         return b === a ? 0 : b ? 1 : -1
       }
-      return self.friends.list
-        .map(({user}) => user)
-        .sort((a: IProfile, b: IProfile) => {
-          return (
-            compare(!!a.unreadCount, !!b.unreadCount) ||
-            (!!a.unreadCount && b.unreadTime - a.unreadTime) ||
-            compare(a.sharesLocation, b.sharesLocation) ||
-            (a.sharesLocation && a.distance - b.distance) ||
-            a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
-          )
-        })
+      return self.friends.list.sort((a: IProfile, b: IProfile) => {
+        return (
+          compare(!!a.unreadCount, !!b.unreadCount) ||
+          (!!a.unreadCount && b.unreadTime - a.unreadTime) ||
+          compare(a.sharesLocation, b.sharesLocation) ||
+          (a.sharesLocation && a.distance - b.distance) ||
+          a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
+        )
+      })
     },
     get sortedBlocked(): IProfile[] {
       return self.blocked.list
@@ -80,14 +65,8 @@ export const OwnProfile = types
     },
   }))
   .actions(self => ({
-    addFriend: (profile: IProfile, createdAt: Date) => {
-      self.friends.add(
-        Contact.create({
-          id: profile.id,
-          createdAt,
-          user: profile.id,
-        })
-      )
+    addFriend: (profile: IProfile) => {
+      self.friends.add(profile)
       self.receivedInvitations.remove(profile.id)
       self.sentInvitations.remove(profile.id)
       profile.setFriend(true)
@@ -101,14 +80,6 @@ export const OwnProfile = types
         })
       )
       profile.setBlocked(true)
-    },
-    removeLocationSharer: (profile: IProfile) => {
-      self.locationSharers.remove(profile.id)
-      profile.setSharesLocation(false)
-    },
-    removeLocationShare: (profile: IProfile) => {
-      self.locationShares.remove(profile.id)
-      profile.setReceivesLocationShare(false)
     },
     removeBlocked: (profile: IProfile) => {
       self.blocked.remove(profile.id)
@@ -136,11 +107,6 @@ export const OwnProfile = types
       )
       profile.receivedInvite()
     },
-    cancelAllLocationShares: flow(function*() {
-      yield self.transport.userLocationCancelAllShares()
-      self.locationShares.list.forEach(share => share.sharedWith.setReceivesLocationShare(false))
-      self.locationShares.refresh()
-    }),
   }))
   .actions(self => {
     const timers: any[] = []
@@ -154,30 +120,6 @@ export const OwnProfile = types
         }
         self.clientData.hide(value, expires)
       }),
-      addLocationSharer(sharedWith: IProfile, createdAt: number, expiresAt: number) {
-        self.locationSharers.add(
-          LocationShare.create({
-            id: sharedWith.id,
-            createdAt,
-            expiresAt,
-            sharedWith: sharedWith.id,
-          })
-        )
-        sharedWith.setSharesLocation(true)
-        timers.push(setTimeout(() => self.removeLocationSharer(sharedWith), expiresAt - Date.now()))
-      },
-      addLocationShare(sharedWith: IProfile, createdAt: number, expiresAt: number) {
-        self.locationShares.add(
-          LocationShare.create({
-            id: sharedWith.id,
-            createdAt,
-            expiresAt,
-            sharedWith: sharedWith.id,
-          })
-        )
-        sharedWith.setReceivesLocationShare(true)
-        timers.push(setTimeout(() => self.removeLocationShare(sharedWith), expiresAt - Date.now()))
-      },
       afterCreate() {
         reactions = []
         if (locationStore) {
@@ -205,8 +147,6 @@ export const OwnProfile = types
       receivedInvitations = [],
       sentInvitations = [],
       friends = [],
-      locationShares = [],
-      locationSharers = [],
       clientData,
       ...data
     }: any) {
@@ -223,27 +163,11 @@ export const OwnProfile = types
       sentInvitations.forEach(({createdAt, user}) =>
         self.sendInvitation(self.service.profiles.get(user.id, user), createdAt)
       )
-      friends.forEach(({createdAt, user, name}) =>
-        self.addFriend(self.service.profiles.get(user.id, user), createdAt)
-      )
+      friends.forEach(profile => self.addFriend(self.service.profiles.get(profile.id, profile)))
       blocked.forEach(({createdAt, user}) => {
         user.isBlocked = true
         self.addBlocked(self.service.profiles.get(user.id, user), createdAt)
       })
-      locationShares.forEach(({createdAt, expiresAt, sharedWith}) =>
-        self.addLocationShare(
-          self.service.profiles.get(sharedWith.id, sharedWith),
-          createdAt,
-          expiresAt
-        )
-      )
-      locationSharers.forEach(({createdAt, expiresAt, sharedWith}) =>
-        self.addLocationSharer(
-          self.service.profiles.get(sharedWith.id, sharedWith),
-          createdAt,
-          expiresAt
-        )
-      )
     },
   }))
   .named('OwnProfile')

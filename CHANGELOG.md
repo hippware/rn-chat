@@ -4,6 +4,113 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Update: phoenix (PR #4855), tslib (PR #4856)
+  * react-test-renderer (PR #4857), @babel/core (PR #4858)
+  * typescript (PR #4859), react-dom (PR #4861)
+* Make the hamburger/main menu a different colour for Staging (#4830)
+* Speculative fix for: TypeError in Transport.ts:1411 (#4288)
+* src/components/SignIn.tsx:102: undefined is not an object (#4820)
+* Change notification to "... is sharing their location with you" (#4867)
+* [dev] Logging improvements (#4866)
+* Post a bugsnag if graphql subscription not found (ie. #4004) (PR #4874)
+
+# 4.40.1 - 2020 Feb 27
+
+* Update: @storybook/react-native (PR #4833), tslib (PR #4834)
+  * typescript (PR #4835)
+  * jest and ts-jest (PR #4836), @types/jest (PR #4837)
+  * libphonenumber-js (PR #4838), @types/react (PR #4840)
+* [dev] Process new UserBefriendNotification (#4780)
+* App crash with logout (#4782)
+* Crash on 'Share Your Location' button (#4753)
+* "Updates" notifications (#4662)
+* Remove bots from the map when zoomed out too far (#4842)
+* Fade away "Zoom in to see locations" message after 3-4 seconds (#3771)
+* Code tidy-up (PR #4845, PR #4846)
+* Experimental debugging for RNBGL `uploadLog` (PR #4847)
+
+# 4.40.0 - 2020 Feb 20
+
+* Update: @babel/runtime (PR #4787), libphonenumber-js (PR #4789)
+  * graphql-tag (PR #4790), @types/react-test-renderer (PR #4794)
+  * @types/jest (PR #4800), react-native-emoji-selector (PR #4801)
+  * husky (PR #4802), react-native-background-geolocation-android
+  * @react-native-community/netinfo, react-native-code-push
+  * bugsnag-react-native, react-native-gesture-handler
+  * react-native-geolocation-service, react-native-device-info (PR #4804)
+* Fix tests: Don't pass invalid `location:false`. (PR #4784)
+* Find Friends Adjustments (#3783, PR #4783, PR #4803)
+* Log some more data to bugsnag for http 4xx errors. (PR #4786)
+* Choose share type after clicking through invitation link (#4750)
+* [dev] wocky-client API changes for nearby sharing (#4774)
+* Code tidy-up (PR #4812)
+
+# 4.39.0 - 2020 Feb 13
+
+* [dev] fill from/to shareType from new location sharing API (#4757)
+* 'Time ago' should update on card while user is on a phone call (#4744)
+* Card does not update when coming from background (#4740)
+* Update: react-native-blur to @react-native-community/blur (PR #4761)
+  * @babel/core (PR #4763), ts-node (PR #4764)
+  * react-native-fbsdk (PR #4765), libphonenumber-js (PR #4766, PR #4776)
+  * @babel/node (PR #4768), react-native-gesture-handler (PR #4770)
+  * mobx-react (PR #4771)
+  * react-native-contacts, react-native-device-info (PR #4778)
+* Invite Friends CTAs should open a list of phone contacts (#4754)
+* [dev] Remove bottom card list from HomeStore; Simplify logic (#4748)
+  * Keep selected avatar at the top/in focus (#3800)
+* Find Friends Adjustments (#3783)
+* Preparation work for nearby sharing (PR #4781)
+  * "Sharing location" toast message (#4661)
+
+# 4.38.0 - 2020 Feb 6
+
+* Profile detail: Enable location sharing settings (#4657)
+* "Sharing location" toast message (#4661)
+* [dev] Replace locationSharers/Shares with currentUser.friends (#4728)
+* [dev] avoid InvalidReferenceError during wocky.setNotification (#4735)
+* Truncate long location title (#4731)
+* Remove gap above Get Started button (#4654)
+* Sharing Location button causes App Crash (#4730)
+* Cleanup. remove unused exports (PR #4742)
+* Wording change on user invites (#4729)
+* [Optimization] User's own location card adjustments (#4549)
+* Sending user invites should include share choice UI (#4749)
+* [dev] Trial iOS background fetch (#4746)
+
+# 4.37.0 - 2020 Jan 30
+
+* Update: typescript (PR #4676), metro-react-native-babel-preset (PR #4677)
+  * @babel/preset-typescript (PR #4679), @babel/core (PR #4680)
+  * @babel/node (PR #4682), react-native-reanimated (PR #4683)
+  * @types/jest (PR #4684)
+  * @babel/plugin-proposal-object-rest-spread (PR #4685)
+  * libphonenumber-js (PR #4687), @babel/runtime (PR #4688)
+  * @babel/plugin-proposal-decorators (PR #4689)
+  * @types/react (PR #4699), mobx (PR #4700), phoenix (PR #4701)
+  * @storybook/react-native (PR #4702), @types/react-native (PR #4711)
+  * react-native-image-crop-picker (PR #4713)
+  * react-native-localize (PR #4715), tslint-react (PR #4716)
+  * babel-jest (PR #4717), @types/jest (PR #4718), husky (PR #4719)
+  * graphql (PR #4720), @babel/plugin-transform-flow-strip-types (PR #4721)
+  * mobx (PR #4722), @react-native-community/netinfo (PR #4690)
+  * native updates (PR #4723), react-native-firebase (PR #4725)
+
+* AppCenter: Do post-build actions based on env vars. (PR #4694)
+* `react-native unlink` x5 (PR #4695)
+* API changes for new sharing model (#4412, PR #4636)
+* Add friend -> location sharing request modal (#4658, PR #4663, PR #4693)
+* Add invite API, remove obsolete methods and UI (PR #4671)
+* Profile detail: Enable location sharing settings (#4657)
+* After accepting friend request select sharing level (#4660)
+* Deep link on friend request (#4659)
+* Invite button should invite new users (#4697)
+* "Sharing location" toast message (#4661)
+* Modal cleanup (PR #4707)
+* [dev] Tidy up 'New' components (#4668)
+* Try out background fetch (PR #4714)
+* Some code cleanup, handle shareType param (PR #4696, PR #4726)
+
 # 4.36.1 - 2020 Jan 17
 
 * Skip live location duration screen from the notification screen (#4672)

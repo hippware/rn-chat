@@ -6,7 +6,7 @@ import {
   timestamp,
   waitFor,
 } from './support/testuser'
-import {IWocky} from '../src'
+import {IWocky, FriendShareTypeEnum} from '../src'
 import {UserActivityType} from '../src/transport/types'
 
 describe('Live Locations', () => {
@@ -51,7 +51,7 @@ describe('Live Locations', () => {
     const date = new Date()
     date.setSeconds(date.getSeconds() + 10)
     // share location
-    await bobAlicesProfile.shareLocation(date)
+    await bobAlicesProfile.shareLocationUpdate(FriendShareTypeEnum.ALWAYS)
   })
 
   it('update location', async () => {
@@ -70,7 +70,7 @@ describe('Live Locations', () => {
   it('expect live location share notification', async () => {
     timestamp()
     await sleep(2000)
-    expect(alice.notifications.length).toBe(1)
+    expect(alice.notifications.length).toBe(2)
     const notification: any = alice.notifications.list[0]
     expect(notification.sharedWith).toBeTruthy()
     expect(notification.sharedWith.id).toBe(bob.profile!.id)
@@ -92,14 +92,14 @@ describe('Live Locations', () => {
   it('cancel share and verify', async () => {
     timestamp()
     const bobAlicesProfile = await bob.loadProfile(alice.username!)
-    await bobAlicesProfile.cancelShareLocation()
+    await bobAlicesProfile.shareLocationUpdate(FriendShareTypeEnum.DISABLED)
     const alicesBobProfile = await alice.loadProfile(bob.username!)
     // wait for the cancel share to take effect
     await sleep(2000)
     // update location
     await bob.setLocation(theLocation)
     // wait location to be updated
-    await waitFor(() => alice.notifications.length === 2, 'should be two notifications')
+    await waitFor(() => alice.notifications.length === 3, 'should be three notifications')
     // check that user still has old location (not updated)
     expect(alicesBobProfile.location!.latitude).toBe(differentLocation.latitude)
     expect(alicesBobProfile.location!.longitude).toBe(differentLocation.longitude)
@@ -117,7 +117,7 @@ describe('Live Locations', () => {
     timestamp()
     await alice.logout()
     alice = await createUser(undefined, alicesPhone)
-    await waitFor(() => alice.notifications.length === 2, 'should be two notifications')
+    await waitFor(() => alice.notifications.length === 3, 'should be three notifications')
     const notification: any = alice.notifications.list[0]
     expect(notification.sharedEndWith).toBeTruthy()
     expect(notification.sharedEndWith.id).toBe(bob.profile!.id)

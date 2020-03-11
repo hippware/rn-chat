@@ -61,7 +61,12 @@ const SeeAllFriends = () => {
   )
 }
 
-const HomeBanner = inject('wocky', 'analytics', 'homeStore', 'navStore')(
+const HomeBanner = inject(
+  'wocky',
+  'analytics',
+  'homeStore',
+  'navStore'
+)(
   observer(({enabled, wocky, navStore, homeStore, analytics}: Props) => {
     const [yOffset] = useState(new Animated.Value(0))
 
@@ -142,7 +147,10 @@ const Buttons = ({mapType, hasUnread}) => (
       onLongPress={() => settings.allowDebugScreen && Actions.debugScreen()}
       testID="bottomMenuButton"
     >
-      <Image source={settingsImg} />
+      <Image
+        source={settingsImg}
+        style={{borderColor: '#3FFC17', borderWidth: settings.isStaging ? 3 : 0, borderRadius: 8}}
+      />
       {!!hasUnread && <View style={styles.newDot} />}
     </TouchableOpacity>
     <TouchableOpacity style={{marginTop: 15}} onPress={() => Actions.attribution()}>

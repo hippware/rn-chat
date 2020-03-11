@@ -1,5 +1,5 @@
 import React from 'react'
-import BotDetails from 'src/components/BotDetails/BotDetailsNew'
+import BotDetails from 'src/components/BotDetails/BotDetails'
 import {Provider} from 'mobx-react'
 import {Bot, IBot} from 'wocky-client'
 import {Animated} from 'react-native'

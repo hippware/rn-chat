@@ -141,9 +141,9 @@ describe('NewGraphQL tests', () => {
   })
 
   it('invite, accept bot invitation, unsubscribe', async () => {
-    expect(user2.notifications.length).toBe(1)
+    expect(user2.notifications.length).toBe(2)
     await bot.invite([user2!.username!])
-    await waitFor(() => user2.notifications.length === 2, 'bot invitation notification')
+    await waitFor(() => user2.notifications.length === 3, 'bot invitation notification')
     const loadedBot = await user2.loadBot(bot.id)
     await loadedBot.acceptInvitation(Location.create({latitude: 50, longitude: 50, accuracy: 5}))
     await user2.loadBot(bot.id)

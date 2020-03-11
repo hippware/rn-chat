@@ -4,17 +4,16 @@ import {Actions} from 'react-native-router-flux'
 
 const placeholderImg = require('../../../images/InviteBG.png')
 
-const ActiveBannerPlaceholder = () => {
-  return (
-    <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-      <TouchableOpacity onPress={() => Actions.geoHeaderPrimer()}>
-        <View style={[styles.pinContainer, {marginTop: 15}]}>
-          <Image source={placeholderImg} />
-        </View>
-      </TouchableOpacity>
+const ActiveBannerPlaceholder = () => (
+  <TouchableOpacity
+    onPress={() => Actions.shareWithContacts()}
+    style={{flexDirection: 'row', justifyContent: 'center'}}
+  >
+    <View style={[styles.pinContainer, {marginTop: 15}]}>
+      <Image source={placeholderImg} />
     </View>
-  )
-}
+  </TouchableOpacity>
+)
 
 export default ActiveBannerPlaceholder
 

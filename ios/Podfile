@@ -32,10 +32,8 @@ def testing_pods
   pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
-  pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios/RNCPushNotificationIOS.podspec'
   pod 'GoogleMaps'
   pod 'react-native-google-maps', :path => '../node_modules/react-native-maps'
-  pod 'react-native-blur', :path => '../node_modules/react-native-blur'
 
   # react native permissions modules
   permissions_path = '../node_modules/react-native-permissions/ios'
@@ -47,19 +45,14 @@ def testing_pods
   pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications.podspec"
   pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary.podspec"
 
-  pod 'RSKImageCropper'
-  pod 'QBImagePickerController'
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Firebase/DynamicLinks'
   pod 'BugsnagReactNative', path: '../node_modules/bugsnag-react-native/'
-  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
-  pod 'RNImageCropPicker', :path =>  '../node_modules/react-native-image-crop-picker'
   pod 'react-native-geolocation', path: '../node_modules/@react-native-community/geolocation'
     
   # Add new pods below this line
   
-  pod 'RNLocalize', :path => '../node_modules/react-native-localize'
   
   pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
   

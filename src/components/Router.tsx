@@ -12,10 +12,10 @@ import Launch from './Launch'
 import SignUp from './SignUp'
 import Home from './Home/Home'
 import MyAccount from './MyAccount'
-import ProfileDetailNew from './ProfileDetail/ProfileDetailNew'
+import ProfileDetailNew from './ProfileDetail/ProfileDetail'
 import ChatListScreen from './Chats/ChatListScreen'
 import ChatScreen from './Chats/ChatScreen'
-import BotDetailsNew from './BotDetails/BotDetailsNew'
+import BotDetailsNew from './BotDetails/BotDetails'
 import TestRegister from './TestRegister'
 import CodePushScene from './CodePushScene'
 import OnboardingSlideshow from './OnboardingSlideshowScene'
@@ -34,24 +34,23 @@ import LocationGeofenceWarning from './modals/LocationGeofenceWarning'
 import LocationWarning from './modals/LocationWarning'
 import SharePresencePrimer from './modals/SharePresencePrimer'
 import InvisibleExpirationSelector from './modals/InvisibleExpirationSelector'
-import GeoHeaderPrimer from './modals/GeoHeaderPrimer'
 import CreationHeader from './Home/CreationHeader'
 import BotCompose, {backAction} from './BotCompose/BotCompose'
 import EditNote from './BotCompose/EditNote'
-import NotificationsNew from './NotificationsNew'
+import NotificationsNew from './Notifications'
 import Attribution from './Attribution'
 import {navBarStyle} from './styles'
 import IconStore from '../store/IconStore'
 import OnboardingSwiper from './Onboarding/OnboardingSwiper'
 import {IAuthStore} from 'src/store/AuthStore'
-// import LiveLocationCompose from './LiveLocation/LiveLocationCompose'
-import LiveLocationSettings from './LiveLocation/LiveLocationSettings'
-import LiveLocationShare from './LiveLocation/LiveLocationShare'
 import  {IHomeStore} from 'src/store/HomeStore';
 import MapOptions from './MapOptions'
 import {IPermissionStore} from 'src/store/PermissionStore'
+import LocationSettingsModal, {Props as LocationSettingsProps} from './LiveLocation/LocationSettingsModal'
+import { IFirebaseStore } from '../store/FirebaseStore'
+import {ContactInviteListWithLoad} from './people-lists/ContactInviteList'
 
-export const iconClose = require('../../images/iconClose.png')
+const iconClose = require('../../images/iconClose.png')
 
 type Props = {
   wocky?: IWocky
@@ -62,10 +61,11 @@ type Props = {
   authStore?: IAuthStore
   permissionStore?: IPermissionStore
   analytics?: any
+  firebaseStore?: IFirebaseStore
 }
 
-const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'iconStore', 'analytics', 'homeStore', 'navStore', 'authStore')(
-  observer(({wocky, permissionStore, locationStore, navStore, homeStore, iconStore, authStore, analytics}: Props) => {
+const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'iconStore', 'analytics', 'homeStore', 'navStore', 'authStore', 'firebaseStore')(
+  observer(({wocky, permissionStore, locationStore, navStore, homeStore, iconStore, authStore, analytics, firebaseStore}: Props) => {
     useEffect(() => {
       reaction(() => navStore!.scene, () => Keyboard.dismiss())
 
@@ -89,9 +89,23 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
           Actions.profileDetails({item: wocky!.profile!.id, preview: true})
         }
       }, {delay: 200})
-      
-      
     }, [])
+
+    const showFriendRequestModal = async (params: any) => {
+      const profile: IProfile = await wocky!.loadProfile(params.params)
+      Actions.locationSettingsModal({
+        settingsType: 'ACCEPT_REJECT_REQUEST',
+        profile,
+        displayName: profile.handle,
+        onOkPress: shareType => {
+          profile.invite(shareType).then(() => {
+            analytics.track('user_follow', (profile as any).toJSON())
+          })
+          Actions.pop()
+        },
+        onCancelPress: Actions.pop
+      } as LocationSettingsProps)
+    }
 
     const onDeepLink = async ({action, params}) => {
       analytics.track('deeplink', {action, params})
@@ -108,8 +122,9 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
                 const user = await wocky!.getProfile(params.userId) as IProfile
                 when(() => !!(user && user.location), () => homeStore!.followUserOnMap(user))
               } else if (action === 'notifications') {
-                wocky!.notifications.setMode(2)
-                Actions.notifications()
+                // friend request
+                // todo: would it be worth switching to a more semantic URL than notifications/?params=123
+                showFriendRequestModal(params)
               } else {
                 Actions[action]({...params, fromDeeplink: true})
                 if (action === 'botDetails' && params.params === 'visitors'){
@@ -138,6 +153,20 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
       }
       return true
     }
+
+    const showSharingModal = async () => {
+      const profile = await wocky!.userInviteGetSender(firebaseStore!.inviteCode)
+      Actions.locationSettingsModal({
+        settingsType: 'ACCEPT_REJECT_REQUEST',
+        profile,
+        displayName: profile!.handle,
+        onOkPress: shareType => {
+          firebaseStore!.redeemCode(shareType)
+          Actions.pop()
+        },
+        onCancelPress: Actions.pop
+      } as LocationSettingsProps)
+    }
   
 
     const uriPrefix = Platform.select({ios: settings.uriPrefix, android: settings.uriPrefix.toLowerCase()})
@@ -155,9 +184,13 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
             <Scene key="connect" on={authStore!.login} success="checkHandle" failure="preConnection" />
             <Scene key="checkProfile" on={() => wocky!.profile} success="checkHandle" failure="connect" />
             <Scene key="checkHandle" on={() => wocky!.profile!.handle} success="checkOnboarded" failure="signUp" />
-            <Scene key="checkOnboarded" on={() => permissionStore!.onboarded} success="logged" failure="onboarding" />
+            <Scene key="checkOnboarded" on={() => permissionStore!.onboarded} success={() => {
+              Actions.logged()
+              if (firebaseStore!.inviteCode) {
+                showSharingModal()
+              }
+            }} failure="onboarding" />
             <Scene key="logout" on={authStore!.logout} success="preConnection" />
-            <Scene key="liveLocationShare" on={() => wocky!.profile!.isLocationShared} success='liveLocationSettings' failure='liveLocationSelectFriends'/>
           </Lightbox>
           <Lightbox>
             <Stack initial hideNavBar key="main">
@@ -180,8 +213,6 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
                     <Scene key="friends" component={peopleLists.FriendList} shiftMap backButton />
                     <Scene key="friendSearch" component={FriendSearch} shiftMap backButton/>
                     <Scene key="visitors" component={VisitorList} shiftMap backButton />
-                    {/* <Scene key="liveLocationCompose" component={LiveLocationCompose} shiftMap backButton /> */}
-                    <Scene key="liveLocationSettings" component={LiveLocationSettings} shiftMap backButton />
                     <Scene key="chats" component={ChatListScreen} title="Messages" shiftMap backButton />
                     <Scene key="mapOptions" component={MapOptions} shiftMap backButton />
                     <Scene key="bottomMenu" component={BottomMenu} backButton hasPreview shiftMap />
@@ -189,10 +220,10 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
                     <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetailsNew} hasPreview />
                     <Scene key="notifications" path="invitations/:params*" component={NotificationsNew} backButton shiftMap />
                     <Scene key="allFriends" component={AllFriendList} title="Friends" backButton />
+                    <Scene key="shareWithContacts" component={ContactInviteListWithLoad} backButton shiftMap />
                   </Lightbox>
                   <Scene key="chat" path="conversation/:item" component={ChatScreen} />
                   <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
-                  <Scene key="liveLocationSelectFriends" component={LiveLocationShare} title="Select Friends" />
                   <Scene key="myAccount" component={MyAccount} editMode back />
                   <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked Users" back />
                   <Scene key="attribution" component={Attribution} leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
@@ -212,7 +243,7 @@ const TinyRobotRouter = inject('wocky', 'permissionStore', 'locationStore', 'ico
             <Scene key="geofenceWarning" component={LocationGeofenceWarning} />
             <Scene key="sharePresencePrimer" component={SharePresencePrimer} />
             <Scene key="invisibleExpirationSelector" component={InvisibleExpirationSelector} />
-            <Scene key="geoHeaderPrimer" component={GeoHeaderPrimer} />
+            <Scene key="locationSettingsModal" component={LocationSettingsModal} />
           </Lightbox>
         </Tabs>
       </Router>

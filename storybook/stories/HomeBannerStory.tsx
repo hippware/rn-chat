@@ -3,7 +3,6 @@ import {Provider} from 'mobx-react'
 import HomeBanner from 'src/components/Home/HomeBanner'
 import {Profile, OwnProfile, File, Transport, Bot, SERVICE_NAME, createFactory} from 'wocky-client'
 import {types} from 'mobx-state-tree'
-import moment from 'moment'
 
 const FakeWockyStore = types
   .model({
@@ -36,7 +35,7 @@ const wocky = FakeWockyStore.create(
     activeBots: [],
   },
   {
-    transport: new Transport('mock'),
+    transport: new Transport('mock', console),
   }
 )
 
@@ -57,15 +56,6 @@ wocky.profiles[1].load({
     },
   },
 })
-
-const hourFromNow = moment()
-  .add(1, 'hour')
-  .toDate()
-  .getTime()
-
-wocky.profile.addLocationSharer(wocky.profiles[0], new Date().getTime(), hourFromNow)
-
-wocky.profile.addLocationSharer(wocky.profiles[1], new Date().getTime(), hourFromNow)
 
 const stores = {
   wocky,

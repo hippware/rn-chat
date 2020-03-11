@@ -1,4 +1,4 @@
-import React, {ReactElement, useRef} from 'react'
+import React, {ReactElement, useRef, useState} from 'react'
 import Swiper from 'react-native-swiper'
 import {View, Alert, Platform} from 'react-native'
 import {colors} from 'src/constants'
@@ -31,7 +31,9 @@ const OnboardingSwiper = inject(
   'permissionStore'
 )(
   observer(({wocky, contactStore, permissionStore}: Props) => {
-    const swiper = useRef<any>(null)
+    const swiper = useRef<Swiper>(null)
+
+    const [showAlmostDone, setShowAlmostDone] = useState(true)
 
     const checkLocationPermissions = async () => {
       const check = await getPermission('location')
@@ -75,6 +77,7 @@ const OnboardingSwiper = inject(
       try {
         await contactStore!.requestPermission()
         swiper.current!.scrollBy(1)
+        setShowAlmostDone(false)
         contactStore!.loadContacts()
       } catch (err) {
         warn(err)
@@ -108,12 +111,16 @@ const OnboardingSwiper = inject(
 
     pages.push(<OnboardingFindFriends key="3" onPress={findFriends} onSkip={done} />)
     pages.push(<OnboardingFindFriendsList key="4" onPress={done} />)
+
     return (
       <View style={{flex: 1}} testID="onboardingSwiper">
-        <RText style={{width: '100%', textAlign: 'center', marginTop: 40 * minHeight}} size={18}>
-          almost done!
-        </RText>
+        {showAlmostDone && (
+          <RText style={{width: '100%', textAlign: 'center', marginTop: 40 * minHeight}} size={18}>
+            almost done!
+          </RText>
+        )}
         <Swiper
+          renderPagination={!showAlmostDone ? () => null : undefined}
           paginationStyle={{top: 8, bottom: undefined}}
           dotColor={colors.GREY}
           activeDotColor={colors.PINK}

@@ -26,62 +26,63 @@ type Props = {
   firebaseStore?: IFirebaseStore
 }
 
-const OnboardingSlideshowScene = inject('analytics', 'firebaseStore')(
-  ({analytics, firebaseStore}: Props) => {
-    function logoutAndNavTo(sceneName: string) {
-      firebaseStore!.logout().catch(err => warn('logout error', err))
-      Actions[sceneName]()
-    }
-
-    const SwiperAny = Swiper as any
-    return (
-      <View style={{flex: 1}} testID="preConnection">
-        <SwiperAny
-          paginationStyle={{bottom: 135 * k}}
-          dotColor={colors.GREY}
-          activeDotColor={colors.PINK}
-          bounces
-          autoplay
-          autoplayTimeout={5}
-          loop
-        >
-          <Slide bgImg={bg1} iconImg={livelocation} left>
-            {'Share your live location\r\nwith friends!'}
-          </Slide>
-          <Slide bgImg={bg2} iconImg={discover} center>
-            {'Tag locations with\r\nfriends and family!'}
-          </Slide>
-          <Slide bgImg={bg3} iconImg={notification}>
-            {'See who’s at your\r\nfavorite locations!'}
-          </Slide>
-        </SwiperAny>
-        <View style={styles.footerButtons}>
-          <GradientButton
-            isPink
-            style={[styles.button]}
-            onPress={() => {
-              analytics!.track('signup')
-              logoutAndNavTo('signIn')
-            }}
-          >
-            <RText size={17.5} color={colors.WHITE}>
-              Get Started
-            </RText>
-          </GradientButton>
-        </View>
-        {settings.allowBypassLogin && (
-          <TouchableOpacity
-            onPress={() => logoutAndNavTo('testRegisterScene')}
-            style={styles.bypassButton}
-            testID="bypassButton"
-          >
-            <RText color={colors.PINK}>Bypass</RText>
-          </TouchableOpacity>
-        )}
-      </View>
-    )
+const OnboardingSlideshowScene = inject(
+  'analytics',
+  'firebaseStore'
+)(({analytics, firebaseStore}: Props) => {
+  function logoutAndNavTo(sceneName: string) {
+    firebaseStore!.logout().catch(err => warn('logout error', err))
+    Actions[sceneName]()
   }
-)
+
+  const SwiperAny = Swiper as any
+  return (
+    <View style={{flex: 1}} testID="preConnection">
+      <SwiperAny
+        paginationStyle={{bottom: 135 * k}}
+        dotColor={colors.GREY}
+        activeDotColor={colors.PINK}
+        bounces
+        autoplay
+        autoplayTimeout={5}
+        loop
+      >
+        <Slide bgImg={bg1} iconImg={livelocation} left>
+          {'Share your live location\r\nwith friends!'}
+        </Slide>
+        <Slide bgImg={bg2} iconImg={discover} center>
+          {'Tag locations with\r\nfriends and family!'}
+        </Slide>
+        <Slide bgImg={bg3} iconImg={notification}>
+          {'See who’s at your\r\nfavorite locations!'}
+        </Slide>
+      </SwiperAny>
+      <View style={styles.footerButtons}>
+        <GradientButton
+          isPink
+          style={[styles.button]}
+          onPress={() => {
+            analytics!.track('signup')
+            logoutAndNavTo('signIn')
+          }}
+        >
+          <RText size={17.5} color={colors.WHITE}>
+            Get Started
+          </RText>
+        </GradientButton>
+      </View>
+      {settings.allowBypassLogin && (
+        <TouchableOpacity
+          onPress={() => logoutAndNavTo('testRegisterScene')}
+          style={styles.bypassButton}
+          testID="bypassButton"
+        >
+          <RText color={colors.PINK}>Bypass</RText>
+        </TouchableOpacity>
+      )}
+    </View>
+  )
+})
 
 const BG_IMG_RATIO = 667 / 375 // height / width of background images
 const FLEX = 55
@@ -131,6 +132,7 @@ const styles = StyleSheet.create({
   },
   bgContainer: {
     flex: FLEX,
+    overflow: 'hidden',
   },
   textContainer: {
     flex: 100 - FLEX,

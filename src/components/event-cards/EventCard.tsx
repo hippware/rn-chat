@@ -1,17 +1,19 @@
 import React from 'react'
 // import EventBotShareCard from './EventBotShareCard'
 import {getType} from 'mobx-state-tree'
-import {IEvent, IEventBotInvite, IEventBotPost, IEventBotGeofence} from 'wocky-client'
+import {
+  IEvent,
+  IEventBotInvite,
+  IEventBotPost,
+  IEventBotGeofence,
+  FriendShareTypeEnum,
+} from 'wocky-client'
 import EventFriendInviteRequestCard from './EventFriendInviteRequestCard'
 import {observer} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
 import EventCardTemplate from './EventCardTemplate'
 import {IEventLocationShare} from 'third-party/wocky-client/src/model/EventLocationShare'
-import {RText, GradientButton} from '../common'
-import {TouchableOpacity} from 'react-native'
-import {colors} from 'src/constants'
-import {share, UNTIL_OFF} from '../LiveLocation/LiveLocationCompose'
-import {useLocationStore, useWocky} from '../../utils/injectors'
+import {IEventUserBefriend} from 'third-party/wocky-client/src/model/EventUserBefriend'
 
 const EventBotInviteCard = observer(
   ({
@@ -67,88 +69,54 @@ const EventBotGeofenceCard = observer(
   )
 )
 
-const Button = ({
-  text,
-  onPress,
-  textStyle,
-  style,
-}: {
-  text: string
-  onPress: any
-  textStyle?: any
-  style?: any
-}) => (
-  <TouchableOpacity
-    style={[
-      {
-        borderColor: colors.PINK,
-        borderWidth: 1,
-        marginTop: 5,
-        height: 29,
-        borderRadius: 3,
-        justifyContent: 'center',
-      },
-      style,
-    ]}
-    onPress={onPress}
-  >
-    <RText
-      weight="Medium"
-      color={colors.PINK}
-      style={[{marginLeft: 10, marginRight: 10}, textStyle]}
-    >
-      {text}
-    </RText>
-  </TouchableOpacity>
+const EventLocationShareCard = observer(
+  ({
+    item: {sharedWith, ownShareType, shareType, relativeDateAsString},
+  }: {
+    item: IEventLocationShare
+  }) => {
+    if (ownShareType !== FriendShareTypeEnum.ALWAYS) {
+      return null
+    }
+    if (shareType === FriendShareTypeEnum.ALWAYS) {
+      return (
+        <EventCardTemplate
+          profile={sharedWith}
+          iconType="share"
+          timestamp={relativeDateAsString}
+          action={'and you are sharing location'}
+        />
+      )
+    } else {
+      return (
+        <EventCardTemplate
+          profile={sharedWith}
+          iconType="share"
+          timestamp={relativeDateAsString}
+          action={'started sharing location, share your location to see each other'}
+          onPress={() => Actions.profileDetails({item: sharedWith.id, preview: false})}
+        />
+      )
+    }
+  }
 )
 
-const EventLocationShareCard = observer(
-  ({item: {sharedWith, relativeDateAsString}}: {item: IEventLocationShare}) => {
-    const locationStore = useLocationStore()
-    const wocky = useWocky()
-
+const EventBeFriendCard = observer(
+  ({item: {userBeFriend, relativeDateAsString}}: {item: IEventUserBefriend}) => {
     return (
       <EventCardTemplate
-        profile={sharedWith}
-        iconType="share"
+        profile={userBeFriend}
+        iconType="connected"
         timestamp={relativeDateAsString}
-        action={'is sharing location with you'}
-      >
-        {sharedWith.sharesLocation ? (
-          sharedWith.receivesLocationShare ? (
-            <GradientButton
-              text="SHARING LOCATION"
-              style={{width: 160, height: 29, borderRadius: 4, marginVertical: 4}}
-              textStyle={{fontSize: 12, color: 'white'}}
-              // onPress={() => Actions.liveLocationCompose({profile: sharedWith})}
-              onPress={() => sharedWith.cancelShareLocation()}
-            />
-          ) : (
-            <Button
-              text="SHARE YOUR LOCATION"
-              // onPress={() => Actions.liveLocationCompose({profile: sharedWith})}
-              onPress={() =>
-                share(
-                  UNTIL_OFF,
-                  null,
-                  wocky,
-                  {selected: [sharedWith]},
-                  locationStore!.location,
-                  false
-                )
-              }
-            />
-          )
-        ) : (
-          undefined
-        )}
-      </EventCardTemplate>
+        action={'is now connected'}
+      />
     )
   }
 )
 
 const eventCardMap: {[key: string]: any} = {
   EventBotPost: EventBotPostCard,
+  EventUserBefriend: EventBeFriendCard,
   // EventBotShare: EventBotShareCard,
   EventBotGeofence: EventBotGeofenceCard,
   EventFriendInvite: EventFriendInviteRequestCard,

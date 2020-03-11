@@ -28,9 +28,6 @@ type Props = {
 const shareIcon = require('../../../images/shareIcon.png')
 const followIcon = require('../../../images/shoesPink.png')
 
-const BotDetailsHeader = (props: Props) =>
-  props.preview ? <PreviewHeader bot={props.bot} /> : <DefaultHeader {...props} />
-
 export const DefaultHeader = inject(
   'notificationStore',
   'analytics',
@@ -64,7 +61,6 @@ export const DefaultHeader = inject(
             color={colors.DARK_PURPLE}
             style={{width: '75%', textAlign: 'center', fontFamily: 'Roboto-Medium'}}
             numberOfLines={2}
-            ellipsizeMode="tail"
           >
             {bot.title}
           </RText>
@@ -149,7 +145,7 @@ export const PreviewHeader = observer(({bot}: {bot: IBot}) => {
       ) : (
         <BotIcon size={47} icon={bot.icon} textStyle={{fontSize: 45, textAlign: 'center'}} />
       )}
-      <View style={{marginLeft: 20}}>
+      <View style={{marginLeft: 20, flex: 1}}>
         <RText
           weight="Bold"
           size={20}
@@ -277,8 +273,6 @@ const BotUnavailable = () => (
     </TouchableOpacity>
   </View>
 )
-
-export default BotDetailsHeader
 
 const styles = StyleSheet.create({
   rowContainer: {

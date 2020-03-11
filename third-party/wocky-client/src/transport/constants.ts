@@ -59,18 +59,37 @@ export const NOTIFICATIONS_PROPS = `
       createdAt
       data {
         __typename
+        ... on LocationShareNearbyStartNotification {
+          user {
+            ${PROFILE_PROPS}
+          }
+        }
+        ... on LocationShareNearbyEndNotification {
+          user {
+            ${PROFILE_PROPS}
+          }
+        }
         ... on LocationShareEndNotification {
           user {
             ${PROFILE_PROPS}
           }
         }
         ... on LocationShareNotification {
-          expiresAt
+          user {
+            ${PROFILE_PROPS}
+          }
+          shareTypes {
+            from
+            to
+          }
+        }
+        ... on UserInvitationNotification {
+          shareType
           user {
             ${PROFILE_PROPS}
           }
         }
-        ... on UserInvitationNotification {
+        ... on UserBefriendNotification {
           user {
             ${PROFILE_PROPS}
           }
@@ -136,4 +155,5 @@ export const USER_LOCATION_PROPS = `
   accuracy
   activity
   activityConfidence
+  id
 `

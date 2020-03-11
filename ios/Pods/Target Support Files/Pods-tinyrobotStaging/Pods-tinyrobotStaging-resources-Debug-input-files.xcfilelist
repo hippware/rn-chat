@@ -18,5 +18,5 @@ ${PODS_ROOT}/Mixpanel/Mixpanel/Images/placeholder-image.png
 ${PODS_ROOT}/Mixpanel/Mixpanel/MPTakeoverNotificationViewController~ipad.xib
 ${PODS_ROOT}/Mixpanel/Mixpanel/MPTakeoverNotificationViewController~iphonelandscape.xib
 ${PODS_ROOT}/Mixpanel/Mixpanel/MPTakeoverNotificationViewController~iphoneportrait.xib
-${PODS_CONFIGURATION_BUILD_DIR}/QBImagePickerController/QBImagePicker.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/RNImageCropPicker/QBImagePicker.bundle
 ${PODS_ROOT}/RSKImageCropper/RSKImageCropper/RSKImageCropperStrings.bundle

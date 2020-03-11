@@ -1,7 +1,7 @@
 import {types, getParent, getEnv, flow, Instance} from 'mobx-state-tree'
 import {reaction, IReactionDisposer, autorun} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
-import {IProfile, IProfilePartial} from '../model/Profile'
+import {IProfile, IProfilePartial, FriendShareTypeEnum} from '../model/Profile'
 import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
 import Timer from './Timer'
@@ -9,11 +9,10 @@ import {IBot, BotPaginableList} from '../model/Bot'
 import {BotPost, IBotPost} from '../model/BotPost'
 import {Chats} from '../model/Chats'
 import {iso8601toDate, processMap, waitFor} from '../transport/utils'
-import {EventList, createEvent} from '../model/EventList'
+import {EventList, createEvent, EventEntity, IEventEntity} from '../model/EventList'
 import _ from 'lodash'
 import {RequestType} from '../model/PaginableList'
 import {ILocation, ILocationSnapshot, createLocation} from '../model/Location'
-import {log} from '../logger'
 
 export const Wocky = types
   .compose(
@@ -31,16 +30,16 @@ export const Wocky = types
       chats: types.optional(Chats, {}),
       localBots: types.optional(BotPaginableList, {}),
       timer: types.optional(Timer, {}),
+      notification: types.maybe(types.reference(EventEntity)), // allow the app to observe new notifications
     })
   )
+  .postProcessSnapshot(snapshot => {
+    const res: any = {...snapshot}
+    delete res.notification
+    return res
+  })
   .named(SERVICE_NAME)
   .actions(self => ({
-    bugsnagNotify: (e: Error, name?: string, extra?: {[name: string]: any}): void => {
-      const env = getEnv(self)
-      if (env.bugsnagNotify) {
-        env.bugsnagNotify(e, name, extra)
-      }
-    },
     loadProfile: flow(function*(id: string) {
       yield waitFor(() => self.connected)
       const isOwn = id === self.username
@@ -63,8 +62,12 @@ export const Wocky = types
     }) as (id: string) => Promise<IProfile>,
   }))
   .extend(self => {
+    const logger = getEnv(self).logger
     return {
       views: {
+        get logger() {
+          return logger
+        },
         get connecting() {
           return self.transport.connecting
         },
@@ -92,12 +95,6 @@ export const Wocky = types
         disconnect: flow(function*() {
           yield self.transport.disconnect()
         }),
-        // Called by transport upon disconnection
-        onClose: () => {
-          if (self.profile) {
-            self.profile!.status = 'OFFLINE'
-          }
-        },
         remove: flow(function*() {
           yield self.transport.remove()
         }),
@@ -283,27 +280,25 @@ export const Wocky = types
           }
         }
       }),
-      _onRosterItem({
-        user,
-        relationship,
-        createdAt,
-      }: {
-        user: IProfile
-        relationship: string
-        createdAt: Date
-      }) {
+      _onRosterItem({user, relationship}: {user: IProfile; relationship: string}) {
         const profile = self.profiles.get(user.id, user)
         if (relationship === 'FRIEND') {
           profile.setFriend(true)
-          self.profile!.addFriend(profile, createdAt)
+          self.profile!.addFriend(profile)
         }
         if (relationship === 'NONE') {
           profile.setFriend(false)
           self.profile!.friends.remove(user.id)
         }
       },
+      setNotification(event: IEventEntity | undefined) {
+        if (event) {
+          self.notification = undefined // remove previous event to avoid InvalidReferenceError error
+          self.notification = event
+        }
+      },
       // _onNotification: flow(function*(data: any) {
-      _onNotification(data: any, pastEvent: boolean = false) {
+      _onNotification(data: any, pastEvent: boolean = false): IEventEntity | undefined {
         // if (!version) {
         //   throw new Error('No version for notification:' + JSON.stringify(data))
         // }
@@ -348,8 +343,9 @@ export const Wocky = types
           if (!pastEvent) {
             item.process()
           }
+          return item
         } catch (e) {
-          log('ONNOTIFICATION ERROR: ' + e.message)
+          self.logger.log('ONNOTIFICATION ERROR: ' + e.message)
         }
         // }
       },
@@ -390,6 +386,11 @@ export const Wocky = types
         const users: IProfilePartial[] = yield self.transport.searchUsers(text)
         return users.map(profile => self.profiles.get(profile.id, profile))
       }),
+      userInviteGetSender: flow(function*(code) {
+        const potentialProfile = yield self.transport.userInviteGetSender(code)
+        return potentialProfile ? self.profiles.get(potentialProfile.id, potentialProfile) : null
+      }),
+      userInviteMakeUrl: self.transport.userInviteMakeUrl,
     }
   })
   .actions(self => ({
@@ -406,18 +407,18 @@ export const Wocky = types
         // there are potentially more new notifications so purge the old ones (to ensure paging works as expected)
         self.notifications.refresh()
       }
-      list.reverse().forEach(e => self._onNotification(e, true))
+      list.reverse().forEach(e => {
+        self._onNotification(e, true)
+      })
+
       self.notifications.cursor = self.notifications.last && self.notifications.last.id
       // console.log(
       //   '& notifications list after initial load',
       //   self.notifications.list.map(n => n.id)
       // )
     }),
-    userInviteMakeCode(): Promise<string> {
-      return self.transport.userInviteMakeCode()
-    },
-    userInviteRedeemCode(code: string): Promise<void> {
-      return self.transport.userInviteRedeemCode(code)
+    userInviteRedeemCode(code: string, shareType?: FriendShareTypeEnum): Promise<void> {
+      return self.transport.userInviteRedeemCode(code, shareType)
     },
     userBulkLookup: flow(function*(phoneNumbers: string[]) {
       yield waitFor(() => self.connected)
@@ -435,8 +436,8 @@ export const Wocky = types
 
       return data
     }) as (phoneNumbers: string[]) => Promise<any[]>,
-    friendSmsInvite: (phoneNumber: string): Promise<void> => {
-      return self.transport.friendSmsInvite(phoneNumber)
+    friendInvite: (phoneNumber: string, shareType: FriendShareTypeEnum): Promise<void> => {
+      return self.transport.userInviteSend(phoneNumber, shareType)
     },
     triggerSilentPush(userId: string): Promise<void> {
       return self.transport.triggerSilentPush(userId)
@@ -488,8 +489,6 @@ export const Wocky = types
               profile.setLocation(
                 createLocation({...location, createdAt: iso8601toDate(location.capturedAt)})
               )
-            } else {
-              self.bugsnagNotify(new Error('Unable to setLocation due to profile not found'), 'wocky_sharedLocation_profile_not_found', {id, location})
             }
           }
         ),
@@ -500,7 +499,8 @@ export const Wocky = types
         reaction(
           () => self.transport.notification,
           data => {
-            self._onNotification(data)
+            const event = self._onNotification(data)
+            self.setNotification(event)
           }
         ),
         reaction(() => self.transport.rosterItem, self._onRosterItem),
@@ -515,6 +515,11 @@ export const Wocky = types
             delay: 1000,
           }
         ),
+        autorun(() => {
+          if (!self.connected && self.profile) {
+            self.profile.setStatus('OFFLINE')
+          }
+        }),
       ]
     }
 
@@ -540,7 +545,6 @@ export const Wocky = types
   })
   .actions(self => ({
     afterCreate: () => {
-      self.transport.onClose(self.onClose)
       self.geofenceBots.setRequest(self._loadGeofenceBots as any)
       self.startReactions()
     },

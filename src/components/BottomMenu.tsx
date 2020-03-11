@@ -8,7 +8,6 @@ import Avatar from './common/Avatar'
 import {k, minHeight, avatarScale} from './Global'
 import {IOwnProfile} from 'wocky-client'
 import {RText} from './common'
-import AnimatedLinearGradient from 'react-native-animated-linear-gradient'
 import {useWocky} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
 
@@ -64,60 +63,6 @@ const MenuItem = ({
   </MenuItemWrapper>
 )
 
-const LiveLocationButton = ({invisible, active}) => (
-  <View style={{position: 'absolute', top: -25, zIndex: 10}}>
-    <TouchableOpacity
-      style={{marginLeft: 160}}
-      onPress={() => {
-        if (invisible) {
-          Alert.alert('', 'Sharing your location turns off invisible mode. Are you sure?', [
-            {text: 'Cancel', style: 'cancel'},
-            {
-              text: 'Continue',
-              onPress: () => {
-                Actions.liveLocationShare()
-              },
-            },
-          ])
-        } else {
-          Actions.liveLocationShare()
-        }
-      }}
-    >
-      {invisible ? (
-        <Image source={require('../../images/liveLocationButtonGhost.png')} />
-      ) : active ? (
-        <View
-          style={{
-            width: 135,
-            height: 53,
-            borderRadius: 21,
-            overflow: 'hidden',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <AnimatedLinearGradient
-            customColors={[
-              'rgb(232, 66, 178)',
-              'rgb(255, 114, 59)',
-              'rgb(255, 183, 44)',
-              'rgb(159, 68, 242)',
-            ]}
-            speed={600}
-          />
-          <Image
-            style={{marginRight: 10}}
-            source={require('../../images/ShareLiveLocationText.png')}
-          />
-        </View>
-      ) : (
-        <Image source={require('../../images/liveLocationButton.png')} />
-      )}
-    </TouchableOpacity>
-  </View>
-)
-
 const BottomMenu = observer(() => {
   const {profile, chats, notifications} = useWocky()
   if (!profile || !isAlive(profile)) {
@@ -142,7 +87,6 @@ const BottomMenu = observer(() => {
         }}
         testID="myAccountMenuItem"
       >
-        <LiveLocationButton invisible={profile.hidden.enabled} active={profile.isLocationShared} />
         <Avatar
           size={74}
           fontSize="large"

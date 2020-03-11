@@ -1,13 +1,11 @@
 import React from 'react'
-import {View, Image, FlatList, StyleSheet} from 'react-native'
-import {RText, GradientButton, Separator, Spinner, Avatar} from '../common'
-import {s, minHeight, k} from '../Global'
-import {onboardingSlideStyle as styles} from '../styles'
+import {View, FlatList} from 'react-native'
+import {RText, GradientButton, Spinner} from '../common'
+import {minHeight, s, k} from '../Global'
 import {observer} from 'mobx-react'
 import {inject} from 'mobx-react'
-import ContactStore, {MyContact} from 'src/store/ContactStore'
-import PersonRow from '../people-lists/PersonRow'
-import {colors} from 'src/constants'
+import ContactStore from 'src/store/ContactStore'
+import {FindFriendsHeader, Contact} from '../people-lists/ContactInviteList'
 
 type Props = {
   onPress: () => void
@@ -25,27 +23,7 @@ const OnboardingFindFriendsList = inject('contactStore')(
         justifyContent: 'center',
       }}
     >
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'flex-start',
-          justifyContent: 'center',
-          width: '70%',
-          paddingTop: 80 * s,
-          height: 200 * k,
-        }}
-      >
-        <Image
-          style={{width: 60, height: 70, marginTop: 5}}
-          source={require('../../../images/iconBot.png')}
-        />
-        <RText style={[styles.onboardingH1, {textAlign: 'left', marginLeft: 20, width: 176}]}>
-          Find Friends on tinyrobot!
-        </RText>
-      </View>
-
-      <Separator style={{width: '100%', marginHorizontal: 5}} />
-
+      <FindFriendsHeader style={{paddingTop: 80 * s, height: 200 * k}} />
       <View
         style={{
           flex: 1,
@@ -53,7 +31,6 @@ const OnboardingFindFriendsList = inject('contactStore')(
           alignItems: 'center',
           paddingBottom: buttonHeight,
           width: '100%',
-          padding: 10,
         }}
       >
         {contactStore!.loading ? (
@@ -62,8 +39,9 @@ const OnboardingFindFriendsList = inject('contactStore')(
           <FlatList
             style={{flex: 1, width: '100%'}}
             data={contactStore!.sortedContacts.slice()}
-            renderItem={({item}) => <Friend contact={item} />}
+            renderItem={({item}) => <Contact contact={item} />}
             keyExtractor={item => item.contact.recordID}
+            showsVerticalScrollIndicator={false}
           />
         )}
       </View>
@@ -81,86 +59,4 @@ const OnboardingFindFriendsList = inject('contactStore')(
   ))
 )
 
-const Friend = observer(({contact}: {contact: MyContact}) => {
-  const {
-    contact: {thumbnailPath},
-    displayName,
-    phoneNumber,
-    profile,
-  } = contact
-  return (
-    <PersonRow
-      imageComponent={
-        <Avatar
-          image={thumbnailPath ? {uri: thumbnailPath} : undefined}
-          displayName={displayName}
-          size={42}
-        />
-      }
-      handleComponent={
-        <RText color={colors.DARK_PURPLE} weight="Medium" size={14}>
-          {displayName}
-        </RText>
-      }
-      displayName={profile ? profile.displayName : phoneNumber ? phoneNumber.number : ''}
-    >
-      <ToggleButton contact={contact} />
-    </PersonRow>
-  )
-})
-
-const ToggleButton = inject('contactStore')(
-  observer(({contact, contactStore}: {contact: MyContact; contactStore?: ContactStore}) => {
-    const {relationship, smsSent} = contact
-
-    let text: string = 'INVITE'
-    let onPress = smsSent ? () => null : () => contactStore!.inviteContact(contact)
-    let isPink: boolean = false
-
-    if (relationship === 'NONE') {
-      text = smsSent ? 'SENT' : 'CONNECT'
-      isPink = smsSent
-    } else if (relationship === null) {
-      text = smsSent ? 'INVITED' : 'INVITE'
-      isPink = smsSent
-    } else if (relationship === 'FRIEND') {
-      text = 'FRIENDS'
-      onPress = () => null
-      isPink = true
-    } else if (relationship === 'INVITED') {
-      text = 'SENT'
-      onPress = () => null
-      isPink = true
-    }
-
-    return (
-      <GradientButton
-        style={[styles2.button]}
-        isPink={isPink}
-        offColor="white"
-        // innerStyle=
-        onPress={onPress}
-      >
-        <RText size={13} color={isPink ? 'white' : colors.PINK} weight={'Medium'}>
-          {text}
-        </RText>
-      </GradientButton>
-    )
-  })
-)
-
 export default OnboardingFindFriendsList
-
-const styles2 = StyleSheet.create({
-  button: {
-    height: 31,
-    width: 94,
-    alignItems: 'center',
-    justifyContent: 'center',
-    // backgroundColor: colors.PINK,
-    borderRadius: 4,
-    backgroundColor: colors.WHITE,
-    borderColor: colors.PINK,
-    borderWidth: 1,
-  },
-})

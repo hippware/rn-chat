@@ -11,7 +11,7 @@ import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
 import {actionLogger, Transport, Wocky} from 'wocky-client'
 import analytics from '../utils/analytics'
-import {bugsnagIdentify, bugsnagNotify} from '../utils/bugsnagConfig'
+import {bugsnagIdentify} from '../utils/bugsnagConfig'
 import FirebaseStore from './FirebaseStore'
 import AuthStore from './AuthStore'
 import fileService from './fileService'
@@ -29,7 +29,7 @@ import GeocodingStore from './GeocodingStore'
 import {AppInfo} from './AppInfo'
 import ContactStore from './ContactStore'
 import reportStore from './ReportStore'
-import {log} from 'src/utils/logger'
+import {log, modifyConsoleAndGetLogger} from 'src/utils/logger'
 import {autorun} from 'mobx'
 import {settings} from '../globals'
 import AsyncStorage from '@react-native-community/async-storage'
@@ -40,13 +40,15 @@ const auth = firebase.auth()
 
 const STORE_NAME = 'MainStore'
 
+const logger = modifyConsoleAndGetLogger()
+
 export type IEnv = {
   transport: Transport
   auth: RNFirebase.auth.Auth
   firebase: Firebase
   fileService: any
   deviceInfo: TRDeviceInfo
-  bugsnagNotify: (e: Error, name?: string, extra?: {[name: string]: any}) => void
+  logger: any
 }
 
 const cleanState = {
@@ -134,8 +136,18 @@ function tryMigrate(parsed): object {
  * Pull store data from the cache (if any) and return a store hydrated with that data
  */
 export async function createStore() {
-  let storeData
+  let mstStore, storeData
   const deviceInfo = await deviceInfoFetch()
+  const transport = new Transport(await DeviceInfo.getUniqueId(), logger)
+  const env: IEnv = {
+    transport,
+    auth,
+    firebase,
+    fileService,
+    deviceInfo,
+    logger,
+  }
+  const appInfo = {jsVersion, nativeVersion: deviceInfo.binaryVersion}
   try {
     const data = await AsyncStorage.getItem(STORE_NAME)
     storeData = data && JSON.parse(data)
@@ -158,30 +170,11 @@ export async function createStore() {
       // todo: can we move this out of persistence and into codepushStore?
       storeData = {...getMinimalStoreData(storeData), codePushStore: {pendingUpdate: false}}
     }
+    mstStore = Store.create({...cleanState, ...storeData, appInfo}, env)
   } catch (err) {
     log('hydration error', err, storeData)
-    storeData = getMinimalStoreData(storeData)
+    mstStore = Store.create({...cleanState, ...getMinimalStoreData(storeData), appInfo}, env)
   }
-
-  const transport = new Transport(await DeviceInfo.getUniqueId())
-
-  const env: IEnv = {
-    transport,
-    auth,
-    firebase,
-    fileService,
-    deviceInfo,
-    bugsnagNotify,
-  }
-
-  const mstStore = Store.create(
-    {
-      ...cleanState,
-      ...storeData,
-      appInfo: {jsVersion, nativeVersion: deviceInfo.binaryVersion},
-    },
-    env
-  )
 
   const requestPushPermissions = initializePushNotifications(mstStore.wocky.enablePush)
   addMiddleware(mstStore, actionLogger)

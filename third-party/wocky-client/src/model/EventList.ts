@@ -13,6 +13,9 @@ import {PaginableLoadType} from '../transport/Transport'
 import {waitFor} from '../transport/utils'
 import {EventLocationShare, EventLocationShareType} from './EventLocationShare'
 import {EventLocationShareEnd} from './EventLocationShareEnd'
+import {EventLocationShareNearbyStart} from './EventLocationShareNearbyStart'
+import {EventLocationShareNearbyEnd} from './EventLocationShareNearbyEnd'
+import {EventUserBeFriend, EventUserBeFriendType} from './EventUserBefriend'
 
 export const EventRequestTypes = [EventFriendInviteType, EventBotInviteType]
 export const EventUpdatesTypes = [
@@ -20,6 +23,7 @@ export const EventUpdatesTypes = [
   EventBotGeofenceType,
   EventBotInviteResponseType,
   EventLocationShareType,
+  EventUserBeFriendType,
 ]
 
 export const EventEntity = types.union(
@@ -30,7 +34,10 @@ export const EventEntity = types.union(
   EventFriendInvite,
   EventBotInvite,
   EventLocationShare,
-  EventLocationShareEnd
+  EventLocationShareNearbyStart,
+  EventLocationShareNearbyEnd,
+  EventLocationShareEnd,
+  EventUserBeFriend
 )
 export type IEventEntity = typeof EventEntity.Type
 
@@ -44,10 +51,24 @@ export function createEvent(params: any, service: any): IEventEntity {
   if (params.sharedWith) {
     params.sharedWith = service.profiles.get(params.sharedWith.id, params.sharedWith)
   }
+  if (params.sharedNearbyWith) {
+    params.sharedNearbyWith = service.profiles.get(
+      params.sharedNearbyWith.id,
+      params.sharedNearbyWith
+    )
+  }
+  if (params.sharedNearbyEndWith) {
+    params.sharedNearbyEndWith = service.profiles.get(
+      params.sharedNearbyEndWith.id,
+      params.sharedNearbyEndWith
+    )
+  }
   if (params.sharedEndWith) {
     params.sharedEndWith = service.profiles.get(params.sharedEndWith.id, params.sharedEndWith)
   }
-
+  if (params.userBeFriend) {
+    params.userBeFriend = service.profiles.get(params.userBeFriend.id, params.userBeFriend)
+  }
   if (params.bot) {
     params.bot = service.bots.get(params.bot.id, params.bot)
   }
@@ -64,10 +85,7 @@ export function createEvent(params: any, service: any): IEventEntity {
 }
 
 export const EventList = types
-  .compose(
-    Base,
-    createPaginable<IEventEntity>(EventEntity, 'EventList')
-  )
+  .compose(Base, createPaginable<IEventEntity>(EventEntity, 'EventList'))
   .postProcessSnapshot(snapshot => {
     if (snapshot.result.length > 20) {
       const result = snapshot.result.slice(0, 20)

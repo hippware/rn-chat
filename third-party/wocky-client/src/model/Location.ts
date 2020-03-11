@@ -1,5 +1,4 @@
-import {types, Instance, SnapshotIn, getRoot} from 'mobx-state-tree'
-import moment from 'moment'
+import {types, Instance, SnapshotIn} from 'mobx-state-tree'
 import {UserActivityType} from '../transport/types'
 
 export const createLocation = ({
@@ -9,6 +8,7 @@ export const createLocation = ({
   createdAt,
   activity,
   activityConfidence,
+  id,
 }: {
   lat: number
   lon: number
@@ -16,6 +16,7 @@ export const createLocation = ({
   createdAt: Date
   activity: UserActivityType | 'unknown' | '' | null
   activityConfidence: number | null
+  id?: string
 }) => {
   return Location.create({
     latitude: lat,
@@ -24,6 +25,7 @@ export const createLocation = ({
     createdAt,
     activity: activity && activity.length && activity !== 'unknown' ? activity : undefined,
     activityConfidence: activityConfidence || undefined,
+    id: id || undefined,
   })
 }
 
@@ -37,23 +39,10 @@ export const Location = types
       types.enumeration(['still', 'on_foot', 'walking', 'in_vehicle', 'on_bicycle', 'running'])
     ),
     activityConfidence: types.maybe(types.number),
+    id: types.maybe(types.string),
   })
   .volatile(() => ({
     isCurrent: false,
-  }))
-  .views(self => ({
-    get fromNow(): string {
-      const now: Date = (getRoot(self) as any).wocky.timer.minute
-      if (self.createdAt) {
-        let diff = moment(self.createdAt).diff(now)
-
-        // correct for server timestamps ahead of `now`
-        if (diff > 0) diff = 0
-
-        return moment.duration(diff).humanize(true)
-      }
-      return ''
-    },
   }))
   .actions(self => ({
     load: (data: any) => {

@@ -4,7 +4,7 @@ import {StyleSheet, Image, View, Animated} from 'react-native'
 import {inject} from 'mobx-react'
 import {observer} from 'mobx-react'
 import {autorun} from 'mobx'
-import {IWocky, ILocation} from 'wocky-client'
+import {IWocky, ILocation, IProfile} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 import {IHomeStore, INIT_DELTA} from '../../store/HomeStore'
 import {Spinner, RText} from '../common'
@@ -12,7 +12,6 @@ import mapStyle from '../map/mapStyle'
 import UberMarker from './UberMarker'
 import {Actions} from 'react-native-router-flux'
 import BotMarker from './map-markers/BotMarker'
-import YouMarker from './map-markers/YouMarker'
 import ProfileMarker from './map-markers/ProfileMarker'
 import {INavStore} from '../../store/NavStore'
 import {k} from '../Global'
@@ -25,12 +24,6 @@ type Props = {
   wocky?: IWocky
 }
 
-const markerMap: {[key: string]: any} = {
-  YouCard: YouMarker,
-  BotCard: BotMarker,
-  LocationSharerCard: ProfileMarker,
-}
-
 const MapHome = inject(
   'locationStore',
   'wocky',
@@ -40,7 +33,6 @@ const MapHome = inject(
   observer((props: Props) => {
     const {locationStore, homeStore, navStore, wocky} = props
     const {
-      list,
       detailsMode,
       creationMode,
       fullScreenMode,
@@ -142,7 +134,12 @@ const MapHome = inject(
         </View>
       )
     }
+    if (!wocky!.profile) return null
     const {latitude, longitude} = location
+    const profiles: IProfile[] = [
+      wocky!.profile!,
+      ...wocky!.profile!.friends.list.filter(profile => profile.sharesLocation),
+    ]
     return (
       <Animated.View
         style={[
@@ -179,22 +176,43 @@ const MapHome = inject(
           pitchEnabled={false}
           {...props}
         >
-          {list.map((card, i) => {
-            const Card = markerMap[card.name]
-            return Card && <Card {...props} key={`card${i}`} card={card} />
-          })}
+          {!(creationMode || areaTooLarge) &&
+            wocky!.localBots.list.map(b => <BotMarker key={b.id} bot={b} {...props} />)}
+          {!creationMode && profiles.map(p => <ProfileMarker key={p.id} profile={p} {...props} />)}
         </MapView>
         {creationMode && <UberMarker />}
-        {areaTooLarge && (
-          <View style={[styles.areaTooLargeView, {bottom: fullScreenMode ? 40 : 160 * k}]}>
-            <Image source={require('../../../images/areaTooLarge.png')} />
-            <RText style={styles.areaTooLargeText}>Zoom In To See Locations</RText>
-          </View>
-        )}
+        <ZoomInNotification areaTooLarge={areaTooLarge} fullScreenMode={fullScreenMode} />
       </Animated.View>
     )
   })
 )
+
+const ZoomInNotification = ({areaTooLarge, fullScreenMode}) => {
+  const [opacity] = useState(new Animated.Value(areaTooLarge ? 1 : 0))
+
+  useEffect(() => {
+    if (areaTooLarge) {
+      opacity.setValue(1)
+      setTimeout(() => {
+        Animated.timing(opacity, {
+          toValue: 0,
+          duration: 500,
+          useNativeDriver: true,
+        }).start()
+      }, 3500)
+    } else {
+      opacity.setValue(0)
+    }
+  }, [areaTooLarge])
+  return (
+    <Animated.View
+      style={[styles.areaTooLargeView, {bottom: fullScreenMode ? 40 : 160 * k, opacity}]}
+    >
+      <Image source={require('../../../images/areaTooLarge.png')} />
+      <RText style={styles.areaTooLargeText}>Zoom In To See Locations</RText>
+    </Animated.View>
+  )
+}
 
 export default MapHome
 

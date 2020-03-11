@@ -1,8 +1,9 @@
 import {observable, action, computed} from 'mobx'
-import {IWocky, IProfile} from 'wocky-client'
+import {IWocky, IProfile, FriendShareTypeEnum} from 'wocky-client'
 import RNContacts, {Contact, PhoneNumber} from 'react-native-contacts'
 import {log} from 'src/utils/logger'
 import {PermissionsAndroid, Platform} from 'react-native'
+import {parsePhoneNumberFromString} from 'libphonenumber-js'
 
 // todo: revisit these labels with the Android port
 const labelPrecedence = ['main', 'mobile', 'iPhone', 'home', 'work', 'other']
@@ -36,7 +37,7 @@ export class MyContact {
   @observable relationship: UserContactRelationship = null
   @observable smsSent: boolean = false
   contact: Contact
-  phoneNumber?: PhoneNumber
+  @observable phoneNumber?: PhoneNumber
 
   constructor(contact: Contact) {
     this.contact = contact
@@ -57,6 +58,11 @@ export class MyContact {
     return parts.join(' ').trim()
   }
 
+  @computed
+  get displayNameSingle(): string {
+    return this.displayName.split(' ')[0]
+  }
+
   @action
   updateWithBulkData(bulkData: BulkData) {
     // short circuit if we already have a profile
@@ -68,12 +74,19 @@ export class MyContact {
     }
 
     const num = this.contact.phoneNumbers.find(n => n.number === bulkData.phoneNumber)
+    const formatted = parsePhoneNumberFromString(bulkData.e164PhoneNumber)
     if (this.phoneNumber) {
       if (num && isMoreImportant(num, this.phoneNumber)) {
-        this.phoneNumber = num
+        this.phoneNumber = {
+          ...num,
+          number: formatted ? formatted.formatInternational() : bulkData.e164PhoneNumber,
+        }
       }
-    } else {
-      this.phoneNumber = num
+    } else if (num) {
+      this.phoneNumber = {
+        ...num,
+        number: formatted ? formatted.formatInternational() : bulkData.e164PhoneNumber,
+      }
     }
   }
 }
@@ -190,9 +203,9 @@ class ContactStore {
     })
   }
 
-  async inviteContact(contact: MyContact) {
+  async inviteContact(contact: MyContact, shareType: FriendShareTypeEnum) {
     if (!contact.phoneNumber) return
-    await this.wocky!.friendSmsInvite(contact.phoneNumber!.number)
+    await this.wocky!.friendInvite(contact.phoneNumber!.number, shareType)
     contact.smsSent = true
   }
 }

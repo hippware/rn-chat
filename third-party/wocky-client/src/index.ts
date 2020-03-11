@@ -1,11 +1,10 @@
 export {actionLogger} from './actionLogger'
 export {Wocky, IWocky} from './store/Wocky'
-export {Profile, IProfile} from './model/Profile'
+export {Profile, IProfile, FriendShareTypeEnum} from './model/Profile'
 export {Base, SERVICE_NAME} from './model/Base'
 export {Chat, IChat} from './model/Chat'
 export {Chats, IChats} from './model/Chats'
 export {Address} from './model/Address'
-export {Contact, IContact} from './model/Contact'
 export {Bot, IBot} from './model/Bot'
 export {BotPost, IBotPost} from './model/BotPost'
 export {Event, IEvent} from './model/Event'
@@ -18,6 +17,7 @@ export {
   IEventFriendInvite,
   IEventFriendInviteData,
 } from './model/EventFriendInvite'
+export {EventLocationShare, IEventLocationShareData} from './model/EventLocationShare'
 export {EventBotInvite, IEventBotInvite} from './model/EventBotInvite'
 export {File, IFile, FileRef} from './model/File'
 export {IFileService} from './transport/FileService'

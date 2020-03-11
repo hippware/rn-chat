@@ -1,74 +1,14 @@
 /* tslint:disable:max-classes-per-file */
 import {types, applySnapshot, getRoot, Instance} from 'mobx-state-tree'
-import {IBot, IProfile, Location, ILocation} from 'wocky-client'
+import {IProfile, Location, IWocky} from 'wocky-client'
 import {autorun} from 'mobx'
+import {INavStore} from './NavStore'
 
-export const DEFAULT_DELTA = 0.00522
-export const TRANS_DELTA = DEFAULT_DELTA + 0.005
+const DEFAULT_DELTA = 0.00522
+const TRANS_DELTA = DEFAULT_DELTA + 0.005
 export const INIT_DELTA = 0.04
 
-export class Card {
-  get id(): string {
-    return this.name
-  }
-  get location(): ILocation | undefined {
-    return undefined
-  }
-  get name(): string {
-    throw new Error('It is abstract class')
-  }
-}
-
-export class BotCard extends Card {
-  bot: IBot
-
-  constructor(bot: IBot) {
-    super()
-    this.bot = bot
-  }
-
-  get location() {
-    return this.bot.location || undefined
-  }
-
-  get id() {
-    return this.bot.id
-  }
-
-  get name() {
-    return 'BotCard'
-  }
-}
-
-export class TutorialCard extends Card {
-  get name() {
-    return 'TutorialCard'
-  }
-}
-export class YouCard extends Card {
-  get name() {
-    return 'YouCard'
-  }
-}
-export class LocationSharerCard extends Card {
-  profile: IProfile
-  constructor(profile: IProfile) {
-    super()
-    this.profile = profile
-  }
-  get location() {
-    return this.profile.location
-  }
-  get name() {
-    return 'LocationSharerCard'
-  }
-  get id() {
-    return this.profile.id
-  }
-}
-
 const MapOptions = types.enumeration(['auto', 'satellite', 'street'])
-export type MapOptionsType = typeof MapOptions.Type
 
 const HomeStore = types
   .model('HomeStore', {
@@ -84,7 +24,7 @@ const HomeStore = types
     friendFilter: '',
   }))
   .views(self => {
-    const {navStore, wocky} = getRoot(self)
+    const {navStore, wocky}: {navStore: INavStore; wocky: IWocky} = getRoot(self)
     return {
       get creationMode() {
         return (
@@ -106,16 +46,6 @@ const HomeStore = types
       get isIconEditable() {
         return ['botCompose', 'botEdit'].includes(navStore.scene)
       },
-      get cards() {
-        const sharers =
-          wocky && wocky.profile
-            ? wocky.profile!.locationSharers.list.map(
-                ({sharedWith}) => new LocationSharerCard(sharedWith)
-              )
-            : []
-        const localBots = wocky.localBots.list.map(bot => new BotCard(bot))
-        return [new YouCard(), ...sharers, ...localBots]
-      },
       get headerItems(): IProfile[] {
         if (!wocky || !wocky.profile) {
           return []
@@ -135,11 +65,6 @@ const HomeStore = types
       },
     }
   })
-  .views(self => ({
-    get list(): Card[] {
-      return self.creationMode ? [] : self.cards
-    },
-  }))
   .actions(self => ({
     setFriendFilter(filter: string) {
       self.friendFilter = filter

@@ -12,6 +12,24 @@ import {Address} from './Address'
 import {when} from 'mobx'
 import _ from 'lodash'
 
+export enum FriendShareTypeEnum {
+  ALWAYS = 'ALWAYS',
+  DISABLED = 'DISABLED',
+  NEARBY = 'NEARBY',
+}
+
+export const FriendShareType = types.enumeration([...Object.values(FriendShareTypeEnum)])
+
+export const FriendShareConfig = types.model({
+  nearbyCooldown: types.integer,
+  nearbyDistance: types.integer,
+})
+
+// probably we don't need it for now
+// export const DefaultFriendShareConfig = {nearbyCooldown: 100, nearbyDistance: 500}
+
+export interface IFriendShareConfig extends SnapshotIn<typeof FriendShareConfig> {}
+
 export const Profile = types
   .compose(
     Base,
@@ -29,11 +47,13 @@ export const Profile = types
       botsSize: 0,
       hasSentInvite: false,
       hasReceivedInvite: false,
+      sharesLocation: false,
       isFriend: false,
       isBlocked: false,
-      sharesLocation: false, // pseudo-calculated property for correct FlatList rendering
-      receivesLocationShare: false, // pseudo-calculated property for correct FlatList rendering
       roles: types.optional(types.array(types.string), []),
+      shareType: types.maybe(FriendShareType),
+      ownShareType: types.maybe(FriendShareType),
+      shareConfig: types.maybe(FriendShareConfig),
       subscribedBots: types.optional(
         types.late((): IAnyModelType => BotPaginableList),
         {}
@@ -46,13 +66,14 @@ export const Profile = types
     const res = {...snapshot}
     delete res.status
     delete res.statusUpdatedAt
-    delete res.sharesLocation
-    delete res.receivesLocationShare
     // delete res.location - need to preserve location because now it is passed only via subscriptions
     delete res.subscribedBots
     return res
   })
   .views(self => ({
+    get receivesLocationShare() {
+      return self.shareType === FriendShareTypeEnum.ALWAYS
+    },
     get location() {
       return self._location
     },
@@ -66,27 +87,14 @@ export const Profile = types
     },
   }))
   .actions(self => ({
-    setSharesLocation(value: boolean) {
+    setSharesLocation: (value: boolean) => {
       self.sharesLocation = value
-    },
-    setReceivesLocationShare(value: boolean) {
-      self.receivesLocationShare = value
     },
     sentInvite: () => {
       self.hasSentInvite = true
-      if (self.hasSentInvite && self.hasReceivedInvite) {
-        self.isFriend = true
-        self.hasReceivedInvite = false
-        self.hasSentInvite = false
-      }
     },
     receivedInvite: () => {
       self.hasReceivedInvite = true
-      if (self.hasSentInvite && self.hasReceivedInvite) {
-        self.isFriend = true
-        self.hasReceivedInvite = false
-        self.hasSentInvite = false
-      }
     },
     setLocation(location: ILocationSnapshot) {
       self._location = Location.create(location)
@@ -107,9 +115,16 @@ export const Profile = types
     const superLoad = self.load
     return {
       actions: {
-        load({avatar, ...data}: any) {
+        load({avatar, shareType, ownShareType, ...data}: any) {
           if (avatar) {
             self.avatar = self.service.files.get(avatar.id, avatar)
+          }
+          if (shareType) {
+            self.shareType = shareType
+          }
+          if (ownShareType) {
+            self.ownShareType = ownShareType
+            self.sharesLocation = ownShareType === FriendShareTypeEnum.ALWAYS
           }
           superLoad(data)
 
@@ -118,16 +133,13 @@ export const Profile = types
             self.statusUpdatedAt = data.statusUpdatedAt
           }
         },
-        invite: flow(function*() {
+        invite: flow(function*(shareType: FriendShareTypeEnum = FriendShareTypeEnum.DISABLED) {
           yield waitFor(() => self.connected)
           self.receivedInvite()
           if (self.isFriend) {
             // remove from receivedInvitations and add to friends
             self.service.profile.receivedInvitations.remove(self.id)
-            self.service.profile.friends.addToTop({
-              id: self.id,
-              user: self.service.profiles.get(self.id),
-            })
+            self.service.profile.friends.addToTop(self)
           } else {
             self.service.profile.sentInvitations.addToTop({
               id: self.id,
@@ -135,23 +147,26 @@ export const Profile = types
               sender: self.service.profiles.get(self.service.username),
             })
           }
-          yield self.transport.friendInvite(self.id)
+          self.shareType = shareType
+          yield self.transport.friendInvite(self.id, shareType)
         }),
         unfriend: flow(function*() {
           yield waitFor(() => self.connected)
           self.service.profile.friends.remove(self.id)
           self.service.profile.receivedInvitations.remove(self.id)
           self.service.profile.sentInvitations.remove(self.id)
+          self.hasSentInvite = false
+          self.hasReceivedInvite = false
           self.setFriend(false)
           yield self.transport.friendDelete(self.id)
         }),
-        shareLocation: flow(function*(expiresAt: Date) {
-          yield self.transport.userLocationShare(self.id, expiresAt)
-          self.service.profile.addLocationShare(self, new Date(), expiresAt)
-        }),
-        cancelShareLocation: flow(function*() {
-          yield self.transport.userLocationCancelShare(self.id)
-          self.service.profile.removeLocationShare(self)
+        shareLocationUpdate: flow(function*(
+          shareType?: FriendShareTypeEnum,
+          shareConfig?: IFriendShareConfig
+        ) {
+          yield self.transport.friendShareUpdate(self.id, self.location, shareType, shareConfig)
+          self.shareType = shareType
+          self.shareConfig = shareConfig
         }),
         block: flow(function*() {
           yield self.transport.block(self.id)
@@ -263,10 +278,6 @@ export const Profile = types
           // return null activity if no updates in last 5 mins
           return minsSinceLastUpdate > 5 ? null : activity
         },
-        get whenLastLocationSent(): string {
-          // console.log('& when', self.location)
-          return self.location ? moment(self.location!.createdAt).fromNow() : 'a while ago'
-        },
       },
     }
   })
@@ -304,6 +315,9 @@ export interface IProfilePartial {
   followedSize: number
   status: string
   statusUpdatedAt: Date
+  ownShareType: FriendShareTypeEnum
+  shareType: FriendShareTypeEnum
+  sharesLocation: boolean
   hidden: {
     enabled: boolean
     expires: Date

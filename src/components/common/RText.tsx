@@ -2,7 +2,7 @@ import React from 'react'
 import {Text, TextProps} from 'react-native'
 import {colors, MAX_FONT_SIZE_MULTIPLIER} from '../../constants'
 
-interface IProps extends TextProps {
+export interface IRTextProps extends TextProps {
   size?: number
   color?: string
   weight?: 'Regular' | 'Bold' | 'Light' | 'Medium' | 'Italic'
@@ -10,7 +10,7 @@ interface IProps extends TextProps {
   pink?: boolean
 }
 
-const RText = (props: IProps) => {
+const RText = (props: IRTextProps) => {
   const {children, color, size, weight, style, pink, ...rest} = props
   const fontFamily = weight ? `Roboto-${weight}` : 'Roboto-Regular'
   const fontSize = size || 12
