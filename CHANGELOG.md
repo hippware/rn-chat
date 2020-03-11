@@ -9,6 +9,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * @react-native-community/push-notification-ios (PR #4879)
   * react-native-background-geolocation
   * react-native-background-fetch (PR #4890)
+  * @babel/core (PR #4893), patch-package (PR #4894)
+  * @types/react (PR #4895), phoenix (PR #4896)
+  * @react-native-community/netinfo (PR #4897)
+  * @babel/runtime (PR #4898), @babel/node (PR #4899)
 * Don't lose map options when upgrading or codepush-ing (#4849)
 * Show warning modal if user disables Motion permissions (#4851)
 * GraphQL userUpdate error: has already been taken (#4821)
