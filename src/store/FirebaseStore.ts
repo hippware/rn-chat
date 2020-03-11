@@ -111,8 +111,7 @@ const FirebaseStore = types
 
     // NOTE: this is not a MST action
     async function processFirebaseAuthChange(user: any) {
-      log('FIREBASESTORE: AUTH STATE CHANGED', !!user)
-      log(user)
+      log('FIREBASESTORE: AUTH STATE CHANGED', user)
       if (user) {
         try {
           await auth!.currentUser!.reload()
