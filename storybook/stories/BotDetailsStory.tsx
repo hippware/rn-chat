@@ -1,7 +1,7 @@
 import React from 'react'
 import BotDetails from 'src/components/BotDetails/BotDetails'
 import {Provider} from 'mobx-react'
-import {Bot, IBot} from 'wocky-client'
+import {Bot, IBot} from 'src/wocky'
 import {Animated} from 'react-native'
 
 const stores = {

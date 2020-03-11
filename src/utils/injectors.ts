@@ -1,6 +1,6 @@
 import {MobXProviderContext, useObserver} from 'mobx-react'
 import React from 'react'
-import {IWocky} from 'wocky-client'
+import {IWocky} from 'src/wocky'
 import {ILocationStore} from 'src/store/LocationStore'
 import {IHomeStore} from 'src/store/HomeStore'
 import {Analytics} from './analytics'

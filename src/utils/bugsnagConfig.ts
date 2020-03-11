@@ -3,7 +3,7 @@ import {Client, Configuration} from 'bugsnag-react-native'
 import getCodeBundleId from './bugsnagCodeBundleId'
 import {settings} from '../globals'
 import {Platform} from 'react-native'
-import {IWocky} from 'wocky-client'
+import {IWocky} from 'src/wocky'
 import {when} from 'mobx'
 
 const API_KEY = 'f108fb997359e5519815d5fc58c79ad3'

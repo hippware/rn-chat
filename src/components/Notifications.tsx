@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {isAlive} from 'mobx-state-tree'
 import {observer, Observer} from 'mobx-react'
-import {IEvent} from 'wocky-client'
+import {IEvent} from 'src/wocky'
 import {RText, BottomPopupNew} from './common'
 import EventCard from './event-cards/EventCard'
 import ListFooter from './ListFooter'

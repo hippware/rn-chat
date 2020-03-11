@@ -7,13 +7,13 @@ import {
   IEventBotPost,
   IEventBotGeofence,
   FriendShareTypeEnum,
-} from 'wocky-client'
+} from 'src/wocky'
 import EventFriendInviteRequestCard from './EventFriendInviteRequestCard'
 import {observer} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
 import EventCardTemplate from './EventCardTemplate'
-import {IEventLocationShare} from 'third-party/wocky-client/src/model/EventLocationShare'
-import {IEventUserBefriend} from 'third-party/wocky-client/src/model/EventUserBefriend'
+import {IEventLocationShare} from 'src/model/EventLocationShare'
+import {IEventUserBefriend} from 'src/model/EventUserBefriend'
 
 const EventBotInviteCard = observer(
   ({

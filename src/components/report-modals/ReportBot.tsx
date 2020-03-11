@@ -3,7 +3,7 @@ import {TouchableOpacity, Image} from 'react-native'
 import {inject} from 'mobx-react'
 import Report, {afterReport} from './Report'
 import {k} from '../Global'
-import {IBot} from 'wocky-client'
+import {IBot} from 'src/wocky'
 import {ReportStore} from '../../store/ReportStore'
 import {useWocky} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
@@ -16,7 +16,10 @@ type Props = {
 
 const sendActive = require('../../../images/sendActive.png')
 
-const Right = inject('wocky', 'reportStore')(({wocky, reportStore, botId}: Props) => (
+const Right = inject(
+  'wocky',
+  'reportStore'
+)(({wocky, reportStore, botId}: Props) => (
   <TouchableOpacity
     onPress={async () => {
       if (reportStore!.submitting) return

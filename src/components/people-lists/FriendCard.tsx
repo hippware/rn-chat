@@ -6,7 +6,7 @@ import ProfileItem from './ProfileItem'
 import {Actions} from 'react-native-router-flux'
 import {observer} from 'mobx-react'
 import {k} from '../Global'
-import {IProfile} from 'wocky-client'
+import {IProfile} from 'src/wocky'
 
 type Props = {
   profile: IProfile

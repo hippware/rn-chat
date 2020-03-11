@@ -6,7 +6,7 @@ import Screen from '../Screen'
 import FriendMultiSelect from './FriendMultiSelect'
 import {colors} from '../../constants'
 import {k, minHeight} from '../Global'
-import {IWocky, IBot} from 'wocky-client'
+import {IWocky, IBot} from 'src/wocky'
 
 import {RText, BottomButton} from '../common'
 import {ISearchStore} from '../../store/SearchStore'

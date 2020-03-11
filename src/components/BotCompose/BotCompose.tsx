@@ -3,7 +3,7 @@ import {StyleSheet, Keyboard, View, TouchableOpacity, Image, Alert, Platform} fr
 import {RText, RTextInput, Spinner, withKeyboardHOC} from '../common'
 import {colors} from '../../constants'
 import {k, height, minHeight} from '../Global'
-import {IWocky, IBot} from 'wocky-client'
+import {IWocky, IBot} from 'src/wocky'
 import {inject} from 'mobx-react'
 import {reaction} from 'mobx'
 import {Actions} from 'react-native-router-flux'

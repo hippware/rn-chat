@@ -3,7 +3,7 @@ import {TouchableOpacity, Share, Platform} from 'react-native'
 import {useAnalytics, useWocky} from '../../utils/injectors'
 import {Actions} from 'react-native-router-flux'
 import {Props as LocationSettingsProps} from '../LiveLocation/LocationSettingsModal'
-import {FriendShareTypeEnum} from 'wocky-client'
+import {FriendShareTypeEnum} from 'src/wocky'
 
 type Props = {
   style?: any

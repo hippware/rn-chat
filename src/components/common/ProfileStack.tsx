@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, ViewStyle} from 'react-native'
 import {observer} from 'mobx-react'
-import {IProfile} from 'wocky-client'
+import {IProfile} from 'src/wocky'
 import {colors} from '../../constants'
 import {avatarScale} from '../Global'
 import RText from './RText'

@@ -5,7 +5,7 @@ import ActionSheet from 'react-native-actionsheet'
 import {Actions} from 'react-native-router-flux'
 import {useAnalytics} from '../../utils/injectors'
 import {toJS} from 'mobx'
-import {IProfile} from 'wocky-client'
+import {IProfile} from 'src/wocky'
 
 type Props = {
   profile: IProfile

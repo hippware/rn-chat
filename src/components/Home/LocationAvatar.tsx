@@ -2,7 +2,7 @@ import React from 'react'
 import {View, Image, ImageBackground} from 'react-native'
 import {Avatar, RText} from '../common'
 import {observer} from 'mobx-react'
-import {IProfile} from 'wocky-client'
+import {IProfile} from 'src/wocky'
 
 type Props = {
   profile: IProfile

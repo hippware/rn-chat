@@ -1,6 +1,6 @@
 import {computed, observable, when, action} from 'mobx'
 import {colors} from '../constants'
-import {IProfile} from 'wocky-client'
+import {IProfile} from 'src/wocky'
 
 type NotificationObj = {
   message: string

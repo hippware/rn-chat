@@ -2,7 +2,7 @@ import React from 'react'
 import Avatar from '../common/Avatar'
 import {observer} from 'mobx-react'
 import {ProfileHandle} from '../common'
-import {IProfile} from 'wocky-client'
+import {IProfile} from 'src/wocky'
 import PersonRow from './PersonRow'
 import {View, Image} from 'react-native'
 

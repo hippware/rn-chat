@@ -1,6 +1,6 @@
 import fs from 'react-native-fs'
 import {Image} from 'react-native'
-import {IFileService} from 'wocky-client'
+import {IFileService} from 'src/wocky'
 import {Platform} from 'react-native'
 
 class FileService implements IFileService {

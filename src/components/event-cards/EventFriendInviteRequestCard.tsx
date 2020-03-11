@@ -1,6 +1,6 @@
 import React from 'react'
 import EventCardTemplate from './EventCardTemplate'
-import {IEventFriendInvite, IProfile} from 'wocky-client'
+import {IEventFriendInvite, IProfile} from 'src/wocky'
 import {StyleSheet, Image, View, TouchableOpacity, Alert} from 'react-native'
 import {observer} from 'mobx-react'
 import {RText} from '../common'

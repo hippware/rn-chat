@@ -10,7 +10,7 @@ import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 import {IHomeStore} from '../../store/HomeStore'
 import {formatText} from '../../utils/maps'
-import {IBot} from 'wocky-client'
+import {IBot} from 'src/wocky'
 import {observer} from 'mobx-react'
 import _ from 'lodash'
 

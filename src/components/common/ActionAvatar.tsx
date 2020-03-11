@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Image, ViewStyle} from 'react-native'
 import Avatar from './Avatar'
-import {IProfile} from 'wocky-client'
+import {IProfile} from 'src/wocky'
 import {k, avatarScale} from '../Global'
 
 export type AvatarIcon = 'geo' | 'notification' | 'share' | 'connected'

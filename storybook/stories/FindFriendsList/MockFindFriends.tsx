@@ -3,7 +3,7 @@ import OnboardingFindFriendsList from '../../../src/components/Onboarding/Onboar
 import {Provider} from 'mobx-react'
 import {MyContact} from '../../../src/store/ContactStore'
 import {observable, computed} from 'mobx'
-import {Profile} from 'wocky-client'
+import {Profile} from 'src/wocky'
 import ContactInviteList from '../../../src/components/people-lists/ContactInviteList'
 
 const contacts: any[] = require('./contacts.json')

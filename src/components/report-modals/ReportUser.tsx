@@ -3,7 +3,7 @@ import {TouchableOpacity, Image} from 'react-native'
 import {inject} from 'mobx-react'
 import Report, {afterReport} from './Report'
 import {k} from '../Global'
-import {IProfile} from 'wocky-client'
+import {IProfile} from 'src/wocky'
 import {useWocky} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
 

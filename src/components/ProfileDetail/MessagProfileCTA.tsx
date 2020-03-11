@@ -1,6 +1,6 @@
 import React from 'react'
 import {observer} from 'mobx-react'
-import {IProfile} from 'wocky-client'
+import {IProfile} from 'src/wocky'
 import {Actions} from 'react-native-router-flux'
 import {TouchableOpacity, Image, StyleSheet} from 'react-native'
 import {avatarScale, minHeight} from '../Global'

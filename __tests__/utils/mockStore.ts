@@ -1,5 +1,5 @@
 import {IFirebaseStore} from 'src/store/FirebaseStore'
-import {Bot, Chat} from 'wocky-client'
+import {Bot, Chat} from 'src/wocky'
 import {Animated} from 'react-native'
 
 export default {

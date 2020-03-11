@@ -1,6 +1,6 @@
 /* tslint:disable:max-classes-per-file */
 import {types, applySnapshot, getRoot, Instance} from 'mobx-state-tree'
-import {IProfile, Location, IWocky, MapOptionsEnum} from 'wocky-client'
+import {IProfile, Location, IWocky, MapOptionsEnum} from 'src/wocky'
 import {autorun} from 'mobx'
 import {INavStore} from './NavStore'
 

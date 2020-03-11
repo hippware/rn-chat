@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import LocationSwitchPanel from '../../../src/components/ProfileDetail/LocationSwitchPanel'
-import {FriendShareTypeEnum} from 'wocky-client'
+import {FriendShareTypeEnum} from 'src/wocky'
 
 import {View} from 'react-native'
 

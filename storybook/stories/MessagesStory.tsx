@@ -1,6 +1,6 @@
 import React from 'react'
 import {Provider} from 'mobx-react'
-import {Wocky} from 'wocky-client'
+import {Wocky} from 'src/wocky'
 import {types} from 'mobx-state-tree'
 import SelectChatUser from 'src/components/Chats/SelectChatUser'
 import SelectableProfileList from 'src/store/SelectableProfileList'

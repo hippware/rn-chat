@@ -14,7 +14,7 @@ import {Spinner, RText, RTextInput} from '../common'
 import {colors} from '../../constants'
 import {showImagePicker, PickerImage} from '../ImagePicker'
 import {k, minHeight} from '../Global'
-import {IWocky, IBot, IBotPost} from 'wocky-client'
+import {IWocky, IBot, IBotPost} from 'src/wocky'
 import withKeyboardHOC from '../common/withKeyboardHOC'
 import {log} from '../../utils/logger'
 

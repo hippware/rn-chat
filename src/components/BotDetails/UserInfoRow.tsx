@@ -6,7 +6,7 @@ import {k} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import {ProfileHandle} from '../common'
 import ProfileAvatar from '../ProfileAvatar'
-import {IProfile} from 'wocky-client'
+import {IProfile} from 'src/wocky'
 import {botProfileStyle} from '../styles'
 
 type Props = {

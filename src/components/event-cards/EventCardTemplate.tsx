@@ -3,7 +3,7 @@ import {View, TouchableWithoutFeedback} from 'react-native'
 import {ActionAvatar, RText} from '../common'
 import {k} from '../Global'
 import {colors} from '../../constants'
-import {IProfile} from 'wocky-client'
+import {IProfile} from 'src/wocky'
 import {observer} from 'mobx-react'
 import {AvatarIcon} from '../common/ActionAvatar'
 

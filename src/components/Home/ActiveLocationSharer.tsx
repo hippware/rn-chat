@@ -7,7 +7,7 @@ import {IActiveBannerItem} from './HomeBanner'
 import LocationAvatar from './LocationAvatar'
 import {useHomeStore} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
-import {IProfile} from 'wocky-client'
+import {IProfile} from 'src/wocky'
 import {Actions} from 'react-native-router-flux'
 
 interface IProps extends IActiveBannerItem {

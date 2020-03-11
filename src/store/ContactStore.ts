@@ -1,5 +1,5 @@
 import {observable, action, computed} from 'mobx'
-import {IWocky, IProfile, FriendShareTypeEnum} from 'wocky-client'
+import {IWocky, IProfile, FriendShareTypeEnum} from 'src/wocky'
 import RNContacts, {Contact, PhoneNumber} from 'react-native-contacts'
 import {log} from 'src/utils/logger'
 import {PermissionsAndroid, Platform} from 'react-native'

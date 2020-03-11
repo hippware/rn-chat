@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {IProfile} from 'wocky-client'
+import {IProfile} from 'src/wocky'
 import {isAlive} from 'mobx-state-tree'
 import {BottomPopupNew, Separator} from '../common'
 import {RText, Pill, BubbleBadge} from '../common'

@@ -3,7 +3,7 @@ import {View} from 'react-native'
 import {RText, Switch} from '../common'
 import {PINK, GREY, WHITE, PINKISH_GREY, DARK_GREY} from '../../constants/colors'
 import SwitchButton from '../SwitchButton'
-import {FriendShareTypeEnum} from 'wocky-client'
+import {FriendShareTypeEnum} from 'src/wocky'
 
 export type Props = {
   onTypeToggle: (type: FriendShareTypeEnum) => void

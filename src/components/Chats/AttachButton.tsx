@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {TouchableOpacity, Image} from 'react-native'
 import {observer} from 'mobx-react'
 import {showImagePicker} from '../ImagePicker'
-import {IChat} from 'wocky-client'
+import {IChat} from 'src/wocky'
 import {Spinner} from '../common'
 
 type Props = {

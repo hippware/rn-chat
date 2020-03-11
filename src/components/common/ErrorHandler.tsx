@@ -8,7 +8,7 @@ import {colors} from '../../constants'
 import Button from '../Button'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
-import {IWocky} from 'wocky-client'
+import {IWocky} from 'src/wocky'
 import bsClient from '../../utils/bugsnagConfig'
 
 type Props = {
