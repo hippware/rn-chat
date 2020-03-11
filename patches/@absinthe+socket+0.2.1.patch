@@ -171,7 +171,7 @@ index 9e5f12d..2c38c75 100644
  const onTimeout = (absintheSocket, notifier) =>
    notifierNotifyActive(
 diff --git a/node_modules/@absinthe/socket/src/subscription.js b/node_modules/@absinthe/socket/src/subscription.js
-index de44085..0b46b29 100644
+index de44085..1abe8c1 100644
 --- a/node_modules/@absinthe/socket/src/subscription.js
 +++ b/node_modules/@absinthe/socket/src/subscription.js
 @@ -7,6 +7,7 @@ import type {
@@ -182,12 +182,18 @@ index de44085..0b46b29 100644
  
  import abortNotifier from "./abortNotifier";
  import notifierFind from "./notifier/find";
-@@ -143,6 +144,9 @@ const onDataMessage = (
+@@ -143,6 +144,15 @@ const onDataMessage = (
    if (notifier) {
      notifierNotifyResultEvent(notifier, payload.result);
    }
 +  else {
-+    notifyBugsnag(new Error('Subscription not found'), 'absinthe_socket_subscription_error', payload)
++    notifyBugsnag(new Error('Subscription not found'),
++      'absinthe_socket_subscription_error',
++      {
++        payload,
++        notifiers: absintheSocket.notifiers,
++      }
++    )
 +  }
  };
  
