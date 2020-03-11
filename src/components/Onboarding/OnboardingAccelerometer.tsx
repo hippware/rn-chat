@@ -4,6 +4,7 @@ import {RText, GradientButton} from '../common'
 import {WHITE} from 'src/constants/colors'
 import {s} from '../Global'
 import {onboardingSlideStyle as styles} from '../styles'
+import {accelerometerSettingsName} from '../modals/MotionWarning'
 
 type Props = {
   onPress: () => void // the function that gets called when the user presses "Allow Accelerometer"
@@ -19,13 +20,13 @@ const OnboardingAccelerometer = ({onPress}: Props) => (
     }}
   >
     <View style={{width: '80%', marginBottom: 33 * s}}>
-      <RText style={styles.onboardingH1}>Allow{'\r\n'} Accelerometer</RText>
+      <RText style={styles.onboardingH1}>{`Allow\r\n${accelerometerSettingsName}`}</RText>
     </View>
 
     <View style={{width: '70%', marginBottom: 42 * s}}>
       <RText style={styles.onboardingSubtext}>
-        Using the accelerometer increases battery-efficiency by intelligently toggling
-        location-tracking while moving.
+        {`Using ${accelerometerSettingsName} increases battery-efficiency by intelligently toggling
+        location-tracking while moving.`}
       </RText>
     </View>
 

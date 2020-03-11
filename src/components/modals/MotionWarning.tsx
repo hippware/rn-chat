@@ -10,6 +10,9 @@ import {useAppState} from 'react-native-hooks'
 import {Actions} from 'react-native-router-flux'
 import {usePermissionStore} from '../../utils/injectors'
 
+export const accelerometerSettingsName =
+  Platform.OS === 'ios' ? 'Motion & Fitness' : 'Physical Activity'
+
 const MotionWarning = observer(() => {
   const currentAppState = useAppState()
   const permissionStore = usePermissionStore()
@@ -20,8 +23,6 @@ const MotionWarning = observer(() => {
       })
     }
   }, [currentAppState])
-
-  const settingsName = Platform.OS === 'ios' ? 'Motion & Fitness' : 'Physical Activity'
 
   return (
     <View
@@ -35,10 +36,10 @@ const MotionWarning = observer(() => {
       ]}
     >
       <BlurView blurType="xlight" blurAmount={10} style={StyleSheet.absoluteFill as any} />
-      <RText style={styles.title}>{`Allow\r\n${settingsName}`}</RText>
+      <RText style={styles.title}>{`Allow\r\n${accelerometerSettingsName}`}</RText>
 
       <RText style={styles.subtext}>
-        {`Using "${settingsName}" increases battery efficiency by intelligently toggling location tracking while moving.`}
+        {`Using "${accelerometerSettingsName}" increases battery efficiency by intelligently toggling location tracking while moving.`}
       </RText>
 
       <Image
