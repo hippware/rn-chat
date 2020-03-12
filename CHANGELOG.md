@@ -17,7 +17,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Show warning modal if user disables Motion permissions (#4851)
 * GraphQL userUpdate error: has already been taken (#4821)
 * Post more info to bugsnag if subscription not found. (PR #4885)
-* Simpler logging solution for (PR #4887)
+* More logging changes (PR #4887, PR #4903)
 * Include memory stats when memory warning occurs. (PR #4891)
 
 # 4.40.2 - 2020 Mar 5
