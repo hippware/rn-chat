@@ -91,7 +91,7 @@
     "react-native-push-notification": "^3.1.9",
     "react-native-reanimated": "^1.7.0",
     "react-native-router-flux": "4.2.0-beta.2",
-    "react-native-screens": "^2.2.0",
+    "react-native-screens": "^2.3.0",
     "react-native-splash-screen": "^3.2.0",
     "react-native-swiper": "^1.6.0-rc.3",
     "react-navigation-stack": "^1.10.3",
