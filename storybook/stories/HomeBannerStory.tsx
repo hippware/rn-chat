@@ -1,7 +1,7 @@
 import React from 'react'
 import {Provider} from 'mobx-react'
 import HomeBanner from 'src/components/Home/HomeBanner'
-import {Profile, OwnProfile, File, Transport, Bot, SERVICE_NAME, createFactory} from 'wocky-client'
+import {Profile, OwnProfile, File, Transport, Bot, SERVICE_NAME, createFactory} from 'src/wocky'
 import {types} from 'mobx-state-tree'
 
 const FakeWockyStore = types

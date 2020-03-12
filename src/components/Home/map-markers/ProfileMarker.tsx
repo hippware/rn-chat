@@ -5,7 +5,7 @@ import {IHomeStore} from '../../../store/HomeStore'
 import LocationAvatar from '../LocationAvatar'
 import {View} from 'react-native'
 import {Actions} from 'react-native-router-flux'
-import {IProfile} from 'wocky-client'
+import {IProfile} from 'src/wocky'
 
 type Props = {
   profile: IProfile

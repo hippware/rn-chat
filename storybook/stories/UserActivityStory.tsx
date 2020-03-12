@@ -1,11 +1,11 @@
 import React from 'react'
 import {TouchableOpacity, View} from 'react-native'
 import LocationAvatar from 'src/components/Home/LocationAvatar'
-import {IProfile, Profile, Location} from 'wocky-client'
+import {IProfile, Profile, Location} from 'src/wocky'
 import {observer} from 'mobx-react'
 import {RText} from 'src/components/common'
 import {types} from 'mobx-state-tree'
-import Timer from '../../third-party/wocky-client/src/store/Timer'
+import Timer from 'src/store/Timer'
 
 let index = 0
 

@@ -1,6 +1,6 @@
 import {types, getParent} from 'mobx-state-tree'
 import {ValidatableProfile} from '../utils/formValidation'
-import {IWocky} from 'wocky-client'
+import {IWocky} from 'src/wocky'
 
 const ProfileValidationStore = types.model('ProfileValidationStore', {}).actions(self => {
   let vProfile: ValidatableProfile

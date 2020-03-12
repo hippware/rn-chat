@@ -2,9 +2,9 @@ import {computed, observable, reaction, action} from 'mobx'
 import {IObservableArray} from 'mobx'
 import {colors} from '../constants'
 import {getType} from 'mobx-state-tree'
-import {IWocky, EventLocationShare} from 'wocky-client'
+import {IWocky, EventLocationShare} from 'src/wocky'
 import Notification from './Notification'
-import {IEventLocationShare} from 'third-party/wocky-client/src/model/EventLocationShare'
+import {IEventLocationShare} from 'src/model/EventLocationShare'
 
 export class NotificationStore {
   @observable stack: IObservableArray<Notification> = observable([])

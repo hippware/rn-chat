@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {View, TouchableOpacity, Image, StyleSheet} from 'react-native'
 import {RText, Separator, Avatar, GradientButton} from '../common'
 import ModalContainer from '../modals/ModalContainer'
-import {IProfile, FriendShareTypeEnum} from '../../../third-party/wocky-client/src'
+import {IProfile, FriendShareTypeEnum} from 'src/wocky'
 import {DARK_PURPLE, PINK, PINKISH_GREY} from '../../constants/colors'
 import {Actions} from 'react-native-router-flux'
 

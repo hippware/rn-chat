@@ -9,7 +9,7 @@ import {
 } from 'mobx-state-tree'
 import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
-import {actionLogger, Transport, Wocky} from 'wocky-client'
+import {actionLogger, Transport, Wocky} from 'src/wocky'
 import analytics from '../utils/analytics'
 import {bugsnagIdentify} from '../utils/bugsnagConfig'
 import FirebaseStore from './FirebaseStore'

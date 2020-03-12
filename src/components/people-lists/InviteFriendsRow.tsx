@@ -4,7 +4,7 @@ import {k, minHeight} from '../Global'
 import {colors} from '../../constants'
 import {RText} from '../common'
 import {observer} from 'mobx-react'
-import {IWocky} from 'wocky-client'
+import {IWocky} from 'src/wocky'
 import ShareActivitySheet from './ShareActivitySheet'
 import {useWocky} from '../../utils/injectors'
 

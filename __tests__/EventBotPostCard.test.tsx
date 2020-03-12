@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer'
 import {Provider} from 'mobx-react'
 import {EventBotPostCard} from 'src/components/event-cards/EventCard'
 import mockStore from './utils/mockStore'
-import {Bot, Profile} from 'wocky-client'
+import {Bot, Profile} from 'src/wocky'
 
 describe('EventBotPostCard', () => {
   it('renders', async () => {

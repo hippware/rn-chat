@@ -5,7 +5,7 @@ import * as colors from '../../constants/colors'
 import {observer} from 'mobx-react'
 import {RText, ProgressiveImage} from '../common'
 import {isAlive} from 'mobx-state-tree'
-import {IBotPost, IBot} from 'wocky-client'
+import {IBotPost, IBot} from 'src/wocky'
 import UserInfoRow from './UserInfoRow'
 
 type Props = {

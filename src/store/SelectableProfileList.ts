@@ -1,5 +1,5 @@
 import {types} from 'mobx-state-tree'
-import {Profile, IProfile} from 'wocky-client'
+import {Profile, IProfile} from 'src/wocky'
 
 const SelectableProfile = types.model({
   profile: types.reference(Profile),

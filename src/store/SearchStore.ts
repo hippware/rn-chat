@@ -2,7 +2,7 @@ import {types, flow, getParent, applySnapshot} from 'mobx-state-tree'
 import {reaction} from 'mobx'
 import validate from 'validate.js'
 import SelectableProfileList from './SelectableProfileList'
-import {IWocky} from 'wocky-client'
+import {IWocky} from 'src/wocky'
 
 declare module 'validate.js' {
   // tslint:disable-next-line
@@ -82,10 +82,14 @@ const SearchStore = types
     let handler1
     function afterAttach() {
       self.addUsernameValidator()
-      handler1 = reaction(() => self.global, text => self._searchGlobal(text), {
-        fireImmediately: false,
-        delay: 500,
-      })
+      handler1 = reaction(
+        () => self.global,
+        text => self._searchGlobal(text),
+        {
+          fireImmediately: false,
+          delay: 500,
+        }
+      )
     }
 
     // TODO: cleanup on disconnect

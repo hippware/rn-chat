@@ -3,7 +3,7 @@ import {View, Image, StyleSheet} from 'react-native'
 import {avatarScale} from '../Global'
 import {observer} from 'mobx-react'
 import {colors} from '../../constants'
-import {IProfile} from 'wocky-client'
+import {IProfile} from 'src/wocky'
 
 const onlineColor = colors.LIGHT_BLUE
 const offlineColor = 'rgb(211,211,211)'

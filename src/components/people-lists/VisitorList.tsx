@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {RText, BottomPopupNew} from '../common'
-import {IBot} from 'wocky-client'
+import {IBot} from 'src/wocky'
 import {isAlive} from 'mobx-state-tree'
 import FriendCard from './FriendCard'
 import {colors} from '../../constants'

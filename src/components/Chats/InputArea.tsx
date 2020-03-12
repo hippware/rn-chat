@@ -3,7 +3,7 @@ import {View, StyleSheet, TouchableOpacity} from 'react-native'
 import {observer} from 'mobx-react'
 import {AutoExpandingTextInput, RText} from '../common'
 import {colors} from '../../constants'
-import {IChat} from 'wocky-client'
+import {IChat} from 'src/wocky'
 import AttachButton from './AttachButton'
 import {addAlpha} from 'src/constants/colors'
 

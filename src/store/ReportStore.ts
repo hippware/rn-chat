@@ -1,6 +1,6 @@
 import base64 from 'base-64'
 import {observable} from 'mobx'
-import {IProfile, IBot} from 'wocky-client'
+import {IProfile, IBot} from 'src/wocky'
 
 export class ReportStore {
   @observable text: string = ''

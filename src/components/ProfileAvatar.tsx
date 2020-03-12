@@ -1,7 +1,7 @@
 import React from 'react'
 import {View} from 'react-native'
 import Avatar from './common/Avatar'
-import {IProfile} from 'wocky-client'
+import {IProfile} from 'src/wocky'
 import MessageProfileCTA from './ProfileDetail/MessagProfileCTA'
 import {observer} from 'mobx-react'
 
