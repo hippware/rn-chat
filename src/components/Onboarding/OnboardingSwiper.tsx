@@ -86,7 +86,7 @@ const OnboardingSwiper = inject(
     }
 
     const done = () => {
-      wocky!.profile!.setOnboarded()
+      permissionStore!.setOnboarded(true)
       Actions.logged()
     }
 

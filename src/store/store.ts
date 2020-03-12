@@ -34,6 +34,7 @@ import {autorun} from 'mobx'
 import {settings} from '../globals'
 import AsyncStorage from '@react-native-community/async-storage'
 import deviceInfoFetch, {TRDeviceInfo} from 'src/utils/deviceInfoFetch'
+import _ from 'lodash'
 
 const jsVersion = require('../../package.json').version
 const auth = firebase.auth()
@@ -48,7 +49,7 @@ export type IEnv = {
   deviceInfo: TRDeviceInfo
 }
 
-const cleanState = {
+export const cleanState = {
   firebaseStore: {},
   authStore: {},
   locationStore: {},
@@ -111,10 +112,11 @@ export interface IStore extends Instance<typeof Store> {}
  * Return only the mstStore data needed to prevent logout
  * @param data - serialized mstStore object
  */
-function getMinimalStoreData(data?: {authStore: object}): object {
+function getMinimalStoreData(data?: {authStore: object; permissionStore: object}): object {
   log('loadMinimal', data)
   return {
-    authStore: data && data.authStore ? data.authStore : {},
+    authStore: _.get(data, 'authStore', cleanState.authStore),
+    permissionStore: _.get(data, 'permissionStore', cleanState.permissionStore),
   }
 }
 
@@ -170,6 +172,7 @@ export async function createStore() {
   } catch (err) {
     log('hydration error', err, storeData)
     mstStore = Store.create({...cleanState, ...getMinimalStoreData(storeData), appInfo}, env)
+    // mstStore = Store.create({...cleanState, appInfo}, env)
   }
 
   const requestPushPermissions = initializePushNotifications(mstStore.wocky.enablePush)

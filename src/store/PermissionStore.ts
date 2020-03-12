@@ -10,6 +10,7 @@ export const PermissionStore = types
     allowsLocation: false,
     allowsContacts: false,
     loaded: false,
+    onboarded: false,
   })
   .actions(self => ({
     setAllowsNotification(value: boolean) {
@@ -26,6 +27,9 @@ export const PermissionStore = types
     },
     setLoaded(value: boolean) {
       self.loaded = value
+    },
+    setOnboarded(value: boolean) {
+      self.onboarded = value
     },
   }))
   .actions(self => ({
@@ -65,21 +69,8 @@ export const PermissionStore = types
       })
     },
   }))
-  .views(self => ({
-    get onboarded() {
-      const {wocky} = getParent<any>(self)
-      return (
-        wocky &&
-        wocky.profile &&
-        wocky.profile.clientData.onboarded &&
-        // self.allowsAccelerometer &&
-        self.allowsNotification
-      )
-    },
-  }))
-  .postProcessSnapshot(() => {
-    // No need to persist this store
-    return {}
+  .postProcessSnapshot(({onboarded}) => {
+    return {onboarded}
   })
 
 export interface IPermissionStore extends Instance<typeof PermissionStore> {}

@@ -256,7 +256,7 @@ const LocationStore = types
     }
   })
   .actions(self => {
-    const {wocky} = getRoot<any>(self)
+    const {wocky, permissionStore} = getRoot<any>(self)
     let reactions: IReactionDisposer[] = []
 
     const init = flow(function*() {
@@ -281,7 +281,7 @@ const LocationStore = types
               wocky.connected &&
               wocky.profile &&
               wocky.profile.hidden &&
-              wocky.profile.clientData.onboarded &&
+              permissionStore.onboarded &&
               self.alwaysOn
             ) {
               try {

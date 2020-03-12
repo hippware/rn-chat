@@ -44,7 +44,6 @@ export const ClientData = types
         mapOptions: types.optional(MapOptions, MapOptionsEnum.AUTO),
         sharePresencePrimed: false,
         guestOnce: false,
-        onboarded: false,
         hidden: types.optional(Hidden, {}),
       })
       .views(self => ({
@@ -74,7 +73,7 @@ export const ClientData = types
     clear: () => {
       applySnapshot(self, {})
     },
-    flip: (property: 'sharePresencePrimed' | 'guestOnce' | 'onboarded') => {
+    flip: (property: 'sharePresencePrimed' | 'guestOnce') => {
       self[property] = true
       self.persist()
     },
