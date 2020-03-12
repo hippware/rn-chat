@@ -166,7 +166,7 @@ export const Profile = types
         ) {
           yield self.transport.friendShareUpdate(
             self.id,
-            self.service.profile.location,
+            self.service.profile.hidden.enabled ? undefined : self.service.profile.location,
             shareType,
             shareConfig
           )
