@@ -14,7 +14,7 @@ const SERVER_NAME = 'testing'
 // tslint:disable:no-console
 const fs = require('fs')
 
-jest.mock('../src/utils/logger', () => ({
+jest.mock('../../../src/utils/logger', () => ({
   log: console.log,
   warn: console.warn,
   error: console.error,
