@@ -164,7 +164,12 @@ export const Profile = types
           shareType?: FriendShareTypeEnum,
           shareConfig?: IFriendShareConfig
         ) {
-          yield self.transport.friendShareUpdate(self.id, self.location, shareType, shareConfig)
+          yield self.transport.friendShareUpdate(
+            self.id,
+            self.service.profile.hidden.enabled ? undefined : self.service.profile.location,
+            shareType,
+            shareConfig
+          )
           self.shareType = shareType
           self.shareConfig = shareConfig
         }),
