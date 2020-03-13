@@ -65,7 +65,6 @@ describe('Friend Share', () => {
     friend = alice.profile!.friends.get(bob.profile!.id)
     expect(friend!.shareType).toEqual(FriendShareTypeEnum.ALWAYS)
     expect(friend!.ownShareType).toEqual(FriendShareTypeEnum.ALWAYS)
-    expect(friend!.sharesLocation).toBeTruthy()
 
     // check sharing
     await alice.setLocation(theLocation)
