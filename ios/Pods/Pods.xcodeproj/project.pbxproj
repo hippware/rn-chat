@@ -17706,6 +17706,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
 			productRefGroup = D2147400B3DAE5D9E0CD9252581E762A /* Products */;
@@ -21899,30 +21900,6 @@
 			};
 			name = Debug;
 		};
-		1913301F4BD8124F4A7397F33B7B146C /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 20F48FA8EA723C0882CB0D5ED287AD00 /* RNScreens.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/RNScreens/RNScreens-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_MODULE_NAME = RNScreens;
-				PRODUCT_NAME = RNScreens;
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
 		1A4E5B94C95C217187B23772110F4C7D /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F596BF251B1010F08311F8702F9E627F /* SSZipArchive.xcconfig */;
@@ -22644,29 +22621,6 @@
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
-		};
-		42BDD8544FADE143776E362ABE9FC9CE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 20F48FA8EA723C0882CB0D5ED287AD00 /* RNScreens.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/RNScreens/RNScreens-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_MODULE_NAME = RNScreens;
-				PRODUCT_NAME = RNScreens;
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
 		};
 		45743B530023095C30A5082C4B8C5A91 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -24715,6 +24669,29 @@
 			};
 			name = Debug;
 		};
+		CB6575B3EF42A9DC13DC2F892AD31E67 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 20F48FA8EA723C0882CB0D5ED287AD00 /* RNScreens.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/RNScreens/RNScreens-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_MODULE_NAME = RNScreens;
+				PRODUCT_NAME = RNScreens;
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 		CC095DE82CE4EE6C211292DDC906F6C3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9553C03ABD8E241105BC572204B3280F /* RNBackgroundFetch.xcconfig */;
@@ -25549,6 +25526,30 @@
 			};
 			name = Debug;
 		};
+		F63E3569EDEB164A0804F15E4DB0760C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 20F48FA8EA723C0882CB0D5ED287AD00 /* RNScreens.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/RNScreens/RNScreens-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_MODULE_NAME = RNScreens;
+				PRODUCT_NAME = RNScreens;
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		F6D84741C85CBF719C7E8B0D184B4726 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5C8D94B3C4580E6B158183DE0A2C65AB /* Permission-Contacts.xcconfig */;
@@ -25960,8 +25961,8 @@
 		6B19C2D7C667C2B0AEFA03CA36D08E34 /* Build configuration list for PBXNativeTarget "RNScreens" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				42BDD8544FADE143776E362ABE9FC9CE /* Debug */,
-				1913301F4BD8124F4A7397F33B7B146C /* Release */,
+				CB6575B3EF42A9DC13DC2F892AD31E67 /* Debug */,
+				F63E3569EDEB164A0804F15E4DB0760C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
