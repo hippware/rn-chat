@@ -66,6 +66,7 @@ export const Profile = types
     const res = {...snapshot}
     delete res.status
     delete res.statusUpdatedAt
+    delete res.sharesLocation
     // delete res.location - need to preserve location because now it is passed only via subscriptions
     delete res.subscribedBots
     return res
@@ -98,6 +99,7 @@ export const Profile = types
     },
     setLocation(location: ILocationSnapshot) {
       self._location = Location.create(location)
+      self.sharesLocation = true
       self.maybeUpdateActivity()
     },
     setFriend: (friend: boolean) => {
@@ -124,7 +126,6 @@ export const Profile = types
           }
           if (ownShareType) {
             self.ownShareType = ownShareType
-            self.sharesLocation = ownShareType === FriendShareTypeEnum.ALWAYS
           }
           superLoad(data)
 
