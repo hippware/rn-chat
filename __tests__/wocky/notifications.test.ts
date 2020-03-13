@@ -6,7 +6,7 @@ import {
   sleep,
   waitFor,
 } from './support/testuser'
-import {IWocky, IBot, ILocation, IEventBotInvite, IEventBotGeofence} from '../../src/wocky'
+import {IWocky, IBot, IEventBotInvite, IEventBotGeofence} from '../../src/wocky'
 
 describe('Notifications (static)', () => {
   let alice: IWocky, bob: IWocky, aliceBot: IBot, bobsAliceBot: IBot
@@ -66,7 +66,6 @@ describe('Notifications (static)', () => {
 
   it('gets Location Invite notification', async () => {
     aliceBot = await alice.createBot()
-    aliceBot.setUserLocation({latitude: 10, longitude: 20, accuracy: 1})
     await aliceBot.update({
       location: theLocation,
       title: 'Test bot',
@@ -91,11 +90,7 @@ describe('Notifications (static)', () => {
 
   it('gets Location Invite Accept notification', async () => {
     bobsAliceBot = await bob.loadBot(aliceBot.id)
-    await bobsAliceBot.acceptInvitation({
-      latitude: 10.1,
-      longitude: 20.1,
-      accuracy: 5,
-    } as ILocation)
+    await bobsAliceBot.acceptInvitation()
     dumpBot(bobsAliceBot, 'bobsAliceBot')
     await sleep(1000)
     await alice.notifications.load({force: true})

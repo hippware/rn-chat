@@ -43,7 +43,7 @@ export const DefaultHeader = inject(
       // avoid null locationStore.location here
       when(
         () => !!locationStore!.location,
-        () => bot.acceptInvitation(locationStore!.location!)
+        () => bot.acceptInvitation()
       )
     }
     if (!bot || !isAlive(bot))

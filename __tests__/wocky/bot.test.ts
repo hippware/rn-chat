@@ -1,7 +1,6 @@
 import {createUser, fillAndSaveProfile, dumpProfile, dumpBot, waitFor} from './support/testuser'
 import {IWocky} from '../../src/wocky'
 import {IBot} from '../../src/model/Bot'
-import {Location} from '../../src/model/Location'
 
 let user: IWocky, user2: IWocky
 let bot, bot2: IBot
@@ -22,7 +21,6 @@ describe('NewGraphQL tests', () => {
     bot = await user.createBot()
     // expect(bot.icon).toBe('')
     // expect(bot.isNew).toBe(true)
-    bot.setUserLocation({latitude: 1, longitude: 2, accuracy: 1})
     await bot.update({
       icon,
       public: false,
@@ -62,7 +60,6 @@ describe('NewGraphQL tests', () => {
 
   it('create bot2', async () => {
     bot2 = await user.createBot()
-    bot2.setUserLocation({latitude: 1, longitude: 2, accuracy: 1})
     expect(bot2.isNew).toBe(true)
     await bot2.update({
       location: {latitude: 1.2, longitude: 2.2},
@@ -145,7 +142,7 @@ describe('NewGraphQL tests', () => {
     await bot.invite([user2!.username!])
     await waitFor(() => user2.notifications.length === 3, 'bot invitation notification')
     const loadedBot = await user2.loadBot(bot.id)
-    await loadedBot.acceptInvitation(Location.create({latitude: 50, longitude: 50, accuracy: 5}))
+    await loadedBot.acceptInvitation()
     await user2.loadBot(bot.id)
     dumpBot(bot, 'loadedBot')
     expect(loadedBot.followersSize).toEqual(1)

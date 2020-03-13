@@ -487,11 +487,7 @@ export class Transport {
     })
     // TODO: assert all invites sent successfully?
   }
-  async inviteBotReply(
-    invitationId: string,
-    {latitude, longitude, accuracy},
-    accept: boolean = true
-  ) {
+  async inviteBotReply(invitationId: string, userLocation?: ILocation, accept: boolean = true) {
     await this.mutate({
       mutation: gql`
         mutation botInvitationRespond($input: BotInvitationRespondInput!) {
@@ -510,7 +506,7 @@ export class Transport {
         input: {
           invitationId,
           accept,
-          userLocation: {accuracy, lat: latitude, lon: longitude, device: this.resource},
+          userLocation: userLocation ? convertLocation(userLocation, this.resource) : undefined,
         },
       },
     })
@@ -889,7 +885,7 @@ export class Transport {
       visibility,
       ...bot
     }: any,
-    userLocation: ILocation | undefined
+    userLocation?: ILocation
   ): Promise<void> {
     return this.voidMutation({
       mutation: gql`
@@ -918,7 +914,7 @@ export class Transport {
           title,
           type,
         },
-        userLocation: userLocation ? convertLocation(userLocation, this.resource) : {},
+        userLocation: userLocation ? convertLocation(userLocation, this.resource) : undefined,
       },
     })
   }
