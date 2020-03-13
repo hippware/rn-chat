@@ -10,7 +10,6 @@ import {IProfilePartial, FriendShareTypeEnum, IFriendShareConfig} from '../model
 import {ILocationSnapshot, IBotPost} from '../wocky'
 import {IBot, IBotIn} from '../model/Bot'
 import {ILocation} from '../model/Location'
-import {notifyBugsnag} from '../utils/logger'
 
 const introspectionQueryResultData = require('./fragmentTypes.json')
 const TIMEOUT = 10000
@@ -1368,10 +1367,7 @@ export class Transport {
     res = await this.mutate({mutation, variables})
     if (res.data && !res.data![name].successful) {
       // console.error('voidMutation error with ', name, JSON.stringify(res.data[name]))
-      notifyBugsnag(
-        new Error(`GraphQL ${name} error: ${JSON.stringify(res.data![name])}`),
-        `graphql_${name}_error`
-      )
+      throw new Error(`GraphQL ${name} error: ${JSON.stringify(res.data![name])}`)
     }
   }
 
