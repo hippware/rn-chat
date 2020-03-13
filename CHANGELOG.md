@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.41.0 - 2020 Mar 12
+
 * Update: @react-native-community/netinfo
   * @react-native-community/async-storage
   * @react-native-community/push-notification-ios (PR #4879)
@@ -19,6 +21,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Post more info to bugsnag if subscription not found. (PR #4885)
 * More logging changes (PR #4887, PR #4903)
 * Include memory stats when memory warning occurs. (PR #4891)
+* [dev] re-integrate wocky-client into codebase (#4888)
+* Onboarding screens should only appear once (#4850)
+* User's location as shown on map is incorrect (#4881)
 
 # 4.40.2 - 2020 Mar 5
 
