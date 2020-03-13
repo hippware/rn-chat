@@ -23,7 +23,7 @@ describe('Friend Share', () => {
   // const differentLocation = {longitude: 1.1, latitude: 1.1, accuracy: 1}
 
   beforeAll(async () => {
-    jest.setTimeout(30000)
+    jest.setTimeout(50000)
     bob = await createUser()
     alice = await createUser()
   })
@@ -112,6 +112,7 @@ describe('Friend Share', () => {
     // change location
     await bob.setLocation(differentLocation)
     await waitFor(() => !friend!.sharesLocation, 'end sharing location')
+    await waitFor(() => !bob.profile!.sharesLocation, 'end sharing location')
   })
 
   afterAll(async () => {
