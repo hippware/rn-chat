@@ -55,8 +55,12 @@ const LocationSwitchPanel = ({onTypeToggle, shareType}: Props) => {
         switchBorderRadius={16}
         activeFontColor={WHITE}
         fontColor={shareType === ALWAYS ? DARK_GREY : PINK}
-        disabled={shareType === DISABLED}
-        onValueChange={value => onTypeToggle(value ? NEARBY : ALWAYS)}
+        onValueChange={value => {
+          setLastType(value ? NEARBY : ALWAYS)
+          if (shareType !== DISABLED) {
+            onTypeToggle(value ? NEARBY : ALWAYS)
+          }
+        }}
       />
     </View>
   )
