@@ -12,7 +12,7 @@ import {iso8601toDate, processMap, waitFor} from '../utils/utils'
 import {EventList, createEvent, EventEntity, IEventEntity} from '../model/EventList'
 import _ from 'lodash'
 import {RequestType} from '../model/PaginableList'
-import {ILocation, ILocationSnapshot, createLocation} from '../model/Location'
+import {ILocationSnapshot, createLocation} from '../model/Location'
 import {log} from '../utils/logger'
 
 export const Wocky = types
@@ -216,11 +216,14 @@ export const Wocky = types
         const {list, cursor, count} = yield self.transport.loadSubscribedBots(userId, lastId, max)
         return {list: list.map((bot: any) => self.getBot(bot)), count, cursor}
       }),
-      _updateBot: flow(function*(d: any, userLocation: ILocation) {
+      _updateBot: flow(function*(d: any) {
         yield waitFor(() => self.connected)
-        yield self.transport.updateBot(d, userLocation)
+        yield self.transport.updateBot(
+          d,
+          !self.profile || self.profile.hidden.enabled ? undefined : self.profile.location
+        )
         return {isNew: false}
-      }) as (data: any, userLocation: ILocation) => Promise<{isNew: boolean}>,
+      }) as (data: any) => Promise<{isNew: boolean}>,
       _removeBotPost: flow(function*(id: string, postId: string) {
         yield waitFor(() => self.connected)
         yield self.transport.removeBotPost(id, postId)
@@ -239,9 +242,12 @@ export const Wocky = types
         yield waitFor(() => self.connected)
         return yield self.transport.unsubscribeBot(id)
       }),
-      _acceptBotInvitation: flow(function*(inviteId: string, userLocation: ILocation) {
+      _acceptBotInvitation: flow(function*(inviteId: string) {
         yield waitFor(() => self.connected)
-        return yield self.transport.inviteBotReply(inviteId, userLocation)
+        return yield self.transport.inviteBotReply(
+          inviteId,
+          !self.profile || self.profile.hidden.enabled ? undefined : self.profile.location
+        )
       }),
       loadLocalBots: flow(function*({latitude, longitude, latitudeDelta, longitudeDelta}: any) {
         yield waitFor(() => self.connected)

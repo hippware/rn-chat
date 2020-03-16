@@ -8,7 +8,6 @@ import {
 } from './support/testuser'
 import {IWocky} from '../../src/wocky'
 import {IBot} from '../../src/model/Bot'
-import {Location} from '../../src/model/Location'
 
 let user1: IWocky, user2: IWocky
 let bot: IBot, bot2: IBot, loadedBot: IBot
@@ -53,7 +52,6 @@ describe('Geofence', () => {
 
   it('user1 creates a geofence bot', async () => {
     bot = await user1.createBot()
-    bot.setUserLocation({latitude: 1, longitude: 2, accuracy: 1})
     await sleep(3000)
     await bot.update({
       location: {latitude: 1.1, longitude: 2.1},
@@ -74,7 +72,6 @@ describe('Geofence', () => {
 
   it('user1 creates bot2', async () => {
     bot2 = await user1.createBot()
-    bot2.setUserLocation({latitude: 1, longitude: 2, accuracy: 1})
     await sleep(3000)
     await bot2.update({
       location: {latitude: 1.1, longitude: 2.1},
@@ -127,7 +124,7 @@ describe('Geofence', () => {
   })
 
   it('user2 accepts invitation to bot', async () => {
-    await loadedBot.acceptInvitation(Location.create({latitude: 50, longitude: 50, accuracy: 5}))
+    await loadedBot.acceptInvitation()
     // server subscribes automatically on invite accept
     expect(loadedBot.isSubscribed).toEqual(true)
   })
@@ -171,7 +168,7 @@ describe('Geofence', () => {
   it('2 users at same new bot location, both visitors', async () => {
     user2.notifications.refresh()
     bot = await user1.createBot()
-    bot.setUserLocation(insideBotLocation)
+    user1.profile!.setLocation(insideBotLocation)
     await Promise.all([enterBot(user1), enterBot(user2)])
     await bot.update({
       location: insideBotLocation,
@@ -183,7 +180,8 @@ describe('Geofence', () => {
     await waitFor(() => user2.notifications.length === 1, 'bot invitation notification')
     loadedBot = await user2.loadBot(bot.id)
     expect(loadedBot.visitorsSize).toEqual(1)
-    await loadedBot.acceptInvitation(Location.create(insideBotLocation))
+    user2.profile!.setLocation(insideBotLocation)
+    await loadedBot.acceptInvitation()
     expect(loadedBot.isSubscribed).toEqual(true)
     await waitFor(() => loadedBot.visitorsSize === 2, 'visitors size to increment')
   })

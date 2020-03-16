@@ -47,7 +47,6 @@ type Props = {
   iconStore?: IconStore
   homeStore?: IHomeStore
   notificationStore?: any
-  locationStore?: any
   geocodingStore?: any
   analytics?: any
   keyboardShowing?: boolean
@@ -61,7 +60,6 @@ const BotCompose = inject(
   'iconStore',
   'notificationStore',
   'analytics',
-  'locationStore',
   'geocodingStore'
 )(
   observer((props: Props) => {
@@ -251,10 +249,9 @@ const BotCompose = inject(
         return
       }
       try {
-        const {load, save: saveBot, setUserLocation} = bot!
+        const {load, save: saveBot} = bot!
         load({title: text, icon: props.iconStore!.emoji})
         Keyboard.dismiss()
-        setUserLocation(props.locationStore.location)
         await saveBot()
 
         if (!props.edit) {
