@@ -235,7 +235,7 @@ const LocationStore = types
         : Promise.reject(new Error('No uploadUrl'))
     }
 
-    async function emailLog(email) {
+    async function emailLog(email = 'crashreports@hippware.com') {
       // emailLog doesn't work in iOS simulator so fetch and dump instead
       if (await DeviceInfo.isEmulator()) {
         log(prefix, await BackgroundGeolocation.logger.getLog())

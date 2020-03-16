@@ -153,6 +153,7 @@ const MyAccount = inject(
           <LinkButton onPress={() => Linking.openURL('https://tinyrobot.com/privacy-policy/')}>
             Privacy Policy
           </LinkButton>
+          <LinkButton onPress={Actions.debugOptionsScreen}>Debug Options</LinkButton>
           <LinkButton
             onPress={() => {
               Alert.alert('Log Out', `Are you sure you want to log out?`, [
@@ -180,7 +181,6 @@ const MyAccount = inject(
           )}
           {settings.allowProfileDelete && (
             <LinkButton
-              style={{marginTop: 50}}
               onPress={() => {
                 Alert.alert(
                   'Delete Profile',

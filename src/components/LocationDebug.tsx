@@ -78,13 +78,7 @@ const LocationDebug = observer(() => {
             {uploadStatusText}
           </RText>
         )}
-        <TouchableOpacity
-          // Calling emailLog with empty string seems to work
-          onPress={() => {
-            emailLog('')
-          }}
-          style={styles.button}
-        >
+        <TouchableOpacity onPress={() => emailLog()} style={styles.button}>
           <RText size={20} color={colors.WHITE}>
             Email log
           </RText>
