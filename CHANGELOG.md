@@ -4,6 +4,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Update: react-native-screens (PR #4892)
+* Revert "Post common graphql errors instead of throwing." (PR #4911)
+
 # 4.41.0 - 2020 Mar 12
 
 * Update: @react-native-community/netinfo
