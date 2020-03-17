@@ -147,7 +147,7 @@ export class Transport {
               ${PROFILE_PROPS}
               ${
                 id === this.username
-                  ? `... on CurrentUser { email phoneNumber clientData
+                  ? `... on CurrentUser { email phoneNumber fullAudit clientData
                   sentInvitations(first:100) {
                     edges {
                       node {
@@ -1115,6 +1115,25 @@ export class Transport {
       `,
       variables: {userId},
     })
+  }
+
+  async userFullAudit(enable: boolean): Promise<boolean> {
+    const res = await this.mutate({
+      mutation: gql`
+        mutation userFullAudit(
+          $enable: Boolean!
+        ) {
+          userFullAudit(
+            input: {enable: $enable}
+          ) {
+            ${VOID_PROPS}
+          }
+        }
+      `,
+      variables: {enable},
+    })
+
+    return (res.data as any).userFullAudit!.successful
   }
 
   async userInviteGetSender(code: string): Promise<IProfilePartial | null> {

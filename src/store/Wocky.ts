@@ -439,6 +439,9 @@ export const Wocky = types
     triggerSilentPush(userId: string): Promise<void> {
       return self.transport.triggerSilentPush(userId)
     },
+    userFullAudit(enable: boolean): Promise<boolean> {
+      return self.transport.userFullAudit(enable)
+    },
   }))
   .actions(self => {
     function clearCache() {

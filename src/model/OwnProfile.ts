@@ -17,6 +17,7 @@ export const OwnProfile = types
     types.model('OwnProfile', {
       email: types.maybeNull(types.string),
       phoneNumber: types.maybeNull(types.string),
+      fullAudit: types.maybeNull(types.boolean),
       sentInvitations: types.optional(InvitationPaginableList, {}),
       receivedInvitations: types.optional(InvitationPaginableList, {}),
       friends: types.optional(ProfilePaginableList, {}),
@@ -106,6 +107,9 @@ export const OwnProfile = types
         })
       )
       profile.receivedInvite()
+    },
+    setFullAudit: (enable: boolean) => {
+      self.fullAudit = enable
     },
   }))
   .actions(self => {
