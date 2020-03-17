@@ -102,6 +102,10 @@ describe('Friend Share', () => {
     // check nearby sharing
     await alice.setLocation(theLocation)
     await bob.setLocation(theLocation)
+    await waitFor(
+      () => friend!.location!.latitude === theLocation.latitude,
+      'user location did not arrive 3'
+    )
 
     receivedLocation = {...friend!.location!}
     delete receivedLocation.createdAt
