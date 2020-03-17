@@ -54,7 +54,7 @@
     "moment": "^2.24.0",
     "mst-middlewares": "3.10.2",
     "patch-package": "^6.2.1",
-    "phoenix": "^1.4.15",
+    "phoenix": "^1.4.16",
     "postinstall-postinstall": "^2.0.0",
     "prop-types": "^15.7.2",
     "react": "16.9.0",
