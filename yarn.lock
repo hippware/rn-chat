@@ -8075,10 +8075,10 @@ react-native-background-fetch@^3.0.3, react-native-background-fetch@~3.0.3:
     react-native-background-fetch "~3.0.3"
     xcode "^0.9.1"
 
-react-native-code-push@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-code-push/-/react-native-code-push-6.1.0.tgz#462755e1b302a896d0abf230af4a833562f5ddc9"
-  integrity sha512-6wJAdFv/F60j1s8W4oscDaPA0HeXV95acVAWoYRzji2uOQ6g5C9PWONVVn1D/PMD8Zmj1QCym0lA5GcH/0d0+Q==
+react-native-code-push@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-code-push/-/react-native-code-push-6.1.1.tgz#4c40b61c2c76b12fc84190ba9b05146f259a46ca"
+  integrity sha512-o/R+oAJO2jjW7tKY0ZM17q95dLszbwDYjZ3jWH4juIaXmsg1jl8R+LR+7pxyMVGEIIjQl/LK/j5W+ykXpnT9vg==
   dependencies:
     code-push "^3.1.0"
     glob "^5.0.15"
