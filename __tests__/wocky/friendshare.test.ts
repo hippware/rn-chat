@@ -1,4 +1,4 @@
-import {createUser, fillAndSaveProfile, dumpProfile, waitFor} from './support/testuser'
+import {createUser, fillAndSaveProfile, dumpProfile, sleep, waitFor} from './support/testuser'
 import {IWocky, FriendShareTypeEnum} from '../../src/wocky'
 import {UserActivityType} from '../../src/store/types'
 
@@ -102,10 +102,7 @@ describe('Friend Share', () => {
     // check nearby sharing
     await alice.setLocation(theLocation)
     await bob.setLocation(theLocation)
-    await waitFor(
-      () => friend!.location!.latitude === theLocation.latitude,
-      'user location did not arrive 3'
-    )
+    await sleep(500)
 
     receivedLocation = {...friend!.location!}
     delete receivedLocation.createdAt
@@ -115,6 +112,7 @@ describe('Friend Share', () => {
     await waitFor(() => !!friend!.sharesLocation, 'start sharing location')
     // change location
     await bob.setLocation(differentLocation)
+    await sleep(500)
     await waitFor(() => !friend!.sharesLocation, 'end sharing location 1')
     await waitFor(() => !bob.profile!.sharesLocation, 'end sharing location 2')
   })
