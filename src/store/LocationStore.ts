@@ -114,10 +114,6 @@ const LocationStore = types
         desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
         enableHeadless: true,
         foregroundService: true, // android only
-        logLevel:
-          __DEV__ || settings.configurableLocationSettings
-            ? BackgroundGeolocation.LOG_LEVEL_VERBOSE
-            : BackgroundGeolocation.LOG_LEVEL_OFF,
         maxRecordsToPersist: 20,
         notification: {
           // android only
@@ -244,6 +240,14 @@ const LocationStore = types
       }
     }
 
+    function setLogVerbose(verbose: boolean) {
+      return BackgroundGeolocation.setConfig({
+        logLevel: verbose
+          ? BackgroundGeolocation.LOG_LEVEL_VERBOSE
+          : BackgroundGeolocation.LOG_LEVEL_OFF,
+      })
+    }
+
     return {
       refreshCredentials,
       invalidateCredentials,
@@ -253,6 +257,7 @@ const LocationStore = types
       stopStandaloneGeolocation,
       uploadLog,
       emailLog,
+      setLogVerbose,
     }
   })
   .actions(self => {

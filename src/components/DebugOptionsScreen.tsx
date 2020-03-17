@@ -7,7 +7,7 @@ import Screen from './Screen'
 import {useLocationStore, useWocky} from 'src/utils/injectors'
 
 const DebugOptionsScreen = observer(() => {
-  const {emailLog} = useLocationStore()
+  const {emailLog, setLogVerbose} = useLocationStore()
   const {profile, userFullAudit} = useWocky()
 
   return profile ? (
@@ -31,6 +31,7 @@ const DebugOptionsScreen = observer(() => {
           offColor={colors.GREY}
           onToggle={value => {
             userFullAudit(value).then(_successful => {
+              setLogVerbose(value)
               profile.setFullAudit(value)
             })
           }}
