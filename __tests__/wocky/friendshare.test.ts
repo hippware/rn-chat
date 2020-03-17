@@ -1,4 +1,4 @@
-import {createUser, fillAndSaveProfile, dumpProfile, waitFor} from './support/testuser'
+import {createUser, fillAndSaveProfile, dumpProfile, sleep, waitFor} from './support/testuser'
 import {IWocky, FriendShareTypeEnum} from '../../src/wocky'
 import {UserActivityType} from '../../src/store/types'
 
@@ -68,7 +68,7 @@ describe('Friend Share', () => {
 
     // check sharing
     await alice.setLocation(theLocation)
-    await waitFor(() => !!bobAliceProfile.location, 'user location did not arrive')
+    await waitFor(() => !!bobAliceProfile.location, 'user location did not arrive 1')
     let receivedLocation = {...bobAliceProfile.location!}
     delete receivedLocation.createdAt
     delete receivedLocation.isCurrent
@@ -77,7 +77,7 @@ describe('Friend Share', () => {
     await alice.setLocation(differentLocation)
     await waitFor(
       () => bobAliceProfile.location!.latitude === differentLocation.latitude,
-      'user location did not arrive'
+      'user location did not arrive 2'
     )
     receivedLocation = {...bobAliceProfile.location!}
     delete receivedLocation.createdAt
@@ -102,6 +102,7 @@ describe('Friend Share', () => {
     // check nearby sharing
     await alice.setLocation(theLocation)
     await bob.setLocation(theLocation)
+    await sleep(500)
 
     receivedLocation = {...friend!.location!}
     delete receivedLocation.createdAt
@@ -111,8 +112,9 @@ describe('Friend Share', () => {
     await waitFor(() => !!friend!.sharesLocation, 'start sharing location')
     // change location
     await bob.setLocation(differentLocation)
-    await waitFor(() => !friend!.sharesLocation, 'end sharing location')
-    await waitFor(() => !bob.profile!.sharesLocation, 'end sharing location')
+    await sleep(500)
+    await waitFor(() => !friend!.sharesLocation, 'end sharing location 1')
+    await waitFor(() => !bob.profile!.sharesLocation, 'end sharing location 2')
   })
 
   afterAll(async () => {
