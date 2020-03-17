@@ -30,6 +30,7 @@ import VerifyCode from './VerifyCode'
 import LocationDebug from './LocationDebug'
 import BottomMenu from './BottomMenu'
 import DebugScreen from './DebugScreen'
+import DebugOptionsScreen from './DebugOptionsScreen'
 import LocationWarning from './modals/LocationWarning'
 import MotionWarning from './modals/MotionWarning'
 import SharePresencePrimer from './modals/SharePresencePrimer'
@@ -237,6 +238,7 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
                     <Scene key="debugScreen" component={DebugScreen} title="Debug" back />,
                     <Scene key="codePush" component={CodePushScene} title="CodePush" back />,
                   ]}
+                  <Scene key="debugOptionsScreen" component={DebugOptionsScreen} title="Debug Options" navigationBarStyle={{paddingBottom: 20, borderBottomWidth:1}} back />
                 </Stack>
                 <Scene key="reportUser" component={ReportUser} wrap title="Report User" leftButtonImage={iconClose} onLeft={Actions.pop} right={ReportUserRightButton} />
                 <Scene key="reportBot" component={ReportBot} wrap title="Report Location" leftButtonImage={iconClose} onLeft={Actions.pop} right={ReportBotRightButton}  />

@@ -57,6 +57,16 @@ describe('New GraphQL profile tests', () => {
     expect(clientData.guestOnce).toBeTruthy()
   })
 
+  it('toggle userFullAudit', async () => {
+    expect(user.profile!.fullAudit).toBe(false)
+    await user.userFullAudit(true)
+    await user.loadProfile(user.profile!.id)
+    expect(user.profile!.fullAudit).toBe(true)
+    await user.userFullAudit(false)
+    await user.loadProfile(user.profile!.id)
+    expect(user.profile!.fullAudit).toBe(false)
+  })
+
   it('user1 sent friend invite to user2', async () => {
     expect(user.profile!.sortedFriends.length).toBe(0)
     expect(user2.profile!.sortedFriends.length).toBe(0)

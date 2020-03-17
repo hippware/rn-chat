@@ -33,7 +33,7 @@ const options = {
 }
 
 const LocationDebug = observer(() => {
-  const {configOptions, setBackgroundConfig, emailLog, uploadLog} = useLocationStore()
+  const {configOptions, setBackgroundConfig, uploadLog} = useLocationStore()
   const [uploadStatusText, setUploadStatusText] = useState('')
 
   return (
@@ -78,17 +78,6 @@ const LocationDebug = observer(() => {
             {uploadStatusText}
           </RText>
         )}
-        <TouchableOpacity
-          // Calling emailLog with empty string seems to work
-          onPress={() => {
-            emailLog('')
-          }}
-          style={styles.button}
-        >
-          <RText size={20} color={colors.WHITE}>
-            Email log
-          </RText>
-        </TouchableOpacity>
       </KeyboardAwareScrollView>
     </Screen>
   )
