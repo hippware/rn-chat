@@ -446,7 +446,7 @@ PODS:
     - React
   - RNReanimated (1.7.0):
     - React
-  - RNScreens (2.0.0-alpha.3):
+  - RNScreens (2.3.0):
     - React
   - RSKImageCropper (2.2.3)
   - SSZipArchive (2.2.2)
@@ -759,7 +759,7 @@ SPEC CHECKSUMS:
   RNPermissions: 2f74237e97b08beda01e914301e12524ddddf5b8
   RNPureJwt: b9e795e38e2b6808d3b8934ce413a508e2f76863
   RNReanimated: 031fe8d9ea93c2bd689a40f05320ef9d96f74d7f
-  RNScreens: 402a99b0a27c0c32f079cec12d3ccbd35e20cd7f
+  RNScreens: 03bf608b92ac0acf323f47d8f5b63a8f829340c8
   RSKImageCropper: a446db0e8444a036b34f3c43db01b2373baa4b2a
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b

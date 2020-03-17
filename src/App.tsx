@@ -10,6 +10,10 @@ import ErrorHandler from './components/common/ErrorHandler'
 import {bugsnagNotify} from 'src/utils/bugsnagConfig'
 import DeviceInfo from 'react-native-device-info'
 
+// Before rendering any navigation stack
+import {enableScreens} from 'react-native-screens'
+enableScreens()
+
 const App = () => {
   const [store, setStore] = useState<any>(null)
 

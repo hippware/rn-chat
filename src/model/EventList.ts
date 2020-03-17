@@ -13,7 +13,6 @@ import {PaginableLoadType} from '../store/Transport'
 import {waitFor} from '../utils/utils'
 import {EventLocationShare, EventLocationShareType} from './EventLocationShare'
 import {EventLocationShareEnd} from './EventLocationShareEnd'
-import {EventLocationShareNearbyStart} from './EventLocationShareNearbyStart'
 import {EventLocationShareNearbyEnd} from './EventLocationShareNearbyEnd'
 import {EventUserBeFriend, EventUserBeFriendType} from './EventUserBefriend'
 
@@ -34,7 +33,6 @@ export const EventEntity = types.union(
   EventFriendInvite,
   EventBotInvite,
   EventLocationShare,
-  EventLocationShareNearbyStart,
   EventLocationShareNearbyEnd,
   EventLocationShareEnd,
   EventUserBeFriend

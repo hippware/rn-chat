@@ -10,7 +10,7 @@ import {
 } from 'mobx-state-tree'
 import {Profile, ProfilePaginableList, IProfilePartial} from './Profile'
 import {FileRef} from './File'
-import {Location, ILocation} from './Location'
+import {Location} from './Location'
 import {BotPostPaginableList, BotPost, IBotPost} from './BotPost'
 import {Address} from './Address'
 import * as utils from '../utils/utils'
@@ -32,7 +32,7 @@ export const Bot = types
     Loadable,
     createUploadable('image', (self: any) => `redirect:${self.service.host}/bot/${self.id}`),
     createUpdatable((self, data) =>
-      self.service._updateBot({...getSnapshot(self), isNew: self.isNew, ...data}, self.userLocation)
+      self.service._updateBot({...getSnapshot(self), isNew: self.isNew, ...data})
     ),
     types.model({
       id: types.identifier,
@@ -61,15 +61,11 @@ export const Bot = types
   .volatile(() => ({
     isNew: false,
     loading: false,
-    userLocation: types.maybeNull(Location),
   }))
   .named('Bot')
   .actions(self => {
     const superLoad = self.load
     return {
-      setUserLocation: (location: any) => {
-        self.userLocation = location
-      },
       setError: (value: string) => {
         self.error = value
         self.loading = false
@@ -94,9 +90,9 @@ export const Bot = types
           self.totalItems -= 1
         }
       }) as (postId: string) => Promise<void>,
-      acceptInvitation: flow(function*(userLocation: ILocation) {
+      acceptInvitation: flow(function*() {
         if (self.invitation) {
-          yield self.service._acceptBotInvitation(self.invitation.id, userLocation)
+          yield self.service._acceptBotInvitation(self.invitation.id)
           self.invitation.accepted = true
           self.isSubscribed = true
           self.service.profile!.subscribedBots.addToTop(self)

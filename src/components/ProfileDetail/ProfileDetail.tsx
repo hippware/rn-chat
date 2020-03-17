@@ -15,6 +15,7 @@ import {Actions} from 'react-native-router-flux'
 import LocationSwitchPanel from './LocationSwitchPanel'
 import {useAppState} from 'react-native-hooks'
 import TimeAgo from '../common/TimeAgo'
+import {FriendShareTypeEnum} from '../../model/Profile'
 
 type Props = {
   item: string
@@ -165,7 +166,9 @@ const InfoPills = observer(({profile}: {profile: IProfile}) =>
       )}
     </View>
   ) : profile.isOwn ? null : (
-    <Pill solidColor="rgb(155,155,155)">Not Sharing Location</Pill>
+    <Pill solidColor="rgb(155,155,155)">
+      {profile.shareType === FriendShareTypeEnum.NEARBY ? 'Not Nearby' : 'Not Sharing Location'}
+    </Pill>
   )
 )
 const unreadCounter = require('../../../images/unreadBG.png')

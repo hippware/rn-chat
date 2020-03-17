@@ -1,12 +1,11 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {TouchableOpacity, Image, Alert, ViewStyle} from 'react-native'
 import {Actions} from 'react-native-router-flux'
 import ActionSheet from 'react-native-actionsheet'
-import {autorun} from 'mobx'
 import {IBot} from 'src/wocky'
 import {isAlive} from 'mobx-state-tree'
 import alert from '../../utils/alert'
-import {useWocky, useLocationStore} from 'src/utils/injectors'
+import {useWocky} from 'src/utils/injectors'
 import {observer} from 'mobx-react'
 
 type Props = {
@@ -19,20 +18,7 @@ const BotButtons = observer((props: Props) => {
   const {bot, style} = props
   let actionSheet: any
 
-  const {connected, removeBot} = useWocky()
-  const {alwaysOn} = useLocationStore()
-
-  useEffect(() => {
-    const handler = autorun(() => {
-      if (connected && bot.isSubscribed) {
-        if (!alwaysOn) {
-          Actions.geofenceWarning()
-          bot.unsubscribe()
-        }
-      }
-    })
-    return handler
-  }, [])
+  const {removeBot} = useWocky()
 
   function getActions() {
     if (bot!.owner!.isOwn) {

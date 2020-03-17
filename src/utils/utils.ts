@@ -11,7 +11,6 @@ import {ILocationSnapshot} from '../model/Location'
 import {IMessageIn} from '../model/Message'
 import {IEventLocationShareEndData} from '../model/EventLocationShareEnd'
 import {IEventLocationShareData} from '../model/EventLocationShare'
-import {IEventLocationShareNearbyStartData} from '../model/EventLocationShareNearbyStart'
 import {IEventLocationShareNearbyEndData} from '../model/EventLocationShareNearbyEnd'
 import {IEventUserBeFriendData} from '../model/EventUserBefriend'
 
@@ -487,13 +486,6 @@ export function convertNotification(edge: any): IEventData | {deletedId: string}
         id,
       }
       return locationShareNotification
-    case 'LocationShareNearbyStartNotification':
-      const locationShareNearbyStartNotification: IEventLocationShareNearbyStartData = {
-        time,
-        sharedNearbyWith: convertProfile({...data.user, _accessedAt: time}),
-        id,
-      }
-      return locationShareNearbyStartNotification
     case 'LocationShareNearbyEndNotification':
       const locationShareNearbyEndNotification: IEventLocationShareNearbyEndData = {
         time,

@@ -31,7 +31,6 @@ import LocationDebug from './LocationDebug'
 import BottomMenu from './BottomMenu'
 import DebugScreen from './DebugScreen'
 import DebugOptionsScreen from './DebugOptionsScreen'
-import LocationGeofenceWarning from './modals/LocationGeofenceWarning'
 import LocationWarning from './modals/LocationWarning'
 import MotionWarning from './modals/MotionWarning'
 import SharePresencePrimer from './modals/SharePresencePrimer'
@@ -248,7 +247,6 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
             <Scene key="reload" hideNavBar type="replace" component={Launch} />
             <Scene key="locationWarning" component={LocationWarning} />
             <Scene key="motionWarning" component={MotionWarning} />
-            <Scene key="geofenceWarning" component={LocationGeofenceWarning} />
             <Scene key="sharePresencePrimer" component={SharePresencePrimer} />
             <Scene key="invisibleExpirationSelector" component={InvisibleExpirationSelector} />
             <Scene key="locationSettingsModal" component={LocationSettingsModal} />
