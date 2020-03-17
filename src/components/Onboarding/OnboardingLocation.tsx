@@ -24,8 +24,7 @@ const OnboardingLocation = ({onPress}: Props) => (
 
     <View style={{width: '70%', marginBottom: 67 * s}}>
       <RText style={styles.onboardingSubtext}>
-        With '<RText style={{fontSize: 19, color: '#fe5c6c'}}>Always Allow</RText>' you won’t miss
-        out on relevant location notifications.
+        {`Don’t miss out on relevant\r\nlocation notifications by allowing\r\nlocation access.`}
       </RText>
     </View>
 
@@ -39,7 +38,7 @@ const OnboardingLocation = ({onPress}: Props) => (
 
     <GradientButton isPink style={{height: 50, width: '80%', borderRadius: 4}} onPress={onPress}>
       <RText color={WHITE} size={18.5}>
-        Always Allow Location
+        Allow Location Access
       </RText>
     </GradientButton>
   </View>

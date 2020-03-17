@@ -11,7 +11,6 @@ import {
 import {inject} from 'mobx-react'
 
 import {colors} from '../../constants'
-import HeaderLocationOverlay from './HeaderLocationOverlay'
 import ActiveBannerPlaceholder from './ActiveBannerPlaceholder'
 import {IWocky} from 'src/wocky'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
@@ -119,7 +118,6 @@ const HomeBanner = inject(
             style={{paddingLeft: 8 * k}}
           />
           {!wocky!.connected && <View style={styles.overlay} />}
-          <HeaderLocationOverlay />
           <InvisibleModeOverlay />
         </View>
         {navStore!.scene !== 'botCompose' && !homeStore!.fullScreenMode && (
