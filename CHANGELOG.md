@@ -5,7 +5,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Update: react-native-screens (PR #4892)
+  * @jest/reporters, @types/jest (PR #4914)
 * Revert "Post common graphql errors instead of throwing." (PR #4911)
+* (Incomplete) Sharing nearby not working properly (#4905, PR #4912)
+* Prevent embedded location for bot operations if invisible (PR #4909)
 
 # 4.41.0 - 2020 Mar 12
 
