@@ -11,6 +11,7 @@ import moment from 'moment'
 import {Address} from './Address'
 import {when} from 'mobx'
 import _ from 'lodash'
+import validate from 'validate.js'
 
 export enum FriendShareTypeEnum {
   ALWAYS = 'ALWAYS',
@@ -29,6 +30,54 @@ export const FriendShareConfig = types.model({
 // export const DefaultFriendShareConfig = {nearbyCooldown: 100, nearbyDistance: 500}
 
 export interface IFriendShareConfig extends SnapshotIn<typeof FriendShareConfig> {}
+
+// eslint-disable-next-line
+const isAlphabet = '^\\pL[ 0-9`\'"\u0060\u00B4\u2018\u2019\u201C\u201D\\pL]*[\\pL0-9]?$'
+
+const profileConstraints = {
+  handle: {
+    length: {
+      minimum: 3,
+      maximum: 16,
+      message: 'must be 3 - 16 characters',
+    },
+    format: {
+      pattern: /\w+/,
+      message: 'can only contain alphanumeric characters and _',
+    },
+    // this validator set in SearchStore.js
+    usernameUniqueValidator: true,
+  },
+  firstName: {
+    format: {
+      pattern: isAlphabet,
+      message: 'is invalid',
+    },
+    length: {
+      minimum: 1,
+      maximum: 32,
+      message: 'must be 1 - 32 characters',
+    },
+  },
+  lastName: {
+    format: {
+      pattern: isAlphabet,
+      message: 'is invalid',
+    },
+    length: {
+      minimum: 1,
+      maximum: 32,
+      message: 'must be 1 - 32 characters',
+    },
+  },
+  email: {
+    email: true,
+    length: {
+      maximum: 254,
+      message: 'must be less than 254 characters',
+    },
+  },
+}
 
 export const Profile = types
   .compose(
@@ -115,6 +164,7 @@ export const Profile = types
   }))
   .extend(self => {
     const superLoad = self.load
+    let errors = ''
     return {
       actions: {
         load({avatar, shareType, ownShareType, ...data}: any) {
@@ -134,6 +184,13 @@ export const Profile = types
             self.statusUpdatedAt = data.statusUpdatedAt
           }
         },
+        validate: flow(function*() {
+          try {
+            yield validate.async(self, profileConstraints)
+          } catch (e) {
+            errors = e
+          }
+        }),
         invite: flow(function*(shareType: FriendShareTypeEnum = FriendShareTypeEnum.DISABLED) {
           yield waitFor(() => self.connected)
           self.receivedInvite()
@@ -222,6 +279,12 @@ export const Profile = types
         },
       },
       views: {
+        get errors() {
+          return errors
+        },
+        get isValid(): boolean {
+          return !errors
+        },
         get isOwn(): boolean {
           const ownProfile = self.service && self.service.profile
           return ownProfile && self.id === ownProfile.id
