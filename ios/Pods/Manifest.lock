@@ -11,7 +11,7 @@ PODS:
   - CocoaLumberjack (3.5.3):
     - CocoaLumberjack/Core (= 3.5.3)
   - CocoaLumberjack/Core (3.5.3)
-  - CodePush (6.1.0):
+  - CodePush (6.1.1):
     - Base64 (~> 1.1)
     - JWT (~> 3.0.0-beta.7)
     - React
@@ -157,19 +157,19 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
-  - Permission-Camera (2.0.9):
+  - Permission-Camera (2.0.10):
     - RNPermissions
-  - Permission-Contacts (2.0.9):
+  - Permission-Contacts (2.0.10):
     - RNPermissions
-  - Permission-LocationAlways (2.0.9):
+  - Permission-LocationAlways (2.0.10):
     - RNPermissions
-  - Permission-LocationWhenInUse (2.0.9):
+  - Permission-LocationWhenInUse (2.0.10):
     - RNPermissions
-  - Permission-Motion (2.0.9):
+  - Permission-Motion (2.0.10):
     - RNPermissions
-  - Permission-Notifications (2.0.9):
+  - Permission-Notifications (2.0.10):
     - RNPermissions
-  - Permission-PhotoLibrary (2.0.9):
+  - Permission-PhotoLibrary (2.0.10):
     - RNPermissions
   - RCTRequired (0.61.5)
   - RCTTypeSafety (0.61.5):
@@ -338,7 +338,7 @@ PODS:
     - React
   - react-native-config (0.12.0):
     - React
-  - react-native-contacts (5.0.7):
+  - react-native-contacts (5.1.0):
     - React
   - react-native-fbsdk (1.1.2):
     - React
@@ -365,7 +365,7 @@ PODS:
   - react-native-mixpanel (1.1.14):
     - Mixpanel (~> 3.5.0)
     - React
-  - react-native-netinfo (5.6.1):
+  - react-native-netinfo (5.6.2):
     - React
   - react-native-splash-screen (3.2.0):
     - React
@@ -437,9 +437,9 @@ PODS:
     - React-Core
     - React-RCTImage
     - RSKImageCropper
-  - RNLocalize (1.3.3):
+  - RNLocalize (1.3.4):
     - React
-  - RNPermissions (2.0.9):
+  - RNPermissions (2.0.10):
     - React
   - RNPureJwt (2.1.1):
     - JWT (= 3.0.0-beta.11)
@@ -679,7 +679,7 @@ SPEC CHECKSUMS:
   BugsnagReactNative: 76ba231ece009a6fad369f18d89779ab75cc1c7d
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   CocoaLumberjack: 2f44e60eb91c176d471fdba43b9e3eae6a721947
-  CodePush: 4168faf8315b3629f047929b3c161f64c24861be
+  CodePush: bb7e03266a59b81c45d67f518dd5eb30aeb09b1e
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
@@ -710,13 +710,13 @@ SPEC CHECKSUMS:
   JWT: 05028b9624591bba9681bb57df2c5f95fa258bad
   Mixpanel: 399997670f5452de026449f9e9ecd52eccbb9ff7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
-  Permission-Camera: 8fe4753b02396489b11c5089e4f57bab7fe1ef42
-  Permission-Contacts: 73d99eab3d1a397a2cd196ee12541548b9a7b9bc
-  Permission-LocationAlways: 8ecde136071ff169dc9f3607641dc40ae3ad7c02
-  Permission-LocationWhenInUse: 9133db2ae6ce48da6ca513ec44a24ccce613fe4f
-  Permission-Motion: 1f956a97407910e84f41f683f777ea910606d2f2
-  Permission-Notifications: 1e03f5c43612ac4f9cdcaf6504695fc4e15f33d9
-  Permission-PhotoLibrary: 42d41b53adefcfa94f42fb628f143d97136120bd
+  Permission-Camera: a8f6007d17b02ed8a2d6bac1c37c2fd5df9b4e8a
+  Permission-Contacts: ac39cd8b11b8931482bf68fc3fa08dbd7ece909d
+  Permission-LocationAlways: 738e3b24333d52c87361804bb0a1641de014c405
+  Permission-LocationWhenInUse: 4a2764d2efe09a1f6c7a00dfbbb863149240311a
+  Permission-Motion: 6d251146daf1102ebe143a2618adc18946353ad2
+  Permission-Notifications: c9eb3a2da68dc0f37a8dc67d37bd28d150c5041d
+  Permission-PhotoLibrary: e59a7a687e002e8c8c46946c26520934ba85a688
   RCTRequired: b153add4da6e7dbc44aebf93f3cf4fcae392ddf1
   RCTTypeSafety: 9aa1b91d7f9310fc6eadc3cf95126ffe818af320
   React: b6a59ef847b2b40bb6e0180a97d0ca716969ac78
@@ -728,13 +728,13 @@ SPEC CHECKSUMS:
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
   react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
   react-native-config: f2c2ae45625a068c35681a16b9bfb1ca58b0adc7
-  react-native-contacts: a30bebe23ddeda7c34bf97cfa5f952201efc5329
+  react-native-contacts: be6cde1ffc9c0196fbb57d987b9d40f12b85989c
   react-native-fbsdk: c35d42169e64aaf66f01713c1e18d0674f7f6519
   react-native-geolocation: a7b94614afbd5fd8350e0233a2025c8228fc8041
   react-native-google-maps: 2e2e697dab576abd5809d78cd74e775865b62bf7
   react-native-maps: 6e499eee4eabf422ba8b6f94e993cc768bf35153
   react-native-mixpanel: 37a6602a70bc6ff835d506b6d0274b75edcec4da
-  react-native-netinfo: fa42683301345997e876760ba2be86f06148baa5
+  react-native-netinfo: 73303369946c2487c600418961bfdc87748b832f
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
   React-RCTAnimation: 791a87558389c80908ed06cc5dfc5e7920dfa360
@@ -755,8 +755,8 @@ SPEC CHECKSUMS:
   RNFS: a8fbe7060fa49157d819466404794ad9c58e58cf
   RNGestureHandler: dde546180bf24af0b5f737c8ad04b6f3fa51609a
   RNImageCropPicker: cf129d17e042ce3e96fb9ada967c28f21f977c82
-  RNLocalize: a734b53c45e77acd3ffb78b92e63bb4d6cd13257
-  RNPermissions: 2f74237e97b08beda01e914301e12524ddddf5b8
+  RNLocalize: 215c419a17d7585eb7a63c748ebfd042e0cb2c3d
+  RNPermissions: 1008d3511fee0e25739cf81c4af0d1b2248f1053
   RNPureJwt: b9e795e38e2b6808d3b8934ce413a508e2f76863
   RNReanimated: 031fe8d9ea93c2bd689a40f05320ef9d96f74d7f
   RNScreens: 03bf608b92ac0acf323f47d8f5b63a8f829340c8
