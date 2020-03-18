@@ -5,7 +5,7 @@
 
     ]
   },
-  "version": "2.0.9",
+  "version": "2.0.10",
   "license": "MIT",
   "summary": "An unified permissions API for React Native on iOS and Android",
   "authors": "Mathieu Acthernoene <zoontek@gmail.com>",
@@ -17,7 +17,7 @@
   "requires_arc": true,
   "source": {
     "git": "https://github.com/react-native-community/react-native-permissions.git",
-    "tag": "2.0.9"
+    "tag": "2.0.10"
   },
   "source_files": "Motion/*.{h,m}"
 }
