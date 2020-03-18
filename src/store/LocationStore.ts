@@ -126,7 +126,9 @@ const LocationStore = types
         disableLocationAuthorizationAlert: true,
       } as any
 
-      if (!settings.configurableLocationSettings) {
+      if (settings.configurableLocationSettings) {
+        config.logLevel = BackgroundGeolocation.LOG_LEVEL_VERBOSE
+      } else {
         config.distanceFilter = 10
       }
 
@@ -242,9 +244,10 @@ const LocationStore = types
 
     function setLogVerbose(verbose: boolean) {
       return BackgroundGeolocation.setConfig({
-        logLevel: verbose
-          ? BackgroundGeolocation.LOG_LEVEL_VERBOSE
-          : BackgroundGeolocation.LOG_LEVEL_OFF,
+        logLevel:
+          settings.configurableLocationSettings || verbose
+            ? BackgroundGeolocation.LOG_LEVEL_VERBOSE
+            : BackgroundGeolocation.LOG_LEVEL_OFF,
       })
     }
 
