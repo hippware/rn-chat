@@ -12,6 +12,7 @@ const DebugScreen = inject('store')(
     <View style={{flex: 1, padding: 40}}>
       <ScreenLink onPress={Actions.codePush}>GO TO CODEPUSH</ScreenLink>
       <ScreenLink onPress={Actions.locationDebug}>GO TO LOCATION DEBUG</ScreenLink>
+      <ScreenLink onPress={Actions.batteryOptimizationDebug}>BATTERY OPTIMIZATION DEBUG</ScreenLink>
       <ScreenLink
         onPress={async () => {
           // reset nav to 'reload' screen while resetting cache (prevent errors from screens/components listening to MST observables)
