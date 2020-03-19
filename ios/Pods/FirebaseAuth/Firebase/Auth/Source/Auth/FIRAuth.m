@@ -29,6 +29,7 @@
 #import <FirebaseCore/FIRLogger.h>
 #import <FirebaseCore/FIROptions.h>
 #import <GoogleUtilities/GULAppDelegateSwizzler.h>
+#import <GoogleUtilities/GULSceneDelegateSwizzler.h>
 #import <GoogleUtilities/GULAppEnvironmentUtil.h>
 
 #import "FIREmailPasswordAuthCredential.h"
@@ -151,6 +152,18 @@ static NSString *const kRecoverEmailRequestType = @"RECOVER_EMAIL";
 */
 static NSString *const kEmailLinkSignInRequestType = @"EMAIL_SIGNIN";
 
+/** @var kVerifyAndChangeEmailRequestType
+    @brief The action code type value for verifing and changing email in the check action code
+           response.
+ */
+static NSString *const kVerifyAndChangeEmailRequestType = @"VERIFY_AND_CHANGE_EMAIL";
+
+/** @var kRevertSecondFactorAdditionRequestType
+    @brief The action code type value for reverting second factor addition in the check action code
+           response.
+ */
+static NSString *const kRevertSecondFactorAdditionRequestType = @"REVERT_SECOND_FACTOR_ADDITION";
+
 /** @var kMissingPasswordReason
     @brief The reason why the @c FIRAuthErrorCodeWeakPassword error is thrown.
     @remarks This error message will be localized in the future.
@@ -167,25 +180,42 @@ static NSMutableDictionary *gKeychainServiceNameForAppName;
 
 #pragma mark - FIRActionCodeInfo
 
-@implementation FIRActionCodeInfo {
-  /** @var _email
-      @brief The email address to which the code was sent. The new email address in the case of
-          FIRActionCodeOperationRecoverEmail.
-   */
-  NSString *_email;
+@interface FIRActionCodeInfo ()
 
-  /** @var _fromEmail
-      @brief The current email address in the case of FIRActionCodeOperationRecoverEmail.
-   */
-  NSString *_fromEmail;
-}
+/**
+    @brief The operation being performed.
+ */
+@property(nonatomic, readwrite) FIRActionCodeOperation operation;
 
-- (NSString *)dataForKey:(FIRActionDataKey)key{
+/** @property email
+    @brief The email address to which the code was sent. The new email address in the case of
+        FIRActionCodeOperationRecoverEmail.
+ */
+@property(nonatomic, nullable, readwrite, copy) NSString *email;
+
+/** @property previousEmail
+    @brief The current email address in the case of FIRActionCodeOperationRecoverEmail.
+ */
+@property(nonatomic, nullable, readwrite, copy) NSString *previousEmail;
+
+#if TARGET_OS_IOS
+/** @property multiFactorInfo
+    @brief The MultiFactorInfo object of the second factor to be reverted in case of
+        FIRActionCodeMultiFactorInfoKey.
+ */
+@property(nonatomic, nullable, readwrite) FIRMultiFactorInfo *multiFactorInfo;
+#endif
+
+@end
+
+@implementation FIRActionCodeInfo
+
+- (NSString *)dataForKey:(FIRActionDataKey)key {
   switch (key) {
     case FIRActionCodeEmailKey:
-      return _email;
+      return self.email;
     case FIRActionCodeFromEmailKey:
-      return _fromEmail;
+      return self.previousEmail;
   }
 }
 
@@ -197,7 +227,7 @@ static NSMutableDictionary *gKeychainServiceNameForAppName;
     _operation = operation;
     if (newEmail) {
       _email = [newEmail copy];
-      _fromEmail = [email copy];
+      _previousEmail = [email copy];
     } else {
       _email = [email copy];
     }
@@ -223,7 +253,88 @@ static NSMutableDictionary *gKeychainServiceNameForAppName;
   if ([requestType isEqualToString:kEmailLinkSignInRequestType]) {
     return FIRActionCodeOperationEmailLink;
   }
+  if ([requestType isEqualToString:kVerifyAndChangeEmailRequestType]) {
+    return FIRActionCodeOperationVerifyAndChangeEmail;
+  }
+  if ([requestType isEqualToString:kRevertSecondFactorAdditionRequestType]) {
+    return FIRActionCodeOperationRevertSecondFactorAddition;
+  }
   return FIRActionCodeOperationUnknown;
+}
+
+@end
+
+#pragma mark - FIRActionCodeURL
+
+@implementation FIRActionCodeURL
+
+/** @fn FIRAuthParseURL:NSString
+    @brief Parses an incoming URL into all available query items.
+    @param urlString The url to be parsed.
+    @return A dictionary of available query items in the target URL.
+ */
++ (NSDictionary<NSString *, NSString *> *)parseURL:(NSString *)urlString {
+  NSString *linkURL = [NSURLComponents componentsWithString:urlString].query;
+  if (!linkURL) {
+    return @{};
+  }
+  NSArray<NSString *> *URLComponents = [linkURL componentsSeparatedByString:@"&"];
+  NSMutableDictionary<NSString *, NSString *> *queryItems =
+      [[NSMutableDictionary alloc] initWithCapacity:URLComponents.count];
+  for (NSString *component in URLComponents) {
+    NSRange equalRange = [component rangeOfString:@"="];
+    if (equalRange.location != NSNotFound) {
+      NSString *queryItemKey =
+          [[component substringToIndex:equalRange.location] stringByRemovingPercentEncoding];
+      NSString *queryItemValue =
+          [[component substringFromIndex:equalRange.location + 1] stringByRemovingPercentEncoding];
+      if (queryItemKey && queryItemValue) {
+        queryItems[queryItemKey] = queryItemValue;
+      }
+    }
+  }
+  return queryItems;
+}
+
++ (nullable instancetype)actionCodeURLWithLink:(NSString *)link {
+  NSDictionary<NSString *, NSString *> *queryItems = [FIRActionCodeURL parseURL:link];
+  if (!queryItems.count) {
+    NSURLComponents *urlComponents = [NSURLComponents componentsWithString:link];
+    queryItems = [FIRActionCodeURL parseURL:urlComponents.query];
+  }
+  if (!queryItems.count) {
+    return nil;
+  }
+  NSString *APIKey = queryItems[@"apiKey"];
+  NSString *actionCode = queryItems[@"oobCode"];
+  NSString *continueURLString = queryItems[@"continueUrl"];
+  NSString *languageCode = queryItems[@"languageCode"];
+  NSString *mode = queryItems[@"mode"];
+  NSString *tenantID = queryItems[@"tenantID"];
+  return [[FIRActionCodeURL alloc] initWithAPIKey:APIKey
+                                       actionCode:actionCode
+                                continueURLString:continueURLString
+                                     languageCode:languageCode
+                                             mode:mode
+                                         tenantID:tenantID];
+}
+
+- (nullable instancetype)initWithAPIKey:(NSString *)APIKey
+                             actionCode:(NSString *)actionCode
+                      continueURLString:(NSString *)continueURLString
+                           languageCode:(NSString *)languageCode
+                                   mode:(NSString *)mode
+                               tenantID:(NSString *)tenantID {
+
+  self = [super init];
+  if (self) {
+    _APIKey = APIKey;
+    _operation = [FIRActionCodeInfo actionCodeOperationForRequestType:mode];
+    _code = actionCode;
+    _continueURL = [NSURL URLWithString:continueURLString];
+    _languageCode = languageCode;
+  }
+  return self;
 }
 
 @end
@@ -231,7 +342,11 @@ static NSMutableDictionary *gKeychainServiceNameForAppName;
 #pragma mark - FIRAuth
 
 #if TARGET_OS_IOS
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000
+@interface FIRAuth () <UIApplicationDelegate, UISceneDelegate, FIRLibrary, FIRComponentLifecycleMaintainer>
+#else
 @interface FIRAuth () <UIApplicationDelegate, FIRLibrary, FIRComponentLifecycleMaintainer>
+#endif
 #else
 @interface FIRAuth () <FIRLibrary, FIRComponentLifecycleMaintainer>
 #endif
@@ -380,7 +495,8 @@ static NSMutableDictionary *gKeychainServiceNameForAppName;
     UIApplication *application = [applicationClass sharedApplication];
 
     [GULAppDelegateSwizzler proxyOriginalDelegateIncludingAPNSMethods];
-    #endif
+    [GULSceneDelegateSwizzler proxyOriginalSceneDelegate];
+    #endif // TARGET_OS_IOS
 
     // Continue with the rest of initialization in the work thread.
     __weak FIRAuth *weakSelf = self;
@@ -435,7 +551,12 @@ static NSMutableDictionary *gKeychainServiceNameForAppName;
           appCredentialManager:strongSelf->_appCredentialManager];
 
       [GULAppDelegateSwizzler registerAppDelegateInterceptor:strongSelf];
-      #endif
+      #if ((TARGET_OS_IOS || TARGET_OS_TV) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= 130000))
+        if (@available(iOS 13, tvos 13, *)) {
+        [GULSceneDelegateSwizzler registerSceneDelegateInterceptor:strongSelf];
+      }
+      #endif // ((TARGET_OS_IOS || TARGET_OS_TV) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= 130000))
+      #endif // TARGET_OS_IOS
     });
   }
   return self;
@@ -1052,7 +1173,7 @@ static NSMutableDictionary *gKeychainServiceNameForAppName;
         completion(nil, error);
         return;
       }
-      completion([info dataForKey:FIRActionCodeEmailKey], nil);
+      completion(info.email, nil);
     }
   }];
 }
@@ -1320,6 +1441,9 @@ static NSMutableDictionary *gKeychainServiceNameForAppName;
 }
 
 #if TARGET_OS_IOS
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-property-ivar"
+// The warning is ignored because we use the token manager to get the token, instead of using the ivar.
 - (nullable NSData *)APNSToken {
   __block NSData *result = nil;
   dispatch_sync(FIRAuthGlobalWorkQueue(), ^{
@@ -1327,6 +1451,7 @@ static NSMutableDictionary *gKeychainServiceNameForAppName;
   });
   return result;
 }
+#pragma clang diagnostic pop
 
 #pragma mark - UIApplicationDelegate
 
@@ -1387,7 +1512,17 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
   });
   return result;
 }
-#endif
+
+#pragma mark - UISceneDelegate
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000
+- (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts API_AVAILABLE(ios(13.0)) {
+  for (UIOpenURLContext *urlContext in URLContexts) {
+    NSURL *url = [urlContext URL];
+    [self canHandleURL:url];
+  }
+}
+#endif  // __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000
+#endif  // TARGET_OS_IOS
 
 #pragma mark - Internal Methods
 
@@ -1884,17 +2019,10 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
     return [[FIRAuth alloc] initWithApp:container.app];
   };
   FIRComponent *authInterop = [FIRComponent componentWithProtocol:@protocol(FIRAuthInterop)
+                                              instantiationTiming:FIRInstantiationTimingAlwaysEager
+                                                     dependencies:@[]
                                                     creationBlock:authCreationBlock];
   return @[authInterop];
-}
-
-#pragma mark - FIRCoreConfigurable
-
-+ (void)configureWithApp:(nonnull FIRApp *)app {
-  // TODO: Evaluate what actually needs to be configured here instead of initializing a full
-  // instance.
-  // Ensures the @c FIRAuth instance for a given app gets loaded as soon as the app is ready.
-  [FIRAuth authWithApp:app];
 }
 
 #pragma mark - FIRComponentLifecycleMaintainer

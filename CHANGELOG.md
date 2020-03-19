@@ -5,7 +5,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Update: react-native-screens (PR #4892)
-  * @jest/reporters, @types/jest (PR #4914)
+  * @jest/reporters, @types/jest (PR #4914), appcenter-cli (PR #4923)
+  * phoenix (PR #4927), libphonenumber-js (PR #4928)
+  * react-native-contacts, @react-native-community/netinfo
+  * react-native-code-push, react-native-permissions
+  * react-native-localize (PR #4935)
 * Revert "Post common graphql errors instead of throwing." (PR #4911)
 * Sharing nearby not working properly (#4905)
 * Prevent embedded location for bot operations if invisible (PR #4909)

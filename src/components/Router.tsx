@@ -28,6 +28,7 @@ import ReportBot, {ReportBotRightButton} from './report-modals/ReportBot'
 import SignIn from './SignIn'
 import VerifyCode from './VerifyCode'
 import LocationDebug from './LocationDebug'
+import BatteryOptimizationDebug from './BatteryOptimizationDebug'
 import BottomMenu from './BottomMenu'
 import DebugScreen from './DebugScreen'
 import DebugOptionsScreen from './DebugOptionsScreen'
@@ -237,6 +238,7 @@ const TinyRobotRouter = inject('wocky', 'locationStore', 'iconStore', 'analytics
                     <Scene key="locationDebug" component={LocationDebug} title="Location Debug" back />,
                     <Scene key="debugScreen" component={DebugScreen} title="Debug" back />,
                     <Scene key="codePush" component={CodePushScene} title="CodePush" back />,
+                    <Scene key="batteryOptimizationDebug" component={BatteryOptimizationDebug} title="Battery Optimization Debug" back />,
                   ]}
                   <Scene key="debugOptionsScreen" component={DebugOptionsScreen} title="Debug Options" navigationBarStyle={{paddingBottom: 20, borderBottomWidth:1}} back />
                 </Stack>

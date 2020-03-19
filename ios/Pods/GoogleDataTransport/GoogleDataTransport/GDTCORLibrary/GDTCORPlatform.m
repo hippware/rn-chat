@@ -17,7 +17,10 @@
 #import <GoogleDataTransport/GDTCORPlatform.h>
 
 #import <GoogleDataTransport/GDTCORAssert.h>
-#import <GoogleDataTransport/GDTCORRegistrar_Private.h>
+#import <GoogleDataTransport/GDTCORConsoleLogger.h>
+#import <GoogleDataTransport/GDTCORReachability.h>
+
+#import "GDTCORLibrary/Private/GDTCORRegistrar_Private.h"
 
 #ifdef GDTCOR_VERSION
 #define STR(x) STR_EXPAND(x)
@@ -37,13 +40,82 @@ NSString *const kGDTCORApplicationWillEnterForegroundNotification =
 
 NSString *const kGDTCORApplicationWillTerminateNotification =
     @"GDTCORApplicationWillTerminateNotification";
-
+#if !TARGET_OS_WATCH
 BOOL GDTCORReachabilityFlagsContainWWAN(SCNetworkReachabilityFlags flags) {
 #if TARGET_OS_IOS
   return (flags & kSCNetworkReachabilityFlagsIsWWAN) == kSCNetworkReachabilityFlagsIsWWAN;
 #else
   return NO;
 #endif  // TARGET_OS_IOS
+}
+#endif  // !TARGET_OS_WATCH
+
+GDTCORNetworkType GDTCORNetworkTypeMessage() {
+#if !TARGET_OS_WATCH
+  SCNetworkReachabilityFlags reachabilityFlags = [GDTCORReachability currentFlags];
+  if ((reachabilityFlags & kSCNetworkReachabilityFlagsReachable) ==
+      kSCNetworkReachabilityFlagsReachable) {
+    if (GDTCORReachabilityFlagsContainWWAN(reachabilityFlags)) {
+      return GDTCORNetworkTypeMobile;
+    } else {
+      return GDTCORNetworkTypeWIFI;
+    }
+  }
+#endif
+  return GDTCORNetworkTypeUNKNOWN;
+}
+
+GDTCORNetworkMobileSubtype GDTCORNetworkMobileSubTypeMessage() {
+#if TARGET_OS_IOS
+  static NSDictionary<NSString *, NSNumber *> *CTRadioAccessTechnologyToNetworkSubTypeMessage;
+  static CTTelephonyNetworkInfo *networkInfo;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    CTRadioAccessTechnologyToNetworkSubTypeMessage = @{
+      CTRadioAccessTechnologyGPRS : @(GDTCORNetworkMobileSubtypeGPRS),
+      CTRadioAccessTechnologyEdge : @(GDTCORNetworkMobileSubtypeEdge),
+      CTRadioAccessTechnologyWCDMA : @(GDTCORNetworkMobileSubtypeWCDMA),
+      CTRadioAccessTechnologyHSDPA : @(GDTCORNetworkMobileSubtypeHSDPA),
+      CTRadioAccessTechnologyHSUPA : @(GDTCORNetworkMobileSubtypeHSUPA),
+      CTRadioAccessTechnologyCDMA1x : @(GDTCORNetworkMobileSubtypeCDMA1x),
+      CTRadioAccessTechnologyCDMAEVDORev0 : @(GDTCORNetworkMobileSubtypeCDMAEVDORev0),
+      CTRadioAccessTechnologyCDMAEVDORevA : @(GDTCORNetworkMobileSubtypeCDMAEVDORevA),
+      CTRadioAccessTechnologyCDMAEVDORevB : @(GDTCORNetworkMobileSubtypeCDMAEVDORevB),
+      CTRadioAccessTechnologyeHRPD : @(GDTCORNetworkMobileSubtypeHRPD),
+      CTRadioAccessTechnologyLTE : @(GDTCORNetworkMobileSubtypeLTE),
+    };
+    networkInfo = [[CTTelephonyNetworkInfo alloc] init];
+  });
+  NSString *networkCurrentRadioAccessTechnology;
+#if TARGET_OS_MACCATALYST
+  NSDictionary<NSString *, NSString *> *networkCurrentRadioAccessTechnologyDict =
+      networkInfo.serviceCurrentRadioAccessTechnology;
+  if (networkCurrentRadioAccessTechnologyDict.count) {
+    networkCurrentRadioAccessTechnology = networkCurrentRadioAccessTechnologyDict.allValues[0];
+  }
+#else
+  if (@available(iOS 12.0, *)) {
+    NSDictionary<NSString *, NSString *> *networkCurrentRadioAccessTechnologyDict =
+        networkInfo.serviceCurrentRadioAccessTechnology;
+    if (networkCurrentRadioAccessTechnologyDict.count) {
+      // In iOS 12, multiple radio technologies can be captured. We prefer not particular radio
+      // tech to another, so we'll just return the first value in the dictionary.
+      networkCurrentRadioAccessTechnology = networkCurrentRadioAccessTechnologyDict.allValues[0];
+    }
+  } else {
+    networkCurrentRadioAccessTechnology = networkInfo.currentRadioAccessTechnology;
+  }
+#endif
+  if (networkCurrentRadioAccessTechnology) {
+    NSNumber *networkMobileSubtype =
+        CTRadioAccessTechnologyToNetworkSubTypeMessage[networkCurrentRadioAccessTechnology];
+    return networkMobileSubtype.intValue;
+  } else {
+    return GDTCORNetworkMobileSubtypeUNKNOWN;
+  }
+#else
+  return GDTCORNetworkMobileSubtypeUNKNOWN;
+#endif
 }
 
 @interface GDTCORApplication ()
@@ -58,6 +130,10 @@ BOOL GDTCORReachabilityFlagsContainWWAN(SCNetworkReachabilityFlags flags) {
 @implementation GDTCORApplication
 
 + (void)load {
+  GDTCORLogDebug(
+      "%@", @"GDT is initializing. Please note that if you quit the app via the "
+             "debugger and not through a lifecycle event, event data will remain on disk but "
+             "storage won't have a reference to them since the singleton wasn't saved to disk.");
 #if TARGET_OS_IOS || TARGET_OS_TV
   // If this asserts, please file a bug at https://github.com/firebase/firebase-ios-sdk/issues.
   GDTCORFatalAssert(
@@ -125,20 +201,29 @@ BOOL GDTCORReachabilityFlagsContainWWAN(SCNetworkReachabilityFlags flags) {
 
 - (GDTCORBackgroundIdentifier)beginBackgroundTaskWithName:(NSString *)name
                                         expirationHandler:(void (^)(void))handler {
-  return [[self sharedApplicationForBackgroundTask] beginBackgroundTaskWithName:name
-                                                              expirationHandler:handler];
+  GDTCORBackgroundIdentifier bgID =
+      [[self sharedApplicationForBackgroundTask] beginBackgroundTaskWithName:name
+                                                           expirationHandler:handler];
+#if !NDEBUG
+  if (bgID != GDTCORBackgroundIdentifierInvalid) {
+    GDTCORLogDebug("Creating background task with name:%@ bgID:%ld", name, (long)bgID);
+  }
+#endif  // !NDEBUG
+  return bgID;
 }
 
 - (void)endBackgroundTask:(GDTCORBackgroundIdentifier)bgID {
   if (bgID != GDTCORBackgroundIdentifierInvalid) {
+    GDTCORLogDebug("Ending background task with ID:%ld was successful", (long)bgID);
     [[self sharedApplicationForBackgroundTask] endBackgroundTask:bgID];
+    return;
   }
 }
 
 #pragma mark - App environment helpers
 
 - (BOOL)isAppExtension {
-#if TARGET_OS_IOS || TARGET_OS_TV
+#if TARGET_OS_IOS || TARGET_OS_TV || TARGET_OS_WATCH
   BOOL appExtension = [[[NSBundle mainBundle] bundlePath] hasSuffix:@".appex"];
   return appExtension;
 #elif TARGET_OS_OSX
@@ -174,6 +259,7 @@ BOOL GDTCORReachabilityFlagsContainWWAN(SCNetworkReachabilityFlags flags) {
   _isRunningInBackground = YES;
 
   NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
+  GDTCORLogDebug("%@", @"GDTCORPlatform is sending a notif that the app is backgrounding.");
   [notifCenter postNotificationName:kGDTCORApplicationDidEnterBackgroundNotification object:nil];
 }
 
@@ -181,11 +267,13 @@ BOOL GDTCORReachabilityFlagsContainWWAN(SCNetworkReachabilityFlags flags) {
   _isRunningInBackground = NO;
 
   NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
+  GDTCORLogDebug("%@", @"GDTCORPlatform is sending a notif that the app is foregrounding.");
   [notifCenter postNotificationName:kGDTCORApplicationWillEnterForegroundNotification object:nil];
 }
 
 - (void)iOSApplicationWillTerminate:(NSNotification *)notif {
   NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
+  GDTCORLogDebug("%@", @"GDTCORPlatform is sending a notif that the app is terminating.");
   [notifCenter postNotificationName:kGDTCORApplicationWillTerminateNotification object:nil];
 }
 #endif  // TARGET_OS_IOS || TARGET_OS_TV
@@ -195,6 +283,7 @@ BOOL GDTCORReachabilityFlagsContainWWAN(SCNetworkReachabilityFlags flags) {
 #if TARGET_OS_OSX
 - (void)macOSApplicationWillTerminate:(NSNotification *)notif {
   NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
+  GDTCORLogDebug("%@", @"GDTCORPlatform is sending a notif that the app is terminating.");
   [notifCenter postNotificationName:kGDTCORApplicationWillTerminateNotification object:nil];
 }
 #endif  // TARGET_OS_OSX
