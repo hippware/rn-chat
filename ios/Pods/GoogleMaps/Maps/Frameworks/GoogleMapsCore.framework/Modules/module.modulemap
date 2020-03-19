@@ -16,4 +16,5 @@ framework module GoogleMapsCore {
   link framework "QuartzCore"
   link framework "Security"
   link framework "SystemConfiguration"
+  link framework "UIKit"
 }

@@ -62,35 +62,33 @@ static NSString *const kNightType = @"Night";
   self.view = _mapView;
 }
 
-- (void)changeMapStyle:(UIBarButtonItem *)sender {
-  UIActionSheet *actionSheet = [[UIActionSheet alloc]
-               initWithTitle:@"Select map style"
-                    delegate:self
-           cancelButtonTitle:nil
-      destructiveButtonTitle:nil
-           otherButtonTitles:kRetroType, kGrayscaleType, kNightType, kNormalType, nil];
-  [actionSheet showFromBarButtonItem:sender animated:YES];
+- (UIAlertAction *_Nonnull)actionWithTitle:(nonnull NSString *)title
+                                     style:(nullable GMSMapStyle *)style {
+  __weak typeof(self) weakSelf = self;
+  return [UIAlertAction actionWithTitle:title
+                                  style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction *_Nonnull action) {
+                                  __strong typeof(self) strongSelf = weakSelf;
+                                  if (strongSelf) {
+                                    strongSelf->_mapView.mapStyle = style;
+                                  }
+                                }];
 }
 
-#pragma mark - UIActionSheetDelegate
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-  switch (buttonIndex) {
-    case 0:
-      _mapView.mapStyle = _retroStyle;
-      break;
-    case 1:
-      _mapView.mapStyle = _grayscaleStyle;
-      break;
-    case 2:
-      _mapView.mapStyle = _nightStyle;
-      break;
-    case 3:
-      _mapView.mapStyle = nil;
-      break;
-    default:
-      break;
-  }
+- (void)changeMapStyle:(UIBarButtonItem *)sender {
+  UIAlertController *alert =
+      [UIAlertController alertControllerWithTitle:@"Select map style"
+                                          message:nil
+                                   preferredStyle:UIAlertControllerStyleActionSheet];
+  [alert addAction:[self actionWithTitle:kRetroType style:_retroStyle]];
+  [alert addAction:[self actionWithTitle:kGrayscaleType style:_grayscaleStyle]];
+  [alert addAction:[self actionWithTitle:kNightType style:_nightStyle]];
+  [alert addAction:[self actionWithTitle:kNormalType style:nil]];
+  [alert addAction:[UIAlertAction actionWithTitle:@"Cancel"
+                                            style:UIAlertActionStyleCancel
+                                          handler:nil]];
+  alert.popoverPresentationController.barButtonItem = sender;
+  [self presentViewController:alert animated:YES completion:nil];
 }
 
 @end
