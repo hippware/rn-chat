@@ -3,19 +3,29 @@ import {Image, View, TextInputProperties, TouchableOpacity, Platform} from 'reac
 import {k} from './Global'
 import {colors} from '../constants'
 import {observer} from 'mobx-react'
-import {ValidateItem} from '../utils/formValidation'
 import {RText, RTextInput, Separator} from './common'
 import Cell from './Cell'
+import {IWocky} from 'src/wocky'
+import {inject} from 'mobx-react'
 
 interface IProps extends TextInputProperties {
   icon?: any
   label: string
-  store?: ValidateItem
+  name: string
+  wocky?: IWocky
   imageStyle?: any
 }
 
+@observer
+@inject('wocky')
 export class FormTextInput extends React.Component<IProps> {
   input: any
+  errorMessage: string = ''
+
+  constructor(props) {
+    super(props)
+    alert(props.wocky)
+  }
 
   focus = () => {
     this.input.focus()
@@ -26,7 +36,7 @@ export class FormTextInput extends React.Component<IProps> {
   }
 
   render() {
-    const {icon, label, store, imageStyle} = this.props
+    const {icon, label, value, name, imageStyle} = this.props
 
     return (
       <>
@@ -66,7 +76,7 @@ export class FormTextInput extends React.Component<IProps> {
             autoCorrect={false}
             {...this.props}
           />
-          {Platform.OS === 'android' && !!store && !!store!.value && store!.value.length > 0 && (
+          {Platform.OS === 'android' && value.length > 0 && (
             <TouchableOpacity
               onPress={() => {
                 if (store) store.value = ''

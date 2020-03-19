@@ -16,7 +16,6 @@ import Cell from './Cell'
 import {FormTextInput} from './FormTextInput'
 import {colors} from '../constants'
 import {RText, Separator} from './common'
-import {ValidatableProfile} from '../utils/formValidation'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {IWocky} from 'src/wocky'
 import {settings} from '../globals'
@@ -25,35 +24,18 @@ import Version from './Version'
 
 type Props = {
   wocky?: IWocky
-  profileValidationStore?: any
 }
 
-const MyAccount = inject(
-  'wocky',
-  'profileValidationStore'
-)(
-  observer(({wocky, profileValidationStore}: Props) => {
+const MyAccount = inject('wocky')(
+  observer(({wocky}: Props) => {
     const {profile} = wocky!
-
-    const [vProfile, setVProfile] = useState<ValidatableProfile | null>(null)
     const handle = useRef<FormTextInput>(null)
     const firstName = useRef<FormTextInput>(null)
     const lastName = useRef<FormTextInput>(null)
     const email = useRef<FormTextInput>(null)
     // const phone = useRef<FormTextInput>(null)
 
-    useEffect(() => {
-      if (profile) {
-        const vProf = new ValidatableProfile(profile)
-        setVProfile(vProf)
-        profileValidationStore.setProfile(vProf)
-
-        // set the "static" context
-        ;(MyAccount as any).profileValidationStore = profileValidationStore
-      }
-    }, [])
-
-    if (!profile || !vProfile) {
+    if (!profile) {
       // error('NULL PROFILE')
       return <View style={{flex: 1, backgroundColor: 'white'}} />
     }
@@ -73,7 +55,7 @@ const MyAccount = inject(
             <FormTextInput
               ref={handle}
               label="Username"
-              store={vProfile && vProfile.handle}
+              name="handle"
               autoCapitalize="none"
               icon={require('../../images/iconUsernameNew.png')}
               onSubmitEditing={() => firstName.current!.focus()}
