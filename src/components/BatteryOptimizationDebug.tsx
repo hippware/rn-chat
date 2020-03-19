@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import {observer} from 'mobx-react'
-import {StyleSheet, TouchableOpacity, View} from 'react-native'
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native'
 import {RText} from './common'
 import {colors} from '../constants'
-import Screen from './Screen'
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import BackgroundGeolocation from 'react-native-background-geolocation-android'
 
 const BatteryOptimizationDebugScreen = observer(() => {
@@ -38,90 +36,61 @@ const BatteryOptimizationDebugScreen = observer(() => {
   }, [])
 
   return (
-    <Screen style={{flex: 1, paddingVertical: 10, paddingHorizontal: 20}}>
-      <KeyboardAwareScrollView>
-        <View
-          style={{
-            borderBottomWidth: 1,
-            borderColor: colors.DARK_GREY,
-            paddingBottom: 20,
-            marginBottom: 20,
-          }}
-        >
-          <RText size={16} style={{}}>
-            {`isIgnoringBatteryOptimizations: ${isIgnoring}`}
-          </RText>
-        </View>
+    <ScrollView style={{flex: 1, paddingVertical: 10, paddingHorizontal: 20}}>
+      <View style={styles.pane}>
+        <RText size={16}>{`isIgnoringBatteryOptimizations: ${isIgnoring}`}</RText>
+      </View>
 
-        <View
-          style={{
-            borderBottomWidth: 1,
-            borderColor: colors.DARK_GREY,
-            paddingBottom: 20,
-            marginBottom: 20,
-          }}
-        >
-          <RText size={20} style={{marginBottom: 20}}>
-            Ignore Battery Optimizations Screen
-          </RText>
-          <RText
-            size={12}
-            style={{marginBottom: 20, padding: 10, borderWidth: 1, backgroundColor: colors.GREY}}
-          >
-            {JSON.stringify(IBORequest, null, 2)}
-          </RText>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              if (IBORequest.action) {
-                deviceSettings.show(IBORequest)
-              }
-            }}
-          >
+      <View style={styles.pane}>
+        <RText size={20} style={{marginBottom: 20}}>
+          Ignore Battery Optimizations Screen
+        </RText>
+        <RText size={12} style={styles.code}>
+          {JSON.stringify(IBORequest, null, 2)}
+        </RText>
+        {!!IBORequest.action && (
+          <TouchableOpacity style={styles.button} onPress={() => deviceSettings.show(IBORequest)}>
             <RText size={16} color={colors.WHITE}>
               Show
             </RText>
           </TouchableOpacity>
-        </View>
+        )}
+      </View>
 
-        <View
-          style={{
-            borderBottomWidth: 1,
-            borderColor: colors.DARK_GREY,
-            paddingBottom: 20,
-            marginBottom: 20,
-          }}
-        >
-          <RText size={20} style={{marginBottom: 20}}>
-            Power Manager Screen
-          </RText>
-          <RText
-            size={12}
-            style={{marginBottom: 20, padding: 10, borderWidth: 1, backgroundColor: colors.GREY}}
-          >
-            {JSON.stringify(PMRequest, null, 2)}
-          </RText>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              if (PMRequest.action) {
-                deviceSettings.show(PMRequest)
-              }
-            }}
-          >
+      <View style={styles.pane}>
+        <RText size={20} style={{marginBottom: 20}}>
+          Power Manager Screen
+        </RText>
+        <RText size={12} style={styles.code}>
+          {JSON.stringify(PMRequest, null, 2)}
+        </RText>
+        {!!PMRequest.action && (
+          <TouchableOpacity style={styles.button} onPress={() => deviceSettings.show(PMRequest)}>
             <RText size={16} color={colors.WHITE}>
               Show
             </RText>
           </TouchableOpacity>
-        </View>
-      </KeyboardAwareScrollView>
-    </Screen>
+        )}
+      </View>
+    </ScrollView>
   )
 })
 
 export default BatteryOptimizationDebugScreen
 
 const styles = StyleSheet.create({
+  pane: {
+    borderBottomWidth: 1,
+    borderColor: colors.DARK_GREY,
+    paddingBottom: 20,
+    marginBottom: 20,
+  },
+  code: {
+    marginBottom: 20,
+    padding: 10,
+    borderWidth: 1,
+    backgroundColor: colors.GREY,
+  },
   button: {
     backgroundColor: colors.PINK,
     padding: 5,
