@@ -3,7 +3,7 @@ import uuid from 'uuid/v1'
 import {IStore} from './store'
 import {Platform} from 'react-native'
 import {TRDeviceInfo} from '../utils/deviceInfoFetch'
-const jwt = require('react-native-pure-jwt').default
+import jsrsasign from 'jsrsasign'
 
 export type Credentials = {typ: string; sub: string; phone_number?: string}
 
@@ -48,9 +48,9 @@ export const AppInfo = types
       }
 
       // This passes in a fake decoy key. The 48th character has been changed.
-      return jwt.sign(payload, '0xszZmLxKWdYjvjXOxchnV+ttjVYkU1ieymigubkJZ9dqjnI7WPYLYqLhvC10TaH', {
-        alg: 'HS512',
-      })
+      const magicKey = 'CgKG3D0OfVBMh3JiJfQGkS0SyTrBaaGfrl1MozWnjesSuhVLnMTHDwyXDC/f2dtu'
+      const header = {alg: 'HS512', typ: 'JWT'}
+      return jsrsasign.jws.JWS.sign('HS512', header, payload, {utf8: magicKey})
     }),
   }))
 

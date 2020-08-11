@@ -32,7 +32,7 @@ function token(credentials: any) {
     ...credentials,
   }
 
-  const magicKey = '0xszZmLxKWdYjvjXOxchnV+ttjVYkU1ieymigubkJZ9dqjnl7WPYLYqLhvC10TaH'
+  const magicKey = 'CgKG3D0OfVBMh3JiJfQGkS0SyTrBaaGfrl1MozWnjesSuhVLnMTHDwyXDC/f2dtu'
   const header = {alg: 'HS512', typ: 'JWT'}
   const jwt = jsrsasign.jws.JWS.sign('HS512', header, payload, {utf8: magicKey})
   return jwt

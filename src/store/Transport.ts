@@ -1450,9 +1450,7 @@ export class Transport {
   }
 
   private makeSocket() {
-    const socketEndpoint = process.env.WOCKY_LOCAL
-      ? 'ws://localhost:8080/graphql'
-      : `wss://${this.host}/graphql`
+    const socketEndpoint = 'ws://3.14.14.222:4000/graphql'
 
     // uncomment to see all graphql messages!
     // process.env.WOCKY_VERBOSE = '1'

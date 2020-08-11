@@ -2,39 +2,35 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
-	<string>ca-app-pub-3940256099942544/2934735716</string>
-	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
-	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>548019610697-uhugcd91bvgpbbui93s57m14j97amt78.apps.googleusercontent.com</string>
+	<string>513608831264-rkm7vrg8g0q9bcq2e2n65ktqlmfvvgem.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.548019610697-uhugcd91bvgpbbui93s57m14j97amt78</string>
+	<string>com.googleusercontent.apps.513608831264-rkm7vrg8g0q9bcq2e2n65ktqlmfvvgem</string>
 	<key>API_KEY</key>
-	<string>AIzaSyC-J9_nmFbGRRg1Iqp4pLnau3TkmS-zSYY</string>
+	<string>AIzaSyDVBtg5Hs8256kZj6-4f0BcG00aHFeSdG0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>548019610697</string>
+	<string>513608831264</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.hippware.ios.ChatStaging</string>
 	<key>PROJECT_ID</key>
-	<string>my-project-1480497595993</string>
+	<string>tiny-robot</string>
 	<key>STORAGE_BUCKET</key>
-	<string>my-project-1480497595993.appspot.com</string>
+	<string>tiny-robot.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<true/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<false/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:548019610697:ios:4c51d050696b9d77</string>
+	<string>1:513608831264:ios:68fbea5df8daf2f24d4745</string>
 	<key>DATABASE_URL</key>
-	<string>https://my-project-1480497595993.firebaseio.com</string>
+	<string>https://tiny-robot.firebaseio.com</string>
 </dict>
 </plist>
