@@ -12,7 +12,7 @@ import {IBot, IBotIn} from '../model/Bot'
 import {ILocation} from '../model/Location'
 
 const introspectionQueryResultData = require('./fragmentTypes.json')
-const TIMEOUT = 10000
+const TIMEOUT = 30000
 import {
   PROFILE_PROPS,
   BOT_PROPS,
@@ -1450,7 +1450,8 @@ export class Transport {
   }
 
   private makeSocket() {
-    const socketEndpoint = 'ws://3.14.14.222:4000/graphql'
+    // const socketEndpoint = 'ws://localhost:4000/graphql'
+    const socketEndpoint = 'ws://updt.hopto.org:4000/graphql'
 
     // uncomment to see all graphql messages!
     // process.env.WOCKY_VERBOSE = '1'
