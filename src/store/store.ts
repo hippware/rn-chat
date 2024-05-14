@@ -17,7 +17,6 @@ import AuthStore from './AuthStore'
 import fileService from './fileService'
 import LocationStore from './LocationStore'
 import SearchStore from './SearchStore'
-import ProfileValidationStore from './ProfileValidationStore'
 import NotificationStore from './NotificationStore'
 import {PermissionStore} from './PermissionStore'
 import CodepushStore from './CodePushStore'
@@ -54,7 +53,6 @@ export const cleanState = {
   authStore: {},
   locationStore: {},
   searchStore: {},
-  profileValidationStore: {},
   homeStore: {},
   navStore: {},
   codePushStore: {},
@@ -71,7 +69,6 @@ const Store = types
     authStore: AuthStore,
     locationStore: LocationStore,
     searchStore: SearchStore,
-    profileValidationStore: ProfileValidationStore,
     codePushStore: CodepushStore,
     navStore: NavStore,
     geocodingStore: GeocodingStore,
